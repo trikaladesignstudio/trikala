@@ -1,4 +1,4 @@
-import Section from "@/components/custom/Section";
+// import Section from "@/components/custom/Section";
 import SectionGrid from "@/components/custom/SectionGrid";
 
 export default function Home() {
