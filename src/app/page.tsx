@@ -6,7 +6,7 @@ export default function Home() {
     <nav></nav>
     <main>
       <Section >
-        <h1>hekko</h1>
+        <h1 className="text-3xl">hekko</h1>
 
       </Section>
 

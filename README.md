@@ -5,7 +5,7 @@
   - [ ] data collection
   - [ ] custom calculator
 - todo
- - [ ] layout components for section and pages snap on screen section
+ - [x] layout components for section and pages snap on screen section
  - [ ] ui implementation section
     - [ ] Featured Work
     - [x] At a Glance
