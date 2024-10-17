@@ -8,7 +8,7 @@ type SectionGridType = {
 
 function SectionGrid({ className, children }: SectionGridType) {
   return (
-    <section className={cn("min-h-screen px-[2rem] lg:px-[10rem] py-12 grid", className)}>
+    <section className={cn("min-h-screen px-[2rem] lg:px-[5rem] py-12 grid", className)}>
       {children}
     </section>
   );

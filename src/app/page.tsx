@@ -1,5 +1,8 @@
-import Section from "@/components/custom/Section";
+import Footer from "@/components/custom/Footer";
+import Interior from "@/components/custom/Interior";
 import SectionGrid from "@/components/custom/SectionGrid";
+import Testimonials from "@/components/custom/Testimonials";
+import Working from "@/components/custom/Working";
 
 export default function Home() {
   return (
@@ -23,7 +26,11 @@ export default function Home() {
 
           <h1 className="text-3xl  w-full flex-1">hekko</h1>
         </Section> */}
+        <Working/>
+        <Interior/>
+        <Testimonials/>
       </main>
+      <Footer/>
     </>
   );
 }

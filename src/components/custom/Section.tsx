@@ -8,7 +8,7 @@ type Section = {
 
 function Section({ className, children }: Section) {
   return (
-    <section className={cn("min-h-screen px-[2rem] lg:px-[10rem] py-12 flex flex-col ", className)}>
+    <section className={cn("min-h-screen px-[2rem] lg:px-[5rem] py-12 lg:py-20 flex flex-col ", className)}>
       {children}
     </section>
   );
