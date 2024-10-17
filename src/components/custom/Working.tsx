@@ -51,7 +51,7 @@ const Working: React.FC = () => {
   };
 
   return (
-    <Sections className="max-h-screen w-full mx-auto mt-8 md:mt-16">
+    <Sections className="max-h-screen w-full mx-auto">
       <div className="flex flex-col md:flex-row justify-between gap-6 md:gap-20">
         <h1 className="text-left text-4xl md:text-6xl lg:text-7xl font-custom flex-none">
           Our method of <br className="md:block hidden" /> working

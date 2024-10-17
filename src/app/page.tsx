@@ -7,15 +7,16 @@ import Working from "@/components/custom/Working";
 export default function Home() {
   return (
     <>
-      <nav></nav>
-      <main>
+      {/* <div className="absolute top-0 left-0 w-full h-full"> */}
+      <main className="relative flex flex-col snap-y snap-mandatory h-screen overflow-y-scroll overflow-hidden border-2">
+        <nav className="snap-start">tjos</nav>
         <SectionGrid className="grid-rows-3 grid-cols-3 gap-4">
-          <div className="row-span-1 col-span-3  flex" >
+          <div className="row-span-1 col-span-3  flex">
             <h1 className="text-4xl lg:text-9xl  w-full flex-1 flex justify-center items-end align-bottom">
               Trikala Studios
             </h1>
           </div>
-          <div className="col-span-3" >
+          <div className="col-span-3">
             <h1 className="text-1xl lg:text-3xl w-full flex-1 flex justify-center items-center align-middle">
               comming soon :)
             </h1>
@@ -23,14 +24,15 @@ export default function Home() {
         </SectionGrid>
         {/* <Section >
           <h1 className="text-3xl  w-full flex-1">hekko</h1>
-
+          
           <h1 className="text-3xl  w-full flex-1">hekko</h1>
-        </Section> */}
-        <Working/>
-        <Interior/>
-        <Testimonials/>
+          </Section> */}
+        <Working />
+        <Interior />
+        <Testimonials />
+        <Footer />
       </main>
-      <Footer/>
+      {/* </div> */}
     </>
   );
 }
