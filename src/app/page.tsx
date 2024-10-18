@@ -1,4 +1,5 @@
-import Footer from "@/components/custom/Footer";
+// import Footer from "@/components/custom/Footer";
+import Featured from "@/components/custom/Feature";
 import Interior from "@/components/custom/Interior";
 import Lead from "@/components/custom/Lead";
 import SectionGrid from "@/components/custom/SectionGrid";
@@ -29,6 +30,7 @@ export default function Home() {
           <h1 className="text-3xl  w-full flex-1">hekko</h1>
         </Section> */}
         <Lead/>
+        <Featured/>
         <Working/>
         <Interior/>
         <Testimonials/>
