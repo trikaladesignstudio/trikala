@@ -1,44 +1,32 @@
+"use client";
+import { cn } from "@/lib/utils";
+import { handleSubmit } from "@/utils/util";
+import { motion } from "framer-motion";
 import React from "react";
+import { Button } from "../ui/button";
 
 function Lead() {
-  async function handleSubmit(formData: FormData) {
-    "use server";
-    // event.preventDefault();
-
-    const rawFormData = {
-      name: formData.get("name") as string,
-      email: formData.get("email") as string,
-      phone: formData.get("phone") as string,
-    };
-
-    console.log("Sending Form Data:", rawFormData);
-    const u = new URLSearchParams(rawFormData).toString();
-
-    try {
-      const response = await fetch(
-        "https://script.google.com/macros/s/AKfycbyZD5NyYxR95xUxIyoNHb1xoJe8HYW6gS0R0s7AwblO/dev" + u,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          // body: JSON.stringify(rawFormData),
-          redirect: "follow",
-        }
-      );
-      console.log("Result:", response.status);
-
-      if (response.ok) {
-        console.log("Result:", response);
-      }
-    } catch (error) {
-      console.error("Error:", error, rawFormData);
-    }
-  }
-
+  const [showForm, setShowForm] = React.useState(true);
   return (
-    <div>
-      <form action={handleSubmit}>
+    <motion.section
+      className={cn("snap-always shrink-0 snap-end bg-black h-auto")}
+      initial={{ height: "auto" }}
+      animate={{ height: showForm ? "auto" : 0 }}
+      transition={{ duration: 0.25, delay: 0.25, ease: "easeInOut" }}
+      exit={{ height: 0 }}
+    >
+      <motion.form
+        initial={{ opacity: 0 }}
+        animate={{ opacity: showForm ? 1 : 0 }}
+        transition={{ duration: 0.25 }}
+        exit={{ opacity: 0 }}
+        className={cn(
+          showForm ? "flex" : "hidden",
+          "px-[2rem] lg:px-[5rem] py-12 lg:py-20 flex flex-col  w-full text-white"
+        )}
+        action={handleSubmit}
+        onSubmit={() => setShowForm(false)}
+      >
         <label htmlFor="name">Name:</label>
         <input type="text" id="name" name="name" defaultValue="Name" required />
         <label htmlFor="email">Email: </label>
@@ -46,7 +34,7 @@ function Lead() {
           type="email"
           id="email"
           name="email"
-          defaultValue="try.srivastava4nishant@gmail.com"
+          defaultValue="trikaladesignstudio@gmail.com"
           required
         />
         <label htmlFor="phone">Phone:</label>
@@ -57,9 +45,11 @@ function Lead() {
           defaultValue="04850"
           required
         />
-        <input type="submit" />
-      </form>
-    </div>
+        <Button className="mt-4" type="submit" variant={"outline"}>
+          <input className="btn" type="submit" />
+        </Button>
+      </motion.form>
+    </motion.section>
   );
 }
 
