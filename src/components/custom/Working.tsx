@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import hero5 from "@/assets/hero3.png";
 import Sections from "./Section";
 import Image from "next/image";
+import Heading from "./Heading";
 
 const Working: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -53,9 +54,9 @@ const Working: React.FC = () => {
   return (
     <Sections className="max-h-screen w-full mx-auto">
       <div className="flex flex-col md:flex-row justify-between gap-6 md:gap-20">
-        <h1 className="text-left text-4xl md:text-6xl lg:text-7xl font-custom flex-none">
-          Our method of <br className="md:block hidden" /> working
-        </h1>
+        <Heading className="flex-none">
+          Our method of <br className="md:block hidden"/> working
+        </Heading>
         <span className="text-sm  text-justify">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta
           dolorum nihil tempore corrupti culpa blanditiis, iusto modi nam,
