@@ -11,7 +11,7 @@ interface CarouselItem {
 }
 
 interface CarouselProps {
-  items: CarouselItem[];
+  items?: CarouselItem[];
 }
 
 const Expertise: React.FC<CarouselProps> = ({ items = expertise }) => {

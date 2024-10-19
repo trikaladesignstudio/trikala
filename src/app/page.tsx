@@ -10,25 +10,12 @@ import Testimonials from "@/components/custom/Testimonials";
 import Working from "@/components/custom/Working";
 import { AnimatePresence } from "framer-motion";
 
-import image from "../assets/aesehi.png";
-import image2 from "../assets/dummy.png";
-import Test from "@/components/custom/Test";
-
 export default function Home() {
-
-  const items = [
-    { image: image, alt: 'Image 1' },
-    { image: image2, alt: 'Image 2' },
-    { image:image, alt: 'Image 3' },
-    { image: image2, alt: 'Image 4' },
-    { image: image, alt: 'Image 5' },
-    { image: image2, alt: 'Image 6' }
-  ];
   return (
     <>
       {/* <div className="absolute top-0 left-0 w-full h-full"> */}
       <main className="relative flex flex-col snap-y snap-mandatory h-screen overflow-y-scroll overflow-hidden">
-        <AnimatePresence mode="wait" initial={false} >
+        <AnimatePresence mode="wait" initial={false}>
           <nav className="snap-start">tjos</nav>
           <SectionGrid className="grid-rows-3 grid-cols-3 gap-4">
             <div className="row-span-1 col-span-3  flex">
@@ -48,18 +35,13 @@ export default function Home() {
           <h1 className="text-3xl  w-full flex-1">hekko</h1>
         </Section> */}
           <Lead />
+          <Featured />
+          <Expertise />
           <Working />
           <Interior />
           <Testimonials />
           <Footer />
         </AnimatePresence>
-        <Lead/>
-        <Featured/>
-        <Expertise items={items}/>
-        <Working/>
-        <Interior/>
-        <Test/>
-        <Testimonials/>
       </main>
       {/* </div> */}
     </>
