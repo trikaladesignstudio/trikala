@@ -17,42 +17,42 @@ interface CarouselProps {
 const Expertise: React.FC<CarouselProps> = ({ items = expertise }) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const handlePrevClick = () => {
-    setActiveIndex((prevIndex) =>
-      prevIndex === 0 ? items.length - 1 : prevIndex - 1
-    );
-  };
-
-  const handleNextClick = () => {
-    setActiveIndex((prevIndex) =>
-      prevIndex === items.length - 1 ? 0 : prevIndex + 1
-    );
-  };
-
   const handleClick = (index: number) => {
     setActiveIndex(index);
   };
 
   const getVisibleItems = () => {
+    const prevIndex1 = (activeIndex - 2 + items.length) % items.length;
     const prevIndex = (activeIndex - 1 + items.length) % items.length;
     const nextIndex = (activeIndex + 1) % items.length;
+    const nextIndex2 = (activeIndex + 2) % items.length;
 
     return [
       {
+        index: prevIndex1,
+        ...items[prevIndex1],
+        position: "scale-50 blur-sm opacity-50 z-0",
+      },
+      {
         index: prevIndex,
         ...items[prevIndex],
-        position: "scale-75 blur-sm opacity-50 z-0",
-      }, // Previous
+        position: "scale-75 blur-sm opacity-70 z-0",
+      },
       {
         index: activeIndex,
         ...items[activeIndex],
         position: "scale-100 blur-0 z-10",
-      }, // Active
+      },
       {
         index: nextIndex,
         ...items[nextIndex],
-        position: "scale-75 blur-sm opacity-50 z-0",
-      }, // Next
+        position: "scale-75 blur-sm opacity-70 z-0",
+      },
+      {
+        index: nextIndex2,
+        ...items[nextIndex2],
+        position: "scale-50 blur-sm opacity-50 z-0",
+      },
     ];
   };
 
@@ -62,14 +62,8 @@ const Expertise: React.FC<CarouselProps> = ({ items = expertise }) => {
         Expertise
       </h1>
       <div className="flex items-center justify-center w-full relative">
-        <button
-          onClick={handlePrevClick}
-          className="bg-gray-600 bg-opacity-20 text-custom-db rounded-full font-bold p-2 absolute left-4 z-20 md:block hidden"
-        >
-          &lt;--Prev
-        </button>
         <div className="relative flex justify-center w-full">
-          <div className="flex w-full justify-center items-center transition-transform duration-500 ease-in-out">
+          <div className="flex w-full justify-between items-center transition-transform duration-500 ease-in-out">
             {getVisibleItems().map((item) => (
               <div
                 key={item.index}
@@ -85,12 +79,6 @@ const Expertise: React.FC<CarouselProps> = ({ items = expertise }) => {
             ))}
           </div>
         </div>
-        <button
-          onClick={handleNextClick}
-          className="bg-gray-600 bg-opacity-20 text-custom-db rounded-full font-bold p-2 absolute right-4 z-20 md:block hidden"
-        >
-          Next --&gt;
-        </button>
       </div>
     </Sections>
   );
