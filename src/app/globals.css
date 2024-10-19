@@ -1,3 +1,76 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+  @apply m-0 p-0 box-border;
+}
+
+.fr {
+  @apply flex flex-row;
+}
+
+.fc {
+  @apply flex flex-col;
+}
+
+.fss {
+  @apply flex items-start justify-start;
+}
+
+.fcc {
+  @apply flex items-center justify-center;
+}
+
+.fce {
+  @apply flex items-center justify-evenly;
+}
+
+.fcb {
+  @apply flex items-center justify-between;
+}
+
+.glass {
+  backdrop-filter: blur(3em);
+  background: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.1),
+    transparent,
+    transparent,
+    rgba(255, 255, 255, 0.05),
+    transparent
+  );
+  @apply shadow border border-white/10 border-opacity-90 inset-0 p-5 rounded-xl
+     /* bg-gradient-to-tr from-white/10 via-transparent to-white/10  */;
+}
+
+body::-webkit-scrollbar {
+  width: 0.7rem;
+  background-color: transparent;
+}
+
+body::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+body::-webkit-scrollbar-thumb {
+  @apply glass;
+  background-color: rgba(169, 169, 169, 0.2);
+  border-radius: 0.5rem;
+}
+
+::-webkit-scrollbar {
+  width: 0.3rem;
+  height: 0.3rem;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply glass;
+  background-color: rgba(169, 169, 169, 0.3);
+  border-radius: 0.5rem;
+}
