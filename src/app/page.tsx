@@ -1,4 +1,5 @@
 // import Footer from "@/components/custom/Footer";
+import Expertise from "@/components/custom/Expertise";
 import Featured from "@/components/custom/Feature";
 import Interior from "@/components/custom/Interior";
 import Lead from "@/components/custom/Lead";
@@ -6,7 +7,20 @@ import SectionGrid from "@/components/custom/SectionGrid";
 import Testimonials from "@/components/custom/Testimonials";
 import Working from "@/components/custom/Working";
 
+import image from "../assets/aesehi.png";
+import image2 from "../assets/dummy.png";
+import Test from "@/components/custom/Test";
+
 export default function Home() {
+
+  const items = [
+    { image: image, alt: 'Image 1' },
+    { image: image2, alt: 'Image 2' },
+    { image:image, alt: 'Image 3' },
+    { image: image2, alt: 'Image 4' },
+    { image: image, alt: 'Image 5' },
+    { image: image2, alt: 'Image 6' }
+  ];
   return (
     <>
       {/* <div className="absolute top-0 left-0 w-full h-full"> */}
@@ -31,8 +45,10 @@ export default function Home() {
         </Section> */}
         <Lead/>
         <Featured/>
+        <Expertise items={items}/>
         <Working/>
         <Interior/>
+        <Test/>
         <Testimonials/>
       </main>
       {/* </div> */}
