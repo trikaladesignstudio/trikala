@@ -1,5 +1,8 @@
 "use client";
 import Footer from "@/components/custom/Footer";
+// import Footer from "@/components/custom/Footer";
+import Expertise from "@/components/custom/Expertise";
+import Featured from "@/components/custom/Feature";
 import Interior from "@/components/custom/Interior";
 import Lead from "@/components/custom/Lead";
 import SectionGrid from "@/components/custom/SectionGrid";
@@ -12,7 +15,7 @@ export default function Home() {
     <>
       {/* <div className="absolute top-0 left-0 w-full h-full"> */}
       <main className="relative flex flex-col snap-y snap-mandatory h-screen overflow-y-scroll overflow-hidden">
-        <AnimatePresence mode="wait" initial={false} >
+        <AnimatePresence mode="wait" initial={false}>
           <nav className="snap-start">tjos</nav>
           <SectionGrid className="grid-rows-3 grid-cols-3 gap-4">
             <div className="row-span-1 col-span-3  flex">
@@ -32,6 +35,8 @@ export default function Home() {
           <h1 className="text-3xl  w-full flex-1">hekko</h1>
         </Section> */}
           <Lead />
+          <Featured />
+          <Expertise />
           <Working />
           <Interior />
           <Testimonials />
