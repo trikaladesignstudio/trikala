@@ -27,4 +27,4 @@
   - [ ] Finalize content
   - [ ] Finalize images
   - [ ] Deside seo
-  - [ ] Sort Hosting and domain
+  - [x] Sort Hosting and domain
