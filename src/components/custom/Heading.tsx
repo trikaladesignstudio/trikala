@@ -4,13 +4,13 @@ import { motion } from "framer-motion";
 import React, { ReactNode } from "react";
 
 type Heading = {
-    className?: string;
-    children: ReactNode;
-  };
+  className?: string;
+  children: ReactNode;
+};
 function Heading({ className, children }: Heading) {
   return (
-    <motion.section
-        initial={{ opacity: 0 }}
+    <motion.div
+      initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       className={cn(
@@ -19,8 +19,8 @@ function Heading({ className, children }: Heading) {
       )}
     >
       {children}
-    </motion.section>
-  )
+    </motion.div>
+  );
 }
 
-export default Heading
+export default Heading;

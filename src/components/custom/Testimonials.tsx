@@ -90,7 +90,7 @@ const ReviewCard = ({
 
 const Testimonials = () => {
   return (
-    <Sections>
+    <Sections className="relative">
       <div className="flex lg:flex-row flex-col lg:gap-[20vh] z-30 justify-between items-start">
         <h1 className="text-[3rem] md:text-6xl lg:text-[6rem] font-custom text-left">
           What Our Clients <br /> have to say
@@ -100,17 +100,19 @@ const Testimonials = () => {
           turpis molestie, dictum est a, mattis tellus. Sed dignissim,{" "}
         </span>
       </div>
-      <div className="absolute top-0 left-0 w-full h-full bg-custom-gradient z-10"></div>
-      <Marquee pauseOnHover className="[--duration:20s]">
-        {firstRow.map((review) => (
-          <ReviewCard key={review.username} {...review} />
-        ))}
-      </Marquee>
-      <Marquee reverse pauseOnHover className="[--duration:20s]">
-        {secondRow.map((review) => (
-          <ReviewCard key={review.username} {...review} />
-        ))}
-      </Marquee>
+      <div className="relative w-[200vw] -translate-x-1/2">
+          <div className="absolute top-0 left-0 w-full h-full bg-custom-gradient z-10"></div>
+          <Marquee pauseOnHover className="[--duration:20s]">
+            {firstRow.map((review) => (
+              <ReviewCard key={review.username} {...review} />
+            ))}
+          </Marquee>
+          <Marquee reverse pauseOnHover className="[--duration:20s]">
+            {secondRow.map((review) => (
+              <ReviewCard key={review.username} {...review} />
+            ))}
+          </Marquee>
+      </div>
     </Sections>
   );
 };
