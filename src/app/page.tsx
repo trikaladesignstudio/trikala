@@ -9,13 +9,11 @@ import SectionGrid from "@/components/custom/SectionGrid";
 import Testimonials from "@/components/custom/Testimonials";
 import Working from "@/components/custom/Working";
 import { AnimatePresence } from "framer-motion";
-import Interiors from "@/components/custom/Test";
 
 export default function Home() {
   return (
     <>
-      {/* <div className="absolute top-0 left-0 w-full h-full"> */}
-      <main className="relative flex flex-col snap-y snap-mandatory h-screen overflow-y-scroll overflow-hidden">
+      <main className="relative flex flex-col snap-y snap-mandatory h-screen overflow-x-hidden scroll-smooth overflow-y-scroll">
         <AnimatePresence mode="wait" initial={false}>
           <nav className="snap-start">tjos</nav>
           <SectionGrid className="grid-rows-3 grid-cols-3 gap-4">
@@ -39,7 +37,6 @@ export default function Home() {
           <Featured />
           <Expertise />
           <Working />
-          <Interiors />
           <Interior />
           <Testimonials />
           <Footer />

@@ -44,23 +44,30 @@
      /* bg-gradient-to-tr from-white/10 via-transparent to-white/10  */;
 }
 
-body::-webkit-scrollbar {
+main {
+  overflow: overlay;
+  scrollbar-gutter: auto;
+}
+
+
+main::-webkit-scrollbar {
   width: 0.7rem;
-  background-color: transparent;
+  position: absolute;
+  background: transparent;
 }
 
-body::-webkit-scrollbar-track {
-  background-color: transparent;
+main::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-body::-webkit-scrollbar-thumb {
+main::-webkit-scrollbar-thumb {
   @apply glass;
-  background-color: rgba(169, 169, 169, 0.2);
+  background-color: rgba(12, 10, 10, 0.6);
   border-radius: 0.5rem;
 }
 
 ::-webkit-scrollbar {
-  width: 0.3rem;
+  width: 0.7rem;
   height: 0.3rem;
   background-color: transparent;
 }
@@ -71,6 +78,6 @@ body::-webkit-scrollbar-thumb {
 
 ::-webkit-scrollbar-thumb {
   @apply glass;
-  background-color: rgba(169, 169, 169, 0.3);
+  background-color: rgba(24, 16, 16, 0.9);
   border-radius: 0.5rem;
 }
