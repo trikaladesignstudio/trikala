@@ -1,63 +1,73 @@
-"use client";
+import { cn } from "@/lib/utils";
+import Sections from "./Section";
+import Heading from "./Heading";
 
-import { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import Image from "next/image";
-import image from "../../assets/Digit.png";
+// Assuming you have an array of interior items
+const interiorItems = [
+  { title: "MODULAR KITCHEN", img: "/placeholder.svg?height=200&width=300" },
+  { title: "STORAGE & WARDROBE", img: "/placeholder.svg?height=200&width=300" },
+  { title: "CROCKERY UNITS", img: "/placeholder.svg?height=200&width=300" },
+  {
+    title: "SPACE SAVING FURNITURE",
+    img: "/placeholder.svg?height=200&width=300",
+  },
+  { title: "TV UNITS", img: "/placeholder.svg?height=200&width=300" },
+  { title: "STUDY TABLE", img: "/placeholder.svg?height=200&width=300" },
+  { title: "FALSE CEILING", img: "/placeholder.svg?height=200&width=300" },
+  // Add more items as needed
+];
 
-const images = [image, image, image];
+const ReviewCard = ({ img, title }: { img: string; title: string }) => {
+  return (
+    <figure
+      className={cn(
+        "w-full h-40 cursor-pointer overflow-hidden bg-cover bg-center relative rounded-md",
+        "border border-gray-200 hover:brightness-90 transition-all duration-300"
+      )}
+      style={{ backgroundImage: `url(${img})` }}
+    >
+      <div className="absolute inset-0 bg-black opacity-40"></div>
+      <span className="absolute inset-0 flex items-center justify-center text-white text-center text-sm font-bold z-10 px-2">
+        {title}
+      </span>
+    </figure>
+  );
+};
 
-export default function Test() {
-  const [currentIndex, setCurrentIndex] = useState(0);
+const BrickRow = ({
+  items,
+  offset,
+}: {
+  items: typeof interiorItems;
+  offset?: boolean;
+}) => {
+  return (
+    <div
+      className={cn(
+        "grid grid-cols-2 md:grid-cols-4 gap-4 w-full",
+        offset && "ml-8"
+      )}
+    >
+      {items.map((item, index) => (
+        <ReviewCard key={index} {...item} />
+      ))}
+    </div>
+  );
+};
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 5000);
-
-    return () => clearInterval(timer);
-  }, []);
-
-  const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-  };
-
-  const handlePrevious = () => {
-    setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + images.length) % images.length
-    );
-  };
+export default function Interiors() {
+  const firstRowItems = interiorItems.slice(0, 4);
+  const secondRowItems = interiorItems.slice(4, 7);
 
   return (
-    <div className="relative w-full max-w-3xl mx-auto overflow-hidden">
-      <div className="relative h-64">
-        {images.map((src, index) => (
-          <Image
-            key={index}
-            width={300}
-            height={300}
-            src={src}
-            alt={`Slide ${index + 1}`}
-            className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-500 ${
-              index === currentIndex ? "opacity-100" : "opacity-0"
-            }`}
-          />
-        ))}
+    <Sections>
+      <Heading className="text-center mb-8">Interior Solutions</Heading>
+      <div className="flex flex-col gap-4 w-full">
+        <BrickRow items={firstRowItems} />
+        <BrickRow items={secondRowItems} offset />
+        <BrickRow items={firstRowItems} />
+        <BrickRow items={secondRowItems} offset />
       </div>
-      <button
-        onClick={handlePrevious}
-        className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-red-500 bg-opacity-50 rounded-full p-2 hover:bg-opacity-75 transition-all duration-200"
-        aria-label="Previous image"
-      >
-        <ChevronLeft className="w-6 h-6 text-gray-800" />
-      </button>
-      <button
-        onClick={handleNext}
-        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 rounded-full p-2 hover:bg-opacity-75 transition-all duration-200"
-        aria-label="Next image"
-      >
-        <ChevronRight className="w-6 h-6 text-gray-800" />
-      </button>
-    </div>
+    </Sections>
   );
 }
