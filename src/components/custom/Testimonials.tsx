@@ -6,6 +6,7 @@ import image3 from "../../assets/hero3.png"; // Ensure the path to the image is 
 import image4 from "../../assets/hero4.png"; // Ensure the path to the image is correct
 import Sections from "./Section";
 import Image, { StaticImageData } from "next/image";
+import Heading from "./Heading";
 
 const reviews = [
   {
@@ -92,26 +93,26 @@ const Testimonials = () => {
   return (
     <Sections className="relative">
       <div className="flex lg:flex-row flex-col lg:gap-[20vh] z-30 justify-between items-start">
-        <h1 className="text-[3rem] md:text-6xl lg:text-[6rem] font-custom text-left">
+        <Heading className="text-left flex-none">
           What Our Clients <br /> have to say
-        </h1>
-        <span className="w-[40vh]">
+        </Heading>
+        <span className="">
           Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu
           turpis molestie, dictum est a, mattis tellus. Sed dignissim,{" "}
         </span>
       </div>
       <div className="relative w-[200vw] -translate-x-1/2">
-          <div className="absolute top-0 left-0 w-full h-full bg-custom-gradient z-10"></div>
-          <Marquee pauseOnHover className="[--duration:20s]">
-            {firstRow.map((review) => (
-              <ReviewCard key={review.username} {...review} />
-            ))}
-          </Marquee>
-          <Marquee reverse pauseOnHover className="[--duration:20s]">
-            {secondRow.map((review) => (
-              <ReviewCard key={review.username} {...review} />
-            ))}
-          </Marquee>
+        <div className="absolute top-0 left-0 w-full h-full bg-custom-gradient z-10"></div>
+        <Marquee pauseOnHover className="[--duration:20s]">
+          {firstRow.map((review) => (
+            <ReviewCard key={review.username} {...review} />
+          ))}
+        </Marquee>
+        <Marquee reverse pauseOnHover className="[--duration:20s]">
+          {secondRow.map((review) => (
+            <ReviewCard key={review.username} {...review} />
+          ))}
+        </Marquee>
       </div>
     </Sections>
   );

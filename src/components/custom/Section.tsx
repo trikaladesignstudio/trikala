@@ -15,7 +15,7 @@ function Section({ className, children }: Section) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       className={cn(
-        "min-h-screen px-[2rem] lg:px-[5rem] py-12 lg:py-20 flex flex-col ",
+        "min-h-screen px-[2rem] lg:px-[5rem] py-12 lg:py-10 flex flex-col ",
         "snap-center snap-always shrink-0",
         className
       )}
