@@ -12,7 +12,7 @@ const reviews = [
   {
     name: "Jack",
     username: "@jack",
-    body: "Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim,Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu ",
+    body: "Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim,Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euYorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim,Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu ",
     img: image1,
   },
   {
@@ -81,7 +81,7 @@ const ReviewCard = ({
         </div>
       </div>
       <div className="flex-1 fcc">
-        <p className="text-gray-700 w-[25vw] text-wrap text-[0.5rem] lg:text-[.9rem]">{body}</p>
+        <p className="text-gray-700  min-w-[20vw] max-w-[35vw] text-wrap text-[0.5rem] lg:text-[.9rem]">{body}</p>
       </div>
     </div>
   );
