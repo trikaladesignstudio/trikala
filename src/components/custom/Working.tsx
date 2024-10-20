@@ -2,10 +2,12 @@
 
 import React, { useState } from "react";
 
-import Sections from "./Section";
 import Image from "next/image";
-import Heading from "./Heading";
+import { BiChevronLeft } from "react-icons/bi";
 import { workingSlides } from "../../constants/index";
+import { Button } from "../ui/button";
+import Heading from "./Heading";
+import Sections from "./Section";
 
 const Working: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -39,18 +41,18 @@ const Working: React.FC = () => {
             sequi ab nisi commodi?
           </span>
           <div className="flex justify-end items-end gap-4 pb-4">
-            <button
+            <Button
               onClick={prevSlide}
-              className="fcc text-white left-4 p-2 bg-custom-db w-10 h-10 rounded-full"
+              className="fcc text-white left-4 p-2 bg-custom-db w-12 h-12 rounded-full"
             >
-              &lt;
-            </button>
-            <button
+              <BiChevronLeft size={24} />
+            </Button>
+            <Button
               onClick={nextSlide}
-              className="fcc text-white bg-custom-lb w-10 h-10 rounded-full"
+              className="fcc text-white left-4 p-2 bg-custom-lb  w-12 h-12 rounded-full"
             >
-              &gt;
-            </button>
+              <BiChevronLeft size={24} className="rotate-180" />
+            </Button>
           </div>
         </div>
       </div>
