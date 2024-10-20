@@ -14,7 +14,7 @@ function Heading({ className, children }: Heading) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       className={cn(
-        "text-4xl md:text-6xl lg:text-8xl tracking-tight font-custom",
+        "text-4xl md:text-5xl lg:text-7xl tracking-tight font-custom",
         className
       )}
     >
