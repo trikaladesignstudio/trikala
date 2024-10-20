@@ -1,13 +1,12 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  content: [
-    "./src/**/*.{js,ts,jsx,tsx,mdx}"
-  ],
+  content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {
       backgroundImage: {
-        'custom-gradient': 'linear-gradient(90deg, #ffffffE6, transparent 30%, transparent 70%, #ffffffE6)',
+        "custom-gradient":
+          "linear-gradient(90deg, #ffffffE6, transparent 20%, transparent 80%, #ffffffE6)",
       },
       animation: {
         marquee: "marquee var(--duration) linear infinite",
@@ -24,13 +23,13 @@ const config: Config = {
         },
       },
       colors: {
-        'custom-premium': '#D1C1A4',
-        'custom-db': '#170800',
-        'custom-lb': '#774931',
-        'custom-bg': '#DEDEDE',
+        "custom-premium": "#D1C1A4",
+        "custom-db": "#170800",
+        "custom-lb": "#774931",
+        "custom-bg": "#DEDEDE",
       },
       fontFamily: {
-        'custom': ['Silver Queen', 'sans-serif'],
+        custom: ["Silver Queen", "sans-serif"],
       },
     },
   },

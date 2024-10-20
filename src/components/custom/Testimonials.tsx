@@ -12,7 +12,7 @@ const reviews = [
   {
     name: "Jack",
     username: "@jack",
-    body: "Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim,Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu ",
+    body: "Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim,Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euYorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim,Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu ",
     img: image1,
   },
   {
@@ -64,7 +64,7 @@ const ReviewCard = ({
   return (
     <div
       className={cn(
-        "relative w-fit h-auto flex flex-col gap-2 cursor-pointer overflow-hidden p-4 bg-cover bg-center",
+        "relative h-auto flex flex-col gap-2 p-4 cursor-pointer",
         // light styles
         "border-gray-950/[.1] bg-gray-950/[.01] hover:bg-gray-950/[.05]",
         // dark styles
@@ -80,8 +80,15 @@ const ReviewCard = ({
           <p className="text-gray-500">{username}</p>
         </div>
       </div>
-      <div className="flex-1 fcc">
-        <p className="text-gray-700 w-[25vw] text-wrap text-[0.5rem] lg:text-[.9rem]">{body}</p>
+      <div
+        className={`flex-1 fcc`}
+        style={{
+          width: body.length / 5 + "ch",
+        }}
+      >
+        <p className="text-gray-700 break-words text-[0.7rem] lg:text-[.8rem] xl:text-[.95rem]">
+          {body}
+        </p>
       </div>
     </div>
   );
@@ -89,7 +96,7 @@ const ReviewCard = ({
 
 const Testimonials = () => {
   return (
-    <Sections className="lg:px-0 px-0 gap-4 justify-between">
+    <Sections className="lg:px-0 px-0">
       <Sections toSnap={false} className="gap-4 min-h-fit lg:py-0 py-0">
         <div className="flex lg:flex-row flex-col lg:gap-[20vh] z-30 justify-between items-start">
           <Heading className="text-left flex-none">
@@ -102,7 +109,7 @@ const Testimonials = () => {
         </div>
       </Sections>
       <div className="relative w-full">
-        <div className="absolute top-0 left-0 w-full h-full bg-custom-gradient z-10"></div>
+        <div className="absolute top-0 left-0 w-full h-full bg-custom-gradient z-10 pointer-events-none" />
         <div className="relative w-full">
           <Marquee pauseOnHover className="[--duration:20s]">
             {firstRow.map((review) => (
