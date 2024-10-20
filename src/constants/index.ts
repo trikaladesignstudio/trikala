@@ -81,4 +81,16 @@ export const interior = [
     body: "I'm at a loss for words. This is amazing. I love it.",
     img: image2,
   },
+  {
+    name: "James",
+    username: "@james",
+    body: "I'm at a loss for words. This is amazing. I love it.",
+    img: image2,
+  },
+  {
+    name: "James",
+    username: "@james",
+    body: "I'm at a loss for words. This is amazing. I love it.",
+    img: image2,
+  },
 ];
