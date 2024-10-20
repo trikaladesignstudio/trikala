@@ -64,7 +64,7 @@ const ReviewCard = ({
   return (
     <div
       className={cn(
-        "relative h-[23vh] w-[30vh] md:h-[20vh] lg:w-[25vw] lg:h-[30vh] xl:h-[23vh] flex flex-col gap-2 cursor-pointer overflow-hidden p-4 bg-cover bg-center",
+        "relative w-fit h-auto flex flex-col gap-2 cursor-pointer overflow-hidden p-4 bg-cover bg-center",
         // light styles
         "border-gray-950/[.1] bg-gray-950/[.01] hover:bg-gray-950/[.05]",
         // dark styles
@@ -80,8 +80,8 @@ const ReviewCard = ({
           <p className="text-gray-500">{username}</p>
         </div>
       </div>
-      <div className="flex-1 fcc ">
-        <p className="text-gray-700  text-[0.8rem] lg:text-[1rem]">{body}</p>
+      <div className="flex-1 fcc">
+        <p className="text-gray-700 w-[25vw] text-wrap text-[0.5rem] lg:text-[.9rem]">{body}</p>
       </div>
     </div>
   );
@@ -89,8 +89,8 @@ const ReviewCard = ({
 
 const Testimonials = () => {
   return (
-    <Sections className="lg:px-0 lg:py-0">
-      <Sections toSnap={false} className="gap-4 min-h-fit">
+    <Sections className="lg:px-0 px-0 gap-4 justify-between">
+      <Sections toSnap={false} className="gap-4 min-h-fit lg:py-0 py-0">
         <div className="flex lg:flex-row flex-col lg:gap-[20vh] z-30 justify-between items-start">
           <Heading className="text-left flex-none">
             What Our Clients <br /> have to say
