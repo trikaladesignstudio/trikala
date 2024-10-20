@@ -92,10 +92,10 @@ const Testimonials = () => {
     <Sections className="lg:px-0 lg:py-0">
       <Sections toSnap={false} className="gap-4 min-h-fit">
         <div className="flex lg:flex-row flex-col lg:gap-[20vh] z-30 justify-between items-start">
-          <h1 className="text-[3rem] md:text-6xl lg:text-[6rem] font-custom text-left">
+          <Heading className="text-left flex-none">
             What Our Clients <br /> have to say
-          </h1>
-          <span className="w-[40vh]">
+          </Heading>
+          <span>
             Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu
             turpis molestie, dictum est a, mattis tellus. Sed dignissim,{" "}
           </span>

@@ -9,6 +9,7 @@ import SectionGrid from "@/components/custom/SectionGrid";
 import Testimonials from "@/components/custom/Testimonials";
 import Working from "@/components/custom/Working";
 import { AnimatePresence } from "framer-motion";
+import Interiors from "@/components/custom/Test";
 
 export default function Home() {
   return (
@@ -38,6 +39,7 @@ export default function Home() {
           <Featured />
           <Expertise />
           <Working />
+          <Interiors />
           <Interior />
           <Testimonials />
           <Footer />
