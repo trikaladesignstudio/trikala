@@ -20,49 +20,46 @@ const ReviewCard = ({ img, body }: { img: string; body: string }) => {
   );
 };
 
-const Row = ({
-  interior,
-}: {
+const Row = (props: {
   interior: { img: string; body: string; username: string }[];
-  alignRight?: boolean;
 }) => {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 justify-between items-center w-full">
-      {interior.map((review) => (
-        <ReviewCard key={review.username} {...review} />
-      ))}
-    </div>
+    <Sections toSnap={false} className="min-h-fit w-[100vw] lg:px-0 lg:py-0 m-0 ">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 w-full">
+        {props.interior.map((review) => (
+          <ReviewCard key={review.username} {...review} />
+        ))}
+      </div>
+    </Sections>
   );
 };
 
 const Interior = () => {
   return (
-    <Sections className="border-4 border-green-800">
-      <Heading className="text-center">
-        Interior Solutions
-      </Heading>
-      <div className="flex flex-col gap-4 w-full">
-          <Row
-            interior={interior.map(({ img, body, username }) => ({
-              img: img.src,
-              body,
-              username,
-            }))}
-          />
-          <Row
-            interior={interior.map(({ img, body, username }) => ({
-              img: img.src,
-              body,
-              username,
-            }))}
-          />
-          <Row
-            interior={interior.map(({ img, body, username }) => ({
-              img: img.src,
-              body,
-              username,
-            }))}
-          />
+    <Sections className="border-4 border-green-800 w-full lg:p-0">
+      <Heading className="text-center">Interior Solutions</Heading>
+      <div className="flex flex-col gap-4 w-full p-0 m-0">
+        <Row
+          interior={interior.map(({ img, body, username }) => ({
+            img: img.src,
+            body,
+            username,
+          }))}
+        />
+        <Row
+          interior={interior.map(({ img, body, username }) => ({
+            img: img.src,
+            body,
+            username,
+          }))}
+        />
+        <Row
+          interior={interior.map(({ img, body, username }) => ({
+            img: img.src,
+            body,
+            username,
+          }))}
+        />
         <div>
           <Row
             interior={interior.map(({ img, body, username }) => ({
