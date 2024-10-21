@@ -2,20 +2,15 @@ import { cn } from "../../lib/utils";
 import Sections from "./Section";
 import Heading from "./Heading";
 import { interior, interiorType } from "../../constants/index";
-import { StaticImageData } from "next/image";
+import Image, { StaticImageData } from "next/image";
 import image1 from "@/assets/Digit.png";
 
 const ReviewCard = ({ img, body }: { img: StaticImageData; body: string }) => {
   return (
-    <div
-      className={cn(
-        "w-full h-[12vw] md:h-[10vw] lg:h-[8vw] xl:h-[8vw] cursor-pointer overflow-hidden bg-cover bg-center relative ",
-        "border-gray-950/[.1] hover:bg-gray-950/[.05] dark:border-gray-50/[.1] dark:bg-gray-50/[.10] dark:hover:bg-gray-50/[.15]"
-      )}
-      style={{ backgroundImage: `url(${img})` }}
-    >
-      <div className="absolute inset-0 bg-black opacity-50"></div>{" "}
-      <span className="absolute inset-0 flex items-center justify-center text-white text-center text-sm font-semibold z-10 ">
+    <div className="relative w-full h-[12vw] md:h-[10vw] xl:h-[5.5vw] cursor-pointer overflow-hidden">
+      <Image src={img} alt={body} layout="fill" objectFit="cover" />
+      <div className="absolute inset-0 bg-black opacity-50"></div>
+      <span className="absolute inset-0 flex items-center justify-center text-white text-center text-sm font-semibold z-10">
         {body}
       </span>
     </div>
@@ -32,7 +27,7 @@ const Row = ({
   return (
     <div
       className={cn(
-        "w-[125%] fr justify-between border gap-2 ", // Restrict width and center row
+        "w-[125%] fr justify-between gap-2 ", // Restrict width and center row
         className
       )}
     >
@@ -86,7 +81,10 @@ const BrickLayout = ({
 
   return (
     <div
-      className={cn("flex flex-col-reverse w-full gap-2 overflow-x-hidden relative", className)}
+      className={cn(
+        "flex flex-col-reverse w-full gap-2 overflow-x-hidden relative",
+        className
+      )}
     >
       {/* Apply left margin to the first row */}
       {formatedData.map((row, index) => {
@@ -99,7 +97,7 @@ const BrickLayout = ({
             <Row
               key={index}
               interior={formatedRow}
-              className="relative -left-[11vw]"
+              className="relative -left-[12vw]"
             />
           );
         }
@@ -111,10 +109,13 @@ const BrickLayout = ({
 const Interior = () => {
   return (
     <Sections className="lg:px-0 px-0 lg:py-0 py-0 justify-between ">
-      <Sections toSnap={false} className="text-center gap-4 min-h-fit p-12 border flex-1">
+      <Sections
+        toSnap={false}
+        className="text-center gap-4 min-h-fit p-12 flex-1 lg:px-0 px-0"
+      >
         <Heading className="">Interior Solutions</Heading>
+        <BrickLayout interior={interior as interiorType[]} />
       </Sections>
-      <BrickLayout interior={interior as interiorType[]} />
     </Sections>
   );
 };
