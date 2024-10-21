@@ -9,13 +9,15 @@ import SectionGrid from "@/components/custom/SectionGrid";
 import Testimonials from "@/components/custom/Testimonials";
 import Working from "@/components/custom/Working";
 import { AnimatePresence } from "framer-motion";
+import Navbar from "@/components/custom/NavBar";
 
 export default function Home() {
   return (
     <>
       <main className="relative flex flex-col snap-y snap-mandatory h-screen overflow-x-hidden scroll-smooth overflow-y-scroll">
         <AnimatePresence mode="wait" initial={false}>
-          <nav className="snap-start">tjos</nav>
+          <Navbar />
+          <nav>tjos</nav>
           <SectionGrid className="grid-rows-3 grid-cols-3 gap-4">
             <div className="row-span-1 col-span-3  flex">
               <h1 className="text-4xl lg:text-9xl  w-full flex-1 flex justify-center items-end align-bottom">

@@ -6,6 +6,18 @@ import image3 from "@/assets/hero3.png";
 import image4 from "@/assets/hero4.png";
 import { StaticImageData } from "next/image";
 
+interface NavLink {
+  name: string;
+  href: string;
+}
+
+export const navlinks: NavLink[] = [
+  { name: "Home", href: "#" },
+  { name: "Process", href: "#" },
+  { name: "Solutions", href: "#" },
+  { name: "Price Estimate", href: "#" },
+];
+
 export const expertise = [
   { image: image, alt: "Image 1" },
   { image: image2, alt: "Image 2" },
