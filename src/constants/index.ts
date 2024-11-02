@@ -4,7 +4,7 @@ import image1 from "@/assets/Digit.png";
 import image2 from "@/assets/aesehi.png";
 import image3 from "@/assets/hero3.png";
 import image4 from "@/assets/hero4.png";
-import StaticImageData from "next/image";
+import { StaticImageData } from "next/image";
 
 interface NavLink {
   name: string;
