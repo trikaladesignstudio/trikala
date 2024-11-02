@@ -2,13 +2,14 @@ import { cn } from "../../lib/utils";
 import Sections from "./Section";
 import Heading from "./Heading";
 import { interior, interiorType } from "../../constants/index";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
+import StaticImageData from "next/image";
 import image1 from "@/assets/Digit.png";
 
 const ReviewCard = ({ img, body }: { img: StaticImageData; body: string }) => {
   return (
     <div className="relative w-full h-[12vw] md:h-[10vw] xl:h-[5.5vw] cursor-pointer overflow-hidden">
-      <Image src={img} alt={body} layout="fill" objectFit="cover" />
+      <Image src={img} alt={body} className="w-full h-full object-cover" />
       <div className="absolute inset-0 bg-black opacity-50"></div>
       <span className="absolute inset-0 flex items-center justify-center text-white text-center text-sm font-semibold z-10">
         {body}

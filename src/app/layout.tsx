@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import Metadata from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -35,7 +35,7 @@ export default function RootLayout({
         {children}
         <Analytics />
         <SpeedInsights />
-        <TwScreenInfo />
+        {/* <TwScreenInfo /> */}
       </body>
     </html>
   );
