@@ -58,11 +58,12 @@ const Expertise: React.FC<CarouselProps> = ({ items = expertise }) => {
   };
 
   return (
-    <Sections>
-      <Heading className="text-center">
-        Expertise
-      </Heading>
-      <div className="flex items-center justify-center w-full relative">
+    <Sections className="lg:px-0 px-0">
+      <Sections
+        toSnap={false}
+        className="fcc w-full relative gap-4 min-h-fit lg:py-0 py-0 lg:px-0"
+      >
+        <Heading className="text-center">Expertise</Heading>
         <div className="relative flex justify-center w-full">
           <div className="flex w-full justify-between items-center transition-transform duration-500 ease-in-out">
             {getVisibleItems().map((item) => (
@@ -80,7 +81,7 @@ const Expertise: React.FC<CarouselProps> = ({ items = expertise }) => {
             ))}
           </div>
         </div>
-      </div>
+      </Sections>
     </Sections>
   );
 };
