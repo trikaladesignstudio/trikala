@@ -2,8 +2,7 @@ import { cn } from "../../lib/utils";
 import Sections from "./Section";
 import Heading from "./Heading";
 import { interior, interiorType } from "../../constants/index";
-import Image from "next/image";
-import StaticImageData from "next/image";
+import Image, { StaticImageData } from "next/image";
 import image1 from "@/assets/Digit.png";
 
 const ReviewCard = ({ img, body }: { img: StaticImageData; body: string }) => {
