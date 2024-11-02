@@ -31,7 +31,7 @@ function Lead() {
         <div className="flex items-center gap-2 ">
           <label htmlFor="name">Name:</label>
           <input
-            className="w-2/3 rounded-md"
+            className="w-2/3 rounded-md text-black"
             type="text"
             id="name"
             name="name"
@@ -42,7 +42,7 @@ function Lead() {
         <div className="flex items-center gap-2 ">
           <label htmlFor="email">Email: </label>
           <input
-            className="w-2/3 rounded-md"
+            className="w-2/3 rounded-md text-black"
             type="email"
             id="email"
             name="email"
@@ -53,7 +53,7 @@ function Lead() {
         <div className="flex items-center gap-2 ">
           <label htmlFor="phone">Phone:</label>
           <input
-            className="w-2/3 rounded-md"
+            className="w-2/3 rounded-md text-black"
             type="tel"
             id="phone"
             name="phone"
