@@ -28,7 +28,7 @@ const Working: React.FC = () => {
   };
 
   return (
-    <Sections>
+    <Sections className="my-0 justify-center">
       <div className="flex flex-col md:flex-row justify-between gap-6 md:gap-20">
         <Heading className="flex-none">
           Our method of <br className="md:block hidden" /> working
@@ -56,7 +56,7 @@ const Working: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="flex overflow-hidden w-full justify-center mt-12 lg:gap-5 gap-2">
+      <div className="flex overflow-hidden w-full justify-center lg:gap-5 gap-2">
         {slides.map((slide, index) => (
           <div
             key={index}
@@ -82,6 +82,7 @@ const Working: React.FC = () => {
                 {slide.heading}
               </h2>
               {index === currentIndex && (
+                //add delay for animation after slide get fully transformed to prevent flickering 
                 <p className="text-sm p-2">{slide.description}</p>
               )}
             </div>
