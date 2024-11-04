@@ -24,7 +24,7 @@ const HeroImages = () => {
   }, [images.length]);
 
   return (
-    <div className="overflow-x-hidden w-[70%] h-[18rem] px-[2rem] lg:pr-[-5rem]">
+    <div className=" w-full h-[18rem] px-[2rem] lg:pr-[-5rem] overflow-x-hidden">
       <div
         className="flex transition-transform duration-500 h-full"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
