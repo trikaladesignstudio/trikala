@@ -10,6 +10,7 @@ import Testimonials from "@/components/custom/Testimonials";
 import Working from "@/components/custom/Working";
 import { AnimatePresence } from "framer-motion";
 import Navbar from "@/components/custom/NavBar";
+import Hero from "@/components/custom/Hero";
 
 export default function Home() {
   return (
@@ -30,6 +31,7 @@ export default function Home() {
               </h1>
             </div>
           </SectionGrid>
+          <Hero />
           {/* <Section >
           <h1 className="text-3xl  w-full flex-1">hekko</h1>
           
