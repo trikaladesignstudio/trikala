@@ -22,31 +22,51 @@ function Lead() {
         exit={{ opacity: 0 }}
         className={cn(
           showForm ? "flex" : "hidden",
-          "px-[2rem] lg:px-[5rem] py-12 lg:py-20 flex flex-col  w-full text-white"
+          "px-[2rem] lg:px-[5rem] py-12 lg:py-20 w-full text-white",
+          "grid grid-cols-1 lg:grid-cols-4 gap-4"
         )}
         action={handleSubmit}
         onSubmit={() => setShowForm(false)}
       >
-        <label htmlFor="name">Name:</label>
-        <input type="text" id="name" name="name" defaultValue="Name" required />
-        <label htmlFor="email">Email: </label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          defaultValue="trikaladesignstudio@gmail.com"
-          required
-        />
-        <label htmlFor="phone">Phone:</label>
-        <input
-          type="tel"
-          id="phone"
-          name="phone"
-          defaultValue="04850"
-          required
-        />
-        <Button className="mt-4" type="submit" variant={"outline"}>
-          <input className="btn" type="submit" />
+        <div className="flex items-center gap-2 ">
+          <label htmlFor="name">Name:</label>
+          <input
+            className="w-2/3 rounded-md text-black"
+            type="text"
+            id="name"
+            name="name"
+            defaultValue="Name"
+            required
+          />
+        </div>
+        <div className="flex items-center gap-2 ">
+          <label htmlFor="email">Email: </label>
+          <input
+            className="w-2/3 rounded-md text-black"
+            type="email"
+            id="email"
+            name="email"
+            defaultValue="trikaladesignstudio@gmail.com"
+            required
+          />
+        </div>
+        <div className="flex items-center gap-2 ">
+          <label htmlFor="phone">Phone:</label>
+          <input
+            className="w-2/3 rounded-md text-black"
+            type="tel"
+            id="phone"
+            name="phone"
+            defaultValue="04850"
+            required
+          />
+        </div>
+        <Button
+          className="flex items-center gap-2"
+          type="submit"
+          variant={"outline"}
+        >
+          <input className="btn " type="submit" />
         </Button>
       </motion.form>
     </motion.section>
