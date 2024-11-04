@@ -1,19 +1,20 @@
 import aesehi from "@/assets/aesehi.png";
 import Sections from "./Section";
 import Image from "next/image";
+import Heading from "./Heading";
 
 function Featured() {
   return (
     <Sections>
-      <h1 className="relative text-6xl lg:top-[6vh] z-10 lg:text-8xl font-custom text-left">
+      <Heading className="relative lg:top-[3rem] z-10 font-custom text-left">
         Featured Work
-      </h1>
+      </Heading>
 
       <div className="flex flex-col items-center lg:items-start">
         <Image
           src={aesehi}
           alt="Featured work"
-          className="lg:h-[50vh] w-[50vw]"
+          className="lg:h-[50vh] lg:w-[50vw] w-full"
         />
 
         <div className="relative lg:ml-[40vw] mt-[-20vh] bg-[#6f4638] p-4 text-white shadow-lg h-[40vh]">
