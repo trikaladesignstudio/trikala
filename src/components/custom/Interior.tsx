@@ -7,7 +7,7 @@ import image1 from "@/assets/Digit.png";
 
 const ReviewCard = ({ img, body }: { img: StaticImageData; body: string }) => {
   return (
-    <div className="relative w-full h-[12vw] md:h-[10vw] xl:h-[5.5vw] cursor-pointer overflow-hidden">
+    <div className="relative w-full h-[20vw] md:h-[10vw] xl:h-[5.5vw] cursor-pointer overflow-hidden">
       <Image src={img} alt={body} className="w-full h-full object-cover" />
       <div className="absolute inset-0 bg-black opacity-50"></div>
       <span className="absolute inset-0 flex items-center justify-center text-white text-center text-sm font-semibold z-10">
@@ -25,12 +25,7 @@ const Row = ({
   className?: string;
 }) => {
   return (
-    <div
-      className={cn(
-        "w-[125%] fr justify-between gap-2 ", // Restrict width and center row
-        className
-      )}
-    >
+    <div className={cn("w-[125%] fr justify-between gap-2 ", className)}>
       {interior.map((review) => (
         <ReviewCard key={review.username} {...review} />
       ))}
@@ -111,7 +106,7 @@ const Interior = () => {
     <Sections className="lg:px-0 px-0 lg:py-0 py-0 justify-between ">
       <Sections
         toSnap={false}
-        className="text-center gap-4 min-h-fit p-12 flex-1 lg:px-0 px-0"
+        className="text-center gap-4 min-h-fit p-12 flex-1 lg:px-0 px-0 justify-center"
       >
         <Heading className="">Interior Solutions</Heading>
         <BrickLayout interior={interior as interiorType[]} />

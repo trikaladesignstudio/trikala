@@ -12,7 +12,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-gray-100 fixed w-full z-20 text-black px-4 py-2 flex justify-between items-center shadow-lg border-b-2 snap-start">
+    <nav className="bg-gray-100 w-full z-20 text-black px-4 py-2 flex justify-between items-center shadow-lg border-b-2 snap-start">
       <div className="font-bold">
         <Image src={logo} alt="Brand Logo" width={100} />
       </div>

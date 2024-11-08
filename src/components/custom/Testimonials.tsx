@@ -96,7 +96,7 @@ const ReviewCard = ({
 
 const Testimonials = () => {
   return (
-    <Sections className="lg:px-0 px-0">
+    <Sections className="lg:px-0 px-0 border-2 border-black max-h-screen">
       <Sections toSnap={false} className="gap-4 min-h-fit lg:py-0 py-0">
         <div className="flex lg:flex-row flex-col lg:gap-[20vh] z-30 justify-between items-start">
           <Heading className="text-left flex-none">

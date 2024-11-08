@@ -75,7 +75,7 @@ const Expertise: React.FC<CarouselProps> = ({ items = expertise }) => {
   }, [activeIndex, items, isMobile]);
 
   return (
-    <Sections className="lg:px-0 px-0 fcc w-full relative gap-4 lg:min-h-fit lg:py-0 py-0">
+    <Sections className="lg:px-0 px-0 fcc w-full  gap-4 lg:min-h-fit">
       <Heading className="text-center">Expertise</Heading>
       <div className="relative flex justify-center w-full">
         <div className="flex w-full justify-between items-center transition-transform duration-500 ease-in-out">

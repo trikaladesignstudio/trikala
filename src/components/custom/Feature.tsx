@@ -6,11 +6,10 @@ import Heading from "./Heading";
 function Featured() {
   return (
     <Sections>
-      <Heading className="relative lg:top-[3rem] z-10 font-custom text-left">
-        Featured Work
-      </Heading>
-
       <div className="flex flex-col items-center lg:items-start">
+        <Heading className="relative lg:top-[2rem] z-10 font-custom text-left">
+          Featured Work
+        </Heading>
         <Image
           src={aesehi}
           alt="Featured work"
