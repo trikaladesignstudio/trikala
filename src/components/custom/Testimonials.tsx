@@ -96,8 +96,11 @@ const ReviewCard = ({
 
 const Testimonials = () => {
   return (
-    <Sections className="lg:px-0 px-0 border-2 border-black max-h-screen">
-      <Sections toSnap={false} className="gap-4 min-h-fit lg:py-0 py-0">
+    <Sections className="lg:px-0 px-0 py-0 lg:py-0 mt-12 border border-black  max-h-screen ">
+      <Sections
+        toSnap={true}
+        className="gap-4 min-h-fit lg:py-0 py-0 border border-black"
+      >
         <div className="flex lg:flex-row flex-col lg:gap-[20vh] z-30 justify-between items-start">
           <Heading className="text-left flex-none">
             What Our Clients <br /> have to say
@@ -108,7 +111,7 @@ const Testimonials = () => {
           </span>
         </div>
       </Sections>
-      <div className="relative w-full">
+      <div className="relative w-full border">
         <div className="absolute top-0 left-0 w-full h-full bg-custom-gradient z-10 pointer-events-none" />
         <div className="relative w-full">
           <Marquee pauseOnHover className="[--duration:20s]">
