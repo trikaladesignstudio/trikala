@@ -82,24 +82,24 @@ export type interiorType = {
 };
 
 export const interior = [
-  {
-    name: "Jill",
-    username: "@jill",
-    body: "I don't know what to say. I'm speechless. This is amazing.",
-    img: image2,
-  },
-  {
-    name: "Jill",
-    username: "@jill",
-    body: "I don't know what to say. I'm speechless. This is amazing.",
-    img: image2,
-  },
-  {
-    name: "Jill",
-    username: "@jill",
-    body: "I don't know what to say. I'm speechless. This is amazing.",
-    img: image2,
-  },
+  // {
+  //   name: "Jill",
+  //   username: "@jill",
+  //   body: "I don't know what to say. I'm speechless. This is amazing.",
+  //   img: image2,
+  // },
+  // {
+  //   name: "Jill",
+  //   username: "@jill",
+  //   body: "I don't know what to say. I'm speechless. This is amazing.",
+  //   img: image2,
+  // },
+  // {
+  //   name: "Jill",
+  //   username: "@jill",
+  //   body: "I don't know what to say. I'm speechless. This is amazing.",
+  //   img: image2,
+  // },
   {
     name: "Jill",
     username: "@jill",
