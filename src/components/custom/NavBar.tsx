@@ -12,9 +12,9 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-gray-100 w-full z-20 text-black px-4 py-2 flex justify-between items-center shadow-lg border-b-2 snap-start">
+    <nav className=" w-full z-20 text-black px-4 py-2 flex justify-between items-center snap-start">
       <div className="font-bold">
-        <Image src={logo} alt="Brand Logo" width={100} />
+        <Image src={logo} alt="Brand Logo" width={130} />
       </div>
 
       <div className="lg:hidden">
@@ -36,7 +36,7 @@ const Navbar = () => {
         </button>
       </div>
 
-      <div className="hidden lg:flex space-x-8">
+      <div className="hidden lg:flex space-x-16">
         {navlinks.map((link) => (
           <div className="relative group" key={link.name}>
             <a href={link.href} className="">
@@ -47,7 +47,7 @@ const Navbar = () => {
         ))}
       </div>
 
-      <button className="hidden lg:block rounded-full bg-custom-db text-white px-6 py-2">
+      <button className="hidden lg:block rounded-full bg-custom-db text-white px-6 py-2 font-semibold">
         Start a Project
       </button>
 
