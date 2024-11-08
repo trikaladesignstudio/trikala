@@ -28,17 +28,20 @@ const Working: React.FC = () => {
   };
 
   return (
-    <Sections className="my-0 justify-center">
+    <Sections className="lg:py-0 justify-center">
       <div className="flex flex-col md:flex-row justify-between gap-6 md:gap-20">
         <Heading className="flex-none">
           Our method of <br className="md:block hidden" /> working
         </Heading>
         <div className="flex flex-col justify-between ">
-          <span className="text-sm  text-justify">
+          <span className="text-md  text-justify">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta
             dolorum nihil tempore corrupti culpa blanditiis, iusto modi nam,
             dignissimos quia enim ipsum ipsa reiciendis provident architecto
-            sequi ab nisi commodi?
+            sequi ab nisi commodi? Lorem ipsum dolor sit amet consectetur
+            adipisicing elit. Soluta dolorum nihil tempore corrupti culpa
+            blanditiis, iusto modi nam, dignissimos quia enim ipsum ipsa
+            reiciendis provident architecto sequi ab nisi commodi?
           </span>
           <div className="flex justify-end items-end gap-4 pb-4">
             <Button
@@ -60,7 +63,7 @@ const Working: React.FC = () => {
         {slides.map((slide, index) => (
           <div
             key={index}
-            className={`relative transition-all duration-300 ease-in-out lg:h-[50vh] h-[25vh] ${
+            className={`relative transition-all duration-300 ease-in-out lg:h-[55vh] h-[25vh] ${
               index === currentIndex ? "w-4/5" : "w-1/6"
             }`}
             onClick={() => handleClick(index)}
@@ -82,7 +85,7 @@ const Working: React.FC = () => {
                 {slide.heading}
               </h2>
               {index === currentIndex && (
-                //add delay for animation after slide get fully transformed to prevent flickering 
+                //add delay for animation after slide get fully transformed to prevent flickering
                 <p className="text-sm p-2">{slide.description}</p>
               )}
             </div>
