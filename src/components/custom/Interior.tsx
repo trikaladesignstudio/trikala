@@ -7,7 +7,7 @@ import image1 from "@/assets/Digit.png";
 
 const ReviewCard = ({ img, body }: { img: StaticImageData; body: string }) => {
   return (
-    <div className="relative w-full h-[12vw] md:h-[10vw] xl:h-[8.5vw] cursor-pointer overflow-hidden group drop-shadow-md hover:drop-shadow-xl">
+    <div className="relative w-full h-[12vw] md:h-[10vw] xl:h-[8vw] cursor-pointer overflow-hidden group drop-shadow-md hover:drop-shadow-xl">
       <Image src={img} alt={body} className="w-full h-full object-cover" />
       <div className="absolute inset-0 bg-black opacity-30 group-hover:opacity-70 ease-in-out transition-all duration-300"></div>
       <span className="absolute inset-0 group-hover:opacity-100 opacity-0 ease-in flex  delay-200 animate-opacity  items-center justify-center m-auto  text-white text-center text-md font-semibold z-10 w-[20ch]">

@@ -10,13 +10,14 @@ import Working from "@/components/custom/Working";
 import { AnimatePresence } from "framer-motion";
 import Navbar from "@/components/custom/NavBar";
 import Hero from "@/components/custom/Hero";
+import PriceEstimator from "@/components/custom/PriceEstimator";
 
 export default function Home() {
   return (
     <>
       <main className="relative flex flex-col snap-y snap-mandatory h-screen overflow-x-hidden scroll-smooth overflow-y-scroll">
         <AnimatePresence mode="wait" initial={false}>
-          <Navbar />
+          {/* <Navbar /> */}
           {/* <SectionGrid className="grid-rows-3 grid-cols-3 gap-4">
             <div className="row-span-1 col-span-3  flex">
               <h1 className="text-4xl lg:text-9xl  w-full flex-1 flex justify-center items-end align-bottom">
@@ -24,11 +25,12 @@ export default function Home() {
               </h1>
             </div>
             <div className="col-span-3">
-              <h1 className="text-1xl lg:text-3xl w-full flex-1 flex justify-center items-center align-middle">
-                comming soon :)
-              </h1>
+            <h1 className="text-1xl lg:text-3xl w-full flex-1 flex justify-center items-center align-middle">
+            comming soon :)
+            </h1>
             </div>
-          </SectionGrid> */}
+            </SectionGrid> */}
+            <PriceEstimator />
           <Hero />
           {/* <Section >
           <h1 className="text-3xl  w-full flex-1">hekko</h1>
