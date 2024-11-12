@@ -10,7 +10,7 @@ function Hero() {
       <div className="flex flex-col gap-10 justify-between">
         <div className="border border-black">
           <div className="flex flex-col lg:flex-row justify-between items-center">
-            <div className="font-custom w-full text-custom-db text-[4rem] md:text-[6em] lg:text-[8rem] text-left tracking-wider leading-10	">
+            <div className="font-custom w-full text-custom-db text-[4rem] md:text-[6em] lg:text-[8rem] text-left tracking-wider leading-10	font-silver">
               Architect Your
             </div>
             <Image
@@ -20,7 +20,7 @@ function Hero() {
             />
           </div>
           <div className="flex flex-col lg:flex-row-reverse justify-between items-center">
-            <div className="font-custom w-full text-custom-db text-[4rem] md:text-[6em] lg:text-[8rem] text-right tracking-wider">
+            <div className="font-custom w-full text-custom-db text-[4rem] md:text-[6em] lg:text-[8rem] text-right tracking-wider font-silver">
               Idea to design
             </div>
             <Image
