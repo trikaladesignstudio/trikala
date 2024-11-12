@@ -17,7 +17,6 @@ export default function Home() {
     <>
       <main className="relative flex flex-col snap-y snap-mandatory h-screen overflow-x-hidden scroll-smooth overflow-y-scroll">
         <AnimatePresence mode="wait" initial={false}>
-          {/* <Navbar /> */}
           {/* <SectionGrid className="grid-rows-3 grid-cols-3 gap-4">
             <div className="row-span-1 col-span-3  flex">
               <h1 className="text-4xl lg:text-9xl  w-full flex-1 flex justify-center items-end align-bottom">
@@ -43,6 +42,7 @@ export default function Home() {
           <PriceEstimator />
           <Interior />
           <Testimonials />
+          <PriceEstimator />
           {/* <Lead /> */}
           <Footer />
         </AnimatePresence>
