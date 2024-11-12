@@ -17,7 +17,6 @@ export default function Home() {
     <>
       <main className="relative flex flex-col snap-y snap-mandatory h-screen overflow-x-hidden scroll-smooth overflow-y-scroll">
         <AnimatePresence mode="wait" initial={false}>
-          {/* <Navbar /> */}
           {/* <SectionGrid className="grid-rows-3 grid-cols-3 gap-4">
             <div className="row-span-1 col-span-3  flex">
               <h1 className="text-4xl lg:text-9xl  w-full flex-1 flex justify-center items-end align-bottom">
@@ -30,19 +29,19 @@ export default function Home() {
             </h1>
             </div>
             </SectionGrid> */}
-            <PriceEstimator />
           <Hero />
           {/* <Section >
           <h1 className="text-3xl  w-full flex-1">hekko</h1>
           
           <h1 className="text-3xl  w-full flex-1">hekko</h1>
-        </Section> */}
-          <Lead />
+          </Section> */}
+          {/* <Lead />
           <Featured />
           <Expertise />
           <Working />
           <Interior />
           <Testimonials />
+          <PriceEstimator /> */}
           {/* <Lead /> */}
           <Footer />
         </AnimatePresence>

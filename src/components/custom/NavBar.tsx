@@ -3,7 +3,6 @@ import { cn } from "../../lib/utils";
 import logo from "../../assets/logo.png";
 import Image from "next/image";
 import { navlinks } from "../../constants/index";
-import Section from "./Section";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,18 +12,53 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="  z-20 text-black">
-      <Section
-        toSnap={false}
-        className="flex-row items-center min-h-fit justify-between w-full lg:py-0  snap-start"
+    <nav
+      className="z-20 text-black/90 flex flex-row items-center min-h-fit justify-between w-full lg:py-0
+      snap-start"
+    >
+      <div className="font-bold">
+        <Image src={logo} alt="Brand Logo" width={130} />
+      </div>
+      <div className="lg:hidden">
+        <button className="text-black focus:outline-none" onClick={toggleMenu}>
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M4 6h16M4 12h16m-7 6h7"
+            ></path>
+          </svg>
+        </button>
+      </div>
+      <div className="hidden lg:flex space-x-16">
+        {navlinks.map((link) => (
+          <div className="relative group" key={link.name}>
+            <a href={link.href} className="">
+              {link.name}
+            </a>
+            <span className="absolute bottom-0 left-0 block w-0 h-[1.5px] bg-custom-db transition-all duration-300 group-hover:w-[70%]"></span>
+          </div>
+        ))}
+      </div>
+      <button className="hidden lg:block rounded-full bg-custom-db text-white px-6 py-2 font-semibold">
+        Start a Project
+      </button>
+      <div
+        className={cn(
+          "fixed inset-0 z-50 transform bg-gray-100 bg-opacity-90 w-full h-full transition-transform duration-300 ease-in-out lg:hidden",
+          isOpen ? "translate-x-0" : "translate-x-full"
+        )}
       >
-        <div className="font-bold">
-          <Image src={logo} alt="Brand Logo" width={130} />
-        </div>
-
-        <div className="lg:hidden">
+        <div className="   h-full flex flex-col justify-center items-center relative">
           <button
-            className="text-black focus:outline-none"
+            className="absolute top-4 right-4 text-black focus:outline-none"
             onClick={toggleMenu}
           >
             <svg
@@ -38,75 +72,30 @@ const Navbar = () => {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="2"
-                d="M4 6h16M4 12h16m-7 6h7"
+                d="M6 18L18 6M6 6l12 12"
               ></path>
             </svg>
           </button>
-        </div>
 
-        <div className="hidden lg:flex space-x-16">
-          {navlinks.map((link) => (
-            <div className="relative group" key={link.name}>
-              <a href={link.href} className="">
+          <nav className="flex flex-col space-y-6 text-xl w-full ">
+            {navlinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                className="hover:text-gray-500 focus:underline underline-offset-4 animate-[underline] ease-in-out delay-75  text-center w-full"
+              >
                 {link.name}
               </a>
-              <span className="absolute bottom-0 left-0 block w-0 h-[1.5px] bg-custom-db transition-all duration-300 group-hover:w-[70%]"></span>
-            </div>
-          ))}
+            ))}
+          </nav>
         </div>
-
-        <button className="hidden lg:block rounded-full bg-custom-db text-white px-6 py-2 font-semibold">
-          Start a Project
-        </button>
-
+      </div>
+      {isOpen && (
         <div
-          className={cn(
-            "fixed inset-0 z-50 transform bg-gray-100 bg-opacity-90 w-full h-full transition-transform duration-300 ease-in-out lg:hidden",
-            isOpen ? "translate-x-0" : "translate-x-full"
-          )}
-        >
-          <div className="p-6 h-full flex flex-col justify-center items-center relative">
-            <button
-              className="absolute top-4 right-4 text-black focus:outline-none"
-              onClick={toggleMenu}
-            >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                ></path>
-              </svg>
-            </button>
-
-            <nav className="flex flex-col space-y-6 text-xl">
-              {navlinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  className="hover:text-gray-500 text-center"
-                >
-                  {link.name}
-                </a>
-              ))}
-            </nav>
-          </div>
-        </div>
-
-        {isOpen && (
-          <div
-            className="fixed inset-0 z-40 bg-black opacity-50 lg:hidden"
-            onClick={toggleMenu}
-          ></div>
-        )}
-      </Section>
+          className="fixed inset-0 z-40 bg-black opacity-50 lg:hidden"
+          onClick={toggleMenu}
+        ></div>
+      )}
     </nav>
   );
 };

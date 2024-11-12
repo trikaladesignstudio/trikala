@@ -3,36 +3,41 @@ import Section from "./Section";
 import Image from "next/image";
 import image1 from "@/assets/Digit.png";
 import HeroImages from "../ui/HeroImages";
+import Navbar from "./NavBar";
+import Heading from "./Heading";
 
 function Hero() {
   return (
-    <Section className="flex flex-col border border-red-800">
-      <div className="flex flex-col gap-10 justify-between">
-        <div className="border border-black">
-          <div className="flex flex-col lg:flex-row justify-between items-center">
-            <div className="font-custom w-full text-custom-db text-[4rem] md:text-[6em] lg:text-[8rem] text-left tracking-wider leading-10	font-silver">
+    <Section className="flex flex-col border border-red-800 py-0 lg:py-0 gap-12 max-h-screen">
+      <Navbar />
+      <div className="flex flex-col gap-10 justify-between  flex-1 ">
+        <div className=" flex flex-col gap-4  ">
+          <div className="flex flex-col lg:flex-row justify-between items-center gap-10">
+            {/* <div className=" border w-fit font-custom text-custom-db text-[4rem] md:text-[6em] lg:text-[8rem] text-left tracking-wider leading-10 font-silver	">
+            </div> */}
+            <Heading className="w-fit text-left tracking-wider text-[4rem] md:text-[6em] lg:text-[10rem]  leading-[5rem] ">
               Architect Your
-            </div>
+            </Heading>
             <Image
               src={image1}
               alt=""
-              className="w-[30rem] hidden lg:h-[8rem] lg:block rounded-full"
+              className="w-[30rem] hidden lg:h-[8rem] lg:block rounded-full flex-1"
             />
           </div>
-          <div className="flex flex-col lg:flex-row-reverse justify-between items-center">
-            <div className="font-custom w-full text-custom-db text-[4rem] md:text-[6em] lg:text-[8rem] text-right tracking-wider font-silver">
+          <div className="flex flex-col lg:flex-row-reverse justify-between items-center gap-10">
+            <Heading className="w-fit text-right tracking-wider text-[4rem] md:text-[6em] lg:text-[10rem]  leading-[5rem] ">
               Idea to design
-            </div>
+            </Heading>
             <Image
               src={image1}
               alt=""
-              className="w-[30rem] hidden lg:h-[8rem] lg:block rounded-full"
+              className="w-[30rem] hidden lg:h-[8rem]  lg:block rounded-full flex-1"
             />
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-10 justify-between flex-1 border border-black">
-          <div className="lg:flex-1 justify-between">
+        <div className="flex flex-col lg:flex-row gap-10 flex-1 ">
+          <div className="flex-1 justify-between w-1/3">
             <div className="flex flex-col justify-between h-full">
               <button className="w-auto border p-2 pl-4 pr-4 rounded-full text-white bg-[#774931] font-bold">
                 Start a Project &gt;
@@ -48,8 +53,11 @@ function Hero() {
               </div>
             </div>
           </div>
-          <div className="w-[70%] h-auto">
-            <HeroImages />
+          <div className="w-2/3 h-full relative ">
+            {/* ths */}
+            <div className="absolute inset-0 w-[70vw] top-0 left-0 ">
+              <HeroImages />
+            </div>
           </div>
         </div>
       </div>
