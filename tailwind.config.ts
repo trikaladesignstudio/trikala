@@ -34,7 +34,7 @@ const config: Config = {
         "custom-bg": "#DEDEDE",
       },
       fontFamily: {
-        custom: ["Silver Queen", "sans-serif"],
+        silver: ["var(--font-silver)"],
       },
     },
   },

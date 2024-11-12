@@ -7,7 +7,7 @@ function Featured() {
   return (
     <Sections>
       <div className="flex flex-col items-center lg:items-start">
-        <Heading className="relative lg:top-[2rem] z-10 font-custom text-left">
+        <Heading className="relative lg:top-[2rem] z-10 text-left">
           Featured Work
         </Heading>
         <Image
