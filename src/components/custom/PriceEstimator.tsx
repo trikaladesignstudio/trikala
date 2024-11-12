@@ -6,24 +6,23 @@ import Heading from "./Heading";
 
 export default function PriceEstimator() {
   return (
-    <Section className=" justify-center">
+    <Section className="lg:py-0 max-h-screen lg:justify-evenly justify-center">
       <Heading className="text-center">Interior Price Estimator</Heading>
-      <div className="grid gap-20 md:grid-cols-2">
+      <div className="flex flex-col lg:flex-row lg:gap-20 lg:justify-center">
         <Link
           href="#full-estimate"
-          className="group relative overflow-hidden bg-white shadow-md transition-transform hover:scale-[1.02]"
+          className="group lg:w-[20rem] overflow-hidden bg-white shadow-md transition-transform hover:scale-[1.02]"
         >
           <div className="">
             <Image
               src={image2}
               alt="Traditional white house with wraparound porch"
               className="w-full object-cover"
-              
             />
           </div>
           <div className="p-4">
             <div className="flex items-center justify-between">
-              <span className="text-lg font-medium">
+              <span className="lg:text-lg text-sm font-medium">
                 FREE FULL HOME ESTIMATE
               </span>
               <span className="text-xl transform transition-transform group-hover:translate-x-1">
@@ -34,7 +33,7 @@ export default function PriceEstimator() {
         </Link>
         <Link
           href="#kitchen-estimate"
-          className="group relative overflow-hidden shadow-md transition-transform hover:scale-[1.02]"
+          className="group lg:w-[20rem] overflow-hidden shadow-md transition-transform hover:scale-[1.02]"
         >
           <div className="aspect-[4/3] relative">
             <Image
@@ -46,7 +45,7 @@ export default function PriceEstimator() {
           </div>
           <div className="p-4">
             <div className="flex items-center justify-between">
-              <span className="text-lg font-medium">FREE KITCHEN ESTIMATE</span>
+              <span className="lg:text-lg text-sm font-medium">FREE KITCHEN ESTIMATE</span>
               <span className="text-xl transform transition-transform group-hover:translate-x-1">
                 →
               </span>

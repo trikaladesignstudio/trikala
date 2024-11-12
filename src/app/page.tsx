@@ -30,17 +30,17 @@ export default function Home() {
             </h1>
             </div>
             </SectionGrid> */}
-            <PriceEstimator />
           <Hero />
           {/* <Section >
           <h1 className="text-3xl  w-full flex-1">hekko</h1>
           
           <h1 className="text-3xl  w-full flex-1">hekko</h1>
-        </Section> */}
+          </Section> */}
           <Lead />
           <Featured />
           <Expertise />
           <Working />
+          <PriceEstimator />
           <Interior />
           <Testimonials />
           {/* <Lead /> */}
