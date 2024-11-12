@@ -1,51 +1,9 @@
 import { cn } from "../../lib/utils";
 import Marquee from "../ui/marquee";
-import image1 from "../../assets/Digit.png"; // Ensure the path to the image is correct
-import image2 from "../../assets/aesehi.png"; // Ensure the path to the image is correct
-import image3 from "../../assets/hero3.png"; // Ensure the path to the image is correct
-import image4 from "../../assets/hero4.png"; // Ensure the path to the image is correct
+import { reviews } from "@/constants/index";
 import Sections from "./Section";
 import Image, { StaticImageData } from "next/image";
 import Heading from "./Heading";
-
-const reviews = [
-  {
-    name: "Jack",
-    username: "@jack",
-    body: "Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim,Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euYorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim,Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu ",
-    img: image1,
-  },
-  {
-    name: "Jill",
-    username: "@jill",
-    body: "Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim,Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu ",
-    img: image2,
-  },
-  {
-    name: "John",
-    username: "@john",
-    body: "Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim,Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu ",
-    img: image3,
-  },
-  {
-    name: "Jane",
-    username: "@jane",
-    body: "Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim,Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu ",
-    img: image4,
-  },
-  {
-    name: "Jenny",
-    username: "@jenny",
-    body: "Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim,Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu ",
-    img: image1,
-  },
-  {
-    name: "James",
-    username: "@james",
-    body: "Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim,Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu ",
-    img: image2,
-  },
-];
 
 const firstRow = reviews.slice(0, reviews.length / 2);
 const secondRow = reviews.slice(reviews.length / 2);
@@ -96,33 +54,40 @@ const ReviewCard = ({
 
 const Testimonials = () => {
   return (
-    <Sections className="lg:px-0 px-0">
-      <Sections toSnap={false} className="gap-4 min-h-fit lg:py-0 py-0">
+    <Sections className="lg:px-0  px-0 py-0 lg:py-0 mt-12 ">
+      <div className="flex flex-row px-[2rem] lg:px-[5rem] gap-6 md:gap-20">
+        <Heading className="text-left flex-none">
+          What Our Clients <br /> have to say
+        </Heading>
         <div className="flex lg:flex-row flex-col lg:gap-[20vh] z-30 justify-between items-start">
-          <Heading className="text-left flex-none">
-            What Our Clients <br /> have to say
-          </Heading>
           <span>
             Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu
-            turpis molestie, dictum est a, mattis tellus. Sed dignissim,{" "}
+            turpis molestie, dictum est a, mattis tellus. Sed dignissim, Yorem
+            ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis
+            molestie, dictum est a, mattis tellus. Sed dignissim,{" "}
           </span>
         </div>
-      </Sections>
-      <div className="relative w-full">
-        <div className="absolute top-0 left-0 w-full h-full bg-custom-gradient z-10 pointer-events-none" />
-        <div className="relative w-full">
-          <Marquee pauseOnHover className="[--duration:20s]">
-            {firstRow.map((review) => (
-              <ReviewCard key={review.username} {...review} />
-            ))}
-          </Marquee>
-          <Marquee reverse pauseOnHover className="[--duration:20s]">
-            {secondRow.map((review) => (
-              <ReviewCard key={review.username} {...review} />
-            ))}
-          </Marquee>
-        </div>
       </div>
+      <Sections
+        toSnap={true}
+        className="gap-4 lg:py-0 pt-12 min-h-fit lg:px-0 px-0 "
+      >
+        <div className="relative w-full ">
+          <div className="absolute top-0 left-0 w-full h-full bg-custom-gradient z-10 pointer-events-none" />
+          <div className="relative w-full">
+            <Marquee pauseOnHover className="[--duration:20s]">
+              {firstRow.map((review) => (
+                <ReviewCard key={review.username} {...review} />
+              ))}
+            </Marquee>
+            <Marquee reverse pauseOnHover className="[--duration:20s]">
+              {secondRow.map((review) => (
+                <ReviewCard key={review.username} {...review} />
+              ))}
+            </Marquee>
+          </div>
+        </div>
+      </Sections>
     </Sections>
   );
 };

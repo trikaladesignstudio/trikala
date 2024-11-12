@@ -11,8 +11,13 @@ const config: Config = {
       animation: {
         marquee: "marquee var(--duration) linear infinite",
         "marquee-vertical": "marquee-vertical var(--duration) linear infinite",
+        float: "float 3s ease-in-out infinite",
       },
       keyframes: {
+        float: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-10px)" },
+        },
         marquee: {
           from: { transform: "translateX(0)" },
           to: { transform: "translateX(calc(-100% - var(--gap)))" },
@@ -29,7 +34,7 @@ const config: Config = {
         "custom-bg": "#DEDEDE",
       },
       fontFamily: {
-        custom: ["Silver Queen", "sans-serif"],
+        silver: ["var(--font-silver)"],
       },
     },
   },
