@@ -35,13 +35,13 @@ export default function Home() {
           
           <h1 className="text-3xl  w-full flex-1">hekko</h1>
           </Section> */}
-          {/* <Lead />
+          <Lead />
           <Featured />
           <Expertise />
           <Working />
           <Interior />
           <Testimonials />
-          <PriceEstimator /> */}
+          <PriceEstimator />
           {/* <Lead /> */}
           <Footer />
         </AnimatePresence>
