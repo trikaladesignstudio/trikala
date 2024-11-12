@@ -4,6 +4,7 @@ import image1 from "@/assets/Digit.png";
 import image2 from "@/assets/aesehi.png";
 import image3 from "@/assets/hero3.png";
 import image4 from "@/assets/hero4.png";
+
 import { StaticImageData } from "next/image";
 
 interface NavLink {
@@ -36,6 +37,47 @@ export const navlinks: NavLink[] = [
   { name: "Process", href: "#" },
   { name: "Solutions", href: "#" },
   { name: "Price Estimate", href: "#" },
+];
+
+
+
+export const reviews = [
+  {
+    name: "Jack",
+    username: "@jack",
+    body: "Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim,Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euYorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim,Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu ",
+    img: image1,
+  },
+  {
+    name: "Jill",
+    username: "@jill",
+    body: "Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim,Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu ",
+    img: image2,
+  },
+  {
+    name: "John",
+    username: "@john",
+    body: "Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim,Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu ",
+    img: image3,
+  },
+  {
+    name: "Jane",
+    username: "@jane",
+    body: "Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim,Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu ",
+    img: image4,
+  },
+  {
+    name: "Jenny",
+    username: "@jenny",
+    body: "Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim,Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu ",
+    img: image1,
+  },
+  {
+    name: "James",
+    username: "@james",
+    body: "Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim,Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu ",
+    img: image2,
+  },
 ];
 
 export const expertise = [
