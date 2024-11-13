@@ -33,17 +33,16 @@ const Working: React.FC = () => {
         <Heading className="flex-none">
           Our method of <br className="md:block hidden" /> working
         </Heading>
-        <div className="flex flex-col justify-between ">
+        <div className="flex flex-col justify-between">
           <span className="text-md  text-justify">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta
             dolorum nihil tempore corrupti culpa blanditiis, iusto modi nam,
             dignissimos quia enim ipsum ipsa reiciendis provident architecto
             sequi ab nisi commodi? Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Soluta dolorum nihil tempore corrupti culpa
-            blanditiis, iusto modi nam, dignissimos quia enim ipsum ipsa
-            reiciendis provident architecto sequi ab nisi commodi?
+            dignissimos quia enim ipsum ipsa reiciendis provident architecto
+            sequi ab nisi commodi? Lorem ipsum dolor sit amet consectetur
           </span>
-          <div className="flex justify-end items-end gap-4 pb-4">
+          <div className="flex justify-end items-end gap-4 pb-4 pt-4">
             <Button
               onClick={prevSlide}
               className="fcc text-white left-4 p-2 bg-custom-db w-12 h-12 rounded-full"
@@ -59,11 +58,11 @@ const Working: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="flex overflow-hidden w-full justify-center lg:gap-5 gap-2">
+      <div className="flex overflow-hidden w-full justify-center lg:gap-5 gap-2 lg:h-auto h-full">
         {slides.map((slide, index) => (
           <div
             key={index}
-            className={`relative transition-all duration-300 ease-in-out lg:h-[55vh] h-[25vh] ${
+            className={`relative transition-all duration-300 ease-in-out lg:h-[55vh] h-[80%] ${
               index === currentIndex ? "w-4/5" : "w-1/6"
             }`}
             onClick={() => handleClick(index)}
