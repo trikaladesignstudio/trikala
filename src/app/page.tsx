@@ -42,7 +42,6 @@ export default function Home() {
           <PriceEstimator />
           <Interior />
           <Testimonials />
-          <PriceEstimator />
           {/* <Lead /> */}
           <Footer />
         </AnimatePresence>

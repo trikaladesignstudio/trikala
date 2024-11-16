@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "title": "Consultation",
+    "description": "We start with a discussion to understand the client’s vision, style, and space requirements, laying the foundation for the project.",
+    "image": "/Projects/1.jpeg"
+  },
+  {
+    "id": 2,
+    "title": "Site Visit & Vastu Review",
+    "description": "We assess the site’s layout, considering vastu principles for harmony if requested, ensuring design aligns with natural orientation.",
+    "image": "/Projects/1.jpeg"
+  },
+  {
+    "id": 3,
+    "title": "Design Concepts",
+    "description": "We develop three tailored design options based on client preferences, offering distinct layouts for the client’s selection.",
+    "image": "/Projects/1.jpeg"
+  },
+  {
+    "id": 4,
+    "title": "Budget Estimate",
+    "description": "A detailed, transparent budget is provided, outlining costs for materials and finishes, aiding in informed decision-making.",
+    "image": "/Projects/1.jpeg"
+  },
+  {
+    "id": 5,
+    "title": "Construction Planning",
+    "description": "Approved designs move to the construction phase, supported by precise working drawings for all technical details.",
+    "image": "/Projects/1.jpeg"
+  },
+  {
+    "id": 6,
+    "title": "Quality Checks",
+    "description": "Regular quality assessments are conducted during construction to maintain standards, with updates provided to the client.",
+    "image": "/Projects/1.jpeg"
+  },
+  {
+    "id": 7,
+    "title": "Final Handover",
+    "description": "After a thorough walkthrough, we ensure the project meets client expectations before officially handing over the completed property.",
+    "image": "/Projects/1.jpeg"
+  }
+]
