@@ -60,11 +60,11 @@ const Working: React.FC = () => {
         </div>
       </div>
       <AnimatePresence>
-        <div className="flex flex-col lg:flex-row overflow-hidden w-full justify-center lg:gap-2 gap-2 lg:h-auto h-full">
+        <div className="flex flex-col lg:flex-row overflow-hidden w-full justify-center gap-2 lg:h-auto h-full">
           {slides.map((slide, index) => (
             <div
               key={index}
-              className={`relative  transition-all duration-500 ease-in-out lg:h-[55vh] border-2 ${
+              className={`relative  transition-all duration-500 ease-in-out lg:h-[55vh] border-2   ${
                 index === currentIndex
                   ? "lg:w-4/5 w-full h-[18vh]"
                   : "lg:w-1/6 w-full h-[6vh]"
@@ -72,7 +72,7 @@ const Working: React.FC = () => {
               onClick={() => handleClick(index)}
             >
               <div
-                className={`absolute group h-full bottom-0 left-0 bg-gradient-to-t from-black via-transparent to-transparent text-white w-full flex flex-col justify-center p-2 ${
+                className={`absolute group h-full bottom-0 left-0 bg-gradient-to-t from-black/30 lg:via-transparent via-black/30 lg:to-transparent to-black/30  text-white w-full flex flex-col justify-center p-2 ${
                   currentIndex !== index
                     ? "lg:justify-center items-center"
                     : "lg:justify-end"
@@ -86,8 +86,8 @@ const Working: React.FC = () => {
                     exit={{ opacity: 0 }}
                     className={`font-bold p-2 lg:hidden ${
                       currentIndex !== index
-                        ? "transform lg:-rotate-90 rotate-0  lg:group-hover:block lg:rotate-270 lg:my-0 my-4 text-[1.2rem]  text-center  lg:w-[100vw]"
-                        : "text-[1.5rem] text-left hidden "
+                        ? "transform lg:-rotate-90 rotate-0  lg:group-hover:block lg:rotate-270 lg:my-0 my-4 lg:text-[1.2rem]  text-center  lg:w-[100vw]"
+                        : "lg:text-[1.5rem] text-left hidden "
                     }`}
                   >
                     {slide.title}
@@ -98,7 +98,7 @@ const Working: React.FC = () => {
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.5 }}
                       exit={{ opacity: 0 }}
-                      className="font-bold p-2 text-[1.5rem] text-left "
+                      className="font-bold p-2 lg:text-[1.5rem] text-left "
                     >
                       {slide.title}
                     </motion.div>
