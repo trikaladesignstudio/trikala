@@ -1,23 +1,23 @@
 import { cn } from "../../lib/utils";
 import Marquee from "../ui/marquee";
-import { reviews } from "@/constants/index";
+import { TestimonialsData } from "@/jsonData/Home/Testimonial/index";
 import Sections from "./Section";
 import Image, { StaticImageData } from "next/image";
 import Heading from "./Heading";
 
-const firstRow = reviews.slice(0, reviews.length / 2);
-const secondRow = reviews.slice(reviews.length / 2);
+const firstRow = TestimonialsData.slice(0, TestimonialsData.length / 2);
+const secondRow = TestimonialsData.slice(TestimonialsData.length / 2);
 
 const ReviewCard = ({
-  img,
-  name,
-  username,
-  body,
+  images,
+  title,
+  company,
+  description,
 }: {
-  img: StaticImageData;
-  name: string;
-  username: string;
-  body: string;
+  title: string;
+  company: string;
+  description: string;
+  images: string;
 }) => {
   return (
     <div
@@ -32,20 +32,26 @@ const ReviewCard = ({
       style={{ backgroundColor: "white" }}
     >
       <div className="flex flex-row items-center gap-3">
-        <Image className="h-12 w-12 rounded-full" src={img} alt={name} />
+        <Image
+          className="h-12 w-12 rounded-full"
+          src={images}
+          alt={title}
+          width={20}
+          height={20}
+        />
         <div className="">
-          <div className="text-xl font-medium text-black">{name}</div>
-          <p className="text-gray-500">{username}</p>
+          <div className="text-xl font-medium text-black">{title}</div>
+          <p className="text-gray-500">{company}</p>
         </div>
       </div>
       <div
         className={`flex-1 fcc`}
         style={{
-          width: body.length / 5 + "ch",
+          width: description.length / 4 + "ch",
         }}
       >
-        <p className="text-gray-700 break-words text-[0.7rem] lg:text-[.8rem] xl:text-[.95rem]">
-          {body}
+        <p className="text-gray-700 break-words text-[0.7rem] lg:text-[.8rem] xl:text-[.95rem] text-justify">
+          {description}
         </p>
       </div>
     </div>
@@ -54,8 +60,8 @@ const ReviewCard = ({
 
 const Testimonials = () => {
   return (
-    <Sections className="lg:px-0  px-0 py-0 lg:py-0 mt-12 ">
-      <div className="flex flex-row px-[2rem] lg:px-[5rem] gap-6 md:gap-20">
+    <Sections className="lg:px-0  px-0 py-0 lg:py-0 mt-12 snap-end">
+      <div className="flex lg:flex-row flex-col px-[2rem] lg:px-[5rem] gap-6 md:gap-20">
         <Heading className="text-left flex-none">
           What Our Clients <br /> have to say
         </Heading>
@@ -69,20 +75,20 @@ const Testimonials = () => {
         </div>
       </div>
       <Sections
-        toSnap={true}
+        toSnap={false}
         className="gap-4 lg:py-0 pt-12 min-h-fit lg:px-0 px-0 "
       >
         <div className="relative w-full ">
           <div className="absolute top-0 left-0 w-full h-full bg-custom-gradient z-10 pointer-events-none" />
           <div className="relative w-full">
-            <Marquee pauseOnHover className="[--duration:20s]">
+            <Marquee pauseOnHover className="[--duration:30s]">
               {firstRow.map((review) => (
-                <ReviewCard key={review.username} {...review} />
+                <ReviewCard key={review.title} {...review} />
               ))}
             </Marquee>
-            <Marquee reverse pauseOnHover className="[--duration:20s]">
+            <Marquee reverse pauseOnHover className="[--duration:30s]">
               {secondRow.map((review) => (
-                <ReviewCard key={review.username} {...review} />
+                <ReviewCard key={review.title} {...review} />
               ))}
             </Marquee>
           </div>

@@ -38,6 +38,7 @@ const config: Config = {
       },
     },
   },
+  safelist: ["lg:[--divider:4]", "md:[--divider:10]", "sm:[--divider:10]"],
   plugins: [],
 };
 export default config;

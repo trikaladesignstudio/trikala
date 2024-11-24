@@ -39,8 +39,6 @@ export const navlinks: NavLink[] = [
   { name: "Price Estimate", href: "#" },
 ];
 
-
-
 export const reviews = [
   {
     name: "Jack",
@@ -117,10 +115,10 @@ export const workingSlides = [
 ];
 
 export type interiorType = {
-  name: string;
-  username: string;
-  body: string;
-  img: StaticImageData;
+  id: number;
+  title: string;
+  description: string;
+  image: string;
 };
 
 export const interior = [
@@ -143,90 +141,105 @@ export const interior = [
   //   img: image2,
   // },
   {
+    id: 1,
     name: "Jill",
     username: "@jill",
     body: "I don't know what to say. I'm speechless. This is amazing.",
     img: image2,
   },
   {
+    id: 2,
     name: "Jill",
     username: "@jill",
     body: "I don't know what to say. I'm speechless. This is amazing.",
     img: image2,
   },
   {
+    id: 3,
     name: "Jill",
     username: "@jill",
     body: "I don't know what to say. I'm speechless. This is amazing.",
     img: image2,
   },
   {
+    id: 4,
     name: "Jill",
     username: "@jill",
     body: "I don't know what to say. I'm speechless. This is amazing.",
     img: image2,
   },
   {
+    id: 5,
     name: "Jill",
     username: "@jill",
     body: "I don't know what to say. I'm speechless. This is amazing.",
     img: image2,
   },
   {
+    id: 6,
     name: "Jill",
     username: "@jill",
     body: "I don't know what to say. I'm speechless. This is amazing.",
     img: image2,
   },
   {
+    id: 7,
     name: "Jill",
     username: "@jill",
     body: "I don't know what to say. I'm speechless. This is amazing.",
     img: image2,
   },
   {
+    id: 8,
     name: "Jill",
     username: "@jill",
     body: "I don't know what to say. I'm speechless. This is amazing.",
     img: image2,
   },
   {
+    id: 9,
     name: "John",
     username: "@john",
     body: "I'm at a loss for words. This is amazing. I love it.",
     img: image3,
   },
   {
+    id: 10,
     name: "Jane",
     username: "@jane",
     body: "I'm at a loss for words. This is amazing. I love it.",
     img: image4,
   },
   {
+    id: 11,
     name: "Jenny",
     username: "@jenny",
     body: "I'm at a loss for words. This is amazing. I love it.",
     img: image1,
   },
   {
+    id: 12,
     name: "James",
     username: "@james",
     body: "I'm at a loss for words. This is amazing. I love it.",
     img: image2,
   },
   {
+    id: 13,
     name: "James",
     username: "@james",
     body: "I'm at a loss for words. This is amazing. I love it.",
     img: image2,
   },
   {
+    id: 14,
     name: "James",
     username: "@james",
     body: "I'm at a loss for words. This is amazing. I love it.",
     img: image2,
   },
   {
+    id: 15,
     name: "James",
     username: "@james",
     body: "I'm at a loss for words. This is amazing. I love it.",

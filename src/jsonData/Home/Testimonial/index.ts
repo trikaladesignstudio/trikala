@@ -1,4 +1,3 @@
-import { StaticImageData } from "next/image";
 import data from "./db.json" assert { type: "json" };
 
 interface TestimonialsDataType {
