@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "title": "Living Room Design",
+    "description": "Stylish and comfortable living room layouts tailored to your taste.",
+    "image": "/Projects/1.jpeg"
+  },
+  {
+    "id": 2,
+    "title": "Bedroom Design",
+    "description": "Cozy and functional bedroom designs for restful nights and vibrant mornings.",
+    "image": "/Projects/1.jpeg"
+  },
+  {
+    "id": 3,
+    "title": "Kitchen Design",
+    "description": "Modern and efficient kitchen layouts with optimized storage and aesthetics.",
+    "image": "/Projects/1.jpeg"
+  },
+  {
+    "id": 4,
+    "title": "Bathroom Design",
+    "description": "Luxurious and practical bathroom spaces designed for relaxation.",
+    "image": "/Projects/1.jpeg"
+  },
+  {
+    "id": 5,
+    "title": "Home Office Design",
+    "description": "Ergonomic and inspiring home office setups for maximum productivity.",
+    "image": "/Projects/1.jpeg"
+  },
+  {
+    "id": 6,
+    "title": "Dining Room Design",
+    "description": "Elegant dining room designs that bring warmth and connection to every meal.",
+    "image": "/Projects/1.jpeg"
+  },
+  {
+    "id": 7,
+    "title": "Outdoor Space Design",
+    "description": "Beautiful outdoor spaces that blend functionality with nature's tranquility.",
+    "image": "/Projects/1.jpeg"
+  },
+  {
+    "id": 8,
+    "title": "Office Interior Design",
+    "description": "Modern office interiors that enhance efficiency and employee satisfaction.",
+    "image": "/Projects/1.jpeg"
+  },
+  {
+    "id": 9,
+    "title": "Restaurant Design",
+    "description": "Inviting restaurant interiors that create memorable dining experiences.",
+    "image": "/Projects/1.jpeg"
+  },
+  {
+    "id": 10,
+    "title": "Retail Store Design",
+    "description": "Innovative retail spaces that captivate customers and boost sales.",
+    "image": "/Projects/1.jpeg"
+  },
+  {
+    "id": 11,
+    "title": "Hotel Interior Design",
+    "description": "Elegant and functional hotel interiors that provide guests with luxury and comfort.",
+    "image": "/Projects/1.jpeg"
+  },
+  {
+    "id": 12,
+    "title": "Healthcare Facility Design",
+    "description": "Patient-focused healthcare spaces designed for comfort and efficiency.",
+    "image": "/Projects/1.jpeg"
+  },
+  {
+    "id": 13,
+    "title": "Educational Institution Design",
+    "description": "Inspiring and functional designs for modern learning environments.",
+    "image": "/Projects/1.jpeg"
+  },
+  {
+    "id": 14,
+    "title": "Commercial Shop Design",
+    "description": "Attractive and well-organized commercial shop layouts for seamless customer experiences.",
+    "image": "/Projects/1.jpeg"
+  },
+  {
+    "id": 15,
+    "title": "Jewelry Shop Design",
+    "description": "Elegant jewelry shop interiors that highlight your exquisite collections.",
+    "image": "/Projects/1.jpeg"
+  }
+]

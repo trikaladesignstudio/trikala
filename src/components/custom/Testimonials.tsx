@@ -1,65 +1,23 @@
 import { cn } from "../../lib/utils";
 import Marquee from "../ui/marquee";
-import image1 from "../../assets/Digit.png"; // Ensure the path to the image is correct
-import image2 from "../../assets/aesehi.png"; // Ensure the path to the image is correct
-import image3 from "../../assets/hero3.png"; // Ensure the path to the image is correct
-import image4 from "../../assets/hero4.png"; // Ensure the path to the image is correct
+import { TestimonialsData } from "@/jsonData/Home/Testimonial/index";
 import Sections from "./Section";
 import Image, { StaticImageData } from "next/image";
 import Heading from "./Heading";
 
-const reviews = [
-  {
-    name: "Jack",
-    username: "@jack",
-    body: "Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim,Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euYorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim,Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu ",
-    img: image1,
-  },
-  {
-    name: "Jill",
-    username: "@jill",
-    body: "Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim,Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu ",
-    img: image2,
-  },
-  {
-    name: "John",
-    username: "@john",
-    body: "Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim,Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu ",
-    img: image3,
-  },
-  {
-    name: "Jane",
-    username: "@jane",
-    body: "Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim,Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu ",
-    img: image4,
-  },
-  {
-    name: "Jenny",
-    username: "@jenny",
-    body: "Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim,Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu ",
-    img: image1,
-  },
-  {
-    name: "James",
-    username: "@james",
-    body: "Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim,Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu ",
-    img: image2,
-  },
-];
-
-const firstRow = reviews.slice(0, reviews.length / 2);
-const secondRow = reviews.slice(reviews.length / 2);
+const firstRow = TestimonialsData.slice(0, TestimonialsData.length / 2);
+const secondRow = TestimonialsData.slice(TestimonialsData.length / 2);
 
 const ReviewCard = ({
-  img,
-  name,
-  username,
-  body,
+  images,
+  title,
+  company,
+  description,
 }: {
-  img: StaticImageData;
-  name: string;
-  username: string;
-  body: string;
+  title: string;
+  company: string;
+  description: string;
+  images: string;
 }) => {
   return (
     <div
@@ -74,20 +32,26 @@ const ReviewCard = ({
       style={{ backgroundColor: "white" }}
     >
       <div className="flex flex-row items-center gap-3">
-        <Image className="h-12 w-12 rounded-full" src={img} alt={name} />
+        <Image
+          className="h-12 w-12 rounded-full"
+          src={images}
+          alt={title}
+          width={20}
+          height={20}
+        />
         <div className="">
-          <div className="text-xl font-medium text-black">{name}</div>
-          <p className="text-gray-500">{username}</p>
+          <div className="text-xl font-medium text-black">{title}</div>
+          <p className="text-gray-500">{company}</p>
         </div>
       </div>
       <div
         className={`flex-1 fcc`}
         style={{
-          width: body.length / 5 + "ch",
+          width: description.length / 4 + "ch",
         }}
       >
-        <p className="text-gray-700 break-words text-[0.7rem] lg:text-[.8rem] xl:text-[.95rem]">
-          {body}
+        <p className="text-gray-700 break-words text-[0.7rem] lg:text-[.8rem] xl:text-[.95rem] text-justify">
+          {description}
         </p>
       </div>
     </div>
@@ -96,33 +60,40 @@ const ReviewCard = ({
 
 const Testimonials = () => {
   return (
-    <Sections className="lg:px-0 px-0">
-      <Sections toSnap={false} className="gap-4 min-h-fit lg:py-0 py-0">
+    <Sections className="lg:px-0  px-0 py-0 lg:py-0 mt-12 snap-end">
+      <div className="flex lg:flex-row flex-col px-[2rem] lg:px-[5rem] gap-6 md:gap-20">
+        <Heading className="text-left flex-none">
+          What Our Clients <br /> have to say
+        </Heading>
         <div className="flex lg:flex-row flex-col lg:gap-[20vh] z-30 justify-between items-start">
-          <Heading className="text-left flex-none">
-            What Our Clients <br /> have to say
-          </Heading>
           <span>
             Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu
-            turpis molestie, dictum est a, mattis tellus. Sed dignissim,{" "}
+            turpis molestie, dictum est a, mattis tellus. Sed dignissim, Yorem
+            ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis
+            molestie, dictum est a, mattis tellus. Sed dignissim,{" "}
           </span>
         </div>
-      </Sections>
-      <div className="relative w-full">
-        <div className="absolute top-0 left-0 w-full h-full bg-custom-gradient z-10 pointer-events-none" />
-        <div className="relative w-full">
-          <Marquee pauseOnHover className="[--duration:20s]">
-            {firstRow.map((review) => (
-              <ReviewCard key={review.username} {...review} />
-            ))}
-          </Marquee>
-          <Marquee reverse pauseOnHover className="[--duration:20s]">
-            {secondRow.map((review) => (
-              <ReviewCard key={review.username} {...review} />
-            ))}
-          </Marquee>
-        </div>
       </div>
+      <Sections
+        toSnap={false}
+        className="gap-4 lg:py-0 pt-12 min-h-fit lg:px-0 px-0 "
+      >
+        <div className="relative w-full ">
+          <div className="absolute top-0 left-0 w-full h-full bg-custom-gradient z-10 pointer-events-none" />
+          <div className="relative w-full">
+            <Marquee pauseOnHover className="[--duration:30s]">
+              {firstRow.map((review) => (
+                <ReviewCard key={review.title} {...review} />
+              ))}
+            </Marquee>
+            <Marquee reverse pauseOnHover className="[--duration:30s]">
+              {secondRow.map((review) => (
+                <ReviewCard key={review.title} {...review} />
+              ))}
+            </Marquee>
+          </div>
+        </div>
+      </Sections>
     </Sections>
   );
 };

@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "title": "Ar. P.S. Sodhi",
+    "company": "Landscape Architect, CPWD",
+    "description": "I had the privilege of collaborating with Trikala Architects on Aarogya Vanam at Rashtrapati Bhawan. Their innovative approach, meticulous planning, and dedication to sustainable design excellence were impressive. Together, we created a serene oasis. I highly recommend Trikala Architects for their professionalism, creativity, and commitment to exceptional landscape architecture.",
+    "images": "/Projects/2.jpeg"
+  },
+  {
+    "id": 2,
+    "title": "Mr. Hari Kushwaha",
+    "company": "Owner, Chandi Jewellers, Lucknow",
+    "description": "Working with Trikala Architects for our jewelry store's interior design was an outstanding experience. They understood our vision and transformed our space into a stunning blend of elegance and functionality. Our clients constantly compliment the new look, and we couldn't be happier with the results. Their expertise and eye for detail are unmatched.",
+    "images": "/Projects/1.jpeg"
+  },
+  {
+    "id": 3,
+    "title": "Mr. Rashid Khan",
+    "company": "Director, WIFA Developers, Mohanlalganj",
+    "description": "The team at Trikala Architects did an incredible job with our township planning and riverfront development project. Their creativity and commitment to quality have set a new benchmark for us. They managed the complex landscape and water features seamlessly. It’s rare to find a firm so focused on both aesthetics and practicality.",
+    "images": "/Projects/2.jpeg"
+  },
+  {
+    "id": 4,
+    "title": "Mr. Chanchal Sharma",
+    "company": "Director, Sharma Developers, Sujanpur Township, Khair, Aligarh",
+    "description": "Collaborating with Trikala Architects on our township and landscape project was a game-changer. Their innovative designs brought a fresh perspective to our development. Their attention to detail and focus on sustainable solutions exceeded our expectations. We look forward to working with them again on future projects.",
+    "images": "/Projects/2.jpeg"
+  },
+  {
+    "id": 5,
+    "title": "Aligarh Development Authority",
+    "company": "Greater Aligarh Township (GIS Consultant)",
+    "description": "Trikala Architects provided exceptional GIS consulting services for our township project. Their expertise in mapping and planning helped us streamline the development process. The team’s insights and data-driven approach were invaluable in achieving efficient and accurate project execution. We highly recommend their consulting services.",
+    "images": "/Projects/2.jpeg"
+  },
+  {
+    "id": 6,
+    "title": "Mr. Gautam Aggarwal",
+    "company": "Aligarh (Residence Construction)",
+    "description": "From start to finish, Trikala Architects made our dream home into a reality. Their professionalism, communication, and attention to every little detail made them different from every other company. They handled the project really well. The final work was way beyond our expectations. We are thrilled with our new home and the quality of the work done.",
+    "images": "/Projects/2.jpeg"
+  },
+  {
+    "id": 7,
+    "title": "Mrs. Neetu Saini",
+    "company": "Aligarh (Residence Construction)",
+    "description": "I had an amazing experience with Trikala Architects. They turned my vision for our home into a reality. The work was incredibly done with perfection and professionalism. The team was responsive, and creative, and ensured that every aspect of the construction met high standards. I am happy and satisfied with the outcome and grateful for their dedication.",
+    "images": "/Projects/2.jpeg"
+  },
+  {
+    "id": 8,
+    "title": "Mr. Naman Majumdar",
+    "company": "Lucknow (Residence Construction & Interior Design)",
+    "description": "Trikala Architects handled both the construction and interior design of my home and I couldn’t be more pleased. They seamlessly blended style with comfort, making sure the design reflected my personality. The entire process was smooth and transparent. Their passion and expertise made all the difference.",
+    "images": "/Projects/2.jpeg"
+  },
+  {
+    "id": 9,
+    "title": "Mr. Sonu Bhati",
+    "company": "Greater Noida (Residence Interior Design)",
+    "description": "The interior design project by Trikala Architects was exceptional. They brought fresh ideas that completely transformed the look and feel of my home. The team listened to my preferences and delivered a modern, stylish interior that I absolutely love. Their creativity and dedication are truly commendable.",
+    "images": "/Projects/2.jpeg"
+  },
+  {
+    "id": 10,
+    "title": "Ms. Yati Singhal",
+    "company": "Khair (Interior Design of Residence)",
+    "description": "I’m beyond impressed with the interior design services provided by Trikala Architects. They took my ideas and elevated them to a whole new level, creating a space that feels both luxurious and welcoming. Their professionalism and a keen eye for design detail made the entire experience enjoyable. I highly recommend them!",
+    "images": "/Projects/2.jpeg"
+  }
+]

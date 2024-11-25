@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import Sections from "./Section";
 import Image, { StaticImageData } from "next/image";
 import { expertise } from "../../constants/index";
@@ -15,6 +15,22 @@ interface CarouselProps {
   items?: CarouselItem[];
 }
 
+const CarouselItemComponent: React.FC<{
+  item: CarouselItem & { position: string };
+  onClick: () => void;
+}> = ({ item, onClick }) => (
+  <div
+    className={`transition-transform duration-500 ease-in-out px-2 md:px-4 ${item.position}`}
+    onClick={onClick}
+  >
+    <Image
+      src={item.image}
+      alt={item.alt}
+      className="lg:w-[20vw] lg:h-[70vh] h-[30vh] w-auto object-cover rounded-full border-2"
+    />
+  </div>
+);
+
 const Expertise: React.FC<CarouselProps> = ({ items = expertise }) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -22,66 +38,31 @@ const Expertise: React.FC<CarouselProps> = ({ items = expertise }) => {
     setActiveIndex(index);
   };
 
-  const getVisibleItems = () => {
-    const prevIndex1 = (activeIndex - 2 + items.length) % items.length;
-    const prevIndex = (activeIndex - 1 + items.length) % items.length;
-    const nextIndex = (activeIndex + 1) % items.length;
-    const nextIndex2 = (activeIndex + 2) % items.length;
-
-    return [
-      {
-        index: prevIndex1,
-        ...items[prevIndex1],
-        position: "scale-50 z-0",
-      },
-      {
-        index: prevIndex,
-        ...items[prevIndex],
-        position: "scale-75 z-0",
-      },
-      {
-        index: activeIndex,
-        ...items[activeIndex],
-        position: "scale-100 z-10",
-      },
-      {
-        index: nextIndex,
-        ...items[nextIndex],
-        position: "scale-75 z-0",
-      },
-      {
-        index: nextIndex2,
-        ...items[nextIndex2],
-        position: "scale-50 z-0",
-      },
-    ];
-  };
+  const visibleItems = useMemo(() => {
+    const totalItems = items.length;
+    const positions = [activeIndex - 1, activeIndex, activeIndex + 1];
+    const scales = ["scale-75 z-0", "scale-100 z-10", "scale-75 z-0"];
+    return positions.map((pos, idx) => ({
+      index: (pos + totalItems) % totalItems,
+      ...items[(pos + totalItems) % totalItems],
+      position: scales[idx],
+    }));
+  }, [activeIndex, items]);
 
   return (
-    <Sections className="lg:px-0 px-0">
-      <Sections
-        toSnap={false}
-        className="fcc w-full relative gap-4 min-h-fit lg:py-0 py-0 lg:px-0"
-      >
-        <Heading className="text-center">Expertise</Heading>
-        <div className="relative flex justify-center w-full">
-          <div className="flex w-full justify-between items-center transition-transform duration-500 ease-in-out">
-            {getVisibleItems().map((item) => (
-              <div
-                key={item.index}
-                className={`transition-transform duration-500 ease-in-out px-2 md:px-4 ${item.position}`}
-                onClick={() => handleClick(item.index)}
-              >
-                <Image
-                  src={item.image}
-                  alt={item.alt}
-                  className="lg:w-[20vw] lg:h-[60vh] h-[40vh] object-cover rounded-full border-2"
-                />
-              </div>
-            ))}
-          </div>
+    <Sections className="lg:px-0 px-0 fcc w-full  gap-4 lg:min-h-fit">
+      <Heading className="text-center">Expertise</Heading>
+      <div className="relative flex justify-center w-full">
+        <div className="flex w-full justify-center items-center transition-transform duration-500 ease-in-out">
+          {visibleItems.map((item) => (
+            <CarouselItemComponent
+              key={item.index}
+              item={item}
+              onClick={() => handleClick(item.index)}
+            />
+          ))}
         </div>
-      </Sections>
+      </div>
     </Sections>
   );
 };

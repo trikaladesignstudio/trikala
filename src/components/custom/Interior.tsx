@@ -1,59 +1,81 @@
 import { cn } from "../../lib/utils";
 import Sections from "./Section";
 import Heading from "./Heading";
-import { interior, interiorType } from "../../constants/index";
+import {
+  interiorData,
+  interiorDataType,
+} from "@/jsonData/Home/Interiors/index";
 import Image, { StaticImageData } from "next/image";
-import image1 from "@/assets/Digit.png";
 
-const ReviewCard = ({ img, body }: { img: StaticImageData; body: string }) => {
+const ReviewCard = ({
+  image,
+  description,
+  title,
+}: {
+  image: string;
+  description: string;
+  title: string;
+}) => {
   return (
-    <div className="relative w-full h-[12vw] md:h-[10vw] xl:h-[5.5vw] cursor-pointer overflow-hidden">
-      <Image src={img} alt={body} className="w-full h-full object-cover" />
-      <div className="absolute inset-0 bg-black opacity-50"></div>
-      <span className="absolute inset-0 flex items-center justify-center text-white text-center text-sm font-semibold z-10">
-        {body}
-      </span>
+    <div className="relative w-full h-[12vw] md:h-[10vw] xl:h-[8vw] cursor-pointer overflow-hidden group drop-shadow-md hover:drop-shadow-xl">
+      <Image
+        src={image}
+        alt={description}
+        className="w-full h-full object-cover"
+        width={200}
+        height={100}
+      />
+      <div className="absolute inset-0 bg-black opacity-30 group-hover:opacity-70 ease-in-out transition-all duration-300"></div>
+      <div className="flex-col flex absolute inset-0 group-hover:opacity-100 opacity-0 ease-in  delay-200 animate-opacity  items-center justify-center text-white text-center text-md z-10 gap-4 p-4">
+        <span className="text-xl  font-semibold">{title}</span>
+        <span className="text-md">{description}</span>
+      </div>
     </div>
   );
 };
 
 const Row = ({
-  interior,
+  interiorData,
   className,
 }: {
-  interior: interiorType[];
+  interiorData: interiorDataType[];
   className?: string;
 }) => {
   return (
     <div
       className={cn(
-        "w-[125%] fr justify-between gap-2 ", // Restrict width and center row
+        "w-[125%] fr justify-between gap-4 ", // Restrict width and center row
         className
       )}
     >
-      {interior.map((review) => (
-        <ReviewCard key={review.username} {...review} />
+      {interiorData.map((review) => (
+        <ReviewCard key={review.title} {...review} />
       ))}
     </div>
   );
 };
 
 // to do: update the image here
-const empty = { name: "", username: "", body: "", img: image1 };
+const empty = {
+  id: 0,
+  title: "",
+  description: "",
+  image: "/Projects/2.jpeg",
+} as interiorDataType;
 
 const BrickLayout = ({
-  interior,
+  interiorData,
   className,
 }: {
-  interior: interiorType[];
+  interiorData: interiorDataType[];
   className?: string;
 }) => {
   // divide the whole data in sets of 4 ele in each row
-  const formatedData: interiorType[][] = [];
-  let currentChunk: interiorType[] = [];
+  const formatedData: interiorDataType[][] = [];
+  let currentChunk: interiorDataType[] = [];
   let count = 0;
 
-  interior.forEach((item) => {
+  interiorData.forEach((item) => {
     currentChunk.push(item);
     count++;
 
@@ -82,7 +104,7 @@ const BrickLayout = ({
   return (
     <div
       className={cn(
-        "flex flex-col-reverse w-full gap-2 overflow-x-hidden relative",
+        "flex flex-col-reverse w-full gap-4 overflow-x-hidden relative",
         className
       )}
     >
@@ -90,13 +112,13 @@ const BrickLayout = ({
       {formatedData.map((row, index) => {
         if (index % 2 === 0) {
           const formatedRow = [...row, empty];
-          return <Row key={index} interior={formatedRow} />;
+          return <Row key={index} interiorData={formatedRow} />;
         } else {
           const formatedRow = [empty, ...row, empty];
           return (
             <Row
               key={index}
-              interior={formatedRow}
+              interiorData={formatedRow}
               className="relative -left-[12vw]"
             />
           );
@@ -108,13 +130,13 @@ const BrickLayout = ({
 
 const Interior = () => {
   return (
-    <Sections className="lg:px-0 px-0 lg:py-0 py-0 justify-between ">
+    <Sections className="lg:px-0 px-0 lg:py-0 py-0 justify-end border">
       <Sections
         toSnap={false}
-        className="text-center gap-4 min-h-fit p-12 flex-1 lg:px-0 px-0"
+        className="text-center gap-4 min-h-fit lg:py-0 flex-1 lg:px-0 px-0  flex flex-col justify-end"
       >
-        <Heading className="">Interior Solutions</Heading>
-        <BrickLayout interior={interior as interiorType[]} />
+        <Heading className="flex-1 fcc">Interior Solutions</Heading>
+        <BrickLayout interiorData={interiorData as interiorDataType[]} />
       </Sections>
     </Sections>
   );
