@@ -5,6 +5,7 @@ import Sections from "./Section";
 import Image, { StaticImageData } from "next/image";
 import { expertise } from "../../constants/index";
 import Heading from "./Heading";
+import { motion } from "framer-motion";
 
 interface CarouselItem {
   image: StaticImageData;
@@ -51,8 +52,8 @@ const Expertise: React.FC<CarouselProps> = ({ items = expertise }) => {
 
   return (
     <Sections className="lg:px-0 px-0 fcc w-full  gap-4 lg:min-h-fit">
-      <Heading className="text-center">Expertise</Heading>
-      <div className="relative flex justify-center w-full">
+      <Heading className="text-center" text="Expertise" />
+      <motion.div className="relative flex justify-center w-full">
         <div className="flex w-full justify-center items-center transition-transform duration-500 ease-in-out">
           {visibleItems.map((item) => (
             <CarouselItemComponent
@@ -62,7 +63,7 @@ const Expertise: React.FC<CarouselProps> = ({ items = expertise }) => {
             />
           ))}
         </div>
-      </div>
+      </motion.div>
     </Sections>
   );
 };

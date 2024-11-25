@@ -7,7 +7,7 @@ import Heading from "./Heading";
 export default function PriceEstimator() {
   return (
     <Section className="lg:py-0 max-h-screen lg:justify-evenly justify-center">
-      <Heading className="text-center">Interior Price Estimator</Heading>
+      <Heading className="text-center" text="Interior Price Estimator" />
       <div className="flex flex-col lg:flex-row lg:gap-20 lg:justify-center">
         <Link
           href="#full-estimate"
@@ -45,7 +45,9 @@ export default function PriceEstimator() {
           </div>
           <div className="p-4">
             <div className="flex items-center justify-between">
-              <span className="lg:text-lg text-sm font-medium">FREE KITCHEN ESTIMATE</span>
+              <span className="lg:text-lg text-sm font-medium">
+                FREE KITCHEN ESTIMATE
+              </span>
               <span className="text-xl transform transition-transform group-hover:translate-x-1">
                 →
               </span>
