@@ -6,7 +6,7 @@ import image2 from "@/assets/2.jpeg";
 import image3 from "@/assets/3.jpeg";
 import Image from "next/image";
 import { useMeasure } from "react-use";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 
 const image = [image0, image1, image2, image3];
 const HeroImages = () => {
