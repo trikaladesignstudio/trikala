@@ -61,7 +61,7 @@ export default function Interiors() {
 
   return (
     <Sections>
-      <Heading className="text-center mb-8">Interior Solutions</Heading>
+      <Heading className="text-center mb-8" text="Interior Solutions" />
       <div className="flex flex-col gap-4 w-full">
         <BrickRow items={firstRowItems} />
         <BrickRow items={secondRowItems} offset />

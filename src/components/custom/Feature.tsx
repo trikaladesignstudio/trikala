@@ -7,9 +7,10 @@ function Featured() {
   return (
     <Sections>
       <div className="flex flex-col items-center lg:items-start">
-        <Heading className="relative lg:top-[2rem] z-10 text-left">
-          Featured Work
-        </Heading>
+        <Heading
+          className="relative lg:top-[2rem] z-10 text-left"
+          text="Featured Work"
+        />
         <Image
           src={aesehi}
           alt="Featured work"

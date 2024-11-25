@@ -62,9 +62,10 @@ const Testimonials = () => {
   return (
     <Sections className="lg:px-0  px-0 py-0 lg:py-0 mt-12 snap-end">
       <div className="flex lg:flex-row flex-col px-[2rem] lg:px-[5rem] gap-6 md:gap-20">
-        <Heading className="text-left flex-none">
-          What Our Clients <br /> have to say
-        </Heading>
+        <div className="text-left flex-none">
+          <Heading className="text-left flex-none" text="What Our Clients" />
+          <Heading className="text-left flex-none" text="have to say" />
+        </div>
         <div className="flex lg:flex-row flex-col lg:gap-[20vh] z-30 justify-between items-start">
           <span>
             Our testimonials showcase the trust and satisfaction of clients who
