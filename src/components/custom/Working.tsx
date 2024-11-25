@@ -31,9 +31,12 @@ const Working: React.FC = () => {
   return (
     <Sections className="lg:py-0 justify-center">
       <div className="flex flex-col md:flex-row justify-between gap-6 md:gap-20">
-        <Heading className="flex-none">
-          Our method of <br className="md:block hidden" /> working
-        </Heading>
+        <div className="flex-none">
+          <Heading
+            text="Our method of"
+          />
+          <Heading className="md:block hidden" text="working" />
+        </div>
         <div className="flex flex-col justify-between">
           <span className="text-md  text-justify">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta
@@ -59,79 +62,77 @@ const Working: React.FC = () => {
           </div>
         </div>
       </div>
-      <AnimatePresence>
-        <div className="flex flex-col lg:flex-row overflow-hidden w-full justify-center gap-2 lg:h-auto h-full">
-          {slides.map((slide, index) => (
+      <div className="flex flex-col lg:flex-row overflow-hidden w-full justify-center gap-2 lg:h-auto h-full">
+        {slides.map((slide, index) => (
+          <div
+            key={index}
+            className={`relative  transition-all duration-500 ease-in-out lg:h-[55vh] border-2   ${
+              index === currentIndex
+                ? "lg:w-4/5 w-full h-[18vh]"
+                : "lg:w-1/6 w-full h-[6vh]"
+            }`}
+            onClick={() => handleClick(index)}
+          >
             <div
-              key={index}
-              className={`relative  transition-all duration-500 ease-in-out lg:h-[55vh] border-2   ${
-                index === currentIndex
-                  ? "lg:w-4/5 w-full h-[18vh]"
-                  : "lg:w-1/6 w-full h-[6vh]"
+              className={`absolute group h-full bottom-0 left-0 bg-gradient-to-t from-black/30 lg:via-transparent via-black/30 lg:to-transparent to-black/30  text-white w-full flex flex-col justify-center p-2 ${
+                currentIndex !== index
+                  ? "lg:justify-center items-center"
+                  : "lg:justify-end"
               }`}
-              onClick={() => handleClick(index)}
             >
-              <div
-                className={`absolute group h-full bottom-0 left-0 bg-gradient-to-t from-black/30 lg:via-transparent via-black/30 lg:to-transparent to-black/30  text-white w-full flex flex-col justify-center p-2 ${
-                  currentIndex !== index
-                    ? "lg:justify-center items-center"
-                    : "lg:justify-end"
-                }`}
-              >
-                <div className="flex-col items-center justify-center ">
+              <div className="flex-col items-center justify-center ">
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.5 }}
+                  exit={{ opacity: 0 }}
+                  className={`font-bold p-2 lg:hidden ${
+                    currentIndex !== index
+                      ? "transform lg:-rotate-90 rotate-0  lg:group-hover:block lg:rotate-270 lg:my-0 my-4 lg:text-[1.2rem]  text-center  lg:w-[100vw]"
+                      : "lg:text-[1.5rem] text-left hidden "
+                  }`}
+                >
+                  {slide.title}
+                </motion.div>
+                {index === currentIndex && (
                   <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.5 }}
                     exit={{ opacity: 0 }}
-                    className={`font-bold p-2 lg:hidden ${
-                      currentIndex !== index
-                        ? "transform lg:-rotate-90 rotate-0  lg:group-hover:block lg:rotate-270 lg:my-0 my-4 lg:text-[1.2rem]  text-center  lg:w-[100vw]"
-                        : "lg:text-[1.5rem] text-left hidden "
-                    }`}
+                    className="font-bold p-2 lg:text-[1.5rem] text-left "
                   >
                     {slide.title}
                   </motion.div>
-                  {index === currentIndex && (
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.5 }}
-                      exit={{ opacity: 0 }}
-                      className="font-bold p-2 lg:text-[1.5rem] text-left "
-                    >
-                      {slide.title}
-                    </motion.div>
-                  )}
+                )}
 
-                  {index === currentIndex && (
-                    //add delay for animation after slide get fully transformed to prevent flickering
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.5 }}
-                      exit={{ opacity: 0 }}
-                      className="text-sm p-2 text-justify"
-                    >
-                      {slide.description}
-                    </motion.div>
-                  )}
-                </div>
+                {index === currentIndex && (
+                  //add delay for animation after slide get fully transformed to prevent flickering
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.5 }}
+                    exit={{ opacity: 0 }}
+                    className="text-sm p-2 text-justify"
+                  >
+                    {slide.description}
+                  </motion.div>
+                )}
               </div>
-
-              <Image
-                src={slide.image}
-                alt={`Slide ${index + 1}`}
-                className={`h-full w-full transition-all duration-500 ease-in-out object-cover ${
-                  index === currentIndex ? "w-full h-52" : "w-auto"
-                }`}
-                width={300}
-                height={300}
-              />
             </div>
-          ))}
-        </div>
-      </AnimatePresence>
+
+            <Image
+              src={slide.image}
+              alt={`Slide ${index + 1}`}
+              className={`h-full w-full transition-all duration-500 ease-in-out object-cover ${
+                index === currentIndex ? "w-full h-52" : "w-auto"
+              }`}
+              width={300}
+              height={300}
+            />
+          </div>
+        ))}
+      </div>
     </Sections>
   );
 };
