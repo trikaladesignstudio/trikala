@@ -67,10 +67,13 @@ const Testimonials = () => {
         </Heading>
         <div className="flex lg:flex-row flex-col lg:gap-[20vh] z-30 justify-between items-start">
           <span>
-            Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu
-            turpis molestie, dictum est a, mattis tellus. Sed dignissim, Yorem
-            ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis
-            molestie, dictum est a, mattis tellus. Sed dignissim,{" "}
+            Our testimonials showcase the trust and satisfaction of clients who
+            {"'"}ve partnered with Trikala Architecture and Associates. From
+            dream homes to innovative spaces, these stories highlight our
+            commitment to excellence and collaboration. Discover how we bring
+            visions to life with thoughtful design, building lasting
+            relationships along the way. See why our clients love working with
+            us!
           </span>
         </div>
       </div>

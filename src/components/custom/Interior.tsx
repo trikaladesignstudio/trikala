@@ -5,7 +5,7 @@ import {
   interiorData,
   interiorDataType,
 } from "@/jsonData/Home/Interiors/index";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 
 const ReviewCard = ({
   image,
@@ -17,7 +17,7 @@ const ReviewCard = ({
   title: string;
 }) => {
   return (
-    <div className="relative w-full h-[12vw] md:h-[10vw] xl:h-[8vw] cursor-pointer overflow-hidden group drop-shadow-md hover:drop-shadow-xl">
+    <div className="relative lg:w-full w-auto h-[15vh] md:h-[10vw] xl:h-[8vw] cursor-pointer overflow-hidden group drop-shadow-md hover:drop-shadow-xl">
       <Image
         src={image}
         alt={description}
@@ -25,10 +25,10 @@ const ReviewCard = ({
         width={200}
         height={100}
       />
-      <div className="absolute inset-0 bg-black opacity-30 group-hover:opacity-70 ease-in-out transition-all duration-300"></div>
+      <div className="absolute inset-0 bg-black opacity-10 lg:group-hover:opacity-50 ease-in-out transition-all duration-300"></div>
       <div className="flex-col flex absolute inset-0 group-hover:opacity-100 opacity-0 ease-in  delay-200 animate-opacity  items-center justify-center text-white text-center text-md z-10 gap-4 p-4">
-        <span className="text-xl  font-semibold">{title}</span>
-        <span className="text-md">{description}</span>
+        <span className="lg:text-xl text-sm  font-semibold">{title}</span>
+        <span className="lg:text-md text-xs">{description}</span>
       </div>
     </div>
   );
@@ -44,13 +44,13 @@ const Row = ({
   return (
     <div
       className={cn(
-        "w-[125%] fr justify-between gap-4 ", // Restrict width and center row
+        "w-[125%] fr justify-between lg:gap-4 gap-1", // Restrict width and center row
         className
       )}
     >
-      {interiorData.map((review) => (
-        <ReviewCard key={review.title} {...review} />
-      ))}
+        {interiorData.map((review) => (
+          <ReviewCard key={review.title} {...review} />
+        ))}
     </div>
   );
 };
@@ -60,7 +60,7 @@ const empty = {
   id: 0,
   title: "",
   description: "",
-  image: "/Projects/2.jpeg",
+  image: "/static/interior/interiorFaltu.png",
 } as interiorDataType;
 
 const BrickLayout = ({

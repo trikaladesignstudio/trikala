@@ -122,8 +122,8 @@ const Working: React.FC = () => {
               <Image
                 src={slide.image}
                 alt={`Slide ${index + 1}`}
-                className={`h-full w-full transition-all duration-500 ease-in-out object-cover ${
-                  index === currentIndex ? "w-full h-52" : "w-auto"
+                className={`h-full w-full transition-all duration-500 ease-in-out ${
+                  index === currentIndex ? "w-full h-52 " : "w-auto object-cover"
                 }`}
                 width={300}
                 height={300}
