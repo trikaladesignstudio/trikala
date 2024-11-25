@@ -2,13 +2,13 @@
 
 import React, { useState } from "react";
 
+import { WorkingsData } from "@/jsonData/Home/Working/index";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import { BiChevronLeft } from "react-icons/bi";
-import { WorkingsData } from "@/jsonData/Home/Working/index";
 import { Button } from "../ui/button";
 import Heading from "./Heading";
 import Sections from "./Section";
-import { AnimatePresence, motion } from "framer-motion";
 
 const Working: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -32,9 +32,7 @@ const Working: React.FC = () => {
     <Sections className="lg:py-0 justify-center">
       <div className="flex flex-col md:flex-row justify-between gap-6 md:gap-20">
         <div className="flex-none">
-          <Heading
-            text="Our method of"
-          />
+          <Heading text="Our method of" />
           <Heading className="md:block hidden" text="working" />
         </div>
         <div className="flex flex-col justify-between">
@@ -121,19 +119,18 @@ const Working: React.FC = () => {
               </div>
             </div>
 
-              <Image
-                src={slide.image}
-                alt={`Slide ${index + 1}`}
-                className={`h-full w-full transition-all duration-500 ease-in-out ${
-                  index === currentIndex ? "w-full h-52 " : "w-auto object-cover"
-                }`}
-                width={300}
-                height={300}
-              />
-            </div>
-          ))}
-        </div>
-      </AnimatePresence>
+            <Image
+              src={slide.image}
+              alt={`Slide ${index + 1}`}
+              className={`h-full w-full transition-all duration-500 ease-in-out ${
+                index === currentIndex ? "w-full h-52 " : "w-auto object-cover"
+              }`}
+              width={300}
+              height={300}
+            />
+          </div>
+        ))}
+      </div>
     </Sections>
   );
 };

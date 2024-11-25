@@ -1,12 +1,12 @@
 "use client";
-import { useState, useEffect } from "react";
-import image0 from "@/assets/aesehi.png";
 import image1 from "@/assets/1.jpeg";
 import image2 from "@/assets/2.jpeg";
 import image3 from "@/assets/3.jpeg";
+import image0 from "@/assets/aesehi.png";
+import { motion } from "framer-motion";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { useMeasure } from "react-use";
-import { AnimatePresence, motion } from "framer-motion";
 
 const image = [image0, image1, image2, image3];
 const HeroImages = () => {
