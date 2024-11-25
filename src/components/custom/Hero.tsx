@@ -15,9 +15,10 @@ function Hero() {
           <div className="flex flex-col lg:flex-row justify-between items-center gap-10">
             {/* <div className=" border w-fit font-custom text-custom-db text-[4rem] md:text-[6em] lg:text-[8rem] text-left tracking-wider leading-10 font-silver	">
             </div> */}
-            <Heading className="w-fit text-left tracking-wider text-[4rem] md:text-[6em] lg:text-[10rem]  leading-[5rem] ">
-              Architect Your
-            </Heading>
+            <Heading
+              className="w-fit text-left tracking-wider text-[4rem] md:text-[6em] lg:text-[10rem]  leading-[5rem] "
+              text="Architect Your"
+            />
             <Image
               src={image1}
               alt=""
@@ -25,9 +26,10 @@ function Hero() {
             />
           </div>
           <div className="flex flex-col lg:flex-row-reverse justify-between items-center gap-10">
-            <Heading className="w-fit text-right tracking-wider text-[4rem] md:text-[6em] lg:text-[10rem]  leading-[5rem] ">
-              Idea to design
-            </Heading>
+            <Heading
+              className="w-fit text-right tracking-wider text-[4rem] md:text-[6em] lg:text-[10rem]  leading-[5rem] "
+              text="Idea to design"
+            />
             <Image
               src={image1}
               alt=""

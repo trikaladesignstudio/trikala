@@ -31,26 +31,24 @@ const HeroImages = () => {
         // style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         // transition-transform
       >
-        <AnimatePresence mode="wait">
-          {messure.height &&
-            images.map((image, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1, width: "auto" }}
-                transition={{ duration: 0.5 }}
-                exit={{ opacity: 0, width: 0 }}
-                className="flex-shrink-0"
-              >
-                <Image
-                  src={image}
-                  style={{ height: `${messure.height}px` }}
-                  alt={`Slide ${index}`}
-                  className="w-auto object-cover"
-                />
-              </motion.div>
-            ))}
-        </AnimatePresence>
+        {messure.height &&
+          images.map((image, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1, width: "auto" }}
+              transition={{ duration: 0.5 }}
+              exit={{ opacity: 0, width: 0 }}
+              className="flex-shrink-0"
+            >
+              <Image
+                src={image}
+                style={{ height: `${messure.height}px` }}
+                alt={`Slide ${index}`}
+                className="w-auto object-cover"
+              />
+            </motion.div>
+          ))}
       </div>
     </div>
   );
