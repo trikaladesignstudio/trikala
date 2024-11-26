@@ -47,26 +47,5 @@
     "company": "Aligarh (Residence Construction)",
     "description": "Trikala Architects turned my vision into a beautiful reality. Their perfection, professionalism, and creativity were impressive. The team’s dedication ensured high standards in every aspect. I’m thrilled with the outcome.",
     "images": "/static/testimonials/image7.jpg"
-  },
-  {
-    "id": 8,
-    "title": "Mr. Naman Majumdar",
-    "company": "Lucknow (Residence Construction & Interior Design)",
-    "description": "Trikala Architects handled construction and interior design seamlessly. Their blend of style and comfort matched my personality perfectly. The process was smooth and transparent, making the experience truly satisfying.",
-    "images": "/static/testimonials/image1.jpg"
-  },
-  {
-    "id": 9,
-    "title": "Mr. Sonu Bhati",
-    "company": "Greater Noida (Residence Interior Design)",
-    "description": "Trikala Architects brought fresh ideas that transformed my home’s interior. They listened to my preferences and delivered a stylish, modern space. Their creativity and dedication were exceptional. Highly satisfied with the results.",
-    "images": "/static/testimonials/image2.jpg"
-  },
-  {
-    "id": 10,
-    "title": "Ms. Yati Singhal",
-    "company": "Khair (Interior Design of Residence)",
-    "description": "Trikala Architects elevated my ideas into a luxurious, welcoming space. Their keen eye for design detail and professionalism made the process enjoyable. I’m beyond impressed and highly recommend their services.",
-    "images": "/static/testimonials/image3.jpg"
   }
 ]

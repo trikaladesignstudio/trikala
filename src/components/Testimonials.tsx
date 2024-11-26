@@ -72,7 +72,7 @@ const Testimonials = () => {
           <Heading className="text-left flex-none" text="What Our Clients" />
           <Heading className="text-left flex-none" text="have to say" />
         </div>
-        <div className="flex lg:flex-row flex-col lg:gap-[20vh] z-30 justify-between items-start">
+        <div className="flex lg:flex-row flex-col lg:gap-[20vh] z-30 justify-between items-start text-justify">
           <span>
             Our testimonials showcase the trust and satisfaction of clients who
             {"'"}ve partnered with Trikala Architecture and Associates. From
