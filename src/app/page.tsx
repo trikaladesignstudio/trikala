@@ -1,6 +1,6 @@
 "use client";
 import Footer from "@/components/Footer";
-import Expertise from "@/components/Expertise";
+import Expertise from "@/components/ExpertiseTest";
 import Featured from "@/components/Feature";
 import Interior from "@/components/Interior";
 import Lead from "@/components/custom/Lead";
