@@ -32,6 +32,7 @@ function Lead() {
 
   return (
     <motion.section
+      id="lead"
       className={cn("snap-always shrink-0 snap-end bg-custom-lb h-auto")}
       initial={{ height: "auto" }}
       animate={{ height: showForm ? "auto" : 0 }}
