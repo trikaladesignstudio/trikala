@@ -42,7 +42,7 @@ const Working: React.FC = () => {
             </Button>
             <Button
               onClick={nextSlide}
-              className="fcc text-white left-4 p-2 bg-custom-lb  w-12 h-12 rounded-full"
+              className="fcc text-white left-4 p-2 bg-primary border w-12 h-12 rounded-full"
             >
               <BiChevronLeft size={24} className="rotate-180" />
             </Button>
