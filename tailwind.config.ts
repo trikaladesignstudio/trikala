@@ -7,6 +7,8 @@ const config: Config = {
       backgroundImage: {
         "custom-gradient":
           "linear-gradient(90deg, #ffffffE6, transparent 20%, transparent 80%, #ffffffE6)",
+        "fade-gradient":
+          "linear-gradient(90deg, transparent, transparent 20%, transparent 60%, #000000E6)",
       },
       animation: {
         marquee: "marquee var(--duration) linear infinite",
