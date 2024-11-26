@@ -1,32 +1,22 @@
 "use client";
-import Footer from "@/components/Footer";
-import Expertise from "@/components/Expertise";
-import Featured from "@/components/Feature";
-import Interior from "@/components/Interior";
 import Lead from "@/components/custom/Lead";
+import Expertise from "@/components/ExpertiseTest";
+import Featured from "@/components/Feature";
+import Footer from "@/components/Footer";
+import Interior from "@/components/Interior";
 // import SectionGrid from "@/components/custom/SectionGrid";
+import Hero from "@/components/Hero";
+import PriceEstimator from "@/components/PriceEstimator";
 import Testimonials from "@/components/Testimonials";
 import Working from "@/components/Working";
 import { AnimatePresence } from "framer-motion";
-import Navbar from "@/components/custom/NavBar";
-import Hero from "@/components/Hero";
-import PriceEstimator from "@/components/PriceEstimator";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-
-import image1 from "@/assets/1.jpeg";
-import image2 from "@/assets/2.jpeg";
-import image3 from "@/assets/3.jpeg";
-import image0 from "@/assets/aesehi.png";
-import Image from "next/image";
-import { motion } from "framer-motion";
-
-const image = [image0, image1, image2, image1, image2, image1, image2, image3];
+// import {
+//   Carousel,
+//   CarouselContent,
+//   CarouselItem,
+//   CarouselNext,
+//   CarouselPrevious,
+// } from "@/components/ui/carousel";
 
 export default function Home() {
   return (
@@ -45,7 +35,7 @@ export default function Home() {
             </h1>
             </div>
             </SectionGrid> */}
-          <Carousel className="w-full m-auto">
+          {/* <Carousel className="w-full m-auto">
             <CarouselContent className="-ml-1">
               {image.map((img, index) => (
                 <CarouselItem
@@ -72,7 +62,7 @@ export default function Home() {
             </CarouselContent>
             <CarouselPrevious />
             <CarouselNext />
-          </Carousel>
+          </Carousel> */}
 
           <Hero />
           <Lead />

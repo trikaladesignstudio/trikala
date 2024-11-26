@@ -34,6 +34,7 @@ const config: Config = {
         "custom-db": "#170800",
         "custom-lb": "#774931",
         "custom-bg": "#DEDEDE",
+        black: "#1A1A1A",
       },
       fontFamily: {
         silver: ["var(--font-silver)"],

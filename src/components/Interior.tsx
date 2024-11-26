@@ -187,9 +187,7 @@ const Interior = () => {
       >
         <Heading className="flex-1 fcc" text="Interior Solutions" />
         {!isMobile ? (
-          <BrickLayout
-            interiorData={interiorData as interiorDataType[]}
-          />
+          <BrickLayout interiorData={interiorData as interiorDataType[]} />
         ) : (
           <MarqueeCreator interiorData={interiorData as interiorDataType[]} />
         )}
