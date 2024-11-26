@@ -1,24 +1,21 @@
-import logo from "../../assets/logo.png";
+import logo from "../assets/logo.png";
 import { FaLinkedinIn, FaFacebookF, FaTwitter } from "react-icons/fa";
 import { ImInstagram } from "react-icons/im";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import Heading from "./Heading";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import Heading from "./custom/Heading";
 
 export default function Footer() {
   const router = useRouter();
   return (
     <footer className="bg-zinc-950 text-zinc-100 px-[5vw] py-10 snap-end snap-always shrink-0">
       <div className=" mx-auto space-y-16">
-        <div className="flex lg:flex-row flex-col justify-between gap-20">
+        <div className="flex lg:flex-row flex-col justify-between lg:gap-20 gap-8">
           {/* Main CTA Section */}
-          <div className="space-y-4  ">
-            <Heading
-              className="text-3xl"
-              text={`Shall we discuss\n the project ?`}
-            />
+          <div className="space-y-4  lg:text-left text-center">
+            <Heading text={`Shall we discuss\n the project ?`} className="lg:px-0 px-10"/>
 
             <p className="text-zinc-400">
               Leave a request using the button below and a manager will contact
@@ -29,7 +26,7 @@ export default function Footer() {
               className="mt-4 border-zinc-700 text-zinc-100 hover:bg-zinc-900 hover:text-zinc-50"
               onClick={() => {
                 window.scrollTo({ top: 0, behavior: "smooth" });
-                router.push("#lead");
+                router.push("mailto:info@trikalarchitect.com");
               }}
             >
               Leave a request
@@ -39,7 +36,7 @@ export default function Footer() {
 
           {/* Contact Grid */}
           <div className=" flex lg:flex-row flex-col-reverse justify-center items-center lg:text-left text-center lg:gap-32 gap-5">
-            <div className="flex-col flex space-y-8">
+            <div className="flex-col flex space-y-4">
               {/* Address */}
               <div className="">
                 <h3 className="text-zinc-500 text-sm tracking-wider">
@@ -62,7 +59,7 @@ export default function Footer() {
               </div>
 
               {/* Social Media */}
-              <div className="space-y-4 flex flex-col ">
+              <div className="space-y-4 flex flex-col justify-center lg:items-start items-center ">
                 <h3 className="text-zinc-500 text-sm tracking-wider">
                   SOCIAL MEDIA
                 </h3>
@@ -96,7 +93,7 @@ export default function Footer() {
             </div>
 
             {/* Contact Emails */}
-            <div className="space-y-8">
+            <div className="space-y-4">
               <div className="space-y-4">
                 <h3 className="text-zinc-500 text-sm tracking-wider">MAIL</h3>
                 <Link
@@ -136,11 +133,18 @@ export default function Footer() {
         <div className="border-t border-zinc-800 pt-8 flex flex-col md:flex-row justify-between lg:items-start md:items-center gap-4">
           <Link
             href="/"
-            className="text-2xl md:text-3xl font-light tracking-tight"
+            className="flex justify-center items-center text-2xl md:text-3xl font-light tracking-tight"
           >
-            <Image src={logo} alt="logo" width={300} height={300} />
+            <Image
+              src={logo}
+              alt="logo"
+              width={300}
+              height={300}
+              className="block"
+            />
           </Link>
-          <div className="flex gap-8 text-sm lg:flex-row flex-col lg:items-end items-center lg:justify-end justify-center">
+
+          <div className="flex lg:gap-8 gap-2 text-sm lg:flex-row flex-col lg:items-end items-center lg:justify-end justify-center">
             <Link
               href="/sitemap"
               className="text-zinc-400 hover:text-zinc-300 transition-colors"

@@ -1,9 +1,9 @@
-import { cn } from "../../lib/utils";
-import Marquee from "../ui/marquee";
+import { cn } from "../lib/utils";
+import Marquee from "./ui/marquee";
 import { TestimonialsData } from "@/jsonData/Home/Testimonial/index";
-import Sections from "./Section";
+import Sections from "./custom/Section";
 import Image, { StaticImageData } from "next/image";
-import Heading from "./Heading";
+import Heading from "./custom/Heading";
 
 const firstRow = TestimonialsData.slice(0, TestimonialsData.length / 2);
 const secondRow = TestimonialsData.slice(TestimonialsData.length / 2);
@@ -66,7 +66,7 @@ const Testimonials = () => {
           <Heading className="text-left flex-none" text="What Our Clients" />
           <Heading className="text-left flex-none" text="have to say" />
         </div>
-        <div className="flex lg:flex-row flex-col lg:gap-[20vh] z-30 justify-between items-start">
+        <div className="flex lg:flex-row flex-col lg:gap-[20vh] z-30 justify-between items-start text-justify">
           <span>
             Our testimonials showcase the trust and satisfaction of clients who
             {"'"}ve partnered with Trikala Architecture and Associates. From

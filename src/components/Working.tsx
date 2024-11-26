@@ -6,9 +6,9 @@ import { WorkingsData } from "@/jsonData/Home/Working/index";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { BiChevronLeft } from "react-icons/bi";
-import { Button } from "../ui/button";
-import Heading from "./Heading";
-import Sections from "./Section";
+import { Button } from "./ui/button";
+import Heading from "./custom/Heading";
+import Sections from "./custom/Section";
 
 const Working: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);

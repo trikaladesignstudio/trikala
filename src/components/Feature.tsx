@@ -1,7 +1,7 @@
 import aesehi from "@/assets/aesehi.png";
-import Sections from "./Section";
+import Sections from "./custom/Section";
 import Image from "next/image";
-import Heading from "./Heading";
+import Heading from "./custom/Heading";
 
 function Featured() {
   return (

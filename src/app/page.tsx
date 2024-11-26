@@ -1,16 +1,16 @@
 "use client";
-import Footer from "@/components/custom/Footer";
-import Expertise from "@/components/custom/Expertise";
-import Featured from "@/components/custom/Feature";
-import Interior from "@/components/custom/Interior";
+import Footer from "@/components/Footer";
+import Interior from "@/components/Interior";
 import Lead from "@/components/custom/Lead";
 // import SectionGrid from "@/components/custom/SectionGrid";
-import Testimonials from "@/components/custom/Testimonials";
-import Working from "@/components/custom/Working";
+import Working from "@/components/Working";
 import { AnimatePresence } from "framer-motion";
 import Navbar from "@/components/custom/NavBar";
-import Hero from "@/components/custom/Hero";
-import PriceEstimator from "@/components/custom/PriceEstimator";
+import Hero from "@/components/Hero";
+import Featured from "@/components/Feature";
+import Expertise from "@/components/Expertise";
+import PriceEstimator from "@/components/PriceEstimator";
+import Testimonials from "@/components/Testimonials";
 
 export default function Home() {
   return (
