@@ -1,9 +1,11 @@
-import { cn } from "../../lib/utils";
-import Marquee from "../ui/marquee";
+import { cn } from "../lib/utils";
+import Marquee from "./ui/marquee";
 import { TestimonialsData } from "@/jsonData/Home/Testimonial/index";
-import Sections from "./Section";
+import Sections from "./custom/Section";
 import Image, { StaticImageData } from "next/image";
-import Heading from "./Heading";
+import Heading from "./custom/Heading";
+import useScreenWidth from "@/hooks/ScreenResize";
+import { useEffect } from "react";
 
 const firstRow = TestimonialsData.slice(0, TestimonialsData.length / 2);
 const secondRow = TestimonialsData.slice(TestimonialsData.length / 2);
@@ -13,12 +15,15 @@ const ReviewCard = ({
   title,
   company,
   description,
+  screenSize,
 }: {
   title: string;
   company: string;
   description: string;
   images: string;
+  screenSize: ReturnType<typeof useScreenWidth>;
 }) => {
+  const inMobileView = screenSize.width < 768;
   return (
     <div
       className={cn(
@@ -45,12 +50,12 @@ const ReviewCard = ({
         </div>
       </div>
       <div
-        className={`flex-1 fcc`}
+        className={`flex-1 fcc m-auto`}
         style={{
-          width: description.length / 4 + "ch",
+          width: description.length / (inMobileView ? 7 : 4) + "ch",
         }}
       >
-        <p className="text-gray-700 break-words text-[0.7rem] lg:text-[.8rem] xl:text-[.95rem] text-justify">
+        <p className="text-gray-700 break-words text-[0.9rem] lg:text-[.8rem] xl:text-[.95rem] text-justify">
           {description}
         </p>
       </div>
@@ -59,6 +64,7 @@ const ReviewCard = ({
 };
 
 const Testimonials = () => {
+  const screenSize = useScreenWidth();
   return (
     <Sections className="lg:px-0  px-0 py-0 lg:py-0 mt-12 snap-end">
       <div className="flex lg:flex-row flex-col px-[2rem] lg:px-[5rem] gap-6 md:gap-20">
@@ -66,7 +72,7 @@ const Testimonials = () => {
           <Heading className="text-left flex-none" text="What Our Clients" />
           <Heading className="text-left flex-none" text="have to say" />
         </div>
-        <div className="flex lg:flex-row flex-col lg:gap-[20vh] z-30 justify-between items-start">
+        <div className="flex lg:flex-row flex-col lg:gap-[20vh] z-30 justify-between items-start text-justify">
           <span>
             Our testimonials showcase the trust and satisfaction of clients who
             {"'"}ve partnered with Trikala Architecture and Associates. From
@@ -87,12 +93,20 @@ const Testimonials = () => {
           <div className="relative w-full">
             <Marquee pauseOnHover className="[--duration:30s]">
               {firstRow.map((review) => (
-                <ReviewCard key={review.title} {...review} />
+                <ReviewCard
+                  key={review.title}
+                  {...review}
+                  screenSize={screenSize}
+                />
               ))}
             </Marquee>
             <Marquee reverse pauseOnHover className="[--duration:30s]">
               {secondRow.map((review) => (
-                <ReviewCard key={review.title} {...review} />
+                <ReviewCard
+                  key={review.title}
+                  {...review}
+                  screenSize={screenSize}
+                />
               ))}
             </Marquee>
           </div>

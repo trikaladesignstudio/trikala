@@ -7,6 +7,8 @@ const config: Config = {
       backgroundImage: {
         "custom-gradient":
           "linear-gradient(90deg, #ffffffE6, transparent 20%, transparent 80%, #ffffffE6)",
+        "fade-gradient":
+          "linear-gradient(90deg, transparent, transparent 20%, transparent 60%, #0000004D)",
       },
       animation: {
         marquee: "marquee var(--duration) linear infinite",
@@ -32,6 +34,7 @@ const config: Config = {
         "custom-db": "#170800",
         "custom-lb": "#774931",
         "custom-bg": "#DEDEDE",
+        black: "#1A1A1A",
       },
       fontFamily: {
         silver: ["var(--font-silver)"],

@@ -6,9 +6,9 @@ import { WorkingsData } from "@/jsonData/Home/Working/index";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { BiChevronLeft } from "react-icons/bi";
-import { Button } from "../ui/button";
-import Heading from "./Heading";
-import Sections from "./Section";
+import { Button } from "./ui/button";
+import Heading from "./custom/Heading";
+import Sections from "./custom/Section";
 
 const Working: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -31,19 +31,8 @@ const Working: React.FC = () => {
   return (
     <Sections className="lg:py-0 justify-center">
       <div className="flex flex-col md:flex-row justify-between gap-6 md:gap-20">
-        <div className="flex-none">
-          <Heading text="Our method of" />
-          <Heading className="md:block hidden" text="working" />
-        </div>
-        <div className="flex flex-col justify-between">
-          <span className="text-md  text-justify">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta
-            dolorum nihil tempore corrupti culpa blanditiis, iusto modi nam,
-            dignissimos quia enim ipsum ipsa reiciendis provident architecto
-            sequi ab nisi commodi? Lorem ipsum dolor sit amet consectetur
-            dignissimos quia enim ipsum ipsa reiciendis provident architecto
-            sequi ab nisi commodi? Lorem ipsum dolor sit amet consectetur
-          </span>
+          <Heading text="Our work is based on the development of an individual approach to each client" />
+        <div className="flex flex-col justify-end">
           <div className=" justify-end items-end gap-4 pb-4 pt-4 hidden lg:flex">
             <Button
               onClick={prevSlide}
@@ -53,9 +42,9 @@ const Working: React.FC = () => {
             </Button>
             <Button
               onClick={nextSlide}
-              className="fcc text-white left-4 p-2 bg-custom-lb  w-12 h-12 rounded-full"
+              className="fcc text-white left-4 p-2 bg-primary border w-12 h-12 rounded-full"
             >
-              <BiChevronLeft size={24} className="rotate-180" />
+              <BiChevronLeft size={24} className="rotate-180 text-black" />
             </Button>
           </div>
         </div>

@@ -1,16 +1,22 @@
 "use client";
-import Footer from "@/components/custom/Footer";
-import Expertise from "@/components/custom/Expertise";
-import Featured from "@/components/custom/Feature";
-import Interior from "@/components/custom/Interior";
 import Lead from "@/components/custom/Lead";
+import Expertise from "@/components/ExpertiseTest";
+import Featured from "@/components/Feature";
+import Footer from "@/components/Footer";
+import Interior from "@/components/Interior";
 // import SectionGrid from "@/components/custom/SectionGrid";
-import Testimonials from "@/components/custom/Testimonials";
-import Working from "@/components/custom/Working";
+import Hero from "@/components/Hero";
+import PriceEstimator from "@/components/PriceEstimator";
+import Testimonials from "@/components/Testimonials";
+import Working from "@/components/Working";
 import { AnimatePresence } from "framer-motion";
-import Navbar from "@/components/custom/NavBar";
-import Hero from "@/components/custom/Hero";
-import PriceEstimator from "@/components/custom/PriceEstimator";
+// import {
+//   Carousel,
+//   CarouselContent,
+//   CarouselItem,
+//   CarouselNext,
+//   CarouselPrevious,
+// } from "@/components/ui/carousel";
 
 export default function Home() {
   return (
@@ -29,12 +35,36 @@ export default function Home() {
             </h1>
             </div>
             </SectionGrid> */}
+          {/* <Carousel className="w-full m-auto">
+            <CarouselContent className="-ml-1">
+              {image.map((img, index) => (
+                <CarouselItem
+                  key={index}
+                  className="pl-1 md:basis-1/2 lg:basis-1/3"
+                >
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1, width: "auto" }}
+                    transition={{ duration: 0.5 }}
+                    exit={{ opacity: 0, width: 0 }}
+                    className="flex-shrink-0"
+                  >
+                    <Image
+                      src={img}
+                      style={{ height: `25rem` }}
+                      alt={`Slide ${index}`}
+                      className="w-auto object-cover "
+                    />
+                  </motion.div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel> */}
+
           <Hero />
-          {/* <Section >
-          <h1 className="text-3xl  w-full flex-1">hekko</h1>
-          
-          <h1 className="text-3xl  w-full flex-1">hekko</h1>
-          </Section> */}
           <Lead />
           <Featured />
           <Expertise />

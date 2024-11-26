@@ -1,12 +1,12 @@
-import { cn } from "../../lib/utils";
-import Sections from "./Section";
-import Heading from "./Heading";
+import { cn } from "../lib/utils";
+import Sections from "./custom/Section";
+import Heading from "./custom/Heading";
 import {
   interiorData,
   interiorDataType,
 } from "@/jsonData/Home/Interiors/index";
 import Image from "next/image";
-import Marquee from "../ui/marquee";
+import Marquee from "./ui/marquee";
 import { useEffect, useState } from "react";
 
 // const [mobile,setMobile]=useState()
@@ -187,9 +187,7 @@ const Interior = () => {
       >
         <Heading className="flex-1 fcc" text="Interior Solutions" />
         {!isMobile ? (
-          <BrickLayout
-            interiorData={interiorData as interiorDataType[]}
-          />
+          <BrickLayout interiorData={interiorData as interiorDataType[]} />
         ) : (
           <MarqueeCreator interiorData={interiorData as interiorDataType[]} />
         )}
