@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import Sections from "./Section";
+import Sections from "./custom/Section";
 import Image, { StaticImageData } from "next/image";
-import { expertise } from "../../constants/index";
-import Heading from "./Heading";
+import { expertise } from "../constants/index";
+import Heading from "./custom/Heading";
 import { motion } from "framer-motion";
 
 interface CarouselItem {

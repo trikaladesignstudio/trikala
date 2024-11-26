@@ -1,8 +1,8 @@
 import Image from "next/image";
 import image2 from "@/assets/Digit.png";
 import Link from "next/link";
-import Section from "./Section";
-import Heading from "./Heading";
+import Section from "./custom/Section";
+import Heading from "./custom/Heading";
 
 export default function PriceEstimator() {
   return (

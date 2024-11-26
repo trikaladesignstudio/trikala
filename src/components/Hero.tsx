@@ -1,10 +1,10 @@
 import React from "react";
-import Section from "./Section";
+import Section from "./custom/Section";
 import Image from "next/image";
 import image1 from "@/assets/Digit.png";
-import HeroImages from "../ui/HeroImages";
-import Navbar from "./NavBar";
-import Heading from "./Heading";
+import HeroImages from "./ui/HeroImages";
+import Navbar from "./custom/NavBar";
+import Heading from "./custom/Heading";
 
 function Hero() {
   return (

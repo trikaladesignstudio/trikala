@@ -1,9 +1,9 @@
-import { cn } from "../../lib/utils";
-import Marquee from "../ui/marquee";
+import { cn } from "../lib/utils";
+import Marquee from "./ui/marquee";
 import { TestimonialsData } from "@/jsonData/Home/Testimonial/index";
-import Sections from "./Section";
+import Sections from "./custom/Section";
 import Image, { StaticImageData } from "next/image";
-import Heading from "./Heading";
+import Heading from "./custom/Heading";
 
 const firstRow = TestimonialsData.slice(0, TestimonialsData.length / 2);
 const secondRow = TestimonialsData.slice(TestimonialsData.length / 2);
