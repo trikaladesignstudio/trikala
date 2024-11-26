@@ -67,7 +67,7 @@ function Section({ className, children, toSnap = true }: Section) {
           duration: 0.5,
           delay: 0.3,
         }}
-        className="absolute top-0 left-0 bg-black w-full h-full  z-10 pointer-events-none"
+        className="absolute top-0 left-0 w-full h-full  z-10 pointer-events-none"
       />
       {children}
     </motion.section>
