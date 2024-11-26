@@ -7,6 +7,7 @@ import useEmblaCarousel, {
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
+import Autoplay from "embla-carousel-autoplay";
 
 type CarouselApi = UseEmblaCarouselType[1];
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
@@ -57,12 +58,16 @@ const Carousel = React.forwardRef<
     },
     ref
   ) => {
+    const plugin = React.useRef(
+      Autoplay({ delay: 2000, stopOnInteraction: true })
+    );
+
     const [carouselRef, api] = useEmblaCarousel(
       {
         ...opts,
         axis: orientation === "horizontal" ? "x" : "y",
       },
-      plugins
+      plugins ? [...plugins, plugin.current] : [plugin.current]
     );
     const [canScrollPrev, setCanScrollPrev] = React.useState(false);
     const [canScrollNext, setCanScrollNext] = React.useState(false);
@@ -135,6 +140,8 @@ const Carousel = React.forwardRef<
       >
         <div
           ref={ref}
+          onMouseEnter={plugin.current.stop}
+          onMouseLeave={plugin.current.reset}
           onKeyDownCapture={handleKeyDown}
           className={cn("relative", className)}
           role="region"
@@ -216,7 +223,10 @@ const CarouselPrevious = React.forwardRef<
         onClick={scrollPrev}
         {...props}
       >
-        <ArrowLeftIcon width={10} className="h-16 w-16 text-xl shadow-sm hover:scale-110" />
+        <ArrowLeftIcon
+          width={10}
+          className="h-16 w-16 text-xl shadow-sm hover:scale-110"
+        />
         <span className="sr-only">Previous slide</span>
       </Button>
     </div>
