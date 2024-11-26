@@ -36,7 +36,7 @@ function Featured() {
   // const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
 
   return (
-    <Sections className="lg:px-0 px-0 lg:py-0 py-0 justify-between ">
+    <Sections className="lg:px-0 px-0 lg:py-0 py-0 justify-center ">
       <Sections toSnap={false} className="min-h-fit ">
         <Heading className="text-5xl" text="Featured Work" />
         <motion.div
