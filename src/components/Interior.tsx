@@ -180,16 +180,12 @@ const Interior = () => {
     };
   }, []);
   return (
-    <Sections className="lg:px-0 px-0 lg:py-0 py-0 justify-end ">
+    <Sections className="lg:px-0 px-0 lg:py-0 py-0 justify-end border">
       <Sections
         toSnap={false}
         className="text-center gap-4 min-h-fit lg:py-0 flex-1 lg:px-0 px-0  flex flex-col justify-end"
       >
-        <div className="flex-1 fcc">
-          <Heading className="block" text="Interior" />
-          &nbsp;
-          <Heading className="block" text="Solutions" />
-        </div>
+        <Heading className="flex-1 fcc" text="Interior Solutions" />
         {!isMobile ? (
           <BrickLayout interiorData={interiorData as interiorDataType[]} />
         ) : (

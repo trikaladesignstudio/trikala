@@ -1,14 +1,11 @@
-import React, { useState } from "react";
-import { cn } from "../../lib/utils";
 import Image from "next/image";
-import { navlinks } from "../../constants/index";
+import { useState } from "react";
+import { navlinks } from "@/types";
+import { cn } from "@/lib/utils";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
+  const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
     <nav

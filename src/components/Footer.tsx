@@ -18,7 +18,7 @@ export default function Footer() {
             <div className="space-y-4  lg:text-left text-center">
               <Heading
                 text={`Shall we discuss\n the project ?`}
-                className="lg:px-0 px-10"
+                className="lg:px-0 px-1 -tracking-tighter"
               />
 
               <p className="text-zinc-400">

@@ -69,8 +69,8 @@ export default function Home() {
           <Featured />
           <Expertise />
           <Working />
-          {/* <PriceEstimator /> */}
-          <Interior />
+          <PriceEstimator />
+          {/* <Interior /> */}
           <Testimonials />
           {/* <Lead /> */}
           <Footer />
