@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -8,28 +8,14 @@ import {
 } from "./ui/carousel";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import image1 from "@/assets/1.jpeg";
-import image2 from "@/assets/2.jpeg";
-import image3 from "@/assets/3.jpeg";
-import image0 from "@/assets/aesehi.png";
 import Section from "./custom/Section";
-import Heading from "./custom/Heading";
-import { title } from "process";
+import { expertiseData } from "@/jsonData/Home/Expertise";
 
-const images = [image0, image1, image2, image1, image2, image1, image2, image3];
+interface CarouselDataProps {
+  images: string[];
+}
 
-// const data = [
-//   {
-//     {
-//     "id": 1,
-//     "title": "MODULAR KITCHEN",
-//     "images": [],
-//     "description": ""
-//   }
-//   }
-// ]
-
-export function CarouselData() {
+function CarouselData({ images }: CarouselDataProps) {
   return (
     <Carousel className="w-full m-auto">
       <CarouselContent className="flex -ml-1">
@@ -47,6 +33,8 @@ export function CarouselData() {
                 style={{ height: `25rem` }}
                 alt={`Slide ${index}`}
                 className="w-full object-cover rounded-md"
+                width={1000}
+                height={1000}
               />
             </motion.div>
           </CarouselItem>
@@ -60,23 +48,22 @@ export function CarouselData() {
 
 function ExpertiseTest() {
   return (
-    <Section className=" bg-black text-white gap-20 ">
-      <div className="relative">
-        <hr className="border-2" />
-        <div className="absolute top-5  text-5xl font-bold">#1</div>
-        <div className="flex gap-20 flex-col">
-          <div className="flex gap-4 justify-between items-center pt-20 ">
-            <div className="flex-1">
-              <h1 className="text-5xl font-semibold">Architectural design</h1>
-              <p className="text-xl pt-5">
-                We create unique architectural concepts that reflect your
-                personality and meet your needs and preferences.
-              </p>
+    <Section className="bg-black text-white gap-20">
+      {expertiseData.map((item) => (
+        <div key={item.id} className="relative">
+          <hr className="border-2" />
+          <div className="absolute top-5 text-5xl font-bold">#{item.id}</div>
+          <div className="flex gap-20 flex-col">
+            <div className="flex gap-4 justify-between items-center pt-20">
+              <div className="flex-1">
+                <h1 className="text-5xl font-semibold">{item.title}</h1>
+                <p className="text-xl pt-5">{item.description}</p>
+              </div>
             </div>
+            <CarouselData images={item.images} />
           </div>
-          <CarouselData />
         </div>
-      </div>
+      ))}
     </Section>
   );
 }

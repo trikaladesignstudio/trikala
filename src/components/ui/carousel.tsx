@@ -65,6 +65,7 @@ const Carousel = React.forwardRef<
     const [carouselRef, api] = useEmblaCarousel(
       {
         ...opts,
+        loop: true,
         axis: orientation === "horizontal" ? "x" : "y",
       },
       plugins ? [...plugins, plugin.current] : [plugin.current]

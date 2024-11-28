@@ -1,4 +1,3 @@
-import logo from "../assets/logo.png";
 import { FaLinkedinIn, FaFacebookF, FaTwitter } from "react-icons/fa";
 import { ImInstagram } from "react-icons/im";
 import Link from "next/link";
@@ -7,7 +6,6 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Heading from "./custom/Heading";
 import Sections from "./custom/Section";
-
 
 export default function Footer() {
   const router = useRouter();
@@ -144,11 +142,11 @@ export default function Footer() {
               className="flex justify-center items-center text-2xl md:text-3xl font-light tracking-tight"
             >
               <Image
-                src={logo}
+                src={"/static/logo.webp"}
                 alt="logo"
                 width={300}
                 height={300}
-                className="block"
+                className="block invert"
               />
             </Link>
 
