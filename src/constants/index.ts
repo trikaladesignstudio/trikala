@@ -5,8 +5,6 @@ import image2 from "@/assets/aesehi.png";
 import image3 from "@/assets/hero3.png";
 import image4 from "@/assets/hero4.png";
 
-import { StaticImageData } from "next/image";
-
 interface NavLink {
   name: string;
   href: string;
@@ -75,42 +73,6 @@ export const reviews = [
     username: "@james",
     body: "Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim,Yorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu ",
     img: image2,
-  },
-];
-
-export const expertise = [
-  { image: dimg1, alt: "Image 1" },
-  { image: dimg2, alt: "Image 2" },
-  { image: dimg3, alt: "Image 3" },
-  { image: dimg4, alt: "Image 4" },
-  { image: image, alt: "Image 5" },
-];
-
-export const workingSlides = [
-  {
-    image: dimg1,
-    heading: "Heading ",
-    description: "Description for the first image.",
-  },
-  {
-    image: dimg2,
-    heading: "Heading ",
-    description: "Description for the second image.",
-  },
-  {
-    image: dimg3,
-    heading: "Heading",
-    description: "Description for the third image.",
-  },
-  {
-    image: dimg4,
-    heading: "Heading ",
-    description: "Description for the fourth image.",
-  },
-  {
-    image: hero5,
-    heading: "Heading ",
-    description: "Description for the fifth image.",
   },
 ];
 

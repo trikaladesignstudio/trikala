@@ -29,7 +29,7 @@ const Working: React.FC = () => {
   };
 
   return (
-    <Sections className="lg:py-0 justify-center">
+    <Sections className="lg:py-0 justify-center gap-10">
       <div className="flex flex-col md:flex-row justify-between gap-6 md:gap-20">
           <Heading text="Our work is based on the development of an individual approach to each client" />
         <div className="flex flex-col justify-end">

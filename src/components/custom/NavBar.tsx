@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { cn } from "../../lib/utils";
-import logo from "../../assets/logo.png";
 import Image from "next/image";
 import { navlinks } from "../../constants/index";
 
@@ -17,7 +16,12 @@ const Navbar = () => {
       snap-start"
     >
       <div className="font-bold">
-        <Image src={logo} alt="Brand Logo" width={130} />
+        <Image
+          src={"/static/logo.webp"}
+          alt="Brand Logo"
+          width={130}
+          height={130}
+        />
       </div>
       <div className="lg:hidden">
         <button className="text-black focus:outline-none" onClick={toggleMenu}>

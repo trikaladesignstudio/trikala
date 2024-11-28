@@ -69,7 +69,7 @@ export default function Home() {
           <Featured />
           <Expertise />
           <Working />
-          <PriceEstimator />
+          {/* <PriceEstimator /> */}
           <Interior />
           <Testimonials />
           {/* <Lead /> */}
