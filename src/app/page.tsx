@@ -10,6 +10,7 @@ import PriceEstimator from "@/components/PriceEstimator";
 import Testimonials from "@/components/Testimonials";
 import Working from "@/components/Working";
 import { AnimatePresence } from "framer-motion";
+import Video from "@/components/Video";
 // import {
 //   Carousel,
 //   CarouselContent,
@@ -72,6 +73,7 @@ export default function Home() {
           <PriceEstimator />
           {/* <Interior /> */}
           <Testimonials />
+          <Video />
           {/* <Lead /> */}
           <Footer />
         </AnimatePresence>

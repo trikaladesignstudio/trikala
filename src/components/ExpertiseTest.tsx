@@ -52,8 +52,7 @@ function ExpertiseTest() {
       {expertiseData.map((item) => (
         <div key={item.id} className="relative">
           <hr className="border-2" />
-          <div className="absolute top-5 text-5xl font-bold">#{item.id}</div>
-          <div className="flex gap-20 flex-col">
+          <div className="flex gap-10 flex-col">
             <div className="flex gap-4 justify-between items-center pt-20">
               <div className="flex-1">
                 <h1 className="text-5xl font-semibold">{item.title}</h1>

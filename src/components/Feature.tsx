@@ -21,7 +21,7 @@ import { cn } from "@/lib/utils";
 const image = [image0, image1, image2, image1, image2, image1, image2, image3];
 const types = [
   "Healthcare",
-  "Workspace",
+  "Landscape",
   "Commercial",
   "Institutional",
   "Residential",

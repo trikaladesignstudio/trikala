@@ -47,7 +47,7 @@ export default function Footer() {
                     ADDRESS
                   </h3>
                   <p className="text-zinc-100">
-                    r. St. Petersburg, Bolshaya Zelenina Street, 24
+                    434 sector 17, HUDA jagadhri, Yamunanagar 135001
                   </p>
                 </div>
 
@@ -60,7 +60,7 @@ export default function Footer() {
                     href="tel:+78124084151"
                     className="text-zinc-100 hover:text-zinc-300 transition-colors"
                   >
-                    +7 (812) 408-4151
+                    +91 8279444174
                   </Link>
                 </div>
 
@@ -117,7 +117,7 @@ export default function Footer() {
                     href="mailto:deal@taiga-arch.com"
                     className="text-zinc-100 hover:text-zinc-300 transition-colors"
                   >
-                    info@trikalarchitect.com
+                    trikaladesignstudio@gmail.com
                   </Link>
                 </div>
                 <div className="space-y-4">
@@ -128,7 +128,7 @@ export default function Footer() {
                     href="mailto:job@taiga-arch.com"
                     className="text-zinc-100 hover:text-zinc-300 transition-colors"
                   >
-                    info@trikalarchitect.com
+                    trikaladesignstudio@gmail.com
                   </Link>
                 </div>
               </div>
