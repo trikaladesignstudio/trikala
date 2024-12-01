@@ -4,7 +4,6 @@ import Navbar from "./custom/NavBar";
 import Heading from "./custom/Heading";
 
 const images = [
-  "/static/images/1.jpg",
   "/static/images/2.jpg",
   "/static/images/3.jpg",
   "/static/images/4.jpg",
