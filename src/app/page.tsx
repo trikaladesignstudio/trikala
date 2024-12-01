@@ -11,6 +11,7 @@ import Testimonials from "@/components/Testimonials";
 import Working from "@/components/Working";
 import { AnimatePresence } from "framer-motion";
 import Video from "@/components/Video";
+import HeroTest from "@/components/HeroTest";
 // import {
 //   Carousel,
 //   CarouselContent,
@@ -65,7 +66,7 @@ export default function Home() {
             <CarouselNext />
           </Carousel> */}
 
-          <Hero />
+          <HeroTest />
           <Lead />
           <Featured />
           <Expertise />
