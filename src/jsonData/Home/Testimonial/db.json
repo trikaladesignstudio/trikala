@@ -4,14 +4,14 @@
     "title": "Ar. P.S. Sodhi",
     "company": "Landscape Architect, CPWD",
     "description": "Collaborating with Trikala Architects on Aarogya Vanam at Rashtrapati Bhawan was a pleasure. Their innovative designs and focus on sustainability helped create a serene oasis. Highly professional and creative, they excel in landscape architecture.",
-    "images": "/static/testimonials/image1.jpg"
+    "images": "/static/testimonials/image6.jpg"
   },
   {
     "id": 2,
     "title": "Mr. Hari Kushwaha",
     "company": "Owner, Chandi Jewellers, Lucknow",
     "description": "Trikala Architects transformed our jewelry store with elegant and functional interior design. Their attention to our vision and incredible detail exceeded expectations. Clients love the new look, and we’re delighted with the results.",
-    "images": "/static/testimonials/image2.jpg"
+    "images": "/static/testimonials/image7.jpg"
   },
   {
     "id": 3,
@@ -25,7 +25,7 @@
     "title": "Mr. Chanchal Sharma",
     "company": "Director, Sharma Developers, Khair, Aligarh",
     "description": "Trikala Architects brought innovative ideas to our township project, exceeding our expectations. Their focus on sustainability and attention to detail were outstanding. We look forward to collaborating again in the future.",
-    "images": "/static/testimonials/image4.jpg"
+    "images": "/static/testimonials/image1.jpg"
   },
   {
     "id": 5,
@@ -39,13 +39,13 @@
     "title": "Mr. Gautam Aggarwal",
     "company": "Aligarh (Residence Construction)",
     "description": "Trikala Architects delivered our dream home with exceptional quality. Their professionalism, communication, and attention to detail made the entire process smooth. The final result far exceeded our expectations. We couldn’t be happier.",
-    "images": "/static/testimonials/image6.jpg"
+    "images": "/static/testimonials/image2.jpg"
   },
   {
     "id": 7,
     "title": "Mrs. Neetu Saini",
     "company": "Aligarh (Residence Construction)",
     "description": "Trikala Architects turned my vision into a beautiful reality. Their perfection, professionalism, and creativity were impressive. The team’s dedication ensured high standards in every aspect. I’m thrilled with the outcome.",
-    "images": "/static/testimonials/image7.jpg"
+    "images": "/static/testimonials/image8.jpg"
   }
 ]
