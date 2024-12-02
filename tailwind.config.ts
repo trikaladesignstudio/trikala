@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
+import { withUt } from "uploadthing/tw";
 
-const config: Config = {
+const config: Config = withUt({
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {
@@ -43,5 +44,5 @@ const config: Config = {
   },
   safelist: ["lg:[--divider:4]", "md:[--divider:10]", "sm:[--divider:10]"],
   plugins: [],
-};
+});
 export default config;
