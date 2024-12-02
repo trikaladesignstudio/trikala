@@ -1,4 +1,3 @@
-import logo from "../assets/logo.png";
 import { FaLinkedinIn, FaFacebookF, FaTwitter } from "react-icons/fa";
 import { ImInstagram } from "react-icons/im";
 import Link from "next/link";
@@ -7,7 +6,6 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Heading from "./custom/Heading";
 import Sections from "./custom/Section";
-
 
 export default function Footer() {
   const router = useRouter();
@@ -20,7 +18,7 @@ export default function Footer() {
             <div className="space-y-4  lg:text-left text-center">
               <Heading
                 text={`Shall we discuss\n the project ?`}
-                className="lg:px-0 px-10"
+                className="lg:px-0 px-1 -tracking-tighter"
               />
 
               <p className="text-zinc-400">
@@ -49,7 +47,7 @@ export default function Footer() {
                     ADDRESS
                   </h3>
                   <p className="text-zinc-100">
-                    r. St. Petersburg, Bolshaya Zelenina Street, 24
+                    434 sector 17, HUDA jagadhri, Yamunanagar 135001
                   </p>
                 </div>
 
@@ -62,7 +60,7 @@ export default function Footer() {
                     href="tel:+78124084151"
                     className="text-zinc-100 hover:text-zinc-300 transition-colors"
                   >
-                    +7 (812) 408-4151
+                    +91 8279444174
                   </Link>
                 </div>
 
@@ -119,7 +117,7 @@ export default function Footer() {
                     href="mailto:deal@taiga-arch.com"
                     className="text-zinc-100 hover:text-zinc-300 transition-colors"
                   >
-                    info@trikalarchitect.com
+                    trikaladesignstudio@gmail.com
                   </Link>
                 </div>
                 <div className="space-y-4">
@@ -130,7 +128,7 @@ export default function Footer() {
                     href="mailto:job@taiga-arch.com"
                     className="text-zinc-100 hover:text-zinc-300 transition-colors"
                   >
-                    info@trikalarchitect.com
+                    trikaladesignstudio@gmail.com
                   </Link>
                 </div>
               </div>
@@ -144,11 +142,11 @@ export default function Footer() {
               className="flex justify-center items-center text-2xl md:text-3xl font-light tracking-tight"
             >
               <Image
-                src={logo}
+                src={"/static/logo.webp"}
                 alt="logo"
                 width={300}
                 height={300}
-                className="block"
+                className="block invert"
               />
             </Link>
 

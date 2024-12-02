@@ -6,7 +6,7 @@ import { Analytics } from "@vercel/analytics/react";
 // import TwScreenInfo from "@/components/custom/TwScreenInfo";
 
 const silver = localFont({
-  src: "./fonts/Silver-Queen.otf",
+  src: "./Silver-Queen.otf",
   variable: "--font-silver",
   weight: "100 900",
 });

@@ -6,7 +6,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const transition = { duration: 1, ease: [0.25, 0.1, 0.25, 1] };
+export const transition = { duration: 0.9, ease: [0.25, 0.1, 0.25, 1] };
 export const brurRenderVariant = {
   hidden: { filter: "blur(10px)", transform: "translateY(20%)", opacity: 0 },
   visible: { filter: "blur(0)", transform: "translateY(0)", opacity: 1 },

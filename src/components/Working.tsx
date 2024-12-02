@@ -29,9 +29,9 @@ const Working: React.FC = () => {
   };
 
   return (
-    <Sections className="lg:py-0 justify-center">
+    <Sections className="lg:py-0 justify-center gap-10">
       <div className="flex flex-col md:flex-row justify-between gap-6 md:gap-20">
-          <Heading text="Our work is based on the development of an individual approach to each client" />
+        <Heading text="Our work is based on the development of an individual approach to each client" />
         <div className="flex flex-col justify-end">
           <div className=" justify-end items-end gap-4 pb-4 pt-4 hidden lg:flex">
             <Button
@@ -61,7 +61,7 @@ const Working: React.FC = () => {
             onClick={() => handleClick(index)}
           >
             <div
-              className={`absolute group h-full bottom-0 left-0 bg-gradient-to-t from-black/30 lg:via-transparent via-black/30 lg:to-transparent to-black/30  text-white w-full flex flex-col justify-center p-2 ${
+              className={`absolute group h-full bottom-0 left-0 bg-gradient-to-t from-black/30 lg:via-transparent via-black/30 lg:to-transparent to-black/30  text-white w-full flex flex-col justify-center p-2 z-20 ${
                 currentIndex !== index
                   ? "lg:justify-center items-center"
                   : "lg:justify-end"
@@ -112,11 +112,13 @@ const Working: React.FC = () => {
               src={slide.image}
               alt={`Slide ${index + 1}`}
               className={`h-full w-full transition-all duration-500 ease-in-out ${
-                index === currentIndex ? "w-full h-52 " : "w-auto object-cover"
+                index === currentIndex ? "w-full h-52" : "w-auto object-cover"
               }`}
               width={300}
               height={300}
             />
+
+            <div className="absolute inset-0 bg-black bg-opacity-35"></div>
           </div>
         ))}
       </div>

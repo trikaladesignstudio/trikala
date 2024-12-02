@@ -66,29 +66,26 @@ const ReviewCard = ({
 const Testimonials = () => {
   const screenSize = useScreenWidth();
   return (
-    <Sections className="lg:px-0  px-0 py-0 lg:py-0 mt-12 snap-end">
-      <div className="flex lg:flex-row flex-col px-[2rem] lg:px-[5rem] gap-6 md:gap-20">
+    <Sections className="lg:px-0  px-0 py-0 lg:py-0 snap-end max-h-screen gap-0">
+      <div className="flex lg:flex-row flex-col px-[2rem] py-[1rem] lg:px-[5rem] gap-2 md:gap-20">
         <div className="text-left flex-none">
           <Heading className="text-left flex-none" text="What Our Clients" />
           <Heading className="text-left flex-none" text="have to say" />
         </div>
-        <div className="flex lg:flex-row flex-col lg:gap-[20vh] z-30 justify-between items-start text-justify">
-          <span>
-            Our testimonials showcase the trust and satisfaction of clients who
-            {"'"}ve partnered with Trikala Architecture and Associates. From
-            dream homes to innovative spaces, these stories highlight our
-            commitment to excellence and collaboration. Discover how we bring
-            visions to life with thoughtful design, building lasting
-            relationships along the way. See why our clients love working with
-            us!
-          </span>
+        <div className="flex lg:flex-row flex-col lg:gap-[20vh] z-30 justify-between items-start text-justify text-sm lg:text-md">
+          Our testimonials showcase the trust and satisfaction of clients who
+          {"'"}ve partnered with Trikala Architecture and Associates. From dream
+          homes to innovative spaces, these stories highlight our commitment to
+          excellence and collaboration. Discover how we bring visions to life
+          with thoughtful design, building lasting relationships along the way.
+          See why our clients love working with us!
         </div>
       </div>
       <Sections
         toSnap={false}
-        className="gap-4 lg:py-0 pt-12 min-h-fit lg:px-0 px-0 "
+        className="gap-4 lg:py-0  min-h-fit lg:px-0 px-0 "
       >
-        <div className="relative w-full ">
+        <div className="relative w-full">
           <div className="absolute top-0 left-0 w-full h-full bg-custom-gradient z-10 pointer-events-none" />
           <div className="relative w-full">
             <Marquee pauseOnHover className="[--duration:30s]">

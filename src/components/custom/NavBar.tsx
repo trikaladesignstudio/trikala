@@ -1,26 +1,28 @@
-import React, { useState } from "react";
-import { cn } from "../../lib/utils";
-import logo from "../../assets/logo.png";
 import Image from "next/image";
-import { navlinks } from "../../constants/index";
+import { useState } from "react";
+import { navlinks } from "@/types";
+import { cn } from "@/lib/utils";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
+  const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
     <nav
-      className="z-20 text-black/90 flex flex-row items-center min-h-fit justify-between w-full lg:py-0
+      className="px-[2rem] lg:px-[5rem] absolute left-0 right-0 top-0 z-20 text-black/90 flex flex-row items-center min-h-fit justify-between w-full lg:py-0
       snap-start"
     >
       <div className="font-bold">
-        <Image src={logo} alt="Brand Logo" width={130} />
+        <Image
+          src={"/static/logo.webp"}
+          alt="Brand Logo"
+          width={130}
+          height={130}
+          className="invert"
+        />
       </div>
       <div className="lg:hidden">
-        <button className="text-black focus:outline-none" onClick={toggleMenu}>
+        <button className="text-white focus:outline-none" onClick={toggleMenu}>
           <svg
             className="w-6 h-6"
             fill="none"
@@ -40,14 +42,14 @@ const Navbar = () => {
       <div className="hidden lg:flex space-x-16">
         {navlinks.map((link) => (
           <div className="relative group" key={link.name}>
-            <a href={link.href} className="">
+            <a href={link.href} className="text-white font-semibold">
               {link.name}
             </a>
-            <span className="absolute bottom-0 left-0 block w-0 h-[1.5px] bg-custom-db transition-all duration-300 group-hover:w-[70%]"></span>
+            <span className="absolute bottom-0 left-0 block w-0 h-[1.5px] bg-white font-semibold transition-all duration-300 group-hover:w-[70%]"></span>
           </div>
         ))}
       </div>
-      <button className="hidden lg:block rounded-full bg-custom-db text-white px-6 py-2 font-semibold">
+      <button className="hidden lg:block rounded-full bg-black border-gray-500/50 border-2 text-white px-6 py-2 font-semibold text-xl">
         Start a Project
       </button>
       <div
@@ -58,7 +60,7 @@ const Navbar = () => {
       >
         <div className="   h-full flex flex-col justify-center items-center relative">
           <button
-            className="absolute top-4 right-4 text-black focus:outline-none"
+            className="absolute top-4 right-4 text-custom-db focus:outline-none"
             onClick={toggleMenu}
           >
             <svg

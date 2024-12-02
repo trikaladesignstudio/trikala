@@ -28,3 +28,35 @@
   - [ ] Finalize images
   - [ ] Deside seo
   - [x] Sort Hosting and domain
+
+
+
+1. animation start margin  
+4. price calculator
+5. interior needed to be decided to keep ? fix mobile view  : chill h
+
+
+
+  
+
+
+
+# data used in website 
+testimonial (done)
+working (done)
+project data (pending) - needed for [expertise, featured work, projects]
+- type : Healthcare | Workspace | Commercial | Institutional | Residential | Urban Design (any one)
+- image : atleast one or more
+- title : "this is the way"
+- category:  specific expertise 
+
+# we need
+- contact, address and email to put on website
+- about us 
+- User Agreement
+- need a meet to decide the images for each section we are also looking 
+
+
+
+2. hero section update and finalize
+3. data api layer
