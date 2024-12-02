@@ -1,4 +1,5 @@
 import ProjectShowcase from "@/components/custom/projectShow";
+import { allSections } from "@/utils/client_utils";
 import { getAllProjects } from "@/utils/dbActions";
 import Link from "next/link";
 
@@ -16,7 +17,19 @@ export default async function Admin() {
           Add New Project
         </Link>
       </div>
-      <ProjectShowcase projects={projects} />
+      {/* {allSections.toString()} */}
+
+      {allSections.map((section) => (
+        <div
+          className="flex flex-col gap-4 border border-gray-300 p-4"
+          key={section}
+        >
+          <h1 className="text-3xl font-bold">{section.toUpperCase()}</h1>
+          <ProjectShowcase
+            projects={projects.filter((p) => p.section === section)}
+          />
+        </div>
+      ))}
     </div>
   );
 }

@@ -1,5 +1,3 @@
-"use client";
-
 export enum sectionType {
   hero = "hero",
   features = "features",

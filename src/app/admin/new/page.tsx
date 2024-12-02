@@ -20,6 +20,7 @@ import toast from "react-hot-toast";
 export default function CreateProject() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmited, setIsSubmited] = useState(false);
   const [formData, setFormData] = useState<Prisma.ProjectCreateInput>({
     title: "",
     description: "",
@@ -31,6 +32,16 @@ export default function CreateProject() {
   });
   const [filenames, setFileNames] = useState<images[] | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (!isSubmited && filenames?.length) {
+        filenames.map((file) => {
+          deleteFileWithFilename(file);
+        });
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (filenames) {
@@ -58,6 +69,7 @@ export default function CreateProject() {
     e.preventDefault();
     setIsSubmitting(true);
     setError(null);
+    setIsSubmited(true);
 
     try {
       await addAProject(formData);
@@ -207,6 +219,9 @@ export default function CreateProject() {
         <div>
           <UploadDropzone
             endpoint={"imageUploader"}
+            onUploadBegin={() => {
+              setIsSubmitting(true);
+            }}
             onClientUploadComplete={(res) => {
               // Do something with the response
               console.log("Files: ", res);
@@ -219,6 +234,7 @@ export default function CreateProject() {
               setFileNames((prev) => (prev ? [...prev, ...files] : files));
               console.log("Files: ", files);
               toast.success("Upload Completed");
+              setIsSubmitting(false);
             }}
             onUploadError={(error: Error) => {
               // Do something with the error.

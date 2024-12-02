@@ -43,7 +43,7 @@ const ProjectShowcase = ({
       {projects.map((project) => (
         <div
           key={project.id}
-          className=" rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow flex flex-col"
+          className="rounded-lg p-1 shadow-md hover:shadow-lg transition-shadow flex flex-col"
         >
           <div className="flex flex-col h-full justify-between">
             <div className="w-full">
@@ -77,18 +77,31 @@ const ProjectShowcase = ({
                 </Carousel>
               )}
             </div>
-            <div className="w-full px-4 flex  justify-between">
-              <div>
-                <div className="mb-2 text-sm text-gray-500">{project.type}</div>
-                <h2 className="text-xl font-semibold mb-2">{project.title}</h2>
-                <p className="text-gray-600 mb-4">{project.description}</p>
-                {project.featured && (
-                  <span className="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded mb-4 inline-block">
-                    Featured
-                  </span>
-                )}
+            <div className="w-full flex justify-between">
+              <div className="flex flex-col justify-between ">
+                <div>
+                  <h2 className="text-xl font-semibold mb-2">
+                    {project.title}
+                  </h2>
+                  <p className="text-gray-600 mb-4">{project.description}</p>
+                  {project.featured && (
+                    <span className="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded mb-4 inline-block">
+                      Featured
+                    </span>
+                  )}
+                </div>
+                <div className="flex flex-col gap-2 justify-end">
+                  <div className="mb-2 text-sm text-gray-500 flex ">
+                    <b>{project.section !== "none" ? project.section : ""}</b>
+                    {project.type !== "none" ? (
+                      <p>&nbsp;-&nbsp;{project.type}</p>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </div>
               </div>
-              <div className="flex flex-col space-x-2 gap-2 justify-end">
+              <div className="flex flex-col gap-2 justify-end">
                 <Button className="">
                   <Link
                     href={`/admin/${project.id}`}
@@ -98,10 +111,8 @@ const ProjectShowcase = ({
                   </Link>
                 </Button>
                 <AlertDialog>
-                  <AlertDialogTrigger>
-                    <Button className="text-white bg-red-500 hover:bg-red-600">
-                      Delete
-                    </Button>
+                  <AlertDialogTrigger className="text-white bg-red-500 hover:bg-red-600 px-4 py-2 rounded-md">
+                    Delete
                   </AlertDialogTrigger>
                   <AlertDialogContent className="bg-white">
                     <AlertDialogHeader>
