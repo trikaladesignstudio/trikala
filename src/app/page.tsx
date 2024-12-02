@@ -1,11 +1,11 @@
 "use client";
-import Lead from "@/components/custom/Lead";
+// import Lead from "@/components/custom/Lead";
 import Expertise from "@/components/ExpertiseTest";
 import Featured from "@/components/Feature";
 import Footer from "@/components/Footer";
-import Interior from "@/components/Interior";
+// import Interior from "@/components/Interior";
 // import SectionGrid from "@/components/custom/SectionGrid";
-import Hero from "@/components/Hero";
+// import Hero from "@/components/Hero";
 import PriceEstimator from "@/components/PriceEstimator";
 import Testimonials from "@/components/Testimonials";
 import Working from "@/components/Working";
@@ -67,7 +67,7 @@ export default function Home() {
           </Carousel> */}
 
           <HeroTest />
-          <Lead />
+          {/* <Lead /> */}
           <Featured />
           <Expertise />
           <Working />

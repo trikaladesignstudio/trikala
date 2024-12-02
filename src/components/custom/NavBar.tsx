@@ -18,6 +18,7 @@ const Navbar = () => {
           alt="Brand Logo"
           width={130}
           height={130}
+          className="invert"
         />
       </div>
       <div className="lg:hidden">
@@ -48,7 +49,7 @@ const Navbar = () => {
           </div>
         ))}
       </div>
-      <button className="hidden lg:block rounded-full bg-custom-db text-white px-6 py-2 font-semibold">
+      <button className="hidden lg:block rounded-full bg-black border-gray-500/50 border-2 text-white px-6 py-2 font-semibold text-xl">
         Start a Project
       </button>
       <div
