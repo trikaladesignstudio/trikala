@@ -43,12 +43,15 @@ const ProjectShowcase = ({
       {projects.map((project) => (
         <div
           key={project.id}
-          className="rounded-lg p-1 shadow-md hover:shadow-lg transition-shadow flex flex-col"
+          className="rounded-lg p-1 shadow-md hover:shadow-lg transition-shadow flex flex-col border border-gray-300"
         >
-          <div className="flex flex-col h-full justify-between">
-            <div className="w-full">
+          <div className="flex flex-col h-full justify-between gap-2">
+            <div className="w-full p-2 border rounded-sm">
               {project.images && (
-                <Carousel className="h-full" style={{ height: "100%" }}>
+                <Carousel
+                  className="h-full rounded-sm"
+                  style={{ height: "100%" }}
+                >
                   <CarouselContent className="-ml-1">
                     {Array.isArray(project.images) &&
                       project.images?.map(({ url }, index) => (
