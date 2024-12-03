@@ -104,7 +104,7 @@ const ProjectShowcase = ({
               <div className="flex flex-col gap-2 justify-end">
                 <Link
                   href={`/admin/${project.id}`}
-                  className="text-blue-500 hover:text-blue-600 text-center p-2 rounded-md border border-blue-500 hover:bg-blue-500 hover:text-white transition-colors"
+                  className="text-blue-500 text-center p-2 rounded-md border border-blue-500 hover:bg-blue-500 hover:text-white transition-colors"
                 >
                   Edit
                 </Link>
