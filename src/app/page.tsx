@@ -14,12 +14,7 @@ import { filterAllProjects } from "@/utils/dbActions";
 import { sectionType } from "@/utils/client_utils";
 
 export default async function Home() {
-  // const da=
-
   const heroData = await filterAllProjects(sectionType.hero);
-
-  console.log("hero data", heroData);
-
   return (
     <>
       <main className="relative flex flex-col snap-y snap-mandatory h-screen overflow-x-hidden scroll-smooth overflow-y-scroll">
