@@ -13,7 +13,7 @@ model User {
   password String
 }
 
-type Image{
+type Image {
   url  String
   name String
 }

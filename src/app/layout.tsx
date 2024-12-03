@@ -44,7 +44,8 @@ export default function RootLayout({
            */
           routerConfig={extractRouterConfig(ourFileRouter)}
         />
-        {children}
+          {children}
+
         <Analytics />
         <SpeedInsights />
         <Toaster />

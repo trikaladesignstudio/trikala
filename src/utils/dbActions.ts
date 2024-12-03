@@ -2,6 +2,7 @@
 import prisma from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
 import { UTApi } from "uploadthing/server";
+import { ProjectType, sectionType } from "./client_utils";
 
 export async function getAllProjects() {
   try {
@@ -15,6 +16,30 @@ export async function getAllProjects() {
     console.error("Error fetching projects:", error);
     return [];
   }
+}
+
+export async function filterAllProjects(
+  section?: sectionType,
+  type?: ProjectType
+) {
+  // console.log(section, type);
+  const filterConditions: any = {};
+  if (!section && !type) {
+    return [];
+  }
+
+  if (section) {
+    filterConditions.section = section;
+  }
+  if (type) {
+    filterConditions.type = type;
+  }
+
+  const filteredData = await prisma.project.findMany({
+    where: filterConditions,
+  });
+
+  return filteredData;
 }
 
 export async function addAProject(projectData: Prisma.ProjectCreateInput) {
