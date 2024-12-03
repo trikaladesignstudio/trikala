@@ -1,26 +1,32 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import Section from "./custom/Section";
 import Navbar from "./custom/NavBar";
 import Heading from "./custom/Heading";
+import { filterAllProjects } from "@/utils/dbActions";
 
-const images = [
-  "/static/images/2.jpg",
-  "/static/images/3.jpg",
-  "/static/images/4.jpg",
-  "/static/images/5.jpg",
-  "/static/images/6.jpg",
-];
-
-function HeroTest() {
+function HeroTest({
+  data,
+}: {
+  data: Awaited<ReturnType<typeof filterAllProjects>>;
+}) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [images, setImages] = useState<String[]>([]);
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
     }, 3000); // Change image every 3 seconds
 
     return () => clearInterval(interval); // Clean up interval on component unmount
-  }, []);
+  }, [images]);
 
+  useEffect(() => {
+    const projectImages = data.map((project) =>
+      project.images.map((image) => image.url)
+    );
+    setImages(projectImages.flat());
+  }, []);
   return (
     <Section className="relative ">
       <Navbar />

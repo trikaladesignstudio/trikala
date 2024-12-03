@@ -1,12 +1,9 @@
-import aesehi from "@/assets/aesehi.png";
-import Sections from "./custom/Section";
-import Image from "next/image";
-import Heading from "./custom/Heading";
+"use client";
+
 import image1 from "@/assets/1.jpeg";
 import image2 from "@/assets/2.jpeg";
 import image3 from "@/assets/3.jpeg";
 import image0 from "@/assets/aesehi.png";
-import { motion } from "framer-motion";
 import {
   Carousel,
   CarouselContent,
@@ -14,9 +11,12 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import Autoplay from "embla-carousel-autoplay";
-import { useRef, useState } from "react";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import { useState } from "react";
+import Heading from "./custom/Heading";
+import Sections from "./custom/Section";
 
 const image = [image0, image1, image2, image1, image2, image1, image2, image3];
 const types = [

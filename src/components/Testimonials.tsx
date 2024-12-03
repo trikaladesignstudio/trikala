@@ -1,3 +1,5 @@
+"use client";
+
 import { cn } from "../lib/utils";
 import Marquee from "./ui/marquee";
 import { TestimonialsData } from "@/jsonData/Home/Testimonial/index";
