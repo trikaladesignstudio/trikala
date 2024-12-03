@@ -22,7 +22,7 @@ function CarouselData({ images }: CarouselDataProps) {
     <Carousel className="w-full m-auto">
       <CarouselContent className="flex -ml-1">
         {images.map((img, index) => (
-          <CarouselItem key={index} className="pl-1 md:basis-1/2 lg:basis-1/3">
+          <CarouselItem key={index} className="pl-1">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, width: "auto" }}
