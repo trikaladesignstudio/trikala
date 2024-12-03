@@ -82,6 +82,20 @@ export async function updateProject(
   }
 }
 
+export async function getProject(id: string) {
+  // console.log("id:", id);
+  try {
+    const project = await prisma.project.findUnique({
+      where: {
+        id: id,
+      },
+    });
+    return project;
+  } catch (error) {
+    return null;
+  }
+}
+
 // upload thing del file
 const utapi = new UTApi();
 

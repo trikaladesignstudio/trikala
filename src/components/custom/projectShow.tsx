@@ -102,14 +102,12 @@ const ProjectShowcase = ({
                 </div>
               </div>
               <div className="flex flex-col gap-2 justify-end">
-                <Button className="">
-                  <Link
-                    href={`/admin/${project.id}`}
-                    className="text-blue-500 hover:text-blue-600 text-center"
-                  >
-                    Edit
-                  </Link>
-                </Button>
+                <Link
+                  href={`/admin/${project.id}`}
+                  className="text-blue-500 hover:text-blue-600 text-center p-2 rounded-md border border-blue-500 hover:bg-blue-500 hover:text-white transition-colors"
+                >
+                  Edit
+                </Link>
                 <AlertDialog>
                   <AlertDialogTrigger className="text-white bg-red-500 hover:bg-red-600 px-4 py-2 rounded-md">
                     Delete
