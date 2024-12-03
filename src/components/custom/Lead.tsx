@@ -1,5 +1,5 @@
 "use client";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { cn } from "@/lib/utils";
 import { handleSubmit } from "@/utils/util";
 import { motion } from "framer-motion";
@@ -93,7 +93,6 @@ function Lead() {
             Submit
           </Button>
         </motion.form>
-        <Toaster />
       </Section>
     </motion.section>
   );
