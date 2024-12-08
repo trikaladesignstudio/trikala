@@ -1,7 +1,10 @@
 import ProjectShowcase from "@/components/custom/projectShow";
+import LogoutBtn from "@/components/user/Logout";
+import { logout } from "@/lib/auth";
 import { allSections } from "@/utils/client_utils";
 import { getAllProjects } from "@/utils/dbActions";
 import Link from "next/link";
+import { BiPowerOff } from "react-icons/bi";
 
 export default async function Admin() {
   const projects = await getAllProjects();
@@ -10,12 +13,15 @@ export default async function Admin() {
     <div className="container mx-auto px-4 py-8 flex flex-col">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold">Admin Dashboard</h1>
-        <Link
-          href="/admin/new"
-          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors"
-        >
-          Add New Project
-        </Link>
+        <div className="flex gap-4">
+          <LogoutBtn />
+          <Link
+            href="/admin/new"
+            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors"
+          >
+            Add New Project
+          </Link>
+        </div>
       </div>
       {/* {allSections.toString()} */}
 

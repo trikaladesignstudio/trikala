@@ -3,10 +3,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { decrypt, encrypt } from "./jwtShit";
 import prisma from "./prisma";
 import { cookies } from "next/headers";
+import { expiresin1Day } from "@/utils/client_utils";
 
-const expiresinSeconds = 10;
-// 1 * 24 * 60 * 60 * 1000; // 1 day
-
+const expires1dayTime = () => {
+  var now = new Date();
+  var time = now.getTime();
+  return time + expiresin1Day;
+};
 export async function login(formData: FormData) {
   // Verify credentials && get the user
   const profile = await prisma.user.findUnique({
@@ -23,11 +26,11 @@ export async function login(formData: FormData) {
     const user = { email: formData.get("email"), role: "admin" };
 
     // Create the session
-    const expires = new Date(Date.now() + expiresinSeconds);
-    const session = await encrypt({ user, expires });
+    const expires = expires1dayTime();
+    const session = await encrypt({ data: user, expires });
 
     // Save the session in a cookie
-    (await cookies()).set("session", session, { expires, httpOnly: true });
+    setCookie("session", session, expires);
     return true;
   }
   return false;
@@ -35,7 +38,7 @@ export async function login(formData: FormData) {
 
 export async function logout() {
   // Destroy the session
-  cookies().set("session", "", { expires: new Date(0) });
+  setCookie("session", "", 0);
 }
 
 export async function getSession() {
@@ -44,22 +47,41 @@ export async function getSession() {
   return await decrypt(session);
 }
 
+export async function setCookie(key: string, value: string, expires: number) {
+  cookies().set(key, value, { expires, httpOnly: true });
+}
+
+// login middle ware itself
+
 export async function updateSession(request: NextRequest) {
   const session = request.cookies.get("session")?.value;
+
   if (!session) {
+    if (request.nextUrl.pathname === "/login") {
+      return NextResponse.next();
+    }
     // redirect to login
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  // Refresh the session so it doesn't expire
-  const parsed = await decrypt(session);
-  parsed.expires = new Date(Date.now() + 10 * 1000);
-  const res = NextResponse.next();
-  res.cookies.set({
-    name: "session",
-    value: await encrypt(parsed),
-    httpOnly: true,
-    expires: parsed.expires,
-  });
-  return res;
+  try {
+    // Refresh the session so it doesn't expire
+    const parsed = await decrypt(session);
+
+    // if user is already login and trying to go to login page then just redirect to /admin page
+    if (request.nextUrl.pathname === "/login") {
+      return NextResponse.redirect(new URL("/admin", request.url));
+    }
+    parsed.expires = expires1dayTime();
+    const res = NextResponse.next();
+    res.cookies.set({
+      name: "session",
+      value: await encrypt(parsed),
+      httpOnly: true,
+      expires: parsed.expires,
+    });
+    return res;
+  } catch (error) {
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
 }

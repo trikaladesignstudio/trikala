@@ -5,24 +5,27 @@ import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
+import { login } from "@/lib/auth";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("trikala@admin.com");
+  const [password, setPassword] = useState("passwordis80");
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    //   const res = await signIn("credentials", {
-    //     redirect: false,
-    //     email,
-    //     password,
-    //   });
-    //   if (res.ok) {
-    //     router.push("/");
-    //   } else {
-    //     toast.error(res.error);
-    //   }
+    // formdata
+    const formData = new FormData();
+    formData.append("email", email);
+    formData.append("password", password);
+    const success = await login(formData);
+    console.log("success:", success);
+    toast.success("Login Successful " + success);
+    if (success) {
+      router.push("/admin");
+    } else {
+      toast.error("Login Failed, username or password incorrect");
+    }
   };
 
   return (
