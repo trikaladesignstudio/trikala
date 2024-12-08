@@ -78,6 +78,7 @@ function Featured() {
                 className="flex-shrink-0"
               >
                 <Image
+                  loading="lazy"
                   src={img}
                   style={{ height: `28rem` }}
                   alt={`Slide ${index}`}

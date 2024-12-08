@@ -1,3 +1,5 @@
+export const expiresin1Day = 1 * 24 * 60 * 60 * 1000; // 1 day
+
 export enum sectionType {
   hero = "hero",
   features = "features",

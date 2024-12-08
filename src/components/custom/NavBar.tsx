@@ -14,6 +14,8 @@ const Navbar = () => {
     >
       <div className="font-bold">
         <Image
+          priority
+          fetchPriority="high"
           src={"/static/logo.webp"}
           alt="Brand Logo"
           width={130}

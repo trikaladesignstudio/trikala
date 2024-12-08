@@ -5,6 +5,8 @@ import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
+import { login } from "@/lib/auth";
+import Link from "next/link";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -13,20 +15,22 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    //   const res = await signIn("credentials", {
-    //     redirect: false,
-    //     email,
-    //     password,
-    //   });
-    //   if (res.ok) {
-    //     router.push("/");
-    //   } else {
-    //     toast.error(res.error);
-    //   }
+    // formdata
+    const formData = new FormData();
+    formData.append("email", email);
+    formData.append("password", password);
+    const success = await login(formData);
+    // console.log("success:", success);
+    toast.success("Login Successful " + success);
+    if (success) {
+      router.push("/admin");
+    } else {
+      toast.error("Login Failed, username or password incorrect");
+    }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div className="flex items-center justify-center min-h-screen flex-col gap-4">
       <form
         onSubmit={handleSubmit}
         className="flex flex-col border border-black rounded-md p-6 gap-4 min-w-[20%]"
@@ -70,6 +74,12 @@ export default function LoginPage() {
           Log in
         </Button>
       </form>
+      <Link
+        href="/"
+        className="px-2 py-1 rounded-md hover:bg-black hover:text-white "
+      >
+        Go back home &rarr;
+      </Link>
     </div>
   );
 }

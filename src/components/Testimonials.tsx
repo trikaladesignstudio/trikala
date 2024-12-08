@@ -40,6 +40,7 @@ const ReviewCard = ({
     >
       <div className="flex flex-row items-center gap-3">
         <Image
+          loading="lazy"
           className="h-12 w-12 rounded-full"
           src={images}
           alt={title}

@@ -1,19 +1,4 @@
 "use client";
-import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
-import { Prisma } from "@prisma/client";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import Image from "next/image";
-import Link from "next/link";
-import { Button } from "../ui/button";
-import { deleteProject } from "@/utils/dbActions";
-import { useRouter } from "next/navigation";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -25,6 +10,20 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { cn } from "@/lib/utils";
+import { deleteProject } from "@/utils/dbActions";
+import { Prisma } from "@prisma/client";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const ProjectShowcase = ({
   projects,
@@ -65,6 +64,7 @@ const ProjectShowcase = ({
                             className="flex-shrink-0 h-full"
                           >
                             <Image
+                              loading="lazy"
                               src={url}
                               width={400}
                               height={400}
