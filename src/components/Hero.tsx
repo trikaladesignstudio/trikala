@@ -20,6 +20,7 @@ function Hero() {
               text="Architect Your"
             />
             <Image
+              loading="lazy"
               src={image1}
               alt=""
               className="w-[30rem] hidden lg:h-[8rem] lg:block rounded-full flex-1"
@@ -31,6 +32,7 @@ function Hero() {
               text="Idea to design"
             />
             <Image
+              loading="lazy"
               src={image1}
               alt=""
               className="w-[30rem] hidden lg:h-[8rem]  lg:block rounded-full flex-1"
@@ -50,8 +52,8 @@ function Hero() {
                 and customized approach.
               </span>
               <div className="flex flex-row justify-between gap-[2rem]">
-                <Image src={image1} alt="" className="h-20" />
-                <Image src={image1} alt="" className="h-20" />
+                <Image loading="lazy" src={image1} alt="" className="h-20" />
+                <Image loading="lazy" src={image1} alt="" className="h-20" />
               </div>
             </div>
           </div>

@@ -15,9 +15,10 @@ export default function PriceEstimator() {
         >
           <div className="">
             <Image
+              loading="lazy"
               src={image2}
               alt="Traditional white house with wraparound porch"
-              className="w-full object-cover"
+              className="w-full o bject-cover"
             />
           </div>
           <div className="p-4">
@@ -37,6 +38,7 @@ export default function PriceEstimator() {
         >
           <div className="aspect-[4/3] relative">
             <Image
+              loading="lazy"
               src={image2}
               alt="Modern white kitchen with wooden accents"
               className="object-cover"

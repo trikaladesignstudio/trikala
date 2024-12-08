@@ -65,6 +65,7 @@ const ProjectShowcase = ({
                             className="flex-shrink-0 h-full"
                           >
                             <Image
+                              loading="lazy"
                               src={url}
                               width={400}
                               height={400}

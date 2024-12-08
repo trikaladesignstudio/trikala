@@ -270,6 +270,7 @@ export default function ProjectForm({ projectId }: { projectId?: string }) {
                       rel="noopener noreferrer"
                     >
                       <Image
+                        loading="lazy"
                         alt=""
                         height={100}
                         width={100}

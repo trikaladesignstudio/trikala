@@ -6,11 +6,19 @@ const nextConfig = {
     },
   },
   images: {
-    domains: [
-      "trikalarchitects.com/",
-      "twitter.com",
-      "www.canva.com",
-      "utfs.io"
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "utfs.io",
+      },
+      {
+        protocol: "http",
+        hostname: "localhost",
+      },
+      {
+        protocol: "https",
+        hostname: "trikalarchitects.com",
+      },
     ],
   },
   pageExtensions: ["mdx", "ts", "tsx"],

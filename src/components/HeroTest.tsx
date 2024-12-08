@@ -5,6 +5,7 @@ import Section from "./custom/Section";
 import Navbar from "./custom/NavBar";
 import Heading from "./custom/Heading";
 import { filterAllProjects } from "@/utils/dbActions";
+import Image from "next/image";
 
 function HeroTest({
   data,
@@ -31,13 +32,20 @@ function HeroTest({
     <Section className="relative ">
       <Navbar />
       {images.map((image, index) => (
-        <div
+        <Image
+          // priority
+          // fetchPriority="high"
+          loading={currentIndex === index ? "eager" : "lazy"}
+          src={image as string}
+          width={1080}
+          height={720}
+          alt={`Image ${index}`}
           key={index}
           className={`absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000 ${
             currentIndex === index ? "opacity-100" : "opacity-0"
           }`}
-          style={{ backgroundImage: `url(${image})` }}
-        ></div>
+          // style={{ backgroundImage: `url(${image})` }}
+        ></Image>
       ))}
       {/* background black and opacity */}
       <div className="absolute inset-0 flex flex-col items-center justify-center text-white bg-black bg-opacity-70">

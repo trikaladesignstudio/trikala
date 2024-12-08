@@ -109,6 +109,7 @@ const Working: React.FC = () => {
             </div>
 
             <Image
+              loading="lazy"
               src={slide.image}
               alt={`Slide ${index + 1}`}
               className={`h-full w-full transition-all duration-500 ease-in-out ${

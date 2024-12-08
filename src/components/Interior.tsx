@@ -56,6 +56,7 @@ const ReviewCard = ({
   return (
     <div className="relative lg:w-full w-full h-[15vh] md:h-[10vw] xl:h-[8vw] cursor-pointer overflow-hidden group drop-shadow-md hover:drop-shadow-xl">
       <Image
+        loading="lazy"
         src={image}
         alt={description}
         className="w-full h-full object-cover"

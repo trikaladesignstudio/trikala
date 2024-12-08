@@ -144,6 +144,7 @@ export default function Footer() {
               className="flex justify-center items-center text-2xl md:text-3xl font-light tracking-tight"
             >
               <Image
+                loading="lazy"
                 src={"/static/logo.webp"}
                 alt="logo"
                 width={300}
