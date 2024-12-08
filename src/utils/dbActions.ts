@@ -22,7 +22,6 @@ export async function filterAllProjects(
   section?: sectionType,
   type?: ProjectType
 ) {
-  // console.log(section, type);
   const filterConditions: any = {};
   if (!section && !type) {
     return [];

@@ -1,18 +1,27 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-import { WorkingsData } from "@/jsonData/Home/Working/index";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { BiChevronLeft } from "react-icons/bi";
 import { Button } from "./ui/button";
 import Heading from "./custom/Heading";
 import Sections from "./custom/Section";
+import { filterAllProjects } from "@/utils/dbActions";
 
-const Working: React.FC = () => {
+function Working({
+  data,
+}: {
+  data: Awaited<ReturnType<typeof filterAllProjects>>;
+}) {
+  console.log("data", data);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const slides = WorkingsData;
+  const [slides, setSlides] = useState<typeof data>([]);
+
+  useEffect(() => {
+    setSlides(data);
+  }, [data]);
 
   const nextSlide = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
@@ -110,7 +119,7 @@ const Working: React.FC = () => {
 
             <Image
               loading="lazy"
-              src={slide.image}
+              src={slide?.images?.[0]?.url ?? "/static/logo.webp"}
               alt={`Slide ${index + 1}`}
               className={`h-full w-full transition-all duration-500 ease-in-out ${
                 index === currentIndex ? "w-full h-52" : "w-auto object-cover"
@@ -118,13 +127,12 @@ const Working: React.FC = () => {
               width={300}
               height={300}
             />
-
             <div className="absolute inset-0 bg-black bg-opacity-35"></div>
           </div>
         ))}
       </div>
     </Sections>
   );
-};
+}
 
 export default Working;
