@@ -1,16 +1,15 @@
 "use client";
 
-import { cn } from "../lib/utils";
-import Marquee from "./ui/marquee";
-import { TestimonialsData } from "@/jsonData/Home/Testimonial/index";
-import Sections from "./custom/Section";
-import Image, { StaticImageData } from "next/image";
-import Heading from "./custom/Heading";
 import useScreenWidth from "@/hooks/ScreenResize";
-import { useEffect } from "react";
-
-const firstRow = TestimonialsData.slice(0, TestimonialsData.length / 2);
-const secondRow = TestimonialsData.slice(TestimonialsData.length / 2);
+import { TestimonialsData } from "@/jsonData/Home/Testimonial/index";
+import Image from "next/image";
+import { cn } from "../lib/utils";
+import Heading from "./custom/Heading";
+import Sections from "./custom/Section";
+import Marquee from "./ui/marquee";
+import { filterAllProjects } from "@/utils/dbActions";
+import { useEffect, useState } from "react";
+import { TestimonialsDataType } from "@/types";
 
 const ReviewCard = ({
   images,
@@ -66,8 +65,29 @@ const ReviewCard = ({
   );
 };
 
-const Testimonials = () => {
+function Testimonials({
+  data,
+}: {
+  data: Awaited<ReturnType<typeof filterAllProjects>>;
+}) {
+  const [testimonials, setTestimonials] = useState<TestimonialsDataType[]>([]);
+
+  useEffect(() => {
+    const formatData = data.map((ele) => {
+      const titlendcompany = ele.title.split(" | ");
+      const image = ele?.images[0]?.url ?? "/static/logo.webp";
+      return {
+        title: titlendcompany.length > 1 ? titlendcompany[0] : ele.title,
+        company: titlendcompany.length > 1 ? titlendcompany[1] : ele.title,
+        images: image,
+        description: ele.description,
+      };
+    });
+    setTestimonials(formatData);
+  }, [data]);
   const screenSize = useScreenWidth();
+  const firstRow = testimonials.slice(0, testimonials.length / 2);
+  const secondRow = testimonials.slice(testimonials.length / 2);
   return (
     <Sections className="lg:px-0  px-0 py-0 lg:py-0 snap-end max-h-screen gap-0">
       <div className="flex lg:flex-row flex-col px-[2rem] py-[1rem] lg:px-[5rem] gap-2 md:gap-20">
@@ -114,6 +134,6 @@ const Testimonials = () => {
       </Sections>
     </Sections>
   );
-};
+}
 
 export default Testimonials;

@@ -9,3 +9,10 @@ export const navlinks: NavLink[] = [
   { name: "Projects", href: "#" },
   { name: "Price Estimate", href: "#" },
 ];
+
+export interface TestimonialsDataType {
+  title: string;
+  company: string;
+  description: string;
+  images: string;
+}
