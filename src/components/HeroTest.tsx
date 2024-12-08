@@ -33,9 +33,9 @@ function HeroTest({
       <Navbar />
       {images.map((image, index) => (
         <Image
-          // priority
+          priority
           // fetchPriority="high"
-          loading={currentIndex === index ? "eager" : "lazy"}
+          // loading={currentIndex === index ? "eager" : "lazy"}
           src={image as string}
           width={1080}
           height={720}

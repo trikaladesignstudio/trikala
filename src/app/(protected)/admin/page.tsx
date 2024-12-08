@@ -11,7 +11,7 @@ export default async function Admin() {
   const projects = await getAllProjects();
 
   return (
-    <div className="container mx-auto px-4 py-8 flex flex-col">
+    <div className="container mx-auto px-4 py-8 flex flex-col gap-4">
       <div className="flex justify-between items-center mb-8">
         <PathHeading />
         <div className="flex gap-4">
@@ -28,7 +28,7 @@ export default async function Admin() {
 
       {allSections.map((section) => (
         <div
-          className="flex flex-col gap-4 border border-gray-300 p-4"
+          className="flex flex-col gap-4 border border-gray-300 p-4 rounded-lg bg-gray-200 shadow-md"
           key={section}
         >
           <h1 className="text-3xl font-bold">{section.toUpperCase()}</h1>
