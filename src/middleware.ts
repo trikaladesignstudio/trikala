@@ -1,11 +1,14 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { updateSession } from "./lib/auth";
 
 export async function middleware(request: NextRequest) {
-  // console.log(request.nextUrl.pathname);
-  return await updateSession(request);
+  const nonPublicPages = ["/login", "/admin", "/admin/new", "/admin/:id"];
+  if (nonPublicPages.includes(request.nextUrl.pathname)) {
+    return await updateSession(request);
+  }
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/login", "/admin", "/admin/new", "/admin/:id"],
+  matcher: ["/((?!.*\\..*|_next).*)", "/(api|trpc)(.*)"],
 };
