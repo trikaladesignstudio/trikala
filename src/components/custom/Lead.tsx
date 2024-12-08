@@ -50,7 +50,6 @@ function Lead() {
             " text-white",
             "grid grid-cols-1 lg:grid-cols-4 gap-4"
           )}
-          action={handleSubmit}
           onSubmit={handleSubmitForm}
         >
           <div className="flex items-center gap-2">

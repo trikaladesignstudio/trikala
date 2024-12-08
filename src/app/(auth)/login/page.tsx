@@ -9,8 +9,8 @@ import { login } from "@/lib/auth";
 import Link from "next/link";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("trikala@admin.com");
-  const [password, setPassword] = useState("passwordis80");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -20,7 +20,7 @@ export default function LoginPage() {
     formData.append("email", email);
     formData.append("password", password);
     const success = await login(formData);
-    console.log("success:", success);
+    // console.log("success:", success);
     toast.success("Login Successful " + success);
     if (success) {
       router.push("/admin");
@@ -78,7 +78,7 @@ export default function LoginPage() {
         href="/"
         className="px-2 py-1 rounded-md hover:bg-black hover:text-white "
       >
-        Go back home{" "}
+        Go back home &rarr;
       </Link>
     </div>
   );
