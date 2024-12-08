@@ -23,8 +23,8 @@ export default function PathHeading({ className }: { className?: string }) {
         {pathname.map((item, index) => {
           const itemValue =
             item == "" ? "Home" : item.charAt(0).toUpperCase() + item.slice(1);
-
-          const path = `${pathname.slice(0, index + 1).join("/")}`;
+          const path =
+            item == "" ? "/" : `${pathname.slice(0, index + 1).join("/")}`;
 
           return (
             <React.Fragment key={index}>
