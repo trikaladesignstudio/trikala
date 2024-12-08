@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { login } from "@/lib/auth";
+import Link from "next/link";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("trikala@admin.com");
@@ -29,7 +30,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div className="flex items-center justify-center min-h-screen flex-col gap-4">
       <form
         onSubmit={handleSubmit}
         className="flex flex-col border border-black rounded-md p-6 gap-4 min-w-[20%]"
@@ -73,6 +74,12 @@ export default function LoginPage() {
           Log in
         </Button>
       </form>
+      <Link
+        href="/"
+        className="px-2 py-1 rounded-md hover:bg-black hover:text-white "
+      >
+        Go back home{" "}
+      </Link>
     </div>
   );
 }

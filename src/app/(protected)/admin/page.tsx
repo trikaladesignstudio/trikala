@@ -1,3 +1,4 @@
+import PathHeading from "@/components/custom/PathHeading";
 import ProjectShowcase from "@/components/custom/projectShow";
 import LogoutBtn from "@/components/user/Logout";
 import { logout } from "@/lib/auth";
@@ -12,7 +13,8 @@ export default async function Admin() {
   return (
     <div className="container mx-auto px-4 py-8 flex flex-col">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">Admin Dashboard</h1>
+        <PathHeading />
+        {/* <h1 className="text-3xl font-bold">Admin Dashboard</h1> */}
         <div className="flex gap-4">
           <LogoutBtn />
           <Link
