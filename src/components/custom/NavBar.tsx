@@ -51,7 +51,7 @@ const Navbar = () => {
           </div>
         ))}
       </div>
-      <button className="hidden lg:block rounded-full bg-black border-gray-500/50 border-2 text-white px-6 py-2 font-semibold text-xl">
+      <button className="hidden lg:block rounded-full bg-black border-gray-500/50 border-2 text-white px-4 py-1 font-semibold text-lg">
         Start a Project
       </button>
       <div

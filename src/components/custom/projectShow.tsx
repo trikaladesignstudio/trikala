@@ -98,7 +98,7 @@ const ProjectShowcase = ({
                     </span>
                   )}
                 </div>
-                <div className="flex justify-between ">
+                <div className="flex justify-between">
                   <div className="flex flex-col gap-2 justify-end">
                     <div className="mb-2 text-sm text-gray-500 flex ">
                       <b>{project.section !== "none" ? project.section : ""}</b>
