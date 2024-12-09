@@ -11,7 +11,7 @@ import {
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Section from "./custom/Section";
-import { expertiseData } from "@/jsonData/Home/Expertise";
+import { expertiseData, expertiseDataType } from "@/jsonData/Home/Expertise";
 
 interface CarouselDataProps {
   images: string[];
@@ -19,7 +19,7 @@ interface CarouselDataProps {
 
 function CarouselData({ images }: CarouselDataProps) {
   return (
-    <Carousel className="w-full m-auto">
+    <Carousel className="w-full m-auto" delay={3000}>
       <CarouselContent className="flex -ml-1">
         {images.map((img, index) => (
           <CarouselItem key={index} className="pl-1">
@@ -50,9 +50,31 @@ function CarouselData({ images }: CarouselDataProps) {
 }
 
 function ExpertiseTest() {
+  const subSectionHeadings = [
+    "Architecture Design",
+    "Interior Design",
+    "Landscape Design",
+    "Urban Design",
+  ];
+
+  const [expertiseDataArray, setExpertiseData] = useState<expertiseDataType[]>(
+    []
+  );
+
+  useEffect(() => {
+    const tempExpertiseData: expertiseDataType[] = [];
+    subSectionHeadings.map((item) => {
+      tempExpertiseData.push({
+        ...expertiseData[0],
+        title: item,
+      });
+    });
+    setExpertiseData(tempExpertiseData);
+  }, [expertiseData]);
+
   return (
     <Section className="bg-black text-white gap-20">
-      {expertiseData.map((item) => (
+      {expertiseDataArray.map((item) => (
         <div key={item.id} className="relative">
           <hr className="border-2" />
           <div className="flex gap-10 flex-col">

@@ -14,25 +14,26 @@ import {
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Heading from "./custom/Heading";
 import Sections from "./custom/Section";
+import { allProjectTypes } from "@/utils/client_utils";
+import { Prisma } from "@prisma/client";
 
 const image = [image0, image1, image2, image1, image2, image1, image2, image3];
-const types = [
-  "Landscape",
-  "Commercial",
-  "Institutional",
-  "Residential",
-  "Urban Design",
-];
+const types = Object.values(allProjectTypes);
+types.pop();
 
-function Featured() {
+function Featured({ data }: { data: Prisma.ProjectCreateInput[] }) {
   const [currentActive, setCurrentActive] = useState(types[0]);
+  const [projectData, setProjectData] = useState(data);
   const filterType = (type: string) => {
     return image;
   };
-  // const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   return (
     <Sections className="lg:px-0 px-0 lg:py-0 py-0 justify-center ">
