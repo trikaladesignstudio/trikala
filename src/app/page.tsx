@@ -10,19 +10,20 @@ import Testimonials from "@/components/Testimonials";
 import Working from "@/components/Working";
 import Video from "@/components/Video";
 import HeroTest from "@/components/HeroTest";
-import { filterAllProjects } from "@/utils/dbActions";
+import { filterAllProjects, getAllFeaturedProjects } from "@/utils/dbActions";
 import { sectionType } from "@/utils/client_utils";
 
 export default async function Home() {
   const heroData = await filterAllProjects(sectionType.hero);
   const workingData = await filterAllProjects(sectionType.working);
   const testimonialData = await filterAllProjects(sectionType.testimonials);
+  const featuresData = await getAllFeaturedProjects();
   return (
     <>
       <main className="relative flex flex-col snap-y snap-mandatory h-screen overflow-x-hidden scroll-smooth overflow-y-scroll">
         <HeroTest data={heroData} />
         {/* <Lead /> */}
-        <Featured />
+        <Featured data={featuresData} />
         <Expertise />
         <Working data={workingData} />
         <PriceEstimator />
