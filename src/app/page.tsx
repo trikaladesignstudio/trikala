@@ -15,6 +15,8 @@ import { sectionType } from "@/utils/client_utils";
 
 export default async function Home() {
   const heroData = await filterAllProjects(sectionType.hero);
+  const workingData = await filterAllProjects(sectionType.working);
+  const testimonialData = await filterAllProjects(sectionType.testimonials);
   return (
     <>
       <main className="relative flex flex-col snap-y snap-mandatory h-screen overflow-x-hidden scroll-smooth overflow-y-scroll">
@@ -22,10 +24,10 @@ export default async function Home() {
         {/* <Lead /> */}
         <Featured />
         <Expertise />
-        <Working />
+        <Working data={workingData} />
         <PriceEstimator />
         {/* <Interior /> */}
-        <Testimonials />
+        <Testimonials data={testimonialData} />
         <Video />
         {/* <Lead /> */}
         <Footer />
