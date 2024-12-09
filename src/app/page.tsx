@@ -17,6 +17,7 @@ export default async function Home() {
   const heroData = await filterAllProjects(sectionType.hero);
   const workingData = await filterAllProjects(sectionType.working);
   const testimonialData = await filterAllProjects(sectionType.testimonials);
+  const footerData = await filterAllProjects(sectionType.contact);
   return (
     <>
       <main className="relative flex flex-col snap-y snap-mandatory h-screen overflow-x-hidden scroll-smooth overflow-y-scroll">
@@ -30,7 +31,7 @@ export default async function Home() {
         <Testimonials data={testimonialData} />
         <Video />
         {/* <Lead /> */}
-        <Footer />
+        <Footer data={footerData} />
       </main>
       {/* </div> */}
     </>

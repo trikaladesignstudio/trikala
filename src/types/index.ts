@@ -16,3 +16,7 @@ export interface TestimonialsDataType {
   description: string;
   images: string;
 }
+export interface ContactDataType {
+  title: string;
+  description: string;
+}
