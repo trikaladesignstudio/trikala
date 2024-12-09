@@ -1,26 +1,33 @@
 "use client";
-
-import React, { useEffect, useState } from "react";
-
+import { filterAllProjects } from "@/utils/dbActions";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { BiChevronLeft } from "react-icons/bi";
-import { Button } from "./ui/button";
 import Heading from "./custom/Heading";
 import Sections from "./custom/Section";
-import { filterAllProjects } from "@/utils/dbActions";
+import { Button } from "./ui/button";
 
 function Working({
   data,
 }: {
   data: Awaited<ReturnType<typeof filterAllProjects>>;
 }) {
-  console.log("data", data);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [slides, setSlides] = useState<typeof data>([]);
 
   useEffect(() => {
-    setSlides(data);
+    // Remove number prefix from title and sort based on the extracted number
+    const formatedData = data
+      .map((item) => ({
+        ...item,
+        title: item.title.replace(/^\d. /, ""),
+        numericTitle: parseInt(item.title.match(/^\d+/)?.[0] || "0", 10),
+      }))
+      .sort((a, b) => a.numericTitle - b.numericTitle)
+      .map(({ numericTitle, ...item }) => item);
+
+    setSlides(formatedData);
   }, [data]);
 
   const nextSlide = () => {
@@ -43,18 +50,22 @@ function Working({
         <Heading text="Our work is based on the development of an individual approach to each client" />
         <div className="flex flex-col justify-end">
           <div className=" justify-end items-end gap-4 pb-4 pt-4 hidden lg:flex">
-            <Button
-              onClick={prevSlide}
-              className="fcc text-white left-4 p-2 bg-custom-db w-12 h-12 rounded-full"
-            >
-              <BiChevronLeft size={24} />
-            </Button>
-            <Button
-              onClick={nextSlide}
-              className="fcc text-white left-4 p-2 bg-primary border w-12 h-12 rounded-full"
-            >
-              <BiChevronLeft size={24} className="rotate-180 text-black" />
-            </Button>
+            <motion.div className="hover:scale-105" whileTap={{ scale: 0.95 }}>
+              <Button
+                onClick={prevSlide}
+                className="fcc text-white left-4 p-2 bg-custom-db w-12 h-12 rounded-full shadow-lg"
+              >
+                <BiChevronLeft size={24} />
+              </Button>
+            </motion.div>
+            <motion.div className="hover:scale-105" whileTap={{ scale: 0.95 }}>
+              <Button
+                onClick={nextSlide}
+                className="fcc text-white left-4 p-2 bg-primary border w-12 h-12 rounded-full shadow-lg"
+              >
+                <BiChevronLeft size={24} className="rotate-180 text-black" />
+              </Button>
+            </motion.div>
           </div>
         </div>
       </div>
