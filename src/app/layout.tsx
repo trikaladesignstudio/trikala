@@ -13,7 +13,7 @@ import BackToTopBtn from "@/components/BackToTop";
 import { filterAllProjects } from "@/utils/dbActions";
 import { sectionType } from "@/utils/client_utils";
 
-export const revalidate = 0;
+export const revalidate = 60*60*0.5;
 
 const silver = localFont({
   src: "./Silver-Queen.otf",

@@ -4,17 +4,19 @@ import { motion, useInView } from "framer-motion";
 import { ReactNode, useRef } from "react";
 
 type Section = {
+  id?: string;
   className?: string;
   children: ReactNode;
   toSnap?: boolean;
 };
 
-function Section({ className, children, toSnap = true }: Section) {
+function Section({ id, className, children, toSnap = true }: Section) {
   const ref = useRef(null);
   const isInView = useInView(ref);
 
   return (
     <motion.section
+      id={id}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true }}

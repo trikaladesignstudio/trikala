@@ -5,9 +5,9 @@ interface NavLink {
 
 export const navlinks: NavLink[] = [
   // { name: "Home", href: "#" },
-  { name: "About Us", href: "#" },
-  { name: "Projects", href: "#" },
-  { name: "Price Estimate", href: "#" },
+  { name: "About Us", href: "/aboutus" },
+  { name: "Projects", href: "/projects" },
+  { name: "Price Estimate", href: "/#price-estimator" },
 ];
 
 export interface TestimonialsDataType {

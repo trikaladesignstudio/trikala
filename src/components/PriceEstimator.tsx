@@ -6,7 +6,7 @@ import Heading from "./custom/Heading";
 
 export default function PriceEstimator() {
   return (
-    <Section className="lg:py-0 max-h-screen lg:justify-evenly justify-center">
+    <Section id="price-estimator" className="lg:py-0 max-h-screen lg:justify-evenly justify-center">
       <Heading className="text-center" text="Interior Price Estimator" />
       <div className="flex flex-col lg:flex-row lg:gap-20 lg:justify-center">
         <Link

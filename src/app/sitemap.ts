@@ -25,6 +25,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 1,
     },
     {
+      url: `${process.env.FRONTEND}/projects`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 1,
+    },
+    {
       url: `${process.env.FRONTEND}/privacyPolicy`,
       lastModified: new Date(),
       changeFrequency: "monthly",

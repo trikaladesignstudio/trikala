@@ -13,7 +13,7 @@ function Video() {
           <span>Check out our story &rarr;</span>
         </Link>
         <iframe
-          className="w-full  lg:h-full h-auto  z-10 rounded-xl shadow-md shadow-black"
+          className="w-full lg:h-full h-auto z-10 rounded-xl shadow-xl"
           src="https://www.youtube.com/embed/-WKHnGln5Yg?autoplay=1&mute=1&loop=1"
           title="Arogya Vanam of Rashtrapati Bhavan"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
