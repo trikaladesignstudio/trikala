@@ -1,5 +1,4 @@
 import Navbar from "@/components/custom/NavBar";
-import Footer from "@/components/Footer";
 import BackToTopBtn from "@/components/BackToTop";
 import Link from "next/link";
 
@@ -13,6 +12,7 @@ export default async function RootLayout({
   // effective for only first login
   return (
     <>
+      <Navbar />
       <Suspense>{children}</Suspense>
       {/* back to dashboard */}
       <div className="fc justify-center items-center">
@@ -23,7 +23,6 @@ export default async function RootLayout({
           Back to Home &rarr;
         </Link>
       </div>
-      <Footer />
       <BackToTopBtn />
     </>
   );
