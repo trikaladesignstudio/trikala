@@ -17,7 +17,6 @@ export default async function Home() {
   const heroData = await filterAllProjects(sectionType.hero);
   const workingData = await filterAllProjects(sectionType.working);
   const testimonialData = await filterAllProjects(sectionType.testimonials);
-  const footerData = await filterAllProjects(sectionType.contact);
   const featuresData = await getAllFeaturedProjects();
   return (
     <>
