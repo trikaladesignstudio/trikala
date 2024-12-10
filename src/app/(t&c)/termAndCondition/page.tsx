@@ -1,11 +1,12 @@
 "use client";
 
+import Section from "@/components/custom/Section";
 import Link from "next/link";
 
 // test for payment page here once then del it for good
 export default function TandC() {
   return (
-    <div className="m-4 p-4  lg:mx-auto lg:w-[70%]">
+    <Section className="m-4 p-4  lg:mx-auto lg:w-[70%]">
       <h1 className="text-3xl font-extrabold mb-4">Terms &amp; Conditions</h1>
       <div className="mb-2">
         By downloading or using the app, these terms will automatically apply to
@@ -135,6 +136,6 @@ export default function TandC() {
           contact@buildyourresume.online
         </Link>
       </div>
-    </div>
+    </Section>
   );
 }

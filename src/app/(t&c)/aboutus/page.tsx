@@ -1,13 +1,12 @@
-"use client";
+import Section from "@/components/custom/Section";
 import Link from "next/link";
 
 // test for payment page here once then del it for good
 export default function PrivacyPolicy() {
   return (
-    <div className="m-4 p-4 lg:mx-auto lg:w-[70%]">
+    <Section className="m-4 p-4 lg:mx-auto lg:w-[70%]">
       <h1 className="text-3xl font-extrabold mb-4">Privacy Policy</h1>
       <div className="mb-2">
-        rishi23root built the build your resume app as a Commercial app. This
         SERVICE is provided by rishi23root and is intended for use as is.
       </div>
       <div className="mb-2">
@@ -25,7 +24,6 @@ export default function PrivacyPolicy() {
       <div className="mb-2">
         The terms used in this Privacy Policy have the same meanings as in our
         Terms and Conditions, which are accessible at build your resume unless
-        otherwise defined in this Privacy Policy.
       </div>
       <div className="mb-2">
         <h1 className="text-3xl font-extrabold my-4 pt-4">
@@ -166,10 +164,8 @@ export default function PrivacyPolicy() {
         <Link
           href="mailto:contact@buildyourresume.online"
           className="underline text-blue-300 hover:text-blue-700"
-        >
           contact@buildyourresume.online
         </Link>
       </div>
-    </div>
   );
 }

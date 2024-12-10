@@ -46,7 +46,7 @@ export default function Footer({
   const twitterUrl = matches.twitter || "https://twitter.com/example";
 
   return (
-    <footer className="bg-zinc-950 text-zinc-100">
+    <footer className="bg-black text-zinc-100">
       <Sections className="justify-center min-h-fit h-auto">
         <div className=" mx-auto space-y-16">
           <div className="flex lg:flex-row flex-col justify-between lg:gap-20 gap-8">
