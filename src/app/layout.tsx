@@ -34,19 +34,19 @@ export default async function RootLayout({
   const footerData = await filterAllProjects(sectionType.contact);
 
   return (
-    <html lang="en">
+    <html lang="en" className={`${silver.variable} antialiased `}>
       <body
         suppressHydrationWarning
-        className={`${silver.variable} antialiased relative flex flex-col snap-y snap-mandatory h-screen overflow-x-hidden scroll-smooth overflow-y-scroll`}
+        className="relative flex flex-col snap-y snap-mandatory h-screen overflow-x-hidden scroll-smooth overflow-y-scroll"
       >
         <NextTopLoader height={3} color="#3b82f6" />
 
         <NextSSRPlugin
           /**
-           * The `extractRouterConfig` will extract **only** the route configs
+           * The extractRouterConfig will extract *only* the route configs
            * from the router to prevent additional information from being
            * leaked to the client. The data passed to the client is the same
-           * as if you were to fetch `/api/uploadthing` directly.
+           * as if you were to fetch /api/uploadthing directly.
            */
           routerConfig={extractRouterConfig(ourFileRouter)}
         />
@@ -56,11 +56,6 @@ export default async function RootLayout({
         <BackToTopBtn />
         {/* <TwScreenInfo /> */}
         <Toaster />
-        <main className="relative flex flex-col snap-y snap-mandatory h-screen overflow-x-hidden scroll-smooth overflow-y-scroll">
-          {children}
-          <Footer data={footerData} />
-        </main>
-
         <Analytics />
         <SpeedInsights />
       </body>
