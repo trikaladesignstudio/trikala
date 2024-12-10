@@ -31,14 +31,13 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
-    const footerData = await filterAllProjects(sectionType.contact);
+  const footerData = await filterAllProjects(sectionType.contact);
 
   return (
     <html lang="en">
       <body
         suppressHydrationWarning
-        className={${silver.variable} antialiased}
+        className={`${silver.variable} antialiased`}
       >
         <NextTopLoader height={3} color="#3b82f6" />
 
@@ -52,9 +51,12 @@ export default async function RootLayout({
           routerConfig={extractRouterConfig(ourFileRouter)}
         />
 
-        <main id="mainCointainer" className="relative flex flex-col snap-y snap-mandatory h-screen overflow-x-hidden scroll-smooth overflow-y-scroll">
+        <main
+          id="mainCointainer"
+          className="relative flex flex-col snap-y snap-mandatory h-screen overflow-x-hidden scroll-smooth overflow-y-scroll"
+        >
           {children}
-          <Footer data={footerData}/>
+          <Footer data={footerData} />
           <BackToTopBtn />
         </main>
         <Toaster />
