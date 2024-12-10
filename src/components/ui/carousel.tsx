@@ -19,6 +19,7 @@ type CarouselProps = {
   plugins?: CarouselPlugin;
   orientation?: "horizontal" | "vertical";
   setApi?: (api: CarouselApi) => void;
+  delay?: number;
 };
 
 type CarouselContextProps = {
@@ -54,12 +55,13 @@ const Carousel = React.forwardRef<
       plugins,
       className,
       children,
+      delay = 2000,
       ...props
     },
     ref
   ) => {
     const plugin = React.useRef(
-      Autoplay({ delay: 2000, stopOnInteraction: true })
+      Autoplay({ delay: delay || 2000, stopOnInteraction: true })
     );
 
     const [carouselRef, api] = useEmblaCarousel(

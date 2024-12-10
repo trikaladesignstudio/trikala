@@ -4,7 +4,7 @@ export enum sectionType {
   hero = "hero",
   features = "features",
   expertise = "expertise",
-  interior = "interior",
+  // interior = "interior",
   working = "working",
   testimonials = "testimonials",
   contact = "contact",
@@ -14,7 +14,7 @@ export enum sectionType {
 export const allSections: sectionType[] = Object.values(sectionType);
 
 export enum ProjectType {
-  Workspace = "Workspace",
+  Landscape = "Landscape",
   Commercial = "Commercial",
   Residential = "Residential",
   UrbanDesign = "Urban Design",

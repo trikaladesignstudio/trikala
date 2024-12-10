@@ -41,6 +41,20 @@ export async function filterAllProjects(
   return filteredData;
 }
 
+export async function getAllFeaturedProjects() {
+  try {
+    const projects = await prisma.project.findMany({
+      where: {
+        featured: true,
+      },
+    });
+    return projects;
+  } catch (error) {
+    console.error("Error fetching projects:", error);
+    return [];
+  }
+}
+
 export async function addAProject(projectData: Prisma.ProjectCreateInput) {
   try {
     const project = await prisma.project.create({
