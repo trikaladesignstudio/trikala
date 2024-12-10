@@ -214,7 +214,7 @@ export default function Footer({
             <div className="flex flex-col lg:flex-row gap-2 lg:gap-8 mx-auto lg:mx-0">
               <div className="flex lg:gap-8 gap-2 text-sm flex-row lg:items-end items-center lg:justify-end justify-center">
                 <Link
-                  href="/sitemap"
+                  href="/sitemap.xml"
                   className="text-zinc-400 hover:text-zinc-300 transition-colors"
                 >
                   Site Map
