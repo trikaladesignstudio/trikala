@@ -20,19 +20,16 @@ export default async function Home() {
   const featuresData = await getAllFeaturedProjects();
   return (
     <>
-      <main className="relative flex flex-col snap-y snap-mandatory h-screen overflow-x-hidden scroll-smooth overflow-y-scroll">
-        <HeroTest data={heroData} />
-        {/* <Lead /> */}
-        <Featured data={featuresData} />
-        <Expertise />
-        <Working data={workingData} />
-        <PriceEstimator />
-        {/* <Interior /> */}
-        <Testimonials data={testimonialData} />
-        <Video />
-        {/* <Lead /> */}
-        <Footer />
-      </main>
+      <HeroTest data={heroData} />
+      {/* <Lead /> */}
+      <Featured data={featuresData} />
+      <Expertise />
+      <Working data={workingData} />
+      <PriceEstimator />
+      {/* <Interior /> */}
+      <Testimonials data={testimonialData} />
+      <Video />
+      {/* <Lead /> */}
       {/* </div> */}
     </>
   );
