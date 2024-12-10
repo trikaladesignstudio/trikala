@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { navlinks } from "@/types";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,10 +12,10 @@ const Navbar = () => {
 
   return (
     <nav
-      className="px-[2rem] lg:px-[5rem] absolute left-0 right-0 top-0 z-20 text-black/90 flex flex-row items-center min-h-fit justify-between w-full lg:py-0
+      className="px-[2rem] lg:px-[5rem] absolute left-0 right-0 top-0 z-20 text-black/90 flex flex-row items-center min-h-fit justify-between w-full py-1
       snap-start"
     >
-      <div className="font-bold">
+      <Link href={"/"} className="font-bold">
         <Image
           priority
           fetchPriority="high"
@@ -24,7 +25,7 @@ const Navbar = () => {
           height={130}
           className="invert"
         />
-      </div>
+      </Link>
       <div className="lg:hidden">
         <button className="text-white focus:outline-none" onClick={toggleMenu}>
           <svg
