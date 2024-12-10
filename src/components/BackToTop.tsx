@@ -6,6 +6,7 @@ import { BiSolidUpArrowAlt } from "react-icons/bi";
 
 function BackToTopBtn() {
   const [scrollY, setScrollY] = useState(0);
+  const [element, setElement] = useState<HTMLElement | null>(null);
 
   // Control animation using Framer Motion
   const controls = useAnimation();
@@ -14,27 +15,30 @@ function BackToTopBtn() {
 
   // Effect to update scroll position
   useEffect(() => {
-    const parentElement = document.getElementById(parentCointerId);
+    setElement(document.getElementById(parentCointerId));
+  }, []);
+
+  useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = parentElement?.scrollTop || window.scrollY;
+      const scrollPosition = element?.scrollTop || window.scrollY;
       setScrollY(scrollPosition);
     };
 
-    if (parentElement) {
-      parentElement.addEventListener("scroll", handleScroll);
+    if (element) {
+      element.addEventListener("scroll", handleScroll);
     } else {
       window.addEventListener("scroll", handleScroll);
     }
 
     // Clean up event listener on component unmount
     return () => {
-      if (parentElement) {
-        parentElement.removeEventListener("scroll", handleScroll);
+      if (element) {
+        element.removeEventListener("scroll", handleScroll);
       } else {
         window.removeEventListener("scroll", handleScroll);
       }
     };
-  }, []);
+  }, [element]);
 
   // Effect to trigger animation when scroll is more than 50%
   useEffect(() => {
@@ -48,7 +52,11 @@ function BackToTopBtn() {
   // JSX for the component
   return (
     <motion.button
-      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      onClick={() =>
+        element
+          ? element.scrollTo({ top: 0, behavior: "smooth" })
+          : window.scrollTo({ top: 0, behavior: "smooth" })
+      }
       initial={{ opacity: 0, y: 50 }}
       animate={controls}
       id="back-to-top"
