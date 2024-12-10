@@ -30,10 +30,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${silver.variable} antialiased `}>
       <body
         suppressHydrationWarning
-        className={`${silver.variable} antialiased relative flex flex-col snap-y snap-mandatory h-screen overflow-x-hidden scroll-smooth overflow-y-scroll`}
+        className={`relative flex flex-col snap-y snap-mandatory h-screen overflow-x-hidden scroll-smooth overflow-y-scroll`}
       >
         <NextTopLoader height={3} color="#3b82f6" />
 
@@ -46,11 +46,9 @@ export default function RootLayout({
            */
           routerConfig={extractRouterConfig(ourFileRouter)}
         />
-        {/* <main className="relative flex flex-col snap-y snap-mandatory h-screen overflow-x-hidden scroll-smooth overflow-y-scroll"> */}
         {children}
         <Footer />
         <BackToTopBtn />
-        {/* <TwScreenInfo /> */}
         <Toaster />
         <Analytics />
         <SpeedInsights />

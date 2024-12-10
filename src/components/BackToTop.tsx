@@ -1,7 +1,8 @@
 "use client";
 
-import { useAnimation, motion } from "framer-motion";
-import React, { useEffect, useState } from "react";
+import { motion, useAnimation } from "framer-motion";
+import { useEffect, useState } from "react";
+import { BiSolidUpArrowAlt } from "react-icons/bi";
 
 function BackToTopBtn() {
   const [scrollY, setScrollY] = useState(0);
@@ -39,9 +40,9 @@ function BackToTopBtn() {
       initial={{ opacity: 0, y: 50 }}
       animate={controls}
       id="back-to-top"
-      className="bg-black border border-white/10 font-bold fixed z-50 bottom-4 right-4 rounded-lg shadow-lg text-white text-lg px-4 py-2 hover:bg-white hover:text-black transition-all duration-300 ease-in-out cursor-pointer"
+      className="bg-black border border-gray-700/70  font-bold fixed z-50 bottom-4 right-4 rounded-full shadow-xl text-white text-lg p-2 hover:bg-white hover:text-black transition-all duration-300 ease-in-out cursor-pointer"
     >
-      &uarr; &nbsp; Back to Top
+      <BiSolidUpArrowAlt size={30}/>
     </motion.button>
   );
 }
