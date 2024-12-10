@@ -59,8 +59,7 @@ main {
 }
 
 main::-webkit-scrollbar {
-  width: 0.7rem;
-  position: absolute;
+  width: 0.5rem;
   background: transparent;
 }
 
@@ -71,10 +70,9 @@ main::-webkit-scrollbar-track {
 main::-webkit-scrollbar-thumb {
   @apply glass;
   background-color: rgba(12, 10, 10, 0.6);
-  border-radius: 0.5rem;
 }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   width: 0.7rem;
   height: 0.3rem;
   background-color: transparent;
@@ -88,4 +86,4 @@ main::-webkit-scrollbar-thumb {
   @apply glass;
   background-color: rgba(24, 16, 16, 0.9);
   border-radius: 0.5rem;
-}
+} */

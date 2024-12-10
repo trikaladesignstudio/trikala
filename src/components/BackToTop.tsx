@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useAnimation } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BiSolidUpArrowAlt } from "react-icons/bi";
 
 function BackToTopBtn() {
@@ -10,17 +10,29 @@ function BackToTopBtn() {
   // Control animation using Framer Motion
   const controls = useAnimation();
 
+  const parentCointerId = "mainCointainer";
+
   // Effect to update scroll position
   useEffect(() => {
+    const parentElement = document.getElementById(parentCointerId);
     const handleScroll = () => {
-      setScrollY(window.scrollY);
+      const scrollPosition = parentElement?.scrollTop || window.scrollY;
+      setScrollY(scrollPosition);
     };
 
-    window.addEventListener("scroll", handleScroll);
+    if (parentElement) {
+      parentElement.addEventListener("scroll", handleScroll);
+    } else {
+      window.addEventListener("scroll", handleScroll);
+    }
 
     // Clean up event listener on component unmount
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      if (parentElement) {
+        parentElement.removeEventListener("scroll", handleScroll);
+      } else {
+        window.removeEventListener("scroll", handleScroll);
+      }
     };
   }, []);
 
@@ -40,9 +52,9 @@ function BackToTopBtn() {
       initial={{ opacity: 0, y: 50 }}
       animate={controls}
       id="back-to-top"
-      className="bg-black border border-gray-700/70  font-bold fixed z-50 bottom-4 right-4 rounded-full shadow-xl text-white text-lg p-2 hover:bg-white hover:text-black transition-all duration-300 ease-in-out cursor-pointer"
+      className="bg-black border border-gray-700/70  font-bold fixed z-50 bottom-4 right-6 rounded-full shadow-xl text-white text-lg p-2 hover:bg-white hover:text-black transition-all duration-300 ease-in-out cursor-pointer"
     >
-      <BiSolidUpArrowAlt size={30}/>
+      <BiSolidUpArrowAlt size={30} />
     </motion.button>
   );
 }
