@@ -211,19 +211,27 @@ export default function Footer({
               />
             </Link>
 
-            <div className="flex lg:gap-8 gap-2 text-sm lg:flex-row flex-col lg:items-end items-center lg:justify-end justify-center">
-              <Link
-                href="/sitemap"
-                className="text-zinc-400 hover:text-zinc-300 transition-colors"
-              >
-                Site Map
-              </Link>
-              <Link
-                href="/agreement"
-                className="text-zinc-400 hover:text-zinc-300 transition-colors"
-              >
-                User Agreement
-              </Link>
+            <div className="flex flex-col lg:flex-row gap-2 lg:gap-8 mx-auto lg:mx-0">
+              <div className="flex lg:gap-8 gap-2 text-sm flex-row lg:items-end items-center lg:justify-end justify-center">
+                <Link
+                  href="/sitemap"
+                  className="text-zinc-400 hover:text-zinc-300 transition-colors"
+                >
+                  Site Map
+                </Link>
+                <Link
+                  href="/privacyPolicy"
+                  className="text-zinc-400 hover:text-zinc-300 transition-colors"
+                >
+                  Privacy Policy
+                </Link>
+                <Link
+                  href="/termAndCondition"
+                  className="text-zinc-400 hover:text-zinc-300 transition-colors"
+                >
+                  T&C
+                </Link>
+              </div>
               <p className="text-zinc-600">
                 {new Date().getFullYear()} &copy; Trikala Architecture Group
               </p>

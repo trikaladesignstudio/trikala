@@ -37,7 +37,7 @@ export default async function RootLayout({
     <html lang="en" className={`${silver.variable} antialiased `}>
       <body
         suppressHydrationWarning
-        className="relative flex flex-col snap-y snap-mandatory h-screen overflow-x-hidden scroll-smooth overflow-y-scroll"
+        className={`relative flex flex-col snap-y snap-mandatory h-screen overflow-x-hidden scroll-smooth overflow-y-scroll`}
       >
         <NextTopLoader height={3} color="#3b82f6" />
 
@@ -50,11 +50,9 @@ export default async function RootLayout({
            */
           routerConfig={extractRouterConfig(ourFileRouter)}
         />
-        {/* <main className="relative flex flex-col snap-y snap-mandatory h-screen overflow-x-hidden scroll-smooth overflow-y-scroll"> */}
         {children}
         <Footer data={footerData} />
         <BackToTopBtn />
-        {/* <TwScreenInfo /> */}
         <Toaster />
         <Analytics />
         <SpeedInsights />
