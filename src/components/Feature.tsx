@@ -16,7 +16,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Heading from "./custom/Heading";
-import Sections from "./custom/Section";
+import Section from "./custom/Section";
 import { allProjectTypes } from "@/utils/client_utils";
 import { Prisma } from "@prisma/client";
 
@@ -36,8 +36,8 @@ function Featured({ data }: { data: Prisma.ProjectCreateInput[] }) {
   }, [data]);
 
   return (
-    <Sections className="lg:px-0 px-0 lg:py-0 py-0 justify-center ">
-      <Sections toSnap={false} className="min-h-fit ">
+    <Section className="lg:px-0 px-0 lg:py-0 py-0 justify-center ">
+      <Section toSnap={false} className="min-h-fit ">
         <Heading className="text-5xl" text="Featured Work" />
         <motion.div
           layout
@@ -58,8 +58,8 @@ function Featured({ data }: { data: Prisma.ProjectCreateInput[] }) {
             </motion.div>
           ))}
         </motion.div>
-      </Sections>
-      {/* <Sections
+      </Section>
+      {/* <Section
         className="lg:px-0 px-0 lg:py-0 py-0 justify-end min-h-fit"
         toSnap={false}
       > */}
@@ -92,8 +92,8 @@ function Featured({ data }: { data: Prisma.ProjectCreateInput[] }) {
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>
-      {/* </Sections> */}
-    </Sections>
+      {/* </Section> */}
+    </Section>
   );
 }
 
