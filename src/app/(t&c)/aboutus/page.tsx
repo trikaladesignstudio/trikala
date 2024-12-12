@@ -51,42 +51,36 @@ export default function PrivacyPolicy() {
   return (
     <>
       <Section className="lg:px-0 px-0 lg:py-0 py-0 max-h-screen">
-        <Section toSnap={false} className="min-h-fit flex-1">
-          <div className="mb-2 text-center ">
-            <Heading text="About us" />
-            <div className="lg:text-xl">
-              Founded by Tanya Agarwal in 2020, Trikala Architects is a
-              visionary design firm dedicated to crafting innovative,
-              sustainable spaces. Our integrated practice areas include Master
-              Planning, Residential, Commercial, Institutional, and Interiors,
-              supported by expertise in Sustainability, Landscape, and Digital
-              Technologies. With a strong presence in India, we deliver holistic
-              design solutions that blend functionality, aesthetics, and
-              environmental responsibility. Our team's passion for creative
-              excellence and client-centric approach drives our commitment to
-              exceptional architecture and design. At Trikala Architects, we
-              strive to make a lasting impact through our work, fostering
-              meaningful relationships and built environments that inspire and
-              uplift communities."
-            </div>
+        <div className=" text-center px-8">
+          <Heading text="About us" className="text-black" />
+          <div className="lg:text-lg text-justify ">
+            Founded by Tanya Agarwal in 2020, Trikala Architects is a visionary
+            design firm dedicated to crafting innovative, sustainable spaces.
+            Our integrated practice areas include Master Planning, Residential,
+            Commercial, Institutional, and Interiors, supported by expertise in
+            Sustainability, Landscape, and Digital Technologies. With a strong
+            presence in India, we deliver holistic design solutions that blend
+            functionality, aesthetics, and environmental responsibility. Our
+            team's passion for creative excellence and client-centric approach
+            drives our commitment to exceptional architecture and design. At
+            Trikala Architects, we strive to make a lasting impact through our
+            work, fostering meaningful relationships and built environments that
+            inspire and uplift communities."
           </div>
-        </Section>
-        <div className="w-full h-1/2 overflow-hidden text-center">
-          <Image
-            src="/static/images/workCulture.jpg"
-            alt="image"
-            className="w-full object-cover h-full"
-            width={400}
-            height={300}
-          />
-          text
         </div>
+        <Image
+          src="/static/images/cover.svg"
+          alt="image"
+          className="w-full h-full object-cover"
+          width={800}
+          height={300}
+        />
       </Section>
       <Section className="lg:px-0 px-0 lg:py-0 py-0 max-h-screen justify-start">
         <div className="lg:mb-2 text-center bg-black text-white ">
           <Section toSnap={false} className="min-h-fit">
             <Heading text="Approach" className="text-white" />
-            <div className="lg:text-xl">
+            <div className="lg:text-xl text-justify ">
               At Trikala Architects, we design with purpose and passion. Our
               projects are guided by first principles, prioritizing comfort,
               safety, and liveability, while harmonizing with India's diverse

@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { login } from "@/lib/auth";
 import Link from "next/link";
+import Section from "@/components/custom/Section";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -30,7 +31,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen flex-col gap-4">
+    <Section className="flex items-center justify-center gap-4">
       <form
         onSubmit={handleSubmit}
         className="flex flex-col border border-black rounded-md p-6 gap-4 min-w-[20%]"
@@ -80,6 +81,6 @@ export default function LoginPage() {
       >
         Go back home &rarr;
       </Link>
-    </div>
+    </Section>
   );
 }
