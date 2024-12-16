@@ -8,9 +8,10 @@ type Section = {
   className?: string;
   children: ReactNode;
   toSnap?: boolean;
+  style?: React.CSSProperties;
 };
 
-function Section({ id, className, children, toSnap = true }: Section) {
+function Section({ id, className, children, toSnap = true, style }: Section) {
   const ref = useRef(null);
   const isInView = useInView(ref);
 
@@ -42,6 +43,7 @@ function Section({ id, className, children, toSnap = true }: Section) {
         toSnap && "snap-center shrink-0",
         className
       )}
+      style={style}
       ref={ref}
     >
       <motion.div
