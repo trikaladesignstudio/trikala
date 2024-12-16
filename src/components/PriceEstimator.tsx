@@ -3,12 +3,17 @@ import image2 from "@/assets/Digit.png";
 import Link from "next/link";
 import Section from "./custom/Section";
 import Heading from "./custom/Heading";
+import PieChart from "./custom/PieChart";
 
 export default function PriceEstimator() {
   return (
-    <Section id="price-estimator" className="lg:py-0 max-h-screen lg:justify-evenly justify-center">
+    <Section
+      id="price-estimator"
+      className="lg:py-0 max-h-screen lg:justify-evenly justify-center"
+    >
       <Heading className="text-center" text="Interior Price Estimator" />
-      <div className="flex flex-col lg:flex-row lg:gap-20 lg:justify-center">
+      <div></div>
+      {/* <div className="flex flex-col lg:flex-row lg:gap-20 lg:justify-center">
         <Link
           href="#full-estimate"
           className="group lg:w-[20rem] overflow-hidden bg-white shadow-md transition-transform hover:scale-[1.02]"
@@ -56,7 +61,8 @@ export default function PriceEstimator() {
             </div>
           </div>
         </Link>
-      </div>
+      </div> */}
+      <PieChart />
     </Section>
   );
 }
