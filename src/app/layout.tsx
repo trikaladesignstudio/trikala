@@ -13,7 +13,7 @@ import BackToTopBtn from "@/components/BackToTop";
 import { filterAllProjects } from "@/utils/dbActions";
 import { sectionType } from "@/utils/client_utils";
 
-export const revalidate = 60*60*0.5;
+export const revalidate = 60 * 60 * 0.5;
 
 const silver = localFont({
   src: "./Silver-Queen.otf",
@@ -31,7 +31,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const footerData = await filterAllProjects(sectionType.contact);
 
   return (
     <html lang="en">
@@ -53,10 +52,9 @@ export default async function RootLayout({
 
         <main
           id="mainCointainer"
-          className="relative flex flex-col snap-y snap-mandatory h-screen overflow-x-hidden scroll-smooth overflow-y-scroll"
+          className="relative flex flex-col snap-y snap-mandatory h-screen overflow-x-hidden scroll-smooth"
         >
           {children}
-          <Footer data={footerData} />
           <BackToTopBtn />
         </main>
         <Toaster />
