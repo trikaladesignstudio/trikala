@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import PieChart from "./PieChart";
+// import PieChart from "./PieChart";
 
 export default function ConstructionEstimator() {
   const [step, setStep] = useState(1);
@@ -379,7 +379,7 @@ export default function ConstructionEstimator() {
                   </div>
                 </div>
               </div>
-              <PieChart />
+              {/* <PieChart /> */}
             </div>
           )}
         </div>
