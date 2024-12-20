@@ -16,6 +16,8 @@ import dynamic from "next/dynamic";
 // import Hero from "@/components/Hero";
 const Video = dynamic(() => import("@/components/Video"), { ssr: true });
 
+export const revalidate = 60 * 60 * 0.5;
+
 export default async function Home() {
   const featuresData = await getAllFeaturedProjects();
   const heroData = await filterAllProjects(sectionType.hero);

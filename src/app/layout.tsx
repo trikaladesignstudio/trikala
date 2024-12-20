@@ -10,8 +10,6 @@ import { extractRouterConfig } from "uploadthing/server";
 import "./globals.css";
 import BackToTopBtn from "@/components/BackToTop";
 
-export const revalidate = 60 * 60 * 0.5;
-
 const silver = localFont({
   src: "./Silver-Queen.otf",
   variable: "--font-silver",
