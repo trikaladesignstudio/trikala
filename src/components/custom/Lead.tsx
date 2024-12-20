@@ -33,7 +33,7 @@ function Lead() {
   return (
     <motion.section
       id="lead"
-      className={cn("snap-always shrink-0 snap-end bg-custom-lb h-auto")}
+      className={"snap-always shrink-0 snap-start bg-black h-auto"}
       initial={{ height: "auto" }}
       animate={{ height: showForm ? "auto" : 0 }}
       transition={{ duration: 0.25, delay: 0.25, ease: "easeInOut" }}
@@ -69,7 +69,6 @@ function Lead() {
               id="email"
               name="email"
               placeholder="Email"
-              // defaultValue=""
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
