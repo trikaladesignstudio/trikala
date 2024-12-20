@@ -1,7 +1,7 @@
 // import Lead from "@/components/custom/Lead";
 import Expertise from "@/components/ExpertiseTest";
 import Featured from "@/components/Feature";
-import PriceEstimator from "@/components/PriceEstimator";
+// import PriceEstimator from "@/components/PriceEstimator";
 import Testimonials from "@/components/Testimonials";
 import Working from "@/components/Working";
 import HeroTest from "@/components/HeroTest";
@@ -17,11 +17,12 @@ import dynamic from "next/dynamic";
 const Video = dynamic(() => import("@/components/Video"), { ssr: true });
 
 export default async function Home() {
+  const featuresData = await getAllFeaturedProjects();
   const heroData = await filterAllProjects(sectionType.hero);
   const workingData = await filterAllProjects(sectionType.working);
   const testimonialData = await filterAllProjects(sectionType.testimonials);
-  const featuresData = await getAllFeaturedProjects();
   const footerData = await filterAllProjects(sectionType.contact);
+  const expertiseData = await filterAllProjects(sectionType.expertise);
 
   return (
     <Suspense>
@@ -29,16 +30,13 @@ export default async function Home() {
       <Suspense>
         <Lead />
         <Featured data={featuresData} />
-        <Expertise />
+        <Expertise data={expertiseData} />
         <Working data={workingData} />
-        <PriceEstimator />
+        {/* <PriceEstimator /> */}
         {/* <Interior /> */}
         <Testimonials data={testimonialData} />
         <Video />
         <Footer data={footerData} />
-
-        {/* <Lead /> */}
-        {/* </div> */}
       </Suspense>
     </Suspense>
   );

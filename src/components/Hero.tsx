@@ -22,7 +22,7 @@ function Hero() {
             <Image
               loading="lazy"
               src={image1}
-              alt=""
+              alt="hero"
               className="w-[30rem] hidden lg:h-[8rem] lg:block rounded-full flex-1"
             />
           </div>
@@ -34,7 +34,7 @@ function Hero() {
             <Image
               loading="lazy"
               src={image1}
-              alt=""
+              alt="hero"
               className="w-[30rem] hidden lg:h-[8rem]  lg:block rounded-full flex-1"
             />
           </div>

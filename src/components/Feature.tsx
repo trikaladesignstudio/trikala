@@ -47,7 +47,7 @@ function Featured({ data }: { data: Prisma.ProjectCreateInput[] }) {
             <motion.div
               key={index}
               className={cn(
-                "relative z-10 text-left p-2 px-4 cursor-pointer animate-[bg_1s_ease-in-out] hover:border inset-0",
+                "relative z-10 text-left p-2 px-4 cursor-pointer animate-[bg_1s_ease-in-out] hover:border -inset-0.5",
                 currentActive == type
                   ? "border rounded-md  bg-black text-white"
                   : ""

@@ -13,10 +13,11 @@ export enum sectionType {
 
 export const allSections: sectionType[] = Object.values(sectionType);
 
+
 export enum ProjectType {
-  Landscape = "Landscape",
-  Commercial = "Commercial",
-  Residential = "Residential",
+  Architecture = "Architecture Design",
+  Interior = "Interior Design",
+  Landscape = "Landscape Design",
   UrbanDesign = "Urban Design",
   none = "none",
 }
