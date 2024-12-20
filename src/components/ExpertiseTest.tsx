@@ -1,4 +1,5 @@
 "use client";
+
 import { expertiseData, expertiseDataType } from "@/jsonData/Home/Expertise";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
@@ -11,6 +12,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "./ui/carousel";
+import { allProjectTypes, ProjectType } from "@/utils/client_utils";
+import { Prisma } from "@prisma/client";
 
 interface CarouselDataProps {
   images: string[];
@@ -77,7 +80,7 @@ function SingleExperize({ expertise }: { expertise: expertiseDataType }) {
   );
 }
 
-function ExpertiseTest() {
+function ExpertiseTest({ data }: { data: Prisma.ProjectCreateInput[] }) {
   const [expertiseDataArray, setExpertiseData] = useState<expertiseDataType[]>(
     []
   );
@@ -141,14 +144,25 @@ function ExpertiseTest() {
   // });
 
   useEffect(() => {
+    // console.log("data:", data);
     const tempExpertiseData: expertiseDataType[] = [];
-    subSectionHeadings.map((item) => {
-      tempExpertiseData.push({
-        ...expertiseData[0],
-        title: item,
+    allProjectTypes
+      .filter((item) => item !== ProjectType.none)
+      .map((item, index) => {
+        const allRelatedImages = data
+          .filter((data) => data.type === item)
+          .map((data) => data.images)
+          .flat()
+          .map((image) => image?.url);
+
+        tempExpertiseData.push({
+          id: index,
+          title: item,
+          description:
+            "We create unique architectural concepts that reflect your personality and meet your needs and preferences",
+          images: allRelatedImages as string[],
+        });
       });
-    });
-    // console.log("tempExpertiseData:", tempExpertiseData);
     setExpertiseData(tempExpertiseData);
   }, [expertiseData]);
 
