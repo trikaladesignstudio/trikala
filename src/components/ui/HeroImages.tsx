@@ -9,7 +9,8 @@ import { useEffect, useState } from "react";
 import { useMeasure } from "react-use";
 
 const image = [image0, image1, image2, image3];
-const HeroImages = () => {image
+const HeroImages = () => {
+  image;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [images, setImages] = useState(image);
   const [ref, messure] = useMeasure<HTMLDivElement>();
@@ -42,6 +43,7 @@ const HeroImages = () => {image
               className="flex-shrink-0"
             >
               <Image
+                loading="lazy"
                 src={image}
                 style={{ height: `${messure.height}px` }}
                 alt={`Slide ${index}`}
