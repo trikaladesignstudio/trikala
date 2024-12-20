@@ -8,10 +8,7 @@ import NextTopLoader from "nextjs-toploader";
 import { Toaster } from "react-hot-toast";
 import { extractRouterConfig } from "uploadthing/server";
 import "./globals.css";
-import Footer from "@/components/Footer";
 import BackToTopBtn from "@/components/BackToTop";
-import { filterAllProjects } from "@/utils/dbActions";
-import { sectionType } from "@/utils/client_utils";
 
 export const revalidate = 60 * 60 * 0.5;
 
@@ -31,7 +28,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return (
     <html lang="en">
       <body
