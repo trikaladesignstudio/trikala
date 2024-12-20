@@ -33,7 +33,7 @@ function HeroTest({
       <Navbar />
       {images.map((image, index) => (
         <Image
-        loading="lazy"
+          // loading="lazy"
           priority
           // fetchPriority="high"
           // loading={currentIndex === index ? "eager" : "lazy"}

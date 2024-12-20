@@ -1,7 +1,7 @@
 // import Lead from "@/components/custom/Lead";
 import Expertise from "@/components/ExpertiseTest";
 import Featured from "@/components/Feature";
-import PriceEstimator from "@/components/PriceEstimator";
+// import PriceEstimator from "@/components/PriceEstimator";
 import Testimonials from "@/components/Testimonials";
 import Working from "@/components/Working";
 import Video from "@/components/Video";
@@ -28,7 +28,7 @@ export default async function Home() {
       <Featured data={featuresData} />
       <Expertise />
       <Working data={workingData} />
-      <PriceEstimator />
+      {/* <PriceEstimator /> */}
       {/* <Interior /> */}
       <Testimonials data={testimonialData} />
       <Video />
