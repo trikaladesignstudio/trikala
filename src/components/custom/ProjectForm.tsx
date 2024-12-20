@@ -271,7 +271,7 @@ export default function ProjectForm({ projectId }: { projectId?: string }) {
                     >
                       <Image
                         loading="lazy"
-                        alt=""
+                        alt="Forms"
                         height={100}
                         width={100}
                         src={filename.url}

@@ -69,6 +69,7 @@ export default function PrivacyPolicy() {
           </div>
         </div>
         <Image
+          loading="lazy"
           src="/static/images/cover.svg"
           alt="image"
           className="w-full h-full object-cover"
