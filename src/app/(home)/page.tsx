@@ -8,6 +8,8 @@ import Video from "@/components/Video";
 import HeroTest from "@/components/HeroTest";
 import { filterAllProjects, getAllFeaturedProjects } from "@/utils/dbActions";
 import { sectionType } from "@/utils/client_utils";
+import { Suspense } from "react";
+import Footer from "@/components/Footer";
 // import Interior from "@/components/Interior";
 // import SectionGrid from "@/components/custom/SectionGrid";
 // import Hero from "@/components/Hero";
@@ -17,8 +19,10 @@ export default async function Home() {
   const workingData = await filterAllProjects(sectionType.working);
   const testimonialData = await filterAllProjects(sectionType.testimonials);
   const featuresData = await getAllFeaturedProjects();
+  const footerData = await filterAllProjects(sectionType.contact);
+
   return (
-    <>
+    <Suspense>
       <HeroTest data={heroData} />
       {/* <Lead /> */}
       <Featured data={featuresData} />
@@ -28,8 +32,10 @@ export default async function Home() {
       {/* <Interior /> */}
       <Testimonials data={testimonialData} />
       <Video />
+      <Footer data={footerData} />
+
       {/* <Lead /> */}
       {/* </div> */}
-    </>
+    </Suspense>
   );
 }
