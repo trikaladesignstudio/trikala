@@ -1,20 +1,8 @@
 "use client";
 import { expertiseData, expertiseDataType } from "@/jsonData/Home/Expertise";
-import {
-  motion,
-  useSpring,
-  useTransform,
-  useViewportScroll,
-} from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
-import {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
-import ResizeObserver from "resize-observer-polyfill";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Section from "./custom/Section";
 import {
   Carousel,
@@ -71,6 +59,7 @@ function SingleExperize({ expertise }: { expertise: expertiseDataType }) {
   return (
     <div key={expertise.id}>
       <Section
+        toSnap={false}
         className="lg:py-0 py-0 min-h-fit"
         style={{ width: `calc(100vw - 0.5rem)` }}
       >
@@ -93,35 +82,63 @@ function ExpertiseTest() {
     []
   );
 
-  const scrollRef = useRef(null);
-  // const ghostRef = useRef(null);
-  // const [scrollRange, setScrollRange] = useState(0);
-  // const [viewportW, setViewportW] = useState(0);
+  const [mainParentScoll, setMainParentScoll] = useState<HTMLElement | null>(
+    null
+  );
+  // const mainParentScoll = useRef<HTMLElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const ghostRef = useRef(null);
+  const refParentScroll = useRef(null);
+  const [scrollRange, setScrollRange] = useState(0);
 
-  // useLayoutEffect(() => {
-  //   scrollRef && setScrollRange(scrollRef.current?.scrollWidth);
-  // }, [scrollRef]);
+  useEffect(() => {
+    const parentScoll = document?.getElementById(
+      "mainCointainer"
+    ) as HTMLElement;
 
-  // const onResize = useCallback((entries) => {
-  //   for (let entry of entries) {
-  //     setViewportW(entry.contentRect.width);
-  //   }
-  // }, []);
+    if (parentScoll) {
+      setMainParentScoll(parentScoll);
+    }
+  }, []);
 
-  // useLayoutEffect(() => {
-  //   const resizeObserver = new ResizeObserver((entries) => onResize(entries));
-  //   resizeObserver.observe(ghostRef.current);
-  //   return () => resizeObserver.disconnect();
-  // }, [onResize]);
+  useLayoutEffect(() => {
+    const scrollref = scrollRef.current;
+    if (scrollref) {
+      scrollRef && setScrollRange(scrollref?.scrollWidth);
+    }
+  }, [scrollRef]);
 
-  // const { scrollYProgress } = useViewportScroll();
-  // const transform = useTransform(
-  //   scrollYProgress,
-  //   [0, 1],
-  //   [0, -scrollRange + viewportW]
-  // );
-  // const physics = { damping: 15, mass: 0.27, stiffness: 55 };
-  // const spring = useSpring(transform, physics);
+  const { scrollYProgress } = useScroll({
+    container: {
+      current: mainParentScoll,
+    },
+    target: refParentScroll,
+    offset: ["start start", "end end"],
+    layoutEffect: false,
+  });
+
+  // funk around here only
+  const transform = useTransform(
+    scrollYProgress,
+    [0, 0.05, 0.3, 0.35, 0.65, 0.7, 0.95, 1],
+    [
+      0,
+      0,
+      -scrollRange,
+      -scrollRange,
+      -scrollRange * 2,
+      -scrollRange * 2,
+      -scrollRange * 3,
+      -scrollRange * 3,
+    ]
+  );
+
+  // useMotionValueEvent(transform, "change", (latest) => {
+  //   console.log("latest transform:", latest);
+  // });
+  // useMotionValueEvent(scrollYProgress, "change", (latest) => {
+  //   console.log("latest:", latest);
+  // });
 
   useEffect(() => {
     const tempExpertiseData: expertiseDataType[] = [];
@@ -136,22 +153,42 @@ function ExpertiseTest() {
   }, [expertiseData]);
 
   return (
-    <Section className="justify-center bg-black text-white lg:px-0 px-0 relative">
-      <div
-        ref={scrollRef}
-        className="fixed left-0 right-0 will-change-transform"
-      >
-        <Section className="lg:py-0 py-0 min-h-fit justify-center">
-          <hr className="border-2" />
+    <Section
+      id="expertise_parent_cointainer"
+      className="min-h-fit  bg-black text-white lg:px-0 px-0 py-0 lg:py-0"
+    >
+      <div ref={refParentScroll} className="flex flex-col relative ">
+        <Section
+          toSnap={false}
+          className="lg:px-0 px-0 py-0 lg:py-0 sticky top-0 right-0 left-0"
+        >
+          <Section
+            toSnap={false}
+            className="lg:py-0 py-0 min-h-fit justify-center"
+          >
+            <hr className="border-2" />
+          </Section>
+          <motion.div
+            style={{ translateX: transform }}
+            ref={scrollRef}
+            className="flex flex-row relative transform "
+          >
+            {expertiseDataArray.map((item) => (
+              <SingleExperize expertise={item} key={item.title} />
+            ))}
+          </motion.div>
+          <Section
+            toSnap={false}
+            className="lg:py-0 py-0 min-h-fit justify-center"
+          >
+            <hr className="border-2" />
+          </Section>
         </Section>
-        <div className="flex flex-row border -translate-x-full">
-          {expertiseDataArray.map((item) => (
-            <SingleExperize expertise={item} />
-          ))}
-        </div>
-        <Section className="lg:py-0 py-0 min-h-fit justify-center">
-          <hr className="border-2" />
-        </Section>
+        <div
+          ref={ghostRef}
+          style={{ height: scrollRange }}
+          className="ghost w-full bg-transparent"
+        />
       </div>
     </Section>
   );

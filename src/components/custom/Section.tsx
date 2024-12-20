@@ -9,9 +9,15 @@ type Section = {
   children: ReactNode;
   toSnap?: boolean;
   style?: React.CSSProperties;
-};
+} 
 
-function Section({ id, className, children, toSnap = true, style }: Section) {
+function Section({
+  id,
+  className,
+  children,
+  toSnap = true,
+  style
+}: Section) {
   const ref = useRef(null);
   const isInView = useInView(ref);
 
