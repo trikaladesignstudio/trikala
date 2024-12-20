@@ -54,9 +54,9 @@ const Navbar = () => {
           </div>
         ))}
       </div>
-      <button className="hidden lg:block rounded-full bg-black border-gray-500/50 border-2 text-white px-4 py-1 font-semibold text-lg">
+      <Link href="/#lead" className="hidden lg:block rounded-full bg-black border-gray-500/50 border-2 text-white px-4 py-1 font-semibold text-lg">
         Start a Project
-      </button>
+      </Link>
       <div
         className={cn(
           "fixed inset-0 z-50 transform bg-gray-100 bg-opacity-90 w-full h-full transition-transform duration-300 ease-in-out lg:hidden",

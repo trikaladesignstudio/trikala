@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useAnimation } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { BiSolidUpArrowAlt } from "react-icons/bi";
 
 function BackToTopBtn() {
