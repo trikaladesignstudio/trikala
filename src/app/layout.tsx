@@ -46,7 +46,7 @@ export default async function RootLayout({
 
         <main
           id="mainCointainer"
-          className="relative flex flex-col snap-y snap-mandatory h-screen overflow-x-hidden scroll-smooth"
+          className="relative flex flex-col snap-y snap-mandatory h-[100dvh] overflow-x-hidden scroll-smooth"
         >
           {children}
           <BackToTopBtn />

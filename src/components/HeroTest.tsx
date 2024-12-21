@@ -34,8 +34,9 @@ function HeroTest({
       setImages(projectImages.flat());
     }
   }, []);
+
   return (
-    <Section className="relative ">
+    <Section className="relative max-h-[100dvh] ">
       <Navbar />
       {images.map((image, index) => (
         <AspectRatio ratio={1.78}>

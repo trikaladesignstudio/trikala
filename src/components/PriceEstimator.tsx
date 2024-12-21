@@ -9,7 +9,7 @@
 //   return (
 //     <Section
 //       id="price-estimator"
-//       className="lg:py-0 max-h-screen lg:justify-evenly justify-center"
+//       className="lg:py-0 max-h-[100dvh] lg:justify-evenly justify-center"
 //     >
 //       <Heading className="text-center" text="Interior Price Estimator" />
 //       <div></div>

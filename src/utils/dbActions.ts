@@ -2,8 +2,9 @@
 import prisma from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
 import { UTApi } from "uploadthing/server";
-import { ProjectType, sectionType } from "./client_utils";
+import { allProjectTypes, ProjectType, sectionType } from "./client_utils";
 import { revalidatePath } from "next/cache";
+import { expertiseDataType } from "@/jsonData/Home/Expertise";
 
 export async function getAllProjects() {
   try {
@@ -40,6 +41,30 @@ export async function filterAllProjects(
   });
 
   return filteredData;
+}
+
+export async function getAllProjectsGroupByType() {
+  // const tempExpertiseData: expertiseDataType[] = [];
+
+  const allProjectTypesData = await allProjectTypes
+    .filter((item) => item !== ProjectType.none)
+    .map(async (item, index) => {
+      const data = await filterAllProjects(undefined, item);
+      const allRelatedImages = await data
+        .filter((data) => data.type === item)
+        .map((data) => data.images)
+        .flat()
+        .map((image) => image?.url);
+
+      return {
+        id: index,
+        title: item,
+        description:
+          "We create unique architectural concepts that reflect your personality and meet your needs and preferences",
+        images: allRelatedImages as string[],
+      };
+    });
+  return await Promise.all(allProjectTypesData);
 }
 
 export async function getAllFeaturedProjects() {

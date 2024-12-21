@@ -2,7 +2,10 @@
 
 import { expertiseDataType } from "@/jsonData/Home/Expertise";
 import { allProjectTypes, ProjectType } from "@/utils/client_utils";
-import { filterAllProjects } from "@/utils/dbActions";
+import {
+  filterAllProjects,
+  getAllProjectsGroupByType,
+} from "@/utils/dbActions";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
@@ -123,7 +126,7 @@ function ExpertiseTest() {
   // funk around here only
   const transform = useTransform(
     scrollYProgress,
-    [0, 0.05, 0.3, 0.35, 0.65, 0.7, 0.95, 1],
+    [0, 0.1, 0.30, 0.40, 0.60, 0.70, 0.90, 1],
     [
       0,
       0,
@@ -144,35 +147,9 @@ function ExpertiseTest() {
   // });
 
   useEffect(() => {
-    // console.log("data:", data);
-    const tempExpertiseData: expertiseDataType[] = [];
-
-    // data.map((data) => {
-    //   console.log("data:", data.type);
-    // });
-    allProjectTypes
-      .filter((item) => item !== ProjectType.none)
-      .map(async (item, index) => {
-        const data = await filterAllProjects(undefined, item);
-        const allRelatedImages = data
-          .filter((data) => data.type === item)
-          .map((data) => data.images)
-          .flat()
-          .map((image) => image?.url);
-
-        setExpertiseData((prev) => [
-          ...prev,
-          {
-            id: index,
-            title: item,
-            description:
-              "We create unique architectural concepts that reflect your personality and meet your needs and preferences",
-            images: allRelatedImages as string[],
-          },
-        ]);
-      });
-
-    setExpertiseData(tempExpertiseData);
+    getAllProjectsGroupByType().then((data) => {
+      setExpertiseData(data);
+    });
   }, []);
 
   return (
