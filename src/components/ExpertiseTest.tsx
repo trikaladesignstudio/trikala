@@ -152,25 +152,27 @@ function ExpertiseTest() {
     // });
     allProjectTypes
       .filter((item) => item !== ProjectType.none)
-      .map((item, index) => {
-        filterAllProjects(undefined, item).then((data) => {
-          const allRelatedImages = data
-            .filter((data) => data.type === item)
-            .map((data) => data.images)
-            .flat()
-            .map((image) => image?.url);
-          console.log(item, "data:", allRelatedImages);
+      .map(async (item, index) => {
+        const data = await filterAllProjects(undefined, item);
+        const allRelatedImages = data
+          .filter((data) => data.type === item)
+          .map((data) => data.images)
+          .flat()
+          .map((image) => image?.url);
 
-          tempExpertiseData.push({
+        setExpertiseData((prev) => [
+          ...prev,
+          {
             id: index,
             title: item,
             description:
               "We create unique architectural concepts that reflect your personality and meet your needs and preferences",
             images: allRelatedImages as string[],
-          });
-          setExpertiseData(tempExpertiseData);
-        });
+          },
+        ]);
       });
+
+    setExpertiseData(tempExpertiseData);
   }, []);
 
   return (
