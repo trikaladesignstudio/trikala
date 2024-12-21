@@ -50,7 +50,7 @@ export default function PrivacyPolicy() {
   const [activeTab, setActiveTab] = useState("T");
   return (
     <>
-      <Section className="lg:px-0 px-0 lg:py-0 py-0 max-h-screen">
+      <Section className="lg:px-0 px-0 lg:py-0 py-0 max-h-[100dvh]">
         <div className=" text-center px-8">
           <Heading text="About us" className="text-black" />
           <div className="lg:text-lg text-justify ">
@@ -77,7 +77,7 @@ export default function PrivacyPolicy() {
           height={300}
         />
       </Section>
-      <Section className="lg:px-0 px-0 lg:py-0 py-0 max-h-screen justify-start">
+      <Section className="lg:px-0 px-0 lg:py-0 py-0 max-h-[100dvh] justify-start">
         <div className="lg:mb-2 text-center bg-black text-white ">
           <Section toSnap={false} className="min-h-fit">
             <Heading text="Approach" className="text-white" />

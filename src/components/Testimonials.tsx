@@ -89,7 +89,7 @@ function Testimonials({
   const firstRow = testimonials.slice(0, testimonials.length / 2);
   const secondRow = testimonials.slice(testimonials.length / 2);
   return (
-    <Sections className="lg:px-0  px-0 py-0 lg:py-0 snap-end max-h-screen gap-0">
+    <Sections className="lg:px-0  px-0 py-0 lg:py-0 snap-end max-h-[100dvh] gap-0">
       <div className="flex lg:flex-row flex-col px-[2rem] py-[1rem] lg:px-[5rem] gap-2 md:gap-20">
         <div className="text-left flex-none">
           <Heading className="text-left flex-none" text="What Our Clients" />
