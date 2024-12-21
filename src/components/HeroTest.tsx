@@ -38,7 +38,7 @@ function HeroTest({
     <Section className="relative ">
       <Navbar />
       {images.map((image, index) => (
-        <AspectRatio ratio={16 / 9}>
+        <AspectRatio ratio={1.78}>
           <Image
             fetchPriority={index === currentIndex ? "high" : "auto"}
             priority
