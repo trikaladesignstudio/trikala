@@ -19,20 +19,18 @@ const Video = dynamic(() => import("@/components/Video"), { ssr: true });
 export const revalidate = 60 * 60 * 0.5;
 
 export default async function Home() {
-  const featuresData = await getAllFeaturedProjects();
   const heroData = await filterAllProjects(sectionType.hero);
   const workingData = await filterAllProjects(sectionType.working);
   const testimonialData = await filterAllProjects(sectionType.testimonials);
   const footerData = await filterAllProjects(sectionType.contact);
-  const expertiseData = await filterAllProjects(sectionType.expertise);
 
   return (
     <Suspense>
       <HeroTest data={heroData} />
       <Suspense>
         <Lead />
-        <Featured data={featuresData} />
-        <Expertise data={expertiseData} />
+        <Featured />
+        <Expertise />
         <Working data={workingData} />
         {/* <PriceEstimator /> */}
         {/* <Interior /> */}

@@ -17,26 +17,29 @@ function HeroTest({
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 3000); // Change image every 3 seconds
+    }, 8000); // Change image every 3 seconds
 
     return () => clearInterval(interval); // Clean up interval on component unmount
   }, [images]);
 
   useEffect(() => {
-    const projectImages = data.map((project) =>
-      project.images.map((image) => image.url)
-    );
-    setImages(projectImages.flat());
+    const projectImages = data
+      .map((project) => project.images.map((image) => image.url))
+      .flat();
+
+    if (projectImages.length === 0) {
+      setImages(["/static/logo.webp"]);
+    } else {
+      setImages(projectImages.flat());
+    }
   }, []);
   return (
     <Section className="relative ">
       <Navbar />
       {images.map((image, index) => (
         <Image
-          // loading="lazy"
+          fetchPriority={index === currentIndex ? "high" : "auto"}
           priority
-          // fetchPriority="high"
-          // loading={currentIndex === index ? "eager" : "lazy"}
           src={image as string}
           width={1080}
           height={720}

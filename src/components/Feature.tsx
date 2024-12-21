@@ -19,38 +19,50 @@ import Heading from "./custom/Heading";
 import Section from "./custom/Section";
 import { allProjectTypes } from "@/utils/client_utils";
 import { Prisma } from "@prisma/client";
+import { getAllFeaturedProjects } from "@/utils/dbActions";
 
 const image = [image0, image1, image2, image1, image2, image1, image2, image3];
 const types = Object.values(allProjectTypes);
 types.pop();
 
-function Featured({ data }: { data: Prisma.ProjectCreateInput[] }) {
+function Featured() {
   const [currentActive, setCurrentActive] = useState(types[0]);
-  const [projectData, setProjectData] = useState(data);
+  const [projectData, setProjectData] = useState<
+    Record<string, Prisma.ProjectCreateInput[]>
+  >({});
   const filterType = (type: string) => {
-    return image;
+    if (projectData[type]) {
+      const projectImages = projectData[type]
+        .map((project) => project.images)
+        .flat()
+        .map((image) => image?.url);
+      return projectImages;
+    }
+    return [];
   };
 
   useEffect(() => {
-    console.log(data);
-  }, [data]);
+    getAllFeaturedProjects()
+      .then((data) => {
+        console.log("DATA,", data);
+        setProjectData(data as any);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
-    <Section className="lg:px-0 px-0 lg:py-0 py-0 justify-center ">
-      <Section toSnap={false} className="min-h-fit ">
+    <Section className="lg:px-0 px-0 lg:py-0 py-0 justify-start">
+      <Section toSnap={false} className="min-h-fit lg:gap-12">
         <Heading className="text-5xl" text="Featured Work" />
-        <motion.div
-          layout
-          className="flex flex-row flex-wrap top-8 lg:gap-8 gap-4  w-full"
-        >
+        <motion.div className="top-8 lg:gap-8 gap-4 w-full grid grid-cols-2 lg:grid-cols-4 ">
           {types.map((type, index) => (
             <motion.div
               key={index}
               className={cn(
-                "relative z-10 text-left p-2 px-4 cursor-pointer animate-[bg_1s_ease-in-out] hover:border -inset-0.5",
-                currentActive == type
-                  ? "border rounded-md  bg-black text-white"
-                  : ""
+                "relative shadow-md hover:border-black/20 z-10 text-left p-2 px-4 cursor-pointer rounded-md animate-[bg_1s_ease-in-out] border -inset-0.5",
+                currentActive == type ? "border  bg-black text-white" : ""
               )}
               onClick={() => setCurrentActive(type)}
             >
@@ -80,7 +92,9 @@ function Featured({ data }: { data: Prisma.ProjectCreateInput[] }) {
               >
                 <Image
                   loading="lazy"
-                  src={img}
+                  src={img as string}
+                  width={150}
+                  height={150}
                   style={{ height: `28rem` }}
                   alt={`Slide ${index}`}
                   className="w-auto object-cover "

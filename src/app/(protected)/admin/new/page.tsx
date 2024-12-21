@@ -4,7 +4,7 @@ import Section from "@/components/custom/Section";
 
 export default function CreateProject() {
   return (
-    <Section className="container mx-auto px-4 py-8 max-w-2xl gap-8 flex flex-col">
+    <Section className="container px-4 py-8 gap-4 flex flex-col mx-auto w-fit">
       <PathHeading />
       <ProjectForm projectId={undefined} />
     </Section>

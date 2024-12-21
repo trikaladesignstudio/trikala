@@ -3,6 +3,7 @@ import prisma from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
 import { UTApi } from "uploadthing/server";
 import { ProjectType, sectionType } from "./client_utils";
+import { revalidatePath } from "next/cache";
 
 export async function getAllProjects() {
   try {
@@ -48,7 +49,17 @@ export async function getAllFeaturedProjects() {
         featured: true,
       },
     });
-    return projects;
+    if (!projects) {
+      return [];
+    }
+    interface Product {
+      category: string;
+      [key: string]: any; // Allows additional properties in the product object
+    }
+    return projects.reduce<Record<string, Product[]>>((acc, product) => {
+      (acc[product.type] = acc[product.type] || []).push(product as any);
+      return acc;
+    }, {});
   } catch (error) {
     console.error("Error fetching projects:", error);
     return [];
@@ -60,7 +71,7 @@ export async function addAProject(projectData: Prisma.ProjectCreateInput) {
     const project = await prisma.project.create({
       data: projectData,
     });
-
+    revalidatePath("/admin");
     return project;
   } catch (error) {
     console.error("Error creating project:", error);
@@ -91,6 +102,9 @@ export async function deleteProject(projectData: Prisma.ProjectCreateInput) {
         id: projectData.id,
       },
     });
+
+    revalidatePath("/admin");
+
     return projectDel;
   } catch (error) {
     console.error("Error deleting project:", error);
@@ -111,6 +125,7 @@ export async function updateProject(
       },
       data: projectData,
     });
+    revalidatePath("/admin");
     return project;
   } catch (error) {
     console.error("Error updating project:", error);
