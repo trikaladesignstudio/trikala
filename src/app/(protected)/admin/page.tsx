@@ -15,11 +15,11 @@ export default async function Admin() {
     <Section className="container mx-auto px-4 py-8 flex flex-col gap-4">
       <div className="flex justify-between items-center mb-8">
         <PathHeading />
-        <div className="flex gap-4">
+        <div className="flex gap-4 border">
           <LogoutBtn />
           <Link
             href="/admin/new"
-            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors"
+            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors w-40"
           >
             Add New Project
           </Link>

@@ -22,8 +22,8 @@ export default function LoginPage() {
     formData.append("password", password);
     const success = await login(formData);
     // console.log("success:", success);
-    toast.success("Login Successful " + success);
     if (success) {
+      toast.success("Login Successful");
       router.push("/admin");
     } else {
       toast.error("Login Failed, username or password incorrect");

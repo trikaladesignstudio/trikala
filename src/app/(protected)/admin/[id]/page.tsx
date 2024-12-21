@@ -1,3 +1,4 @@
+import PathHeading from "@/components/custom/PathHeading";
 import ProjectForm from "@/components/custom/ProjectForm";
 import Section from "@/components/custom/Section";
 
@@ -9,8 +10,8 @@ export default async function Page({
   const id = (await params).id;
 
   return (
-    <Section className="container mx-auto px-4 py-8 max-w-2xl">
-      <h1 className="text-3xl font-bold mb-8">Create New Project</h1>
+    <Section className="container px-4 py-8 gap-4 flex flex-col mx-auto w-fit">
+      <PathHeading />
       <ProjectForm projectId={id} />
     </Section>
   );

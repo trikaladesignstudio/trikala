@@ -18,7 +18,7 @@ export default function PathHeading({ className }: { className?: string }) {
   const pathname = usePathname().split("/");
 
   return (
-    <Breadcrumb>
+    <Breadcrumb className="w-full">
       <BreadcrumbList className={cn("text-2xl", className)}>
         {pathname.map((item, index) => {
           const itemValue =

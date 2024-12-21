@@ -1,6 +1,11 @@
 "use client";
 
-import { expertiseData, expertiseDataType } from "@/jsonData/Home/Expertise";
+import { expertiseDataType } from "@/jsonData/Home/Expertise";
+import {
+  allProjectTypes,
+  ProjectType
+} from "@/utils/client_utils";
+import { filterAllProjects } from "@/utils/dbActions";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
@@ -12,8 +17,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "./ui/carousel";
-import { allProjectTypes, ProjectType } from "@/utils/client_utils";
-import { Prisma } from "@prisma/client";
 
 interface CarouselDataProps {
   images: string[];
@@ -33,7 +36,7 @@ function CarouselData({ images }: CarouselDataProps) {
               className="flex-shrink-0"
             >
               <Image
-                loading="lazy"
+                loading="eager"
                 src={img}
                 style={{ height: `25rem` }}
                 alt={`Slide ${index}`}
@@ -51,12 +54,12 @@ function CarouselData({ images }: CarouselDataProps) {
   );
 }
 
-const subSectionHeadings = [
-  "Architecture Design",
-  "Interior Design",
-  "Landscape Design",
-  "Urban Design",
-];
+// const subSectionHeadings = [
+//   "Architecture Design",
+//   "Interior Design",
+//   "Landscape Design",
+//   "Urban Design",
+// ];
 
 function SingleExperize({ expertise }: { expertise: expertiseDataType }) {
   return (
@@ -80,7 +83,7 @@ function SingleExperize({ expertise }: { expertise: expertiseDataType }) {
   );
 }
 
-function ExpertiseTest({ data }: { data: Prisma.ProjectCreateInput[] }) {
+function ExpertiseTest() {
   const [expertiseDataArray, setExpertiseData] = useState<expertiseDataType[]>(
     []
   );
@@ -146,9 +149,15 @@ function ExpertiseTest({ data }: { data: Prisma.ProjectCreateInput[] }) {
   useEffect(() => {
     // console.log("data:", data);
     const tempExpertiseData: expertiseDataType[] = [];
+
+    // data.map((data) => {
+    //   console.log("data:", data.type);
+    // });
     allProjectTypes
       .filter((item) => item !== ProjectType.none)
-      .map((item, index) => {
+      .map(async (item, index) => {
+        const data = await filterAllProjects(undefined, item);
+
         const allRelatedImages = data
           .filter((data) => data.type === item)
           .map((data) => data.images)
@@ -164,7 +173,7 @@ function ExpertiseTest({ data }: { data: Prisma.ProjectCreateInput[] }) {
         });
       });
     setExpertiseData(tempExpertiseData);
-  }, [expertiseData]);
+  }, []);
 
   return (
     <Section

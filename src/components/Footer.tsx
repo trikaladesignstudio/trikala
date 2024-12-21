@@ -79,9 +79,9 @@ export default function Footer({
               <div className="flex-col flex space-y-4">
                 {/* Address */}
                 <div className="">
-                  <h3 className="text-zinc-500 text-sm tracking-wider">
+                  <div className="text-zinc-500 text-sm tracking-wider">
                     ADDRESS
-                  </h3>
+                  </div>
                   <p className="text-zinc-100">
                     {
                       contactData.find((ele) => ele.title === "ADDRESS")
@@ -92,9 +92,9 @@ export default function Footer({
 
                 {/* Phone */}
                 <div className="space-y-4">
-                  <h3 className="text-zinc-500 text-sm tracking-wider">
+                  <div className="text-zinc-500 text-sm tracking-wider">
                     PHONE
-                  </h3>
+                  </div>
                   <Link
                     href="tel:+78124084151"
                     className="text-zinc-100 hover:text-zinc-300 transition-colors"
@@ -108,17 +108,19 @@ export default function Footer({
 
                 {/* Social Media */}
                 <div className="space-y-4 flex flex-col justify-center lg:items-start items-center ">
-                  <h3 className="text-zinc-500 text-sm tracking-wider">
+                  <div className="text-zinc-500 text-sm tracking-wider">
                     SOCIAL MEDIA
-                  </h3>
+                  </div>
                   <div className="flex gap-4">
                     <Link
                       href={youtubeUrl}
+                      aria-label="Youtube"
                       className="text-zinc-100 hover:text-zinc-300 transition-colors"
                     >
                       <FaYoutube />
                     </Link>
                     <Link
+                      aria-label="Instagram"
                       href={instagramUrl}
                       className="text-zinc-100 hover:text-zinc-300 transition-colors"
                     >
@@ -126,12 +128,14 @@ export default function Footer({
                     </Link>
                     <Link
                       href={facebookUrl}
+                      aria-label="Facebook"
                       className="text-zinc-100 hover:text-zinc-300 transition-colors"
                     >
                       <FaFacebookF />
                     </Link>
                     <Link
                       href={twitterUrl}
+                      aria-label="Twitter"
                       className="text-zinc-100 hover:text-zinc-300 transition-colors"
                     >
                       <FaTwitter />
@@ -143,7 +147,9 @@ export default function Footer({
               {/* Contact Emails */}
               <div className="space-y-4">
                 <div className="space-y-4">
-                  <h3 className="text-zinc-500 text-sm tracking-wider">MAIL</h3>
+                  <div className="text-zinc-500 text-sm tracking-wider">
+                    MAIL
+                  </div>
                   <Link
                     href={`mailto:${
                       contactData.find((ele) => ele.title === "EMAIL")
@@ -158,9 +164,9 @@ export default function Footer({
                   </Link>
                 </div>
                 <div className="space-y-4">
-                  <h3 className="text-zinc-500 text-sm tracking-wider">
+                  <div className="text-zinc-500 text-sm tracking-wider">
                     DISCUSS THE PROJECT
-                  </h3>
+                  </div>
                   <Link
                     href={`mailto:${
                       contactData.find((ele) => ele.title === "EMAIL")
@@ -175,9 +181,9 @@ export default function Footer({
                   </Link>
                 </div>
                 <div className="space-y-4">
-                  <h3 className="text-zinc-500 text-sm tracking-wider">
+                  <div className="text-zinc-500 text-sm tracking-wider">
                     SUPPLIERS
-                  </h3>
+                  </div>
                   <Link
                     href={`mailto:${
                       contactData.find((ele) => ele.title === "EMAIL")

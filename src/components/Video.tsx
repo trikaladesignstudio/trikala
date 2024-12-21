@@ -14,6 +14,7 @@ function Video() {
         </Link>
         <iframe
           loading="lazy"
+          aria-label="Arogya Vanam of Rashtrapati Bhavan"
           className="w-full lg:h-full h-auto z-10 rounded-xl shadow-xl"
           src="https://www.youtube.com/embed/-WKHnGln5Yg?autoplay=1&mute=1&loop=1"
           title="Arogya Vanam of Rashtrapati Bhavan"
