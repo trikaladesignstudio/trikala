@@ -1,10 +1,7 @@
 "use client";
 
 import { expertiseDataType } from "@/jsonData/Home/Expertise";
-import {
-  allProjectTypes,
-  ProjectType
-} from "@/utils/client_utils";
+import { allProjectTypes, ProjectType } from "@/utils/client_utils";
 import { filterAllProjects } from "@/utils/dbActions";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
@@ -157,21 +154,24 @@ function ExpertiseTest() {
       .filter((item) => item !== ProjectType.none)
       .map(async (item, index) => {
         const data = await filterAllProjects(undefined, item);
-
         const allRelatedImages = data
           .filter((data) => data.type === item)
           .map((data) => data.images)
           .flat()
           .map((image) => image?.url);
 
-        tempExpertiseData.push({
-          id: index,
-          title: item,
-          description:
-            "We create unique architectural concepts that reflect your personality and meet your needs and preferences",
-          images: allRelatedImages as string[],
-        });
+        setExpertiseData((prev) => [
+          ...prev,
+          {
+            id: index,
+            title: item,
+            description:
+              "We create unique architectural concepts that reflect your personality and meet your needs and preferences",
+            images: allRelatedImages as string[],
+          },
+        ]);
       });
+
     setExpertiseData(tempExpertiseData);
   }, []);
 

@@ -52,6 +52,7 @@ function BackToTopBtn() {
   // JSX for the component
   return (
     <motion.button
+      aria-label="Back to top"
       onClick={() =>
         element
           ? element.scrollTo({ top: 0, behavior: "smooth" })
