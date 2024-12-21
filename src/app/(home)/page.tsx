@@ -1,16 +1,16 @@
 // import Lead from "@/components/custom/Lead";
+import Lead from "@/components/custom/Lead";
 import Expertise from "@/components/ExpertiseTest";
 import Featured from "@/components/Feature";
-// import PriceEstimator from "@/components/PriceEstimator";
+import Footer from "@/components/Footer";
+import HeroTest from "@/components/HeroTest";
+import PriceEstimator from "@/components/PriceEstimatorTest";
 import Testimonials from "@/components/Testimonials";
 import Working from "@/components/Working";
-import HeroTest from "@/components/HeroTest";
-import { filterAllProjects, getAllFeaturedProjects } from "@/utils/dbActions";
 import { sectionType } from "@/utils/client_utils";
-import { Suspense } from "react";
-import Lead from "@/components/custom/Lead";
-import Footer from "@/components/Footer";
+import { filterAllProjects } from "@/utils/dbActions";
 import dynamic from "next/dynamic";
+import { Suspense } from "react";
 // import Interior from "@/components/Interior";
 // import SectionGrid from "@/components/custom/SectionGrid";
 // import Hero from "@/components/Hero";
@@ -32,7 +32,7 @@ export default async function Home() {
         <Featured />
         <Expertise />
         <Working data={workingData} />
-        {/* <PriceEstimator /> */}
+        <PriceEstimator />
         {/* <Interior /> */}
         <Testimonials data={testimonialData} />
         <Video />

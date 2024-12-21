@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-// import PieChart from "./PieChart";
+import { PieChartComponent } from "./PieChart";
+import { BarGraph } from "./BarGraph";
 
 export default function ConstructionEstimator() {
   const [step, setStep] = useState(1);
@@ -379,7 +380,8 @@ export default function ConstructionEstimator() {
                   </div>
                 </div>
               </div>
-              {/* <PieChart /> */}
+              <PieChartComponent />
+              <BarGraph />
             </div>
           )}
         </div>
