@@ -159,6 +159,7 @@ function ExpertiseTest() {
             .map((data) => data.images)
             .flat()
             .map((image) => image?.url);
+          console.log(item, "data:", allRelatedImages);
 
           tempExpertiseData.push({
             id: index,
@@ -167,9 +168,9 @@ function ExpertiseTest() {
               "We create unique architectural concepts that reflect your personality and meet your needs and preferences",
             images: allRelatedImages as string[],
           });
+          setExpertiseData(tempExpertiseData);
         });
       });
-    setExpertiseData(tempExpertiseData);
   }, []);
 
   return (

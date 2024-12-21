@@ -44,7 +44,7 @@ function Featured() {
   useEffect(() => {
     getAllFeaturedProjects()
       .then((data) => {
-        console.log("DATA,", data);
+        // console.log("DATA,", data);
         setProjectData(data as any);
       })
       .catch((err) => {
