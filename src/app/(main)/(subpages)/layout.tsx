@@ -1,18 +1,16 @@
 import Navbar from "@/components/custom/NavBar";
-import { Suspense } from "react";
 
 export default async function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
-  // effective for only first login
+}>) {
   return (
     <>
-      <div className="min-h-[70px] relative bg-black">
+      <div className="min-h-[70px] relative bg-black flex justify-center items-center">
         <Navbar />
       </div>
-      <Suspense>{children}</Suspense>
+      {children}
     </>
   );
 }
