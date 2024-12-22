@@ -118,11 +118,11 @@ export function BarGraph() {
         </div>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig}>
+        <ChartContainer config={chartConfig} className="flex">
           <BarChart
             data={transformedData}
             layout="vertical"
-            margin={{ top: 10, right: 150, bottom: 10, left: 180 }}
+            margin={{ top: 10, right: 150, bottom: 10, left: 10 }}
           >
             <XAxis
               type="number"
