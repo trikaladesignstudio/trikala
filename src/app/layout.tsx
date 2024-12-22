@@ -88,24 +88,14 @@ export default async function RootLayout({
         suppressHydrationWarning
         className={`${silver.variable} antialiased`}
       >
-        <NextTopLoader height={3} color="#3b82f6" />
-
-        <NextSSRPlugin
-          /**
-           * The extractRouterConfig will extract *only* the route configs
-           * from the router to prevent additional information from being
-           * leaked to the client. The data passed to the client is the same
-           * as if you were to fetch /api/uploadthing directly.
-           */
-          routerConfig={extractRouterConfig(ourFileRouter)}
-        />
-
+        <NextTopLoader height={3} color="#1A1A1A" />
+        <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
         <main
           id="mainCointainer"
           className="relative flex flex-col snap-y snap-mandatory h-[100dvh] overflow-x-hidden scroll-smooth"
         >
-          {children}
           <BackToTopBtn />
+          {children}
         </main>
         <Toaster />
         <Analytics />
