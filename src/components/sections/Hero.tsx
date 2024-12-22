@@ -5,6 +5,8 @@ import image1 from "@/assets/Digit.png";
 import HeroImages from "../ui/HeroImages";
 import Navbar from "../custom/NavBar";
 import Heading from "../custom/Heading";
+import Link from "next/link";
+import { startAProjectLink } from "@/constants";
 
 function Hero() {
   return (
@@ -43,9 +45,12 @@ function Hero() {
         <div className="flex flex-col lg:flex-row gap-10 flex-1 ">
           <div className="flex-1 justify-between w-1/3">
             <div className="flex flex-col justify-between h-full">
-              <button className="w-auto border p-2 pl-4 pr-4 rounded-full text-white bg-[#774931] font-bold">
+              <Link
+                href={startAProjectLink}
+                className="w-auto border p-2 pl-4 pr-4 rounded-full text-white bg-[#774931] font-bold"
+              >
                 Start a Project &gt;
-              </button>
+              </Link>
               <span className="text-base text-justify">
                 Signet Estate Group transforms complex development challenges
                 into collaborative opportunities through a creative, flexible,

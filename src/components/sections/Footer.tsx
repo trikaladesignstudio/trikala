@@ -3,7 +3,7 @@
 import { FaFacebookF, FaTwitter, FaYoutube } from "react-icons/fa";
 import { ImInstagram } from "react-icons/im";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Heading from "../custom/Heading";
@@ -11,6 +11,7 @@ import Sections from "../custom/Section";
 import { filterAllProjects } from "@/utils/dbActions";
 import { useEffect, useState } from "react";
 import { ContactDataType } from "@/types";
+import { startAProjectLink } from "@/constants";
 
 export default function Footer({
   data,
@@ -61,17 +62,17 @@ export default function Footer({
                 Leave a request using the button below and a manager will
                 contact you shortly to discuss the details
               </p>
-              <Button
-                variant="outline"
-                className="mt-4 border-zinc-700 text-zinc-100 hover:bg-zinc-900 hover:text-zinc-50"
-                onClick={() => {
-                  window.scrollTo({ top: 0, behavior: "smooth" });
-                  router.push("mailto:info@trikalarchitect.com");
-                }}
+              <Link
+                href={startAProjectLink}
+                className={buttonVariants({
+                  variant: "outline",
+                  className:
+                    "mt-4 border-zinc-700 text-zinc-100 hover:bg-zinc-900 hover:text-zinc-50",
+                })}
               >
                 Leave a request
                 <span className="ml-2">+</span>
-              </Button>
+              </Link>
             </div>
 
             {/* Contact Grid */}
@@ -96,7 +97,10 @@ export default function Footer({
                     PHONE
                   </div>
                   <Link
-                    href="tel:+78124084151"
+                    href={`tel:${
+                      contactData.find((ele) => ele.title === "PHONE")
+                        ?.description || "78124084151"
+                    }`}
                     className="text-zinc-100 hover:text-zinc-300 transition-colors"
                   >
                     {
@@ -142,47 +146,9 @@ export default function Footer({
                     </Link>
                   </div>
                 </div>
-              </div>
-
-              {/* Contact Emails */}
-              <div className="space-y-4">
                 <div className="space-y-4">
                   <div className="text-zinc-500 text-sm tracking-wider">
                     MAIL
-                  </div>
-                  <Link
-                    href={`mailto:${
-                      contactData.find((ele) => ele.title === "EMAIL")
-                        ?.description
-                    }`}
-                    className="text-zinc-100 hover:text-zinc-300 transition-colors"
-                  >
-                    {
-                      contactData.find((ele) => ele.title === "EMAIL")
-                        ?.description
-                    }
-                  </Link>
-                </div>
-                <div className="space-y-4">
-                  <div className="text-zinc-500 text-sm tracking-wider">
-                    DISCUSS THE PROJECT
-                  </div>
-                  <Link
-                    href={`mailto:${
-                      contactData.find((ele) => ele.title === "EMAIL")
-                        ?.description
-                    }`}
-                    className="text-zinc-100 hover:text-zinc-300 transition-colors"
-                  >
-                    {
-                      contactData.find((ele) => ele.title === "EMAIL")
-                        ?.description
-                    }
-                  </Link>
-                </div>
-                <div className="space-y-4">
-                  <div className="text-zinc-500 text-sm tracking-wider">
-                    SUPPLIERS
                   </div>
                   <Link
                     href={`mailto:${
@@ -202,18 +168,18 @@ export default function Footer({
           </div>
 
           {/* Bottom Section */}
-          <div className="border-t border-zinc-800 pt-8 flex flex-col md:flex-row justify-between lg:items-start md:items-center gap-4">
+          <div className="border-t border-zinc-800 pt-4 flex flex-col md:flex-row justify-between items-center gap-4 ">
             <Link
               href="/"
-              className="flex justify-center items-center text-2xl md:text-3xl font-light tracking-tight"
+              className="flex justify-center items-center font-light tracking-tight "
             >
               <Image
                 loading="lazy"
                 src={"/static/logo.webp"}
                 alt="logo"
                 width={300}
-                height={300}
-                className="block invert"
+                height={200}
+                className="block invert h-[10vh] w-auto scale-125"
               />
             </Link>
 
