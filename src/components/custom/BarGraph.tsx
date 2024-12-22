@@ -111,7 +111,7 @@ const chartConfig = {
 
 export function BarGraph() {
   return (
-    <Card className="w-full">
+    <Card className="w-1/2">
       <CardHeader>
         <CardTitle className="text-center">
           Timeline Tracking: Cost Per Phase (INR ₹)
@@ -121,11 +121,11 @@ export function BarGraph() {
         </div>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig} className="h-[500px]">
+        <ChartContainer config={chartConfig} className="h-[500px] border">
           <BarChart
             data={data}
             layout="vertical"
-            margin={{ top: 10, right: 50, bottom: 10, left: 200 }}
+            margin={{ top: 10, right: 10, bottom: 10, left: 10 }}
           >
             <XAxis
               type="number"

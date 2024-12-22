@@ -1,9 +1,5 @@
 "use client";
 
-import image1 from "@/assets/1.jpeg";
-import image2 from "@/assets/2.jpeg";
-import image3 from "@/assets/3.jpeg";
-import image0 from "@/assets/aesehi.png";
 import {
   Carousel,
   CarouselContent,
@@ -15,13 +11,12 @@ import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import Heading from "./custom/Heading";
-import Section from "./custom/Section";
+import Heading from "../custom/Heading";
+import Section from "../custom/Section";
 import { allProjectTypes } from "@/utils/client_utils";
 import { Prisma } from "@prisma/client";
 import { getAllFeaturedProjects } from "@/utils/dbActions";
 
-const image = [image0, image1, image2, image1, image2, image1, image2, image3];
 const types = Object.values(allProjectTypes);
 types.pop();
 

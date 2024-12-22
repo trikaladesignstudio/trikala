@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Section from "./custom/Section";
-import Navbar from "./custom/NavBar";
-import Heading from "./custom/Heading";
+import Section from "../custom/Section";
+import Navbar from "../custom/NavBar";
+import Heading from "../custom/Heading";
 import { filterAllProjects } from "@/utils/dbActions";
 import Image from "next/image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
