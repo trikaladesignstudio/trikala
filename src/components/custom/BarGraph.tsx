@@ -145,6 +145,7 @@ export function BarGraph() {
               dataKey="days"
               fill="var(--color-days)"
               radius={[0, 4, 4, 0]}
+              
               label={(props) => {
                 const { x, y, width, value, label } = props;
                 return (
