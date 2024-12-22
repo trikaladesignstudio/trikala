@@ -59,7 +59,7 @@ export function PieChartComponent() {
   }, []);
 
   return (
-    <Card className="flex flex-col">
+    <Card className="flex flex-col w-1/2">
       <CardHeader className="items-center pb-0">
         {/* <CardTitle>Simple Pie Chart</CardTitle>
         <CardDescription>Custom Colors</CardDescription> */}

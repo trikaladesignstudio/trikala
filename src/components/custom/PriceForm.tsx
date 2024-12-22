@@ -380,8 +380,10 @@ export default function ConstructionEstimator() {
                   </div>
                 </div>
               </div>
-              <PieChartComponent />
-              <BarGraph />
+              <div className="flex gap-4">
+                <PieChartComponent />
+                <BarGraph />
+              </div>
             </div>
           )}
         </div>

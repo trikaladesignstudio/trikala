@@ -4,9 +4,9 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { BiChevronLeft } from "react-icons/bi";
-import Heading from "./custom/Heading";
-import Sections from "./custom/Section";
-import { Button } from "./ui/button";
+import Heading from "../custom/Heading";
+import Sections from "../custom/Section";
+import { Button } from "../ui/button";
 
 function Working({
   data,

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Section from "./custom/Section";
+import Section from "../custom/Section";
 
 function Video() {
   return (

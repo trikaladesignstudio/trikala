@@ -1,22 +1,18 @@
 "use client";
 
 import { expertiseDataType } from "@/jsonData/Home/Expertise";
-import { allProjectTypes, ProjectType } from "@/utils/client_utils";
-import {
-  filterAllProjects,
-  getAllProjectsGroupByType,
-} from "@/utils/dbActions";
+import { getAllProjectsGroupByType } from "@/utils/dbActions";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import Section from "./custom/Section";
+import Section from "../custom/Section";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "./ui/carousel";
+} from "../ui/carousel";
 
 interface CarouselDataProps {
   images: string[];
@@ -126,7 +122,7 @@ function ExpertiseTest() {
   // funk around here only
   const transform = useTransform(
     scrollYProgress,
-    [0, 0.1, 0.30, 0.40, 0.60, 0.70, 0.90, 1],
+    [0, 0.1, 0.3, 0.4, 0.6, 0.7, 0.9, 1],
     [
       0,
       0,
