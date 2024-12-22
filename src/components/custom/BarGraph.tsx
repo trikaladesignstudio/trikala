@@ -10,7 +10,7 @@ const data = [
     phase: "Home Design & Approval",
     days: 46,
     cost: 215000,
-    start: 0, // Starts at 0
+    start: 0,
     label: "46 Days | ₹ 2,15,000",
   },
   {
@@ -18,7 +18,7 @@ const data = [
     phase: "Excavation",
     days: 14,
     cost: 105750,
-    start: 46, // Starts after "Home Design & Approval"
+    start: 46,
     label: "14 Days | ₹ 1,05,750",
   },
   {
@@ -26,7 +26,7 @@ const data = [
     phase: "Footing & Foundation",
     days: 41,
     cost: 786000,
-    start: 60, // Starts after "Excavation"
+    start: 60,
     label: "41 Days | ₹ 7,86,000",
   },
   {
@@ -34,7 +34,7 @@ const data = [
     phase: "RCC Work - Columns & Slabs",
     days: 17,
     cost: 525000,
-    start: 101, // Starts after "Footing & Foundation"
+    start: 101,
     label: "17 Days | ₹ 5,25,000",
   },
   {
@@ -100,54 +100,50 @@ const chartConfig = {
   },
 };
 
-// for(int i = 0; i < data.length; i++) {
-//   chartConfig[data[i].phase] = {
-//     label: data[i].label,
-//     color: "var(--color-days)",
-//   };
-// }
-
-//i want to create or show the graph on after the other
-
 export function BarGraph() {
+  // Transform data to create bars with custom start points
+  const transformedData = data.map((item) => ({
+    ...item,
+    customBar: [item.start, item.start + item.days],
+  }));
+
   return (
-    <Card className="w-1/2">
+    <Card className="w-full flex flex-col border-none shadow-none">
       <CardHeader>
         <CardTitle className="text-center">
-          Timeline Tracking: Cost Per Phase (INR ₹)
+          Construction Timeline & Cost Breakdown
         </CardTitle>
         <div className="text-center text-sm text-muted-foreground">
-          Overall duration in days: 247 Days
+          Total Project Duration: 247 Days | Total Cost: ₹ 29,26,500
         </div>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig} className="h-[500px] border">
+        <ChartContainer config={chartConfig}>
           <BarChart
-            data={data}
+            data={transformedData}
             layout="vertical"
-            margin={{ top: 10, right: 10, bottom: 10, left: 10 }}
+            margin={{ top: 10, right: 150, bottom: 10, left: 180 }}
           >
             <XAxis
               type="number"
-              domain={[0, 300]}
-              tickCount={7}
+              domain={[0, 250]}
+              tickCount={10}
               tick={{ fontSize: 12 }}
+              label={{ value: "Days", position: "bottom", offset: 0 }}
             />
             <YAxis
               type="category"
               dataKey="phase"
               tick={{ fontSize: 12 }}
-              width={180}
+              width={170}
             />
             <Bar
-              isAnimationActive={true}
-              animationBegin={2000}
-              dataKey="days"
-              fill="var(--color-days)"
-              radius={[0, 4, 4, 0]}
-              
+              dataKey="customBar"
+              fill="hsl(var(--chart-1))"
+              radius={[4, 4, 4, 4]}
               label={(props) => {
                 const { x, y, width, value, label } = props;
+                const item = transformedData[props.index];
                 return (
                   <text
                     x={x + width + 10}
@@ -156,7 +152,7 @@ export function BarGraph() {
                     fontSize={12}
                     textAnchor="start"
                   >
-                    {label}
+                    {item.label}
                   </text>
                 );
               }}

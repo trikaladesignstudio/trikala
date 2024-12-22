@@ -27,11 +27,13 @@ function HeroTest({
     const projectImages = data
       .map((project) => project.images.map((image) => image.url))
       .flat();
+    console.log("images", projectImages);
 
     if (projectImages.length === 0) {
       setImages(["/static/logo.webp"]);
     } else {
       setImages(projectImages.flat());
+      console.log("images", projectImages);
     }
   }, []);
 
