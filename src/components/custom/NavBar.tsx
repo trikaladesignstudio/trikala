@@ -5,6 +5,8 @@ import { useState } from "react";
 import { navlinks } from "@/types";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { startAProjectLink } from "@/constants";
+import { buttonVariants } from "../ui/button";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -54,8 +56,18 @@ const Navbar = () => {
           </div>
         ))}
       </div>
-      <Link href="/#lead" className="hidden lg:block rounded-full bg-black border-gray-500/50 border-2 text-white px-4 py-1 font-semibold text-lg">
-        Start a Project
+      <Link
+        href={startAProjectLink}
+        className={cn(
+          buttonVariants({
+            variant: "default",
+          }),
+          "lg:block bg-black border-gray-500/50 border-2 text-white px-4 transition-all duration-300 ease-in-out rounded-full",
+          "flex items-center justify-center",
+          "shadow-md hover:shadow-lg "
+        )}
+      >
+        Start a Project &rarr;  
       </Link>
       <div
         className={cn(
