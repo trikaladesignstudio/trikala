@@ -1,9 +1,5 @@
 "use client";
 
-import image1 from "@/assets/1.jpeg";
-import image2 from "@/assets/2.jpeg";
-import image3 from "@/assets/3.jpeg";
-import image0 from "@/assets/aesehi.png";
 import {
   Carousel,
   CarouselContent,
@@ -15,13 +11,12 @@ import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import Heading from "./custom/Heading";
-import Section from "./custom/Section";
+import Heading from "../custom/Heading";
+import Section from "../custom/Section";
 import { allProjectTypes } from "@/utils/client_utils";
 import { Prisma } from "@prisma/client";
 import { getAllFeaturedProjects } from "@/utils/dbActions";
 
-const image = [image0, image1, image2, image1, image2, image1, image2, image3];
 const types = Object.values(allProjectTypes);
 types.pop();
 
@@ -38,13 +33,17 @@ function Featured() {
         .map((image) => image?.url);
       return projectImages;
     }
-    return [];
+    return [
+      "/static/logo.webp",
+      "/static/logo.webp",
+      "/static/logo.webp",
+      "/static/logo.webp",
+    ];
   };
 
   useEffect(() => {
     getAllFeaturedProjects()
       .then((data) => {
-        // console.log("DATA,", data);
         setProjectData(data as any);
       })
       .catch((err) => {
@@ -71,10 +70,6 @@ function Featured() {
           ))}
         </motion.div>
       </Section>
-      {/* <Section
-        className="lg:px-0 px-0 lg:py-0 py-0 justify-end min-h-fit"
-        toSnap={false}
-      > */}
       <Carousel className="w-full">
         <CarouselContent className="-ml-1">
           {filterType(currentActive).map((img, index) => (
@@ -91,7 +86,8 @@ function Featured() {
                 className="flex-shrink-0"
               >
                 <Image
-                  loading="lazy"
+                  priority
+                  fetchPriority="high"
                   src={img as string}
                   width={150}
                   height={150}

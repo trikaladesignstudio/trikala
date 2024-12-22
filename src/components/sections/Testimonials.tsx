@@ -1,15 +1,14 @@
 "use client";
 
 import useScreenWidth from "@/hooks/ScreenResize";
-import { TestimonialsData } from "@/jsonData/Home/Testimonial/index";
 import Image from "next/image";
-import { cn } from "../lib/utils";
-import Heading from "./custom/Heading";
-import Sections from "./custom/Section";
-import Marquee from "./ui/marquee";
+import { cn } from "@/lib/utils";
 import { filterAllProjects } from "@/utils/dbActions";
 import { useEffect, useState } from "react";
 import { TestimonialsDataType } from "@/types";
+import Section from "../custom/Section";
+import Heading from "../custom/Heading";
+import Marquee from "../ui/marquee";
 
 const ReviewCard = ({
   images,
@@ -89,7 +88,7 @@ function Testimonials({
   const firstRow = testimonials.slice(0, testimonials.length / 2);
   const secondRow = testimonials.slice(testimonials.length / 2);
   return (
-    <Sections className="lg:px-0  px-0 py-0 lg:py-0 snap-end max-h-screen gap-0">
+    <Section className="lg:px-0 px-0 py-0 lg:py-0">
       <div className="flex lg:flex-row flex-col px-[2rem] py-[1rem] lg:px-[5rem] gap-2 md:gap-20">
         <div className="text-left flex-none">
           <Heading className="text-left flex-none" text="What Our Clients" />
@@ -104,7 +103,7 @@ function Testimonials({
           See why our clients love working with us!
         </div>
       </div>
-      <Sections
+      <Section
         toSnap={false}
         className="gap-4 lg:py-0  min-h-fit lg:px-0 px-0 "
       >
@@ -131,8 +130,8 @@ function Testimonials({
             </Marquee>
           </div>
         </div>
-      </Sections>
-    </Sections>
+      </Section>
+    </Section>
   );
 }
 

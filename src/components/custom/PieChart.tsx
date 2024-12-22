@@ -1,123 +1,129 @@
-// "use client";
+"use client";
 
-// import React, { useState } from "react";
-// import { Doughnut } from "react-chartjs-2";
-// import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import * as React from "react";
+import { TrendingUp } from "lucide-react";
+import { Label, Pie, PieChart } from "recharts";
 
-// ChartJS.register(ArcElement, Tooltip, Legend);
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  CardFooter,
+} from "@/components/ui/card";
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
 
-// const PieChart: React.FC = () => {
-//   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+const chartData = [
+  { category: "A", value: 30, fill: "#FF6384" },
+  { category: "B", value: 25, fill: "#36A2EB" },
+  { category: "C", value: 20, fill: "#FFCE56" },
+  { category: "D", value: 15, fill: "#4BC0C0" },
+  { category: "E", value: 10, fill: "#9966FF" },
+];
 
-//   const data = {
-//     labels: [
-//       "Home Design & Approval",
-//       "Excavation",
-//       "Footing & Foundation",
-//       "RCC Work - Columns & Slabs",
-//       "Roof Slab",
-//       "Door",
-//       "Water Supply & Plumbing",
-//       "Electric Wiring",
-//       "Flooring & Tiling",
-//       "Brickwork and Plastering",
-//     ],
-//     datasets: [
-//       {
-//         data: [10, 15, 20, 25, 30, 10, 15, 20, 25, 30],
-//         backgroundColor: [
-//           "#FFD700", // Home Design
-//           "#228B22", // Excavation
-//           "#000000", // Footing
-//           "#FF0000", // RCC Work
-//           "#0000FF", // Roof Slab
-//           "#8B4513", // Door
-//           "#A9A9A9", // Water Supply
-//           "#FFA500", // Electric Wiring
-//           "#800080", // Flooring
-//           "#FFB6C1", // Brickwork
-//         ],
-//         borderWidth: 0,
-//       },
-//     ],
-//   };
+const chartConfig = {
+  value: {
+    label: "Value",
+  },
+  A: {
+    label: "Category A",
+    color: "#FF6384",
+  },
+  B: {
+    label: "Category B",
+    color: "#36A2EB",
+  },
+  C: {
+    label: "Category C",
+    color: "#FFCE56",
+  },
+  D: {
+    label: "Category D",
+    color: "#4BC0C0",
+  },
+  E: {
+    label: "Category E",
+    color: "#9966FF",
+  },
+} satisfies ChartConfig;
 
-//   const total = data.datasets[0].data.reduce((a, b) => a + b, 0);
+export function PieChartComponent() {
+  const totalValue = React.useMemo(() => {
+    return chartData.reduce((acc, curr) => acc + curr.value, 0);
+  }, []);
 
-//   const handleHover = (event: any, elements: any) => {
-//     if (elements.length > 0) {
-//       setHoveredIndex(elements[0].index);
-//     } else {
-//       setHoveredIndex(null);
-//     }
-//   };
-
-//   return (
-//     <div className="w-[30vw] h-full flex items-center justify-center">
-//       <div className="relative flex flex-col items-center w-full h-full">
-//         {/* Donut Chart */}
-//         <Doughnut
-//           data={data}
-//           options={{
-//             maintainAspectRatio: true, // Prevent size changes
-//             plugins: {
-//               tooltip: {
-//                 enabled: false,
-//               },
-//             },
-//             cutout: "50%",
-//             onHover: handleHover,
-//           }}
-//         />
-
-//         {/* Tooltip (custom) */}
-//         {hoveredIndex !== null && (
-//           <div
-//             className="absolute bg-white text-gray-800 shadow-md rounded-md px-3 py-2 font-bold text-sm z-10"
-//             style={{
-//               top: "50%", // Centering relative to the donut chart
-//               left: "50%",
-//               transform: "translate(-50%, -120%)", // Position tooltip above the chart
-//               pointerEvents: "none", // Prevent tooltip from affecting hover
-//             }}
-//           >
-//             {/* <strong>{data.labels[hoveredIndex]}</strong> */}
-//             {/* <br /> */}
-//             {(
-//               ((data.datasets[0].data[hoveredIndex] as number) / total) *
-//               100
-//             ).toFixed(1)}
-//             %
-//           </div>
-//         )}
-
-//         {/* Titles around the chart */}
-//         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center pointer-events-none">
-//           {data.labels.map((label, index) => {
-//             const angle = (360 / data.labels.length) * index; // Evenly distribute labels around the circle
-//             const radius = 120; // Adjust for position
-//             const x = radius * Math.cos((angle * Math.PI) / 180);
-//             const y = radius * Math.sin((angle * Math.PI) / 180);
-
-//             return (
-//               <div
-//                 key={index}
-//                 style={{
-//                   position: "absolute",
-//                   transform: `translate(${x}px, ${y}px)`,
-//                   whiteSpace: "nowrap",
-//                   textAlign: "center",
-//                 }}
-//                 className="text-xs text-gray-800"
-//               >
-//                 {/* {label} */}
-//               </div>
-//             );
-//           })}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default PieChart;
+  return (
+    <Card className="flex flex-col w-1/2">
+      <CardHeader className="items-center pb-0">
+        {/* <CardTitle>Simple Pie Chart</CardTitle>
+        <CardDescription>Custom Colors</CardDescription> */}
+      </CardHeader>
+      <CardContent className="flex-1 pb-0">
+        <ChartContainer
+          config={chartConfig}
+          className="mx-auto aspect-square max-h-[250px]"
+        >
+          <PieChart>
+            <ChartTooltip
+              cursor={false}
+              content={
+                <ChartTooltipContent
+                  hideLabel
+                  className="text-white bg-black"
+                />
+              }
+            />
+            <Pie
+              data={chartData}
+              dataKey="value"
+              nameKey="category"
+              innerRadius={60}
+              strokeWidth={5}
+            >
+              <Label
+                content={({ viewBox }) => {
+                  if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                    return (
+                      <text
+                        x={viewBox.cx}
+                        y={viewBox.cy}
+                        textAnchor="middle"
+                        dominantBaseline="middle"
+                      >
+                        <tspan
+                          x={viewBox.cx}
+                          y={viewBox.cy}
+                          className="fill-foreground text-3xl font-bold"
+                        >
+                          {totalValue.toLocaleString()}
+                        </tspan>
+                        <tspan
+                          x={viewBox.cx}
+                          y={(viewBox.cy || 0) + 24}
+                          className="fill-muted-foreground"
+                        >
+                          Total
+                        </tspan>
+                      </text>
+                    );
+                  }
+                }}
+              />
+            </Pie>
+          </PieChart>
+        </ChartContainer>
+      </CardContent>
+      {/* <CardFooter className="flex-col gap-2 text-sm">
+        <div className="leading-none text-muted-foreground">
+          Showing simplified data with custom colors
+        </div>
+      </CardFooter> */}
+    </Card>
+  );
+}

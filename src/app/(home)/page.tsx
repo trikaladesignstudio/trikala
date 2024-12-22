@@ -1,20 +1,18 @@
-// import Lead from "@/components/custom/Lead";
-import Expertise from "@/components/ExpertiseTest";
-import Featured from "@/components/Feature";
-// import PriceEstimator from "@/components/PriceEstimator";
-import Testimonials from "@/components/Testimonials";
-import Working from "@/components/Working";
-import HeroTest from "@/components/HeroTest";
-import { filterAllProjects, getAllFeaturedProjects } from "@/utils/dbActions";
-import { sectionType } from "@/utils/client_utils";
-import { Suspense } from "react";
+// import Lead from "@/components/sections/custom/Lead";
 import Lead from "@/components/custom/Lead";
-import Footer from "@/components/Footer";
+import Expertise from "@/components/sections/ExpertiseTest";
+import Featured from "@/components/sections/Feature";
+import Footer from "@/components/sections/Footer";
+import HeroTest from "@/components/sections/HeroTest";
+import PriceEstimator from "@/components/sections/PriceEstimatorTest";
+import Testimonials from "@/components/sections/Testimonials";
+import Working from "@/components/sections/Working";
+import { sectionType } from "@/utils/client_utils";
+import { filterAllProjects } from "@/utils/dbActions";
 import dynamic from "next/dynamic";
-// import Interior from "@/components/Interior";
-// import SectionGrid from "@/components/custom/SectionGrid";
-// import Hero from "@/components/Hero";
-const Video = dynamic(() => import("@/components/Video"), { ssr: true });
+import { Suspense } from "react";
+
+const Video = dynamic(() => import("@/components/sections/Video"), { ssr: true });
 
 export const revalidate = 60 * 60 * 0.5;
 
@@ -28,13 +26,13 @@ export default async function Home() {
     <Suspense>
       <HeroTest data={heroData} />
       <Suspense>
-        <Lead />
+        {/* <Lead /> */}
         <Featured />
         <Expertise />
         <Working data={workingData} />
-        {/* <PriceEstimator /> */}
         {/* <Interior /> */}
         <Testimonials data={testimonialData} />
+        <PriceEstimator />
         <Video />
         <Footer data={footerData} />
       </Suspense>

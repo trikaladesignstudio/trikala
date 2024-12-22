@@ -44,7 +44,7 @@ function Section({
         },
       }}
       className={cn(
-        "relative min-h-screen flex flex-col gap-4 justify-evenly",
+        "relative min-h-[100dvh] flex flex-col gap-4 justify-evenly",
         "px-[2rem] lg:px-[5rem] py-6 lg:py-10",
         toSnap && "snap-center shrink-0",
         className
