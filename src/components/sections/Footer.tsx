@@ -97,7 +97,10 @@ export default function Footer({
                     PHONE
                   </div>
                   <Link
-                    href="tel:+78124084151"
+                    href={`tel:${
+                      contactData.find((ele) => ele.title === "PHONE")
+                        ?.description || "78124084151"
+                    }`}
                     className="text-zinc-100 hover:text-zinc-300 transition-colors"
                   >
                     {
