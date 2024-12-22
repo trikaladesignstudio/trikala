@@ -22,7 +22,7 @@ model Project {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   title       String
   description String
-  pdf         String?
+  pdf         Image?
   images      Image[]
   type        String
   section     String

@@ -15,7 +15,7 @@ export default async function Admin() {
     <Section className="container mx-auto px-4 py-8 flex flex-col gap-4">
       <div className="flex justify-between items-center mb-8">
         <PathHeading />
-        <div className="flex gap-4 border">
+        <div className="flex gap-4">
           <LogoutBtn />
           <Link
             href="/admin/new"
