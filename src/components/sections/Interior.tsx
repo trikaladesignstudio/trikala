@@ -1,12 +1,12 @@
-import { cn } from "../lib/utils";
-import Sections from "./custom/Section";
-import Heading from "./custom/Heading";
+import { cn } from "@/lib/utils";
+import Sections from "../custom/Section";
+import Heading from "../custom/Heading";
 import {
   interiorData,
   interiorDataType,
 } from "@/jsonData/Home/Interiors/index";
 import Image from "next/image";
-import Marquee from "./ui/marquee";
+import Marquee from "../ui/marquee";
 import { useEffect, useState } from "react";
 
 // const [mobile,setMobile]=useState()
