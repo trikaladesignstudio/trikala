@@ -1,3 +1,6 @@
+"use cache";
+
+// import Lead from "@/components/sections/custom/Lead";
 import Expertise from "@/components/sections/ExpertiseTest";
 import Featured from "@/components/sections/Feature";
 import HeroTest from "@/components/sections/HeroTest";
@@ -21,8 +24,10 @@ export default async function Home() {
   const testimonialData = await filterAllProjects(sectionType.testimonials);
 
   return (
-    <Suspense>
+<>
+<Suspense>
       <HeroTest data={heroData} />
+    </Suspense>
       <Suspense>
         <Featured />
         <Expertise />
@@ -31,6 +36,6 @@ export default async function Home() {
         <PriceEstimator />
         <Video />
       </Suspense>
-    </Suspense>
+</>
   );
 }

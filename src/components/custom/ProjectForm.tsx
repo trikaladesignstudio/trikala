@@ -25,6 +25,11 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
+// import RenderPdf from "./RenderPdf";
+import dynamic from "next/dynamic";
+const RenderPdf = dynamic(() => import("./RenderPdf"), {
+  ssr: false,
+});
 
 export default function ProjectForm({ projectId }: { projectId?: string }) {
   const router = useRouter();
@@ -48,7 +53,7 @@ export default function ProjectForm({ projectId }: { projectId?: string }) {
   const getProjectInfo = async () => {
     projectId &&
       getProject(projectId).then((project) => {
-        console.log("project:", project);
+        // console.log("project:", project);
         if (project === null) {
           toast.error("Error fetching project");
           setTimeout(() => {
@@ -65,6 +70,7 @@ export default function ProjectForm({ projectId }: { projectId?: string }) {
             images: project.images,
             pdf: project.pdf,
           });
+          setPdfFile(project.pdf);
           setFileNames(project.images);
         }
       });
@@ -133,6 +139,14 @@ export default function ProjectForm({ projectId }: { projectId?: string }) {
     }));
   };
 
+  // useEffect(() => {
+  //   if (pdfFile) {
+  //     toImg(pdfFile.url).then((imgs) => {
+  //       console.log("imgs:", imgs);
+  //     });
+  //   }
+  // }, [pdfFile]);
+
   return (
     <>
       {error && (
@@ -140,7 +154,7 @@ export default function ProjectForm({ projectId }: { projectId?: string }) {
           {error}
         </div>
       )}
-      <motion.div className={cn("h-full flex flex-col lg:flex-row gap-4")}>
+      <motion.div className={cn("h-fit flex flex-col lg:flex-row gap-4")}>
         <motion.form onSubmit={handleSubmit} className="space-y-2 max-w-2xl">
           <Card className="h-full bg-white">
             <CardContent className="p-4 flex flex-col gap-2 ">
@@ -230,12 +244,11 @@ export default function ProjectForm({ projectId }: { projectId?: string }) {
                   htmlFor="description"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
-                  Description *
+                  Description
                 </label>
                 <input
                   id="description"
                   name="description"
-                  required
                   value={formData.description}
                   onChange={handleInputChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md"
@@ -399,28 +412,18 @@ export default function ProjectForm({ projectId }: { projectId?: string }) {
           </motion.div>
         )}
         {pdfFile && (
-          <motion.div className="flex-1 w-full space-y-2 rounded-lg flex flex-col h-full">
+          <motion.div className="flex-1 md:w-full w-1/2 space-y-2 rounded-lg flex flex-col h-full">
             <Card className="h-full bg-white">
-              <CardContent className="p-4 flex flex-col gap-4 ">
-                <div className="text-3xl font-thin font-poppins">
-                  Uploaded Pdf
-                </div>
-                <motion.div className="space-y-2 flex-1">
-                  <AnimatePresence mode="wait">
-                    {pdfFile && (
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.5 }}
-                        className="grid grid-cols-2 "
-                      >
-                        {pdfFile.name}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </motion.div>
-              </CardContent>
+              <AnimatePresence mode="wait">
+                <CardContent className="p-4 flex flex-col gap-4 h-full">
+                  <div className="text-3xl font-thin font-poppins">
+                    Uploaded Pdf
+                  </div>
+                  <motion.div className="space-y-2 flex-1 border">
+                    <RenderPdf url={pdfFile?.url || ""} />
+                  </motion.div>
+                </CardContent>
+              </AnimatePresence>
             </Card>
           </motion.div>
         )}
