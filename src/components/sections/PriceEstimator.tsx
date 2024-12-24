@@ -79,7 +79,7 @@ export default function PriceEstimator() {
       ) : (
         <div
           id={estimator}
-          className="min-h-fit flex flex-col gap-4 text-center"
+          className="min-h-fit flex flex-col gap-4"
         >
           <button
             onClick={handleBack}
