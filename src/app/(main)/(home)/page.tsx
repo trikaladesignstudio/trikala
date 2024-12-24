@@ -24,18 +24,18 @@ export default async function Home() {
   const testimonialData = await filterAllProjects(sectionType.testimonials);
 
   return (
-<>
-<Suspense>
-      <HeroTest data={heroData} />
-    </Suspense>
+    <>
+      <Suspense>
+        <HeroTest data={heroData} />
+      </Suspense>
       <Suspense>
         <Featured />
         <Expertise />
         <Working data={workingData} />
         <Testimonials data={testimonialData} />
         <PriceEstimator />
-        <Video />
+        {/* <Video /> */}
       </Suspense>
-</>
+    </>
   );
 }
