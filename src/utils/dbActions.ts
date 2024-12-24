@@ -20,6 +20,28 @@ export async function getAllProjects() {
   }
 }
 
+export async function getAllProjectsByPDF() {
+  try {
+
+    // for some mf reason this is not working with filter not sure why !!!!!! panic 3hrs wasted
+    const projects = await prisma.project.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    if (projects.length) {
+      const filteredProject = projects.filter((project) => project.pdf);
+      return filteredProject;
+    } else {
+      return [];
+    }
+  } catch (error) {
+    console.error("Error fetching projects:", error);
+    return [];
+  }
+}
+
 export async function filterAllProjects(
   section?: sectionType,
   type?: ProjectType
