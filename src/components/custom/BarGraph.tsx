@@ -122,7 +122,7 @@ export function BarGraph() {
           <BarChart
             data={transformedData}
             layout="vertical"
-            margin={{ top: 10, right: 150, bottom: 10, left: 10 }}
+            margin={{ top: 10, right: 0, bottom: 10, left: 0 }}
           >
             <XAxis
               type="number"
@@ -135,7 +135,7 @@ export function BarGraph() {
               type="category"
               dataKey="phase"
               tick={{ fontSize: 12 }}
-              width={170}
+              width={100}
             />
             <Bar
               dataKey="customBar"
@@ -152,7 +152,7 @@ export function BarGraph() {
                     fontSize={12}
                     textAnchor="start"
                   >
-                    {item.label}
+                    {/* {item.label} */}
                   </text>
                 );
               }}

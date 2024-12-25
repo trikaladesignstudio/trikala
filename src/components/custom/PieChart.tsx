@@ -59,12 +59,12 @@ export function PieChartComponent() {
   }, []);
 
   return (
-    <Card className="flex flex-col lg:w-1/3 w-full border-none shadow-none">
+    <Card className="flex flex-col w-full border-none shadow-none">
       <CardHeader className="items-center pb-0">
         {/* <CardTitle>Simple Pie Chart</CardTitle>
         <CardDescription>Custom Colors</CardDescription> */}
       </CardHeader>
-      <CardContent className="flex-1 pb-0">
+      <CardContent className="flex-1 pb-0 p-0">
         <ChartContainer config={chartConfig} className="mx-auto aspect-square">
           <PieChart>
             <ChartTooltip
