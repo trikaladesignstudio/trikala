@@ -69,22 +69,22 @@ function Working({
           </div>
         </div>
       </div>
-      <div className="flex flex-col lg:flex-row overflow-hidden w-full justify-center gap-2 lg:h-auto h-full">
+      <div className="flex flex-col md:flex-row overflow-hidden w-full justify-center gap-2 md:h-auto h-full">
         {slides.map((slide, index) => (
           <div
             key={index}
-            className={`relative  transition-all duration-500 ease-in-out lg:h-[55vh] border-2   ${
+            className={`relative cursor-pointer  transition-all duration-500 ease-in-out md:h-[55vh] border-2   ${
               index === currentIndex
-                ? "lg:w-4/5 w-full h-[18vh]"
-                : "lg:w-1/6 w-full h-[6vh]"
+                ? "md:w-4/5 w-full h-[18vh]"
+                : "md:w-1/6 w-full h-[6vh]"
             }`}
             onClick={() => handleClick(index)}
           >
             <div
-              className={`absolute group h-full bottom-0 left-0 bg-gradient-to-t from-black/30 lg:via-transparent via-black/30 lg:to-transparent to-black/30  text-white w-full flex flex-col justify-center p-2 z-20 ${
+              className={`absolute group h-full bottom-0 left-0 bg-gradient-to-t from-black/30 md:via-transparent via-black/30 md:to-transparent to-black/30  text-white w-full flex flex-col justify-center p-2 z-20 ${
                 currentIndex !== index
-                  ? "lg:justify-center items-center"
-                  : "lg:justify-end"
+                  ? "md:justify-center items-center"
+                  : "md:justify-end"
               }`}
             >
               <div className="flex-col items-center justify-center ">
@@ -93,7 +93,7 @@ function Working({
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.5 }}
                   exit={{ opacity: 0 }}
-                  className={`font-bold p-2 lg:hidden ${
+                  className={`font-bold p-2 md:hidden ${
                     currentIndex !== index
                       ? "transform lg:-rotate-90 rotate-0  lg:group-hover:block lg:rotate-270 lg:my-0 my-4 lg:text-[1.2rem]  text-center  lg:w-[100vw]"
                       : "lg:text-[1.5rem] text-left hidden "
@@ -107,7 +107,7 @@ function Working({
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.5 }}
                     exit={{ opacity: 0 }}
-                    className="font-bold p-2 lg:text-[1.5rem] text-left "
+                    className="font-bold p-2 lg:text-[1.8rem] text-[1.2rem] text-left "
                   >
                     {slide.title}
                   </motion.div>
@@ -120,7 +120,7 @@ function Working({
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.5 }}
                     exit={{ opacity: 0 }}
-                    className="text-sm p-2 text-justify"
+                    className="text-sm p-2 text-justify leading-4"
                   >
                     {slide.description}
                   </motion.div>

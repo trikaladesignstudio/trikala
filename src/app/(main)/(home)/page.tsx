@@ -34,7 +34,7 @@ export default async function Home() {
         <Working data={workingData} />
         <Testimonials data={testimonialData} />
         <PriceEstimator />
-        {/* <Video /> */}
+        <Video />
       </Suspense>
     </>
   );

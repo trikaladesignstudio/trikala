@@ -61,7 +61,8 @@ function Featured() {
               key={index}
               className={cn(
                 "relative shadow-md hover:border-black/20 z-10 text-left p-2 px-4 cursor-pointer rounded-md animate-[bg_1s_ease-in-out] border -inset-0.5",
-                currentActive == type ? "border  bg-black text-white" : ""
+                currentActive == type ? "border  bg-black text-white" : "",
+                "flex justify-center items-center"
               )}
               onClick={() => setCurrentActive(type)}
             >

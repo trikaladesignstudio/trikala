@@ -9,6 +9,7 @@ import { Toaster } from "react-hot-toast";
 import { extractRouterConfig } from "uploadthing/server";
 import "./globals.css";
 import BackToTopBtn from "@/components/BackToTop";
+import TwScreenInfo from "@/components/custom/TwScreenInfo";
 
 const silver = localFont({
   src: "./Silver-Queen.otf",
@@ -88,6 +89,7 @@ export default async function RootLayout({
         suppressHydrationWarning
         className={`${silver.variable} antialiased`}
       >
+        <TwScreenInfo />
         <NextTopLoader height={3} color="#1A1A1A" />
         <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
         <main

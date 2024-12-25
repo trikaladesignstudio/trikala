@@ -14,7 +14,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className="px-[2rem] lg:px-[5rem] absolute left-0 right-0 -top-2 z-20 text-black/90 flex flex-row items-center min-h-fit justify-between w-full py-1
+      className="px-[.2rem] lg:px-[5rem] absolute left-0 right-0 -top-2 z-20 text-black/90 flex flex-row items-center min-h-fit justify-between w-full py-1
       snap-start"
     >
       <Link href={"/"} className="font-bold">
