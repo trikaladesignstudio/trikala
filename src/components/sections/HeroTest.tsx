@@ -40,11 +40,11 @@ function HeroTest({
       <Navbar />
       {images.map((image, index) => (
         <Image
-          fetchPriority={index === currentIndex ? "high" : "auto"}
+          fetchPriority="high"
           priority
           src={image as string}
-          width={700}
-          height={500}
+          width={400}
+          height={400}
           alt={`Image ${index}`}
           key={index}
           className={`lg:aspect-[1.78] aspect-auto absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000 ${
