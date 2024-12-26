@@ -7,41 +7,12 @@ import { filterAllProjects } from "@/utils/dbActions";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
 
-const Expertise = dynamic(() => import("@/components/sections/ExpertiseTest"), {
-  ssr: true,
-  suspense: true,
-});
-
-const Featured = dynamic(() => import("@/components/sections/Feature"), {
-  ssr: true,
-  suspense: true,
-});
-
-const PriceEstimator = dynamic(
-  () => import("@/components/sections/PriceEstimatorTest"),
-  {
-    ssr: true,
-    suspense: true,
-  }
-);
-
-const Testimonials = dynamic(
-  () => import("@/components/sections/Testimonials"),
-  {
-    ssr: true,
-    suspense: true,
-  }
-);
-
-const Video = dynamic(() => import("@/components/sections/Video"), {
-  ssr: true,
-  suspense: true,
-});
-
-const Working = dynamic(() => import("@/components/sections/Working"), {
-  ssr: true,
-  suspense: true,
-});
+import Expertise from "@/components/sections/ExpertiseTest";
+import Featured from "@/components/sections/Feature";
+import PriceEstimator from "@/components/sections/PriceEstimatorTest";
+import Testimonials from "@/components/sections/Testimonials";
+import Video from "@/components/sections/Video";
+import Working from "@/components/sections/Working";
 
 export const revalidate = 300;
 
