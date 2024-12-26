@@ -87,8 +87,7 @@ function Featured() {
                 className="flex-shrink-0"
               >
                 <Image
-                  priority
-                  fetchPriority="low"
+                  loading="lazy"
                   src={img as string}
                   width={400}
                   height={400}

@@ -89,8 +89,8 @@ export default async function RootLayout({
         suppressHydrationWarning
         className={`${silver.variable} antialiased`}
       >
-        <TwScreenInfo />
-        <NextTopLoader height={3} color="#1A1A1A" />
+        {/* <TwScreenInfo /> */}
+        <NextTopLoader height={3} color="#1A1A1A" showSpinner={false} />
         <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
         <main
           id="mainCointainer"

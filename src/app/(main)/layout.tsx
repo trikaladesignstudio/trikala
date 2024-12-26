@@ -1,6 +1,12 @@
-import Footer from "@/components/sections/Footer";
-import { sectionType } from "@/utils/client_utils";
 import { filterAllProjects } from "@/utils/dbActions";
+import { sectionType } from "@/utils/client_utils";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
+
+const Footer = dynamic(() => import("@/components/sections/Footer"), {
+  ssr: false,
+  suspense: true,
+});
 
 export default async function RootLayout({
   children,
@@ -12,7 +18,9 @@ export default async function RootLayout({
   return (
     <>
       {children}
-      <Footer data={footerData} />
+      <Suspense>
+        <Footer data={footerData} />
+      </Suspense>
     </>
   );
 }

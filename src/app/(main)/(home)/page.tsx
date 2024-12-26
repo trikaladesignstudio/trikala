@@ -7,53 +7,26 @@ import { filterAllProjects } from "@/utils/dbActions";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
 
-const Expertise = dynamic(() => import("@/components/sections/ExpertiseTest"), {
-  ssr: false,
-  suspense: true,
-});
+import Expertise from "@/components/sections/ExpertiseTest";
+import Featured from "@/components/sections/Feature";
+import PriceEstimator from "@/components/sections/PriceEstimatorTest";
+import Testimonials from "@/components/sections/Testimonials";
+import Video from "@/components/sections/Video";
+import Working from "@/components/sections/Working";
 
-const Featured = dynamic(() => import("@/components/sections/Feature"), {
-  ssr: false,
-  suspense: true,
-});
-
-const PriceEstimator = dynamic(
-  () => import("@/components/sections/PriceEstimatorTest"),
-  {
-    ssr: false,
-    suspense: true,
-  }
-);
-
-const Testimonials = dynamic(
-  () => import("@/components/sections/Testimonials"),
-  {
-    ssr: false,
-    suspense: true,
-  }
-);
-
-const Video = dynamic(() => import("@/components/sections/Video"), {
-  ssr: false,
-  suspense: true,
-});
-
-const Working = dynamic(() => import("@/components/sections/Working"), {
-  ssr: false,
-  suspense: true,
-});
-
-export const revalidate = 60 * 60 * 0.5;
+export const revalidate = 300;
 
 export default async function Home() {
-  const heroData = await filterAllProjects(sectionType.hero);
-  const workingData = await filterAllProjects(sectionType.working);
-  const testimonialData = await filterAllProjects(sectionType.testimonials);
+  const heroData = filterAllProjects(sectionType.hero);
+  const [workingData, testimonialData] = await Promise.all([
+    filterAllProjects(sectionType.working),
+    filterAllProjects(sectionType.testimonials),
+  ]);
 
   return (
     <>
       <Suspense>
-        <HeroTest data={heroData} />
+        <HeroTest pData={heroData} />
       </Suspense>
       <Suspense>
         <Featured />
