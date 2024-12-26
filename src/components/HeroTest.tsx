@@ -43,7 +43,6 @@ function HeroTest({
       {images.map((image, index) => (
         <AspectRatio ratio={1.78}>
           <Image
-            fetchPriority={index === currentIndex ? "high" : "auto"}
             priority
             src={image as string}
             width={700}
