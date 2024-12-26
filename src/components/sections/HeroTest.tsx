@@ -31,22 +31,33 @@ function HeroTest({
     if (projectImages.length === 0) {
       setImages(["/static/logo.webp"]);
     } else {
-      setImages(projectImages.flat());
+      const imgArr = projectImages.flat();
+      setImages([imgArr[0]]);
+      imgArr.forEach((image, index) => {
+        if (index === 0) return;
+        setTimeout(() => {
+          console.log("image", index);
+          setImages((prevImages) => [...prevImages, image]);
+        }, index * 5000);
+      });
     }
   }, []);
 
   return (
-    <Section className="relative max-h-[100dvh] ">
+    <Section className="relative max-h-[100dvh] bg-black">
       <Navbar />
+
       {images.map((image, index) => (
         <Image
-          fetchPriority="high"
           priority
           src={image as string}
           width={400}
-          height={400}
+          height={200}
           alt={`Image ${index}`}
           key={index}
+          onLoad={() => {
+            setCurrentIndex(index);
+          }}
           className={`lg:aspect-[1.78] aspect-auto absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000 ${
             currentIndex === index ? "opacity-100" : "opacity-0"
           }`}

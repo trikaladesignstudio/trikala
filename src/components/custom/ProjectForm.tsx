@@ -279,7 +279,7 @@ export default function ProjectForm({ projectId }: { projectId?: string }) {
                     }}
                     onUploadError={(error: Error) => {
                       // Do something with the error.
-                      alert(`ERROR! ${error.message}`);
+                      toast.error(error.message);
                     }}
                   />
                 )}
