@@ -38,12 +38,12 @@ export default function PriceEstimator() {
             className="group w-full lg:w-[30rem] bg-white rounded-lg shadow-lg overflow-hidden transition-transform hover:scale-105"
           >
             {/* <div className="relative h-48 w-full"> */}
-              <Image
-                loading="lazy"
-                src={image2}
-                alt="Traditional white house with wraparound porch"
-                className="w-full h-full object-cover"
-              />
+            <Image
+              loading="lazy"
+              src={image2}
+              alt="Traditional white house with wraparound porch"
+              className="w-full h-full object-cover"
+            />
             {/* </div> */}
             <div className="p-4">
               <div className="flex items-center justify-between">
@@ -62,12 +62,12 @@ export default function PriceEstimator() {
             className="group w-full lg:w-[30rem] bg-white rounded-lg shadow-lg overflow-hidden transition-transform hover:scale-105"
           >
             {/* <div className="relative h-48 w-full"> */}
-              <Image
-                loading="lazy"
-                src={image2}
-                alt="Modern white kitchen with wooden accents"
-                className="w-full h-full object-cover"
-              />
+            <Image
+              loading="lazy"
+              src={image2}
+              alt="Modern white kitchen with wooden accents"
+              className="w-full h-full object-cover"
+            />
             {/* </div> */}
             <div className="p-4">
               <div className="flex items-center justify-between">
@@ -92,14 +92,14 @@ export default function PriceEstimator() {
           <div className="w-full">
             <PriceForm />
           </div>
-          <section className="w-full flex flex-col lg:flex-row gap-8 mt-8 justify-center items-center">
+          <Section className="w-full flex flex-col lg:flex-row px-1 justify-center items-center">
             <div className="w-full lg:w-1/3">
               <PieChartComponent />
             </div>
-            <div className="w-full lg:w-2/3 overflow-x-auto">
+            <div className="w-full lg:w-2/3">
               <BarGraph />
             </div>
-          </section>
+          </Section>
         </div>
       )}
     </Section>
