@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Section from "../custom/Section";
-import Navbar from "../custom/NavBar";
-import Heading from "../custom/Heading";
+import Section from "./custom/Section";
+import Navbar from "./custom/NavBar";
+import Heading from "./custom/Heading";
 import { filterAllProjects } from "@/utils/dbActions";
 import Image from "next/image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -27,11 +27,13 @@ function HeroTest({
     const projectImages = data
       .map((project) => project.images.map((image) => image.url))
       .flat();
+    console.log("images", projectImages);
 
     if (projectImages.length === 0) {
       setImages(["/static/logo.webp"]);
     } else {
       setImages(projectImages.flat());
+      console.log("images", projectImages);
     }
   }, []);
 
@@ -39,19 +41,21 @@ function HeroTest({
     <Section className="relative max-h-[100dvh] ">
       <Navbar />
       {images.map((image, index) => (
-        <Image
-          fetchPriority="high"
-          priority
-          src={image as string}
-          width={400}
-          height={400}
-          alt={`Image ${index}`}
-          key={index}
-          className={`lg:aspect-[1.78] aspect-auto absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000 ${
-            currentIndex === index ? "opacity-100" : "opacity-0"
-          }`}
-          // style={{ backgroundImage: `url(${image})` }}
-        />
+        <AspectRatio ratio={1.78}>
+          <Image
+            fetchPriority={index === currentIndex ? "high" : "auto"}
+            priority
+            src={image as string}
+            width={700}
+            height={500}
+            alt={`Image ${index}`}
+            key={index}
+            className={`absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000 ${
+              currentIndex === index ? "opacity-100" : "opacity-0"
+            }`}
+            // style={{ backgroundImage: `url(${image})` }}
+          />
+        </AspectRatio>
       ))}
       {/* background black and opacity */}
       <div className="absolute inset-0 flex flex-col items-center justify-center text-white bg-black bg-opacity-70">

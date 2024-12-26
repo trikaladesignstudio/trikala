@@ -20,7 +20,7 @@ interface CarouselDataProps {
 
 function CarouselData({ images }: CarouselDataProps) {
   return (
-    <Carousel className="w-full m-auto" delay={3000}>
+    <Carousel className="w-full m-auto" delay={2000}>
       <CarouselContent className="flex -ml-1">
         {images.map((img, index) => (
           <CarouselItem key={index} className="pl-1 md:basis-1/2 lg:basis-1/3">
@@ -32,13 +32,14 @@ function CarouselData({ images }: CarouselDataProps) {
               className="flex-shrink-0"
             >
               <Image
-                loading="eager"
+                priority
+                fetchPriority="low"
                 src={img}
                 style={{ height: `25rem` }}
                 alt={`Slide ${index}`}
                 className="w-full object-cover rounded-md"
-                width={1000}
-                height={1000}
+                width={400}
+                height={400}
               />
             </motion.div>
           </CarouselItem>
