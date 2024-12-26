@@ -1,20 +1,17 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import Section from "../custom/Section";
 import Navbar from "../custom/NavBar";
 import Heading from "../custom/Heading";
 import { filterAllProjects } from "@/utils/dbActions";
 import Image from "next/image";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { Prisma } from "@prisma/client";
 
-function HeroTest({
-  data,
-}: {
-  data: Awaited<ReturnType<typeof filterAllProjects>>;
-}) {
+function HeroTest({ pData }: { pData: Promise<Prisma.ProjectCreateInput[]> }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [images, setImages] = useState<String[]>([]);
+  const data = use(pData);
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
@@ -25,23 +22,29 @@ function HeroTest({
 
   useEffect(() => {
     const projectImages = data
-      .map((project) => project.images.map((image) => image.url))
+      .map((project) => project?.images)
+      .flat()
+      .map((image) => image?.url)
       .flat();
+
+    // console.log("projectImages", projectImages);
 
     if (projectImages.length === 0) {
       setImages(["/static/logo.webp"]);
     } else {
       const imgArr = projectImages.flat();
-      setImages([imgArr[0]]);
-      imgArr.forEach((image, index) => {
-        if (index === 0) return;
-        setTimeout(() => {
-          console.log("image", index);
-          setImages((prevImages) => [...prevImages, image]);
-        }, index * 5000);
-      });
+      if (imgArr.length > 0) {
+        imgArr[0] && setImages([imgArr[0]]);
+        imgArr.forEach((image, index) => {
+          if (index === 0) return;
+          setTimeout(() => {
+            console.log("image", index);
+            setImages((prevImages) => [...prevImages, image as string]);
+          }, index * 5000);
+        });
+      }
     }
-  }, []);
+  }, [data]);
 
   return (
     <Section className="relative max-h-[100dvh] bg-black">
@@ -55,6 +58,8 @@ function HeroTest({
           height={200}
           alt={`Image ${index}`}
           key={index}
+          blurDataURL="URL"
+          placeholder="blur"
           onLoad={() => {
             setCurrentIndex(index);
           }}

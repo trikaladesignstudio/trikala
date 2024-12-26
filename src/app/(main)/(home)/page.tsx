@@ -43,17 +43,17 @@ const Working = dynamic(() => import("@/components/sections/Working"), {
   suspense: true,
 });
 
-export const revalidate = 60 * 60 * 0.5;
-
 export default async function Home() {
-  const heroData = await filterAllProjects(sectionType.hero);
-  const workingData = await filterAllProjects(sectionType.working);
-  const testimonialData = await filterAllProjects(sectionType.testimonials);
+  const heroData = filterAllProjects(sectionType.hero);
+  const [workingData, testimonialData] = await Promise.all([
+    filterAllProjects(sectionType.working),
+    filterAllProjects(sectionType.testimonials),
+  ]);
 
   return (
     <>
       <Suspense>
-        <HeroTest data={heroData} />
+        <HeroTest pData={heroData} />
       </Suspense>
       <Suspense>
         <Featured />
