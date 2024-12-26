@@ -1,4 +1,3 @@
-"use client";
 import Section from "@/components/custom/Section";
 import Link from "next/link";
 
@@ -7,11 +6,10 @@ export default function PrivacyPolicy() {
     <Section className="m-4 p-4 lg:mx-auto lg:w-[70%]">
       <h1 className="text-3xl font-extrabold">Privacy Policy</h1>
       <>
-        Trikala Architects and Associates ("we," "our," or "us") operates as an
-        architectural firm providing professional services to clients. This
-        Privacy Policy outlines our policies regarding the collection, use, and
-        disclosure of personal information for visitors and clients who engage
-        with our services.
+        Trikala Architects and Associates, We operates as an architectural firm
+        providing professional services to clients. This Privacy Policy outlines
+        our policies regarding the collection, use, and disclosure of personal
+        information for visitors and clients who engage with our services.
       </>
       <>
         If you choose to engage with our services, you agree to the collection
