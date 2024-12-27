@@ -4,7 +4,6 @@
 import HeroTest from "@/components/sections/HeroTest";
 import { sectionType } from "@/utils/client_utils";
 import { filterAllProjects } from "@/utils/dbActions";
-import dynamic from "next/dynamic";
 import { Suspense } from "react";
 
 import Expertise from "@/components/sections/ExpertiseTest";
