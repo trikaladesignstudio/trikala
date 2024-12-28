@@ -117,25 +117,28 @@ export function BarGraph() {
           Total Project Duration: 247 Days | Total Cost: ₹ 29,26,500
         </div>
       </CardHeader>
-      <CardContent>
-        <ChartContainer config={chartConfig} className="flex">
+      <CardContent className="overflow-x-auto">
+        <ChartContainer
+          config={chartConfig}
+          className="flex lg:w-full w-[40rem] items-start"
+        >
           <BarChart
             data={transformedData}
             layout="vertical"
-            margin={{ top: 10, right: 150, bottom: 10, left: 10 }}
+            margin={{ top: 0, right: 150, bottom: 0, left: -50 }}
           >
             <XAxis
               type="number"
               domain={[0, 250]}
-              tickCount={10}
-              tick={{ fontSize: 12 }}
+              tickCount={20}
+              tick={{ fontSize: 10 }}
               label={{ value: "Days", position: "bottom", offset: 0 }}
             />
             <YAxis
               type="category"
               dataKey="phase"
-              tick={{ fontSize: 12 }}
-              width={170}
+              tick={{ fontSize: 10 }}
+              width={150}
             />
             <Bar
               dataKey="customBar"

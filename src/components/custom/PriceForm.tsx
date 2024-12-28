@@ -40,7 +40,7 @@ export default function ConstructionEstimator() {
 
   return (
     <div className=" overflow-hidden">
-      <div className="p-6 md:p-8">
+      <div className="">
         <h1 className="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-2">
           Find Out How Much Your Home-building Project Will Cost
         </h1>
@@ -99,7 +99,7 @@ export default function ConstructionEstimator() {
             >
               Area
             </label>
-            <div className="flex space-x-4">
+            <div className="flex lg:space-x-4 gap-2 flex-col lg:flex-row">
               <Input
                 type="text"
                 id="area"
@@ -114,9 +114,9 @@ export default function ConstructionEstimator() {
                 className="block w-full px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm"
               />
 
-              <div className="flex space-x-2">
+              <div className="flex justify-between gap-5 w-full">
                 <Button
-                  className={`px-5 py-2 text-sm font-medium rounded-md ${
+                  className={`px-3 py-2 text-sm font-medium rounded-md ${
                     formData.unit === "sqft"
                       ? "bg-gray-600 text-white"
                       : "bg-gray-200 text-gray-700"
@@ -143,16 +143,16 @@ export default function ConstructionEstimator() {
         {/* </div> */}
         <div className="space-y-6">
           <div className="space-y-4">
-            <div className="flex justify-between gap-4 pt-4">
+            <div className="flex justify-between lg:flex-row flex-col gap-4 pt-4">
               <div className="space-y-2 border border-gray-300 rounded-md p-4 w-full">
                 <label className="block text-sm font-medium text-gray-700 ">
                   Building Class
                 </label>
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-3 gap-2">
                   {["luxury", "regular", "dwelling"].map((type) => (
                     <button
                       key={type}
-                      className={`px-4 py-2 text-sm font-medium rounded-md ${
+                      className={`px-2 py-2 text-sm font-medium rounded-md ${
                         formData.buildingClass === type
                           ? "bg-gray-600 text-white"
                           : "bg-gray-200 text-gray-700"
