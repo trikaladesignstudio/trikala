@@ -10,7 +10,7 @@ import {
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Heading from "../custom/Heading";
 import Section from "../custom/Section";
 import { allProjectTypes } from "@/utils/client_utils";
@@ -86,15 +86,16 @@ function Featured() {
                 exit={{ opacity: 0, width: 0 }}
                 className="flex-shrink-0"
               >
-                <Image
-                  loading="lazy"
-                  src={img as string}
-                  width={400}
-                  height={400}
-                  style={{ height: `28rem` }}
-                  alt={`Slide ${index}`}
-                  className="w-auto object-cover "
-                />
+                <Suspense>
+                  <Image
+                    src={img as string}
+                    width={400}
+                    height={400}
+                    style={{ height: `28rem` }}
+                    alt={`Slide ${index}`}
+                    className="w-auto object-cover "
+                  />
+                </Suspense>
               </motion.div>
             </CarouselItem>
           ))}

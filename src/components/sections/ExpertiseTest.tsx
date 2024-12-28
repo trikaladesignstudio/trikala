@@ -32,7 +32,6 @@ function CarouselData({ images }: CarouselDataProps) {
               className="flex-shrink-0"
             >
               <Image
-                loading="lazy"
                 src={img}
                 style={{ height: `25rem` }}
                 alt={`Slide ${index}`}
