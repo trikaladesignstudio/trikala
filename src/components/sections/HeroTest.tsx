@@ -1,6 +1,6 @@
 "use client";
 
-import React, { use, useEffect, useState } from "react";
+import React, { memo, use, useEffect, useState } from "react";
 import Section from "../custom/Section";
 import Navbar from "../custom/NavBar";
 import Heading from "../custom/Heading";
@@ -8,14 +8,18 @@ import { filterAllProjects } from "@/utils/dbActions";
 import Image from "next/image";
 import { Prisma } from "@prisma/client";
 
-function HeroTest({ pData }: { pData: Promise<Prisma.ProjectCreateInput[]> }) {
+export default memo(function HeroTest({
+  pData,
+}: {
+  pData: Promise<Prisma.ProjectCreateInput[]>;
+}) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [images, setImages] = useState<String[]>([]);
   const data = use(pData);
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 8000); // Change image every 3 seconds
+    }, 10000); // Change image every 10 seconds
 
     return () => clearInterval(interval); // Clean up interval on component unmount
   }, [images]);
@@ -40,7 +44,7 @@ function HeroTest({ pData }: { pData: Promise<Prisma.ProjectCreateInput[]> }) {
           setTimeout(() => {
             console.log("image", index);
             setImages((prevImages) => [...prevImages, image as string]);
-          }, index * 5000);
+          }, index * 6000);
         });
       }
     }
@@ -49,10 +53,9 @@ function HeroTest({ pData }: { pData: Promise<Prisma.ProjectCreateInput[]> }) {
   return (
     <Section className="relative max-h-[100dvh] bg-black">
       <Navbar />
-
       {images.map((image, index) => (
         <Image
-          priority
+          priority={index == 0 ? true : false}
           src={image as string}
           width={400}
           height={200}
@@ -61,7 +64,7 @@ function HeroTest({ pData }: { pData: Promise<Prisma.ProjectCreateInput[]> }) {
           blurDataURL="URL"
           placeholder="blur"
           onLoad={() => {
-            setCurrentIndex(index);
+            console.log("image loaded", image);
           }}
           className={`lg:aspect-[1.78] aspect-auto absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000 ${
             currentIndex === index ? "opacity-100" : "opacity-0"
@@ -78,6 +81,4 @@ function HeroTest({ pData }: { pData: Promise<Prisma.ProjectCreateInput[]> }) {
       </div>
     </Section>
   );
-}
-
-export default HeroTest;
+});

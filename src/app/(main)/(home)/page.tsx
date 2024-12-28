@@ -1,39 +1,16 @@
-"use cache";
-
 // import Lead from "@/components/sections/custom/Lead";
-import HeroTest from "@/components/sections/HeroTest";
-import { sectionType } from "@/utils/client_utils";
-import { filterAllProjects } from "@/utils/dbActions";
 import { Suspense } from "react";
-
-import Expertise from "@/components/sections/ExpertiseTest";
-import Featured from "@/components/sections/Feature";
-import PriceEstimator from "@/components/sections/PriceEstimator";
-import Testimonials from "@/components/sections/Testimonials";
-import Video from "@/components/sections/Video";
-import Working from "@/components/sections/Working";
+import FasterHome from "./_com/FastestHero";
+import OtherHomeConponent from "./_com/OtherHomeConponent";
 
 export const revalidate = 300;
 
 export default async function Home() {
-  const heroData = filterAllProjects(sectionType.hero);
-  const [workingData, testimonialData] = await Promise.all([
-    filterAllProjects(sectionType.working),
-    filterAllProjects(sectionType.testimonials),
-  ]);
-
   return (
     <>
+      <FasterHome />
       <Suspense>
-        <HeroTest pData={heroData} />
-      </Suspense>
-      <Suspense>
-        <Featured />
-        <Expertise />
-        <Working data={workingData} />
-        <Testimonials data={testimonialData} />
-        <PriceEstimator />
-        <Video />
+        <OtherHomeConponent />
       </Suspense>
     </>
   );
