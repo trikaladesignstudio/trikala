@@ -6,7 +6,7 @@ import React, { ReactNode } from "react";
 type Heading = {
   className?: string;
   text: string;
-  customDelay: number;
+  customDelay?: number;
 };
 
 function Heading({ className, text, customDelay = 0 }: Heading) {
