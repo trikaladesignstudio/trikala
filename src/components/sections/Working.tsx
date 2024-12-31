@@ -7,6 +7,7 @@ import { BiChevronLeft } from "react-icons/bi";
 import Heading from "../custom/Heading";
 import Sections from "../custom/Section";
 import { Button } from "../ui/button";
+import { rollInView } from "@/lib/utils";
 
 function Working({
   data,
@@ -47,9 +48,20 @@ function Working({
   return (
     <Sections className="lg:py-0 justify-center lg:gap-10">
       <Heading text="Our work is based on the development of an individual approach to each client" />
-      <div className="flex flex-col md:flex-row overflow-hidden w-full justify-center gap-2 md:h-auto h-full">
+      <motion.div
+        variants={rollInView}
+        viewport={{ once: true }}
+        initial="base"
+        whileInView="show"
+        transition={{
+          ...rollInView.transition,
+          delay: 0.4,
+          duration: 0.5,
+        }}
+        className="flex flex-col md:flex-row overflow-hidden w-full justify-center gap-2 md:h-auto h-full"
+      >
         {slides.map((slide, index) => (
-          <div
+          <motion.div
             key={index}
             className={`relative cursor-pointer  transition-all duration-500 ease-in-out md:h-[55vh] border-2   ${
               index === currentIndex
@@ -117,9 +129,9 @@ function Working({
               height={300}
             />
             <div className="absolute inset-0 bg-black bg-opacity-35"></div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </Sections>
   );
 }

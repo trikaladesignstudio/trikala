@@ -2,30 +2,42 @@
 
 import useScreenWidth from "@/hooks/ScreenResize";
 import Image from "next/image";
-import { cn } from "@/lib/utils";
+import { cn, rollInView } from "@/lib/utils";
 import { filterAllProjects } from "@/utils/dbActions";
 import { useEffect, useState } from "react";
 import { TestimonialsDataType } from "@/types";
 import Section from "../custom/Section";
 import Heading from "../custom/Heading";
 import Marquee from "../ui/marquee";
+import { motion } from "framer-motion";
 
 const ReviewCard = ({
   images,
   title,
   company,
   description,
+  animationDelay,
   screenSize,
 }: {
   title: string;
   company: string;
   description: string;
   images: string;
+  animationDelay: number;
   screenSize: ReturnType<typeof useScreenWidth>;
 }) => {
   const inMobileView = screenSize.width < 768;
   return (
-    <div
+    <motion.div
+      variants={rollInView}
+      viewport={{ once: true }}
+      initial="base"
+      whileInView="show"
+      transition={{
+        ...rollInView.transition,
+        delay: animationDelay,
+        duration: 0.5,
+      }}
       className={cn(
         "relative h-auto flex flex-col gap-2 p-4 cursor-pointer",
         // light styles
@@ -60,7 +72,7 @@ const ReviewCard = ({
           {description}
         </p>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
@@ -94,12 +106,23 @@ function Testimonials({
           <Heading className="text-left flex-none" text="What Our Clients" />
           <Heading className="text-left flex-none" text="have to say" />
         </div>
-        <div className="flex lg:flex-row flex-col lg:gap-[20vh] z-30 justify-between items-start text-justify text-sm lg:text-md">
+        <motion.div
+          variants={rollInView}
+          viewport={{ once: true }}
+          initial="base"
+          whileInView="show"
+          transition={{
+            ...rollInView.transition,
+            delay: 0.4,
+            duration: 0.5,
+          }}
+          className="flex lg:flex-row flex-col lg:gap-[20vh] z-30 justify-between items-start text-justify text-md lg:text-lg"
+        >
           Our testimonials reflect the trust of clients who’ve partnered with
           Trikala Architecture and Associates. From dream homes to innovative
           spaces, they showcase our excellence, collaboration, and lasting
           relationships, bringing visions to life with thoughtful design.
-        </div>
+        </motion.div>
       </div>
       <Section
         toSnap={false}
@@ -114,6 +137,7 @@ function Testimonials({
                   key={review.title}
                   {...review}
                   screenSize={screenSize}
+                  animationDelay={0.4}
                 />
               ))}
             </Marquee>
@@ -123,6 +147,7 @@ function Testimonials({
                   key={review.title}
                   {...review}
                   screenSize={screenSize}
+                  animationDelay={0.6}
                 />
               ))}
             </Marquee>
