@@ -95,12 +95,10 @@ function Testimonials({
           <Heading className="text-left flex-none" text="have to say" />
         </div>
         <div className="flex lg:flex-row flex-col lg:gap-[20vh] z-30 justify-between items-start text-justify text-sm lg:text-md">
-          Our testimonials showcase the trust and satisfaction of clients who
-          {"'"}ve partnered with Trikala Architecture and Associates. From dream
-          homes to innovative spaces, these stories highlight our commitment to
-          excellence and collaboration. Discover how we bring visions to life
-          with thoughtful design, building lasting relationships along the way.
-          See why our clients love working with us!
+          Our testimonials reflect the trust of clients who’ve partnered with
+          Trikala Architecture and Associates. From dream homes to innovative
+          spaces, they showcase our excellence, collaboration, and lasting
+          relationships, bringing visions to life with thoughtful design.
         </div>
       </div>
       <Section

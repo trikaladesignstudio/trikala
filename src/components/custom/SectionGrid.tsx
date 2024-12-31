@@ -32,7 +32,7 @@ function SectionGrid({ className, children, toSnap }: SectionGridType) {
         },
       }}
       className={cn(
-        "min-h-[100dvh] grid",
+        "min-h-[100svh] grid",
         "px-[2rem] lg:px-[5rem] py-6 lg:py-10",
         toSnap && "snap-center shrink-0",
         className
