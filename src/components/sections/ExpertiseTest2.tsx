@@ -13,6 +13,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "../ui/carousel";
+import { rollInView } from "@/lib/utils";
 
 interface CarouselDataProps {
   images: string[];
@@ -20,15 +21,19 @@ interface CarouselDataProps {
 
 function CarouselData({ images }: CarouselDataProps) {
   return (
-    <Carousel className="w-full m-auto  " delay={2000}>
+    <Carousel className="w-full m-auto" delay={4000} >
       <CarouselContent className="flex -ml-1">
         {images.map((img, index) => (
           <CarouselItem key={index} className="pl-1 md:basis-1/2 lg:basis-1/3">
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1, width: "auto" }}
-              transition={{ duration: 0.5 }}
-              exit={{ opacity: 0, width: 0 }}
+              variants={rollInView}
+              initial="base"
+              whileInView="show"
+              viewport={{ once: true }}
+              transition={{
+                ...rollInView.transition,
+                delay: 0.2 + index * 0.02,
+              }}
               className="flex-shrink-0"
             >
               <Image
@@ -51,15 +56,32 @@ function CarouselData({ images }: CarouselDataProps) {
 function SingleExperize({ expertise }: { expertise: expertiseDataType }) {
   return (
     <div key={expertise.id}>
+      <div className="py-4 border-t border-white"></div>
       <div className="lg:py-0 py-0 ">
         <div className="flex gap-10 flex-col">
           <div className="flex gap-4 justify-between items-center ">
-            <div className="flex-1">
-              <h1 className="text-5xl font-semibold text-white">
-                {expertise.title}
-              </h1>
-              <p className="text-xl pt-5 text-white">{expertise.description}</p>
-            </div>
+            <motion.div className="flex-1">
+              <motion.div
+                variants={rollInView}
+                viewport={{ once: true }}
+                initial="base"
+                whileInView="show"
+                transition={{ ...rollInView.transition, delay: 0.2 }}
+                className="text-5xl font-semibold text-white"
+              >
+                # {expertise.title}
+              </motion.div>
+              <motion.p
+                variants={rollInView}
+                viewport={{ once: true }}
+                initial="base"
+                whileInView="show"
+                transition={{ ...rollInView.transition, delay: 0.4 }}
+                className="text-xl pt-5 text-white"
+              >
+                {expertise.description}
+              </motion.p>
+            </motion.div>
           </div>
           <CarouselData images={expertise.images} />
         </div>
@@ -72,7 +94,7 @@ function ExpertiseTest({ data }: { data: expertiseDataType[] }) {
   return (
     <>
       {data.map((item) => (
-        <Section className=" border-none bg-black">
+        <Section className="bg-black min-h-screen">
           <motion.div className="flex flex-col transform ">
             <SingleExperize expertise={item} key={item.title} />
           </motion.div>

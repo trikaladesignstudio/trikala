@@ -46,7 +46,7 @@ importers:
         version: 1.12.5
       '@uploadthing/react':
         specifier: ^7.1.1
-        version: 7.1.3(next@14.2.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(uploadthing@7.4.1(next@14.2.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@3.4.17))
+        version: 7.1.5(next@14.2.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(uploadthing@7.4.4(next@14.2.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@3.4.17))
       '@vercel/analytics':
         specifier: ^1.3.1
         version: 1.4.1(next@14.2.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
@@ -91,7 +91,7 @@ importers:
         version: 18.3.1(react@18.3.1)
       react-hot-toast:
         specifier: ^2.4.1
-        version: 2.4.1(csstype@3.1.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 2.5.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-icons:
         specifier: ^5.3.0
         version: 5.4.0(react@18.3.1)
@@ -115,7 +115,7 @@ importers:
         version: 1.0.7(tailwindcss@3.4.17)
       uploadthing:
         specifier: ^7.3.0
-        version: 7.4.1(next@14.2.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@3.4.17)
+        version: 7.4.4(next@14.2.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@3.4.17)
     devDependencies:
       '@types/lodash':
         specifier: ^4.17.13
@@ -899,21 +899,21 @@ packages:
   '@types/react@18.3.18':
     resolution: {integrity: sha512-t4yC+vtgnkYjNSKlFx1jkAhH8LgTo2N/7Qvi83kdEaUtMDiwpbLAktKDaAMlRcJ5eSxZkH74eEGt1ky31d7kfQ==}
 
-  '@uploadthing/mime-types@0.3.2':
-    resolution: {integrity: sha512-WP/K75S/649lM0GUcd9jq4RjeTIc/0bO2UmLx4+usTSNy/x0K8gV0JdLWeUUbmTQtJoHd4ZTSvAdG7ZQgcmXvA==}
+  '@uploadthing/mime-types@0.3.4':
+    resolution: {integrity: sha512-EB0o0a4y++UJFMLqS8LDVhSQgXUllG6t5fwl5cbmOM0Uay8YY5Nc/JjFwzJ8wccdIKz4oYwQW7EOSfUyaMPbfw==}
 
-  '@uploadthing/react@7.1.3':
-    resolution: {integrity: sha512-oV8hhFtAl7I05mmop8zQSz1nIq5KamfSPYpFl0OU/61TcmEcXXISH6CshF/TMuHasvqvGpMVfW7meC8b7idxBA==}
+  '@uploadthing/react@7.1.5':
+    resolution: {integrity: sha512-D0lP4YnUWw5LFHrLuL+sq26wlul9dGE70G+oOQ+qkM1ZqSeKSGvIdAIOAQUBj2qQi4Re7o0VpF3+3qBF3svN6A==}
     peerDependencies:
       next: '*'
-      react: ^17.0.2 || ^18.0.0
-      uploadthing: 7.4.1
+      react: ^17.0.2 || ^18.0.0 || ^19.0.0
+      uploadthing: ^7.2.0
     peerDependenciesMeta:
       next:
         optional: true
 
-  '@uploadthing/shared@7.1.3':
-    resolution: {integrity: sha512-JlYz/JLZPrMAZRg7YPDUICodvIXLW9xS32aErqDvD76juq6nPRwFdwG5V089CY2kS5Ju9I0rGAu94hbJFqd9qQ==}
+  '@uploadthing/shared@7.1.5':
+    resolution: {integrity: sha512-5ePSiR2CPA5a8gfPqsHpE/uPwGG9iPqhxcFpeLGnEuExPqIi5ZY7upZgpc+6T1gMxwfbP0O5X4043TTNk3q/pA==}
 
   '@vercel/analytics@1.4.1':
     resolution: {integrity: sha512-ekpL4ReX2TH3LnrRZTUKjHHNpNy9S1I7QmS+g/RQXoSUQ8ienzosuX7T9djZ/s8zPhBx1mpHP/Rw5875N+zQIQ==}
@@ -1710,8 +1710,8 @@ packages:
     peerDependencies:
       react: ^18.3.1
 
-  react-hot-toast@2.4.1:
-    resolution: {integrity: sha512-j8z+cQbWIM5LY37pR6uZR6D4LfseplqnuAO4co4u8917hBUvXlEqyP1ZzqVLcqoyUesZZv/ImreoCeHVDpE5pQ==}
+  react-hot-toast@2.5.1:
+    resolution: {integrity: sha512-54Gq1ZD1JbmAb4psp9bvFHjS7lje+8ubboUmvKZkCsQBLH6AOpZ9JemfRvIdHcfb9AZXRaFLrb3qUobGYDJhFQ==}
     engines: {node: '>=10'}
     peerDependencies:
       react: '>=16'
@@ -1998,15 +1998,15 @@ packages:
   undici-types@6.19.8:
     resolution: {integrity: sha512-ve2KP6f/JnbPBFyobGHuerC9g1FYGn/F8n1LWTwNxCEzd6IfqTwUQcNXgEtmmQ6DlRrC1hrSrBnCZPokRrDHjw==}
 
-  uploadthing@7.4.1:
-    resolution: {integrity: sha512-an/ENGUJ06Rg9eI2/bWOUsm+6iDlufDRggUsw6HR4mqhNa/aqLHj5KrWP1CuVHP70fXMCsSM+BgVm00y5wt6wg==}
+  uploadthing@7.4.4:
+    resolution: {integrity: sha512-dgV8LqaKrXSnpDkqzzLbVEmIubMPi8a5bRtIzM+rG5EbZpIZyOG0bByLxdSlkSbK5L6F+HbIGX5eDkLPFNL8dg==}
     engines: {node: '>=18.13.0'}
     peerDependencies:
       express: '*'
       fastify: '*'
       h3: '*'
       next: '*'
-      tailwindcss: '*'
+      tailwindcss: ^3.0.0 || ^4.0.0-beta.0
     peerDependenciesMeta:
       express:
         optional: true
@@ -2065,8 +2065,8 @@ packages:
     resolution: {integrity: sha512-si7QWI6zUMq56bESFvagtmzMdGOtoxfR+Sez11Mobfc7tm+VkUckk9bW2UeffTGVUbOksxmSw0AA2gs8g71NCQ==}
     engines: {node: '>=12'}
 
-  yaml@2.6.1:
-    resolution: {integrity: sha512-7r0XPzioN/Q9kXBro/XPnA6kznR73DHq+GXh5ON7ZozRO6aMjbmiBuKste2wslTFkC5d1dw0GooOCepZXJ2SAg==}
+  yaml@2.7.0:
+    resolution: {integrity: sha512-+hSoy/QHluxmC9kCIJyL/uyFmLmc+e5CFR5Wa+bpIhIj85LVb9ZH2nVnqrHoSvKogwODv0ClqZkmiSSaIH5LTA==}
     engines: {node: '>= 14'}
     hasBin: true
 
@@ -2757,20 +2757,20 @@ snapshots:
       '@types/prop-types': 15.7.14
       csstype: 3.1.3
 
-  '@uploadthing/mime-types@0.3.2': {}
+  '@uploadthing/mime-types@0.3.4': {}
 
-  '@uploadthing/react@7.1.3(next@14.2.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(uploadthing@7.4.1(next@14.2.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@3.4.17))':
+  '@uploadthing/react@7.1.5(next@14.2.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(uploadthing@7.4.4(next@14.2.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@3.4.17))':
     dependencies:
-      '@uploadthing/shared': 7.1.3
+      '@uploadthing/shared': 7.1.5
       file-selector: 0.6.0
       react: 18.3.1
-      uploadthing: 7.4.1(next@14.2.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@3.4.17)
+      uploadthing: 7.4.4(next@14.2.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@3.4.17)
     optionalDependencies:
       next: 14.2.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
 
-  '@uploadthing/shared@7.1.3':
+  '@uploadthing/shared@7.1.5':
     dependencies:
-      '@uploadthing/mime-types': 0.3.2
+      '@uploadthing/mime-types': 0.3.4
       effect: 3.11.5
       sqids: 0.3.0
 
@@ -3428,7 +3428,7 @@ snapshots:
   postcss-load-config@4.0.2(postcss@8.4.49):
     dependencies:
       lilconfig: 3.1.3
-      yaml: 2.6.1
+      yaml: 2.7.0
     optionalDependencies:
       postcss: 8.4.49
 
@@ -3482,13 +3482,12 @@ snapshots:
       react: 18.3.1
       scheduler: 0.23.2
 
-  react-hot-toast@2.4.1(csstype@3.1.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  react-hot-toast@2.5.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
+      csstype: 3.1.3
       goober: 2.1.16(csstype@3.1.3)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
-    transitivePeerDependencies:
-      - csstype
 
   react-icons@5.4.0(react@18.3.1):
     dependencies:
@@ -3802,12 +3801,12 @@ snapshots:
 
   undici-types@6.19.8: {}
 
-  uploadthing@7.4.1(next@14.2.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@3.4.17):
+  uploadthing@7.4.4(next@14.2.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@3.4.17):
     dependencies:
       '@effect/platform': 0.70.7(effect@3.11.5)
       '@standard-schema/spec': 1.0.0-beta.3
-      '@uploadthing/mime-types': 0.3.2
-      '@uploadthing/shared': 7.1.3
+      '@uploadthing/mime-types': 0.3.4
+      '@uploadthing/shared': 7.1.5
       effect: 3.11.5
     optionalDependencies:
       next: 14.2.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -3869,6 +3868,6 @@ snapshots:
       string-width: 5.1.2
       strip-ansi: 7.1.0
 
-  yaml@2.6.1: {}
+  yaml@2.7.0: {}
 
   yocto-queue@0.1.0: {}

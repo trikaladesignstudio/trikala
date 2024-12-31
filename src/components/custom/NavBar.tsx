@@ -7,13 +7,23 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { startAProjectLink } from "@/constants";
 import { buttonVariants } from "../ui/button";
+import { motion } from "framer-motion";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
-    <nav
+    <motion.nav
+      initial={{
+        opacity: 0,
+        y: -10,
+      }}
+      whileInView={{
+        opacity: 1,
+        y: 0,
+      }}
+      transition={{ duration: 0.5, delay: 0.5 }}
       className="px-[.2rem] lg:px-[5rem] absolute left-0 right-0 -top-2 z-20 text-black/90 flex flex-row items-center min-h-fit justify-between w-full py-1
       snap-start"
     >
@@ -114,7 +124,7 @@ const Navbar = () => {
           onClick={toggleMenu}
         ></div>
       )}
-    </nav>
+    </motion.nav>
   );
 };
 

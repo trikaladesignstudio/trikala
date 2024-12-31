@@ -6,9 +6,10 @@ import React, { ReactNode } from "react";
 type Heading = {
   className?: string;
   text: string;
+  customDelay: number;
 };
 
-function Heading({ className, text }: Heading) {
+function Heading({ className, text, customDelay = 0 }: Heading) {
   const words = text.split(" ");
 
   return (
@@ -22,8 +23,11 @@ function Heading({ className, text }: Heading) {
         <React.Fragment key={index}>
           <motion.span
             className="inline-block"
-            transition={transition}
+            viewport={{ once: true }}
+            transition={{ ...transition, delay: customDelay + index * 0.2 }}
             variants={brurRenderVariant}
+            initial="hidden"
+            whileInView="visible"
           >
             {word}
           </motion.span>

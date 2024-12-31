@@ -9,6 +9,8 @@ import { PieChartComponent } from "../custom/PieChart";
 import { BarGraph } from "../custom/BarGraph";
 import { useState } from "react";
 import Heading from "../custom/Heading";
+import { motion } from "framer-motion";
+import { rollInView } from "@/lib/utils";
 
 export default function PriceEstimator() {
   const [estimator, setEstimator] = useState("");
@@ -28,7 +30,7 @@ export default function PriceEstimator() {
     >
       <Heading
         className="text-center w-full text-2xl font-bold text-gray-800"
-        text="Interior Price Estimator"
+        text="Price Estimator"
       />
       {estimator === "" ? (
         <div className="flex flex-col md:flex-row md:gap-12 gap-6 justify-center items-center">
@@ -37,48 +39,70 @@ export default function PriceEstimator() {
             href="#full-estimate"
             className="group w-full lg:w-[30rem] bg-white rounded-lg shadow-lg overflow-hidden transition-transform hover:scale-105"
           >
-            {/* <div className="relative h-48 w-full"> */}
-            <Image
-              loading="lazy"
-              src={image2}
-              alt="Traditional white house with wraparound porch"
-              className="w-full h-full object-cover"
-            />
-            {/* </div> */}
-            <div className="p-4">
-              <div className="flex items-center justify-between">
-                <span className="text-lg font-medium text-gray-700">
-                  FREE FULL HOME ESTIMATE
-                </span>
-                <span className="text-xl text-gray-500 transform transition-transform group-hover:translate-x-1">
-                  →
-                </span>
+            <motion.div
+              variants={rollInView}
+              viewport={{ once: true }}
+              initial="base"
+              whileInView="show"
+              transition={{
+                ...rollInView.transition,
+                delay: 0.2,
+                duration: 0.5,
+              }}
+            >
+              <Image
+                loading="lazy"
+                src={image2}
+                alt="Traditional white house with wraparound porch"
+                className="w-full lg:h-full h-56 object-cover"
+              />
+              <div className="p-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-lg font-medium text-gray-700">
+                    FREE FULL HOME ESTIMATE
+                  </span>
+                  <span className="text-xl text-gray-500 transform transition-transform group-hover:translate-x-1">
+                    →
+                  </span>
+                </div>
               </div>
-            </div>
+            </motion.div>
           </Link>
           <Link
             onClick={() => handleEstimator("kitchen-estimate")}
             href="#kitchen-estimate"
             className="group w-full lg:w-[30rem] bg-white rounded-lg shadow-lg overflow-hidden transition-transform hover:scale-105"
           >
-            {/* <div className="relative h-48 w-full"> */}
-            <Image
-              loading="lazy"
-              src={image2}
-              alt="Modern white kitchen with wooden accents"
-              className="w-full h-full object-cover"
-            />
-            {/* </div> */}
-            <div className="p-4">
-              <div className="flex items-center justify-between">
-                <span className="text-lg font-medium text-gray-700">
-                  FREE KITCHEN ESTIMATE
-                </span>
-                <span className="text-xl text-gray-500 transform transition-transform group-hover:translate-x-1">
-                  →
-                </span>
+            <motion.div
+              variants={rollInView}
+              viewport={{ once: true }}
+              initial="base"
+              whileInView="show"
+              transition={{
+                ...rollInView.transition,
+                delay: 0.4,
+                duration: 0.5,
+              }}
+            >
+              {/* <div className="relative h-48 w-full"> */}
+              <Image
+                loading="lazy"
+                src={image2}
+                alt="Modern white kitchen with wooden accents"
+                className="w-full h-56 lg:h-full object-cover"
+              />
+              {/* </div> */}
+              <div className="p-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-lg font-medium text-gray-700">
+                    FREE KITCHEN ESTIMATE
+                  </span>
+                  <span className="text-xl text-gray-500 transform transition-transform group-hover:translate-x-1">
+                    →
+                  </span>
+                </div>
               </div>
-            </div>
+            </motion.div>
           </Link>
         </div>
       ) : (

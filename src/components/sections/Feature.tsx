@@ -7,7 +7,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { cn } from "@/lib/utils";
+import { cn, rollInView } from "@/lib/utils";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Suspense, useEffect, useState } from "react";
@@ -59,6 +59,14 @@ function Featured() {
           {types.map((type, index) => (
             <motion.div
               key={index}
+              variants={rollInView}
+              viewport={{ once: true }}
+              initial="base"
+              whileInView="show"
+              transition={{
+                ...rollInView.transition,
+                delay: 0.2 + index * 0.2,
+              }}
               className={cn(
                 "relative shadow-md hover:border-black/20 z-10 text-left p-2 px-4 cursor-pointer rounded-md animate-[bg_1s_ease-in-out] border -inset-0.5",
                 currentActive == type ? "border  bg-black text-white" : "",
@@ -80,10 +88,14 @@ function Featured() {
             >
               <motion.div
                 key={index}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1, width: "auto" }}
-                transition={{ duration: 0.5 }}
-                exit={{ opacity: 0, width: 0 }}
+                variants={rollInView}
+                viewport={{ once: true }}
+                initial="base"
+                whileInView="show"
+                transition={{
+                  ...rollInView.transition,
+                  delay: 0.4 + 0.02 * index,
+                }}
                 className="flex-shrink-0"
               >
                 <Suspense>

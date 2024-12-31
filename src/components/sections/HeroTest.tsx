@@ -75,6 +75,7 @@ export default memo(function HeroTest({
       {/* background black and opacity */}
       <div className="absolute inset-0 flex flex-col items-center justify-center text-white bg-black bg-opacity-70">
         <Heading
+          customDelay={1}
           text="Trikala Architect"
           className=" text-[4rem] md:text-[6em] lg:text-[10rem] mt-40 font-bold"
         />
