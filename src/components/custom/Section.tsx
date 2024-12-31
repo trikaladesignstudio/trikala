@@ -3,21 +3,18 @@ import { cn } from "@/lib/utils";
 import { motion, useInView } from "framer-motion";
 import { ReactNode, useRef } from "react";
 
-type Section = {
+// need to add this
+//motion.dev/docs/react-use-animate#scroll-triggered-animations
+
+  type Section = {
   id?: string;
   className?: string;
   children: ReactNode;
   toSnap?: boolean;
   style?: React.CSSProperties;
-} 
+};
 
-function Section({
-  id,
-  className,
-  children,
-  toSnap = true,
-  style
-}: Section) {
+function Section({ id, className, children, toSnap = true, style }: Section) {
   const ref = useRef(null);
   const isInView = useInView(ref);
 
@@ -44,7 +41,7 @@ function Section({
         },
       }}
       className={cn(
-        "relative min-h-[100dvh] flex flex-col gap-4 justify-evenly",
+        "relative min-h-[100svh] w-screen flex flex-col gap-4 justify-evenly",
         "px-[2rem] lg:px-[5rem] py-6 lg:py-10",
         toSnap && "snap-center shrink-0",
         className

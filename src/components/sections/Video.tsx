@@ -4,7 +4,7 @@ import Heading from "../custom/Heading";
 
 function Video() {
   return (
-    <Section className="lg:min-h-[100dvh] min-h-fit px-0 py-20 justify-center items-center">
+    <Section className="lg:min-h-[100svh] min-h-fit px-0 py-20 justify-center items-center">
       <div className="w-[95%] lg:w-[80%] p-2  h-fit lg:relative lg:block flex flex-col-reverse gap-10 lg:gap-0 ">
         <Link
           href="/aboutus"

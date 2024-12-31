@@ -45,30 +45,8 @@ function Working({
   };
 
   return (
-    <Sections className="lg:py-0 justify-center gap-10">
-      <div className="flex flex-col md:flex-row justify-between gap-6 md:gap-20">
-        <Heading text="Our work is based on the development of an individual approach to each client" />
-        <div className="flex flex-col justify-end">
-          <div className=" justify-end items-end gap-4 pb-4 pt-4 hidden lg:flex">
-            <motion.div className="hover:scale-105" whileTap={{ scale: 0.95 }}>
-              <Button
-                onClick={prevSlide}
-                className="fcc text-white left-4 p-2 bg-custom-db w-12 h-12 rounded-full shadow-lg"
-              >
-                <BiChevronLeft size={24} />
-              </Button>
-            </motion.div>
-            <motion.div className="hover:scale-105" whileTap={{ scale: 0.95 }}>
-              <Button
-                onClick={nextSlide}
-                className="fcc text-white left-4 p-2 bg-primary border w-12 h-12 rounded-full shadow-lg"
-              >
-                <BiChevronLeft size={24} className="rotate-180 text-black" />
-              </Button>
-            </motion.div>
-          </div>
-        </div>
-      </div>
+    <Sections className="lg:py-0 justify-center lg:gap-10">
+      <Heading text="Our work is based on the development of an individual approach to each client" />
       <div className="flex flex-col md:flex-row overflow-hidden w-full justify-center gap-2 md:h-auto h-full">
         {slides.map((slide, index) => (
           <div

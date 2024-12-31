@@ -51,7 +51,7 @@ export default memo(function HeroTest({
   }, [data]);
 
   return (
-    <Section className="relative max-h-[100dvh] bg-black">
+    <Section className="relative max-h-[100svh] bg-black">
       <Navbar />
       {images.map((image, index) => (
         <Image
@@ -66,7 +66,7 @@ export default memo(function HeroTest({
           onLoad={() => {
             console.log("image loaded", image);
           }}
-          className={`lg:aspect-[1.78] aspect-auto absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000 ${
+          className={`lg:aspect-[1.78] aspect-auto absolute inset-0 w-full h-full bg-cover bg-no-repeat object-cover lg:object-fill bg-center transition-opacity duration-1000 ${
             currentIndex === index ? "opacity-100" : "opacity-0"
           }`}
           // style={{ backgroundImage: `url(${image})` }}

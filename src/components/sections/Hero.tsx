@@ -10,7 +10,7 @@ import { startAProjectLink } from "@/constants";
 
 function Hero() {
   return (
-    <Section className="flex flex-col py-0 lg:py-0 gap-12 max-h-[100dvh]">
+    <Section className="flex flex-col py-0 lg:py-0 gap-12 max-h-[100svh]">
       <Navbar />
       <div className="flex flex-col gap-10 justify-between  flex-1 ">
         <div className=" flex flex-col gap-4  ">

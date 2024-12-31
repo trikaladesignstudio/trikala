@@ -52,7 +52,7 @@ function Featured() {
   }, []);
 
   return (
-    <Section className="lg:px-0 px-0 lg:py-0 py-0 justify-start">
+    <Section className="lg:px-0 px-0 lg:py-0 py-0 lg:justify-start">
       <Section toSnap={false} className="min-h-fit lg:gap-12">
         <Heading className="text-5xl" text="Featured Work" />
         <motion.div className="top-8 lg:gap-8 gap-4 w-full grid grid-cols-2 lg:grid-cols-4 ">

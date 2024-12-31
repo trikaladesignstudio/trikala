@@ -9,7 +9,8 @@ import { Toaster } from "react-hot-toast";
 import { extractRouterConfig } from "uploadthing/server";
 import "./globals.css";
 import BackToTopBtn from "@/components/BackToTop";
-import TwScreenInfo from "@/components/custom/TwScreenInfo";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import PsudoScollBar from "@/components/PseudoScollBar";
 
 const silver = localFont({
   src: "./Silver-Queen.otf",
@@ -94,9 +95,10 @@ export default async function RootLayout({
         <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
         <main
           id="mainCointainer"
-          className="relative flex flex-col snap-y snap-mandatory h-[100dvh] overflow-x-hidden scroll-smooth"
+          className="relative flex flex-col snap-y snap-mandatory h-[100svh] overflow-x-hidden scroll-smooth"
         >
           <BackToTopBtn />
+          <PsudoScollBar/>
           {children}
         </main>
         <Toaster />

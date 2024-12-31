@@ -59,18 +59,19 @@ main {
 }
 
 main::-webkit-scrollbar {
-  width: 0.5rem;
-  background: transparent;
+  display: none;
+  /* width: 0.5rem;
+  background: transparent; */
 }
 
-main::-webkit-scrollbar-track {
+/* main::-webkit-scrollbar-track {
   background: transparent;
 }
 
 main::-webkit-scrollbar-thumb {
   @apply glass;
   background-color: rgba(12, 10, 10, 0.6);
-}
+} */
 
 /* ::-webkit-scrollbar {
   width: 0.7rem;
