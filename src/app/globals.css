@@ -64,6 +64,10 @@ main::-webkit-scrollbar {
   background: transparent; */
 }
 
+.rpv-core__inner-page{
+  background: transparent;
+}
+
 /* main::-webkit-scrollbar-track {
   background: transparent;
 }

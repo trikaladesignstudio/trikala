@@ -412,14 +412,14 @@ export default function ProjectForm({ projectId }: { projectId?: string }) {
           </motion.div>
         )}
         {pdfFile && (
-          <motion.div className="flex-1 md:w-full w-1/2 space-y-2 rounded-lg flex flex-col h-full">
+          <motion.div className="flex-1 w-full space-y-2 rounded-lg flex flex-col h-full">
             <Card className="h-full bg-white">
               <AnimatePresence mode="wait">
                 <CardContent className="p-4 flex flex-col gap-4 h-full">
                   <div className="text-3xl font-thin font-poppins">
-                    Uploaded Pdf
+                    Rendered Pdf 
                   </div>
-                  <motion.div className="space-y-2 flex-1 border">
+                  <motion.div className="flex-1">
                     <RenderPdf url={pdfFile?.url || ""} />
                   </motion.div>
                 </CardContent>

@@ -29,7 +29,11 @@ export default function PathHeading({ className }: { className?: string }) {
           return (
             <React.Fragment key={index}>
               <BreadcrumbItem>
-                <BreadcrumbLink href={`${path}`}>{itemValue}</BreadcrumbLink>
+                {index !== pathname.length - 1 ? (
+                  <BreadcrumbLink href={`${path}`}>{itemValue}</BreadcrumbLink>
+                ) : (
+                  itemValue
+                )}
               </BreadcrumbItem>
               {index !== pathname.length - 1 ? (
                 <BreadcrumbSeparator>
