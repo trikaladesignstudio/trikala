@@ -87,15 +87,16 @@ function Featured() {
               className="pl-1 md:basis-1/2 lg:basis-1/3"
             >
               <motion.div
-                key={index}
+                key={img}
                 variants={rollInView}
                 viewport={{ once: true }}
                 initial="base"
                 whileInView="show"
                 transition={{
                   ...rollInView.transition,
-                  delay: 0.4 + 0.02 * index,
+                  delay: 0.2 + 0.02 * index,
                 }}
+                exit={{ opacity: 0 }}
                 className="flex-shrink-0"
               >
                 <Suspense>

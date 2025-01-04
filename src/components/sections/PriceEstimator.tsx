@@ -32,6 +32,7 @@ export default function PriceEstimator() {
         className="text-center w-full text-2xl font-bold text-gray-800"
         text="Price Estimator"
       />
+
       {estimator === "" ? (
         <div className="flex flex-col md:flex-row md:gap-12 gap-6 justify-center items-center">
           <Link
