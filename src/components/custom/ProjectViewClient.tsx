@@ -1,16 +1,10 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import { Prisma } from "@prisma/client";
-import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
-import { Button } from "../ui/button";
-import { Card, CardContent } from "../ui/card";
 import dynamic from "next/dynamic";
+import { useState } from "react";
 import Heading from "./Heading";
+import Section from "./Section";
 const RenderPdf = dynamic(() => import("./RenderPdf"), {
   ssr: false,
 });
@@ -24,11 +18,16 @@ export default function ProjectViewClient({
 
   return (
     <div className="flex flex-col gap-4 min-h-full w-full justify-start">
-      <Heading className="text-left " text={project.title} />
-      <p className="text-lg ">{project.description}</p>
-      <p className="text-lg border border-black w-full" />
+      <Section
+        toSnap={false}
+        className="gap-4 flex flex-col min-h-fit justify-start"
+      >
+        <Heading className="text-left " text={project.title} />
+        <p className="text-lg ">{project.description}</p>
+        <p className="text-lg border border-black w-full" />
+      </Section>
       {projectData.pdf && (
-        <div className="flex-1 w-full min-h-screen">
+        <div className="mb-4">
           <RenderPdf url={projectData.pdf.url as string} />
         </div>
       )}
