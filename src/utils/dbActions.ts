@@ -67,6 +67,13 @@ export async function filterAllProjects(
 
 export async function getAllProjectsGroupByType() {
   // const tempExpertiseData: expertiseDataType[] = [];
+  const architecturalConcepts = [
+    "We design bespoke architectural solutions that embody your vision, ensuring functionality and aesthetics seamlessly align with your unique lifestyle.",
+    "Our architectural concepts are tailored to reflect your individuality, creating spaces that resonate with your preferences and aspirations.",
+    "We craft personalized architectural designs that harmonize your personality with innovative, purpose-driven structures.",
+    "Our architecture transforms your ideas into distinctive spaces, blending creativity with your specific needs and desires.",
+  ];
+
 
   const allProjectTypesData = await allProjectTypes
     .filter((item) => item !== ProjectType.none)
@@ -81,8 +88,8 @@ export async function getAllProjectsGroupByType() {
       return {
         id: index,
         title: item,
-        description:
-          "We create unique architectural concepts that reflect your personality and meet your needs and preferences",
+        description: architecturalConcepts[index],
+          // "We create unique architectural concepts that reflect your personality and meet your needs and preferences",
         images: allRelatedImages as string[],
       };
     });

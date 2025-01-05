@@ -1,6 +1,6 @@
 import { ourFileRouter } from "@/app/api/uploadthing/core";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
-import { Analytics } from "@vercel/analytics/react";
+import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
@@ -9,7 +9,6 @@ import { Toaster } from "react-hot-toast";
 import { extractRouterConfig } from "uploadthing/server";
 import "./globals.css";
 import BackToTopBtn from "@/components/BackToTop";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import PsudoScollBar from "@/components/PseudoScollBar";
 
 const silver = localFont({
@@ -19,8 +18,9 @@ const silver = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Trikal Architects",
-  description: "Trikal Architects - Architects & Interior Designers",
+  title: "Trikal Architects - Architects & Interior Designers",
+  description:
+    "Trikala Architects creates eco-friendly, functional, and innovative spaces, inspiring communities through impactful architecture.",
   openGraph: {
     title: "Trikal Architects",
     description: "Trikal Architects - Architects & Interior Designers",
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     siteName: "Trikal Architects",
     images: [
       {
-        url: "https://trikalarchitects.com/logo.webp",
+        url: "https://trikalarchitects.com/static/logo.webp",
         width: 800,
         height: 600,
       },
@@ -74,8 +74,10 @@ export const metadata: Metadata = {
   },
   metadataBase: new URL("https://trikalarchitects.com"),
   authors: [
-    { name: "rishi23root" },
-    { name: "Rishabh Jain", url: "https://github.com/rishi23root" },
+    {
+      name: "Tanya Agarwal",
+      url: "https://www.instagram.com/trikalaarchitects/",
+    },
   ],
 };
 
@@ -98,7 +100,7 @@ export default async function RootLayout({
           className="relative flex flex-col snap-y snap-mandatory h-[100svh] overflow-x-hidden scroll-smooth"
         >
           <BackToTopBtn />
-          <PsudoScollBar/>
+          <PsudoScollBar />
           {children}
         </main>
         <Toaster />
