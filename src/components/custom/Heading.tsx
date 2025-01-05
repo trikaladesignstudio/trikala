@@ -13,7 +13,7 @@ function Heading({ className, text, customDelay = 0 }: Heading) {
   const words = text.split(" ");
 
   return (
-    <motion.div
+    <motion.h1
       className={cn(
         "text-4xl md:text-5xl lg:text-7xl tracking-tight font-silver",
         className
@@ -34,16 +34,7 @@ function Heading({ className, text, customDelay = 0 }: Heading) {
           {index < words.length - 1 && " "}
         </React.Fragment>
       ))}
-      {/* //   initial={{ opacity: 0 }}
-    //   animate={{ opacity: 1 }}
-    //   exit={{ opacity: 0 }}
-    //   className={cn( 
-    //     "text-4xl md:text-5xl lg:text-7xl tracking-tight font-silver",
-    //     className
-    //   )}
-    // >
-    */}
-    </motion.div>
+    </motion.h1>
   );
 }
 

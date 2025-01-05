@@ -4,7 +4,7 @@ import { expertiseDataType } from "@/jsonData/Home/Expertise";
 import { getAllProjectsGroupByType } from "@/utils/dbActions";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useLayoutEffect, useRef, useState } from "react";
 import Section from "../custom/Section";
 import {
   Carousel,
@@ -21,7 +21,7 @@ interface CarouselDataProps {
 
 function CarouselData({ images }: CarouselDataProps) {
   return (
-    <Carousel className="w-full m-auto" delay={4000} >
+    <Carousel className="w-full m-auto" delay={4000}>
       <CarouselContent className="flex -ml-1">
         {images.map((img, index) => (
           <CarouselItem key={index} className="pl-1 md:basis-1/2 lg:basis-1/3">
@@ -93,12 +93,14 @@ function SingleExperize({ expertise }: { expertise: expertiseDataType }) {
 function ExpertiseTest({ data }: { data: expertiseDataType[] }) {
   return (
     <>
-      {data.map((item) => (
-        <Section className="bg-black min-h-screen">
-          <motion.div className="flex flex-col transform ">
-            <SingleExperize expertise={item} key={item.title} />
-          </motion.div>
-        </Section>
+      {data.map((item, index) => (
+        <Fragment key={index}>
+          <Section className="bg-black min-h-screen">
+            <motion.div className="flex flex-col transform ">
+              <SingleExperize expertise={item} key={item.title} />
+            </motion.div>
+          </Section>
+        </Fragment>
       ))}
     </>
   );

@@ -42,7 +42,7 @@ export default memo(function HeroTest({
         imgArr.forEach((image, index) => {
           if (index === 0) return;
           setTimeout(() => {
-            console.log("image", index);
+            // console.log("image", index);
             setImages((prevImages) => [...prevImages, image as string]);
           }, index * 6000);
         });
@@ -63,9 +63,9 @@ export default memo(function HeroTest({
           key={index}
           blurDataURL="URL"
           placeholder="blur"
-          onLoad={() => {
-            console.log("image loaded", image);
-          }}
+          // onLoad={() => {
+          //   console.log("image loaded", image);
+          // }}
           className={`lg:aspect-[1.78] aspect-auto absolute inset-0 w-full h-full bg-cover bg-no-repeat object-cover lg:object-fill bg-center transition-opacity duration-1000 ${
             currentIndex === index ? "opacity-100" : "opacity-0"
           }`}
