@@ -69,7 +69,7 @@ function SingleExperize({ expertise }: { expertise: expertiseDataType }) {
                 transition={{ ...rollInView.transition, delay: 0.2 }}
                 className="text-5xl font-semibold text-white"
               >
-                # {expertise.title}
+                {expertise.title}
               </motion.div>
               <motion.p
                 variants={rollInView}
