@@ -28,9 +28,8 @@ export const rollInView = {
     stiffness: 100,
     damping: 10,
     restDelta: 0.001,
-
-    duration: 0.2,
-    delay: 0.2,
+    duration: 0.3,
+    delay: 0.3,
     when: "beforeChildren", //use this instead of delay
     staggerChildren: 0.2,
   },

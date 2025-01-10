@@ -4,7 +4,11 @@ export interface expertiseDataType {
   id: number;
   title: string;
   description: string;
-  images: string[];
+  images: imagesWithProjectId[];
 }
 
-export const expertiseData: expertiseDataType[] = data;
+export type imagesWithProjectId = {
+  url: string;
+  projectId: string | null;
+};
+// export const expertiseData: expertiseDataType[] = data;

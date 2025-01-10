@@ -16,6 +16,7 @@ import Section from "../custom/Section";
 import { allProjectTypes } from "@/utils/client_utils";
 import { Prisma } from "@prisma/client";
 import { getAllFeaturedProjects } from "@/utils/dbActions";
+import Link from "next/link";
 
 const types = Object.values(allProjectTypes);
 types.pop();
@@ -27,17 +28,45 @@ function Featured() {
   >({});
   const filterType = (type: string) => {
     if (projectData[type]) {
-      const projectImages = projectData[type]
-        .map((project) => project.images)
-        .flat()
-        .map((image) => image?.url);
-      return projectImages;
+      const projectImagesByProjectId = projectData[type]
+        .map((project) => {
+          return project.images
+            ? (project.images as any[]).map(({ url }: { url: string }) => {
+                return {
+                  url: url,
+                  projectId: project.pdf ? project.id : null,
+                };
+              })
+            : [];
+        })
+        .flat();
+
+      console.log("data1234", projectImagesByProjectId);
+      return projectImagesByProjectId;
+
+      // const projectImages = projectData[type]
+      //   .map((project) => project.images)
+      //   .flat()
+      //   .map((image) => image?.url);
+      // return projectImages;
     }
     return [
-      "/static/logo.webp",
-      "/static/logo.webp",
-      "/static/logo.webp",
-      "/static/logo.webp",
+      {
+        url: "/static/logo.webp",
+        projectId: null,
+      },
+      {
+        url: "/static/logo.webp",
+        projectId: null,
+      },
+      {
+        url: "/static/logo.webp",
+        projectId: null,
+      },
+      {
+        url: "/static/logo.webp",
+        projectId: null,
+      },
     ];
   };
 
@@ -81,35 +110,64 @@ function Featured() {
       </Section>
       <Carousel className="w-full" delay={3000}>
         <CarouselContent className="-ml-1">
-          {filterType(currentActive).map((img, index) => (
+          {filterType(currentActive).map(({ url: img, projectId }, index) => (
             <CarouselItem
               key={index}
               className="pl-1 md:basis-1/2 lg:basis-1/3"
             >
-              <motion.div
-                key={img}
-                variants={rollInView}
-                viewport={{ once: true }}
-                initial="base"
-                whileInView="show"
-                transition={{
-                  ...rollInView.transition,
-                  delay: 0.2 + 0.02 * index,
-                }}
-                exit={{ opacity: 0 }}
-                className="flex-shrink-0"
-              >
-                <Suspense>
-                  <Image
-                    src={img as string}
-                    width={400}
-                    height={400}
-                    style={{ height: `28rem` }}
-                    alt={`Slide ${index}`}
-                    className="w-auto object-cover "
-                  />
-                </Suspense>
-              </motion.div>
+              {projectId ? (
+                <Link href={`/projects/${projectId}`}>
+                  <motion.div
+                    key={img}
+                    variants={rollInView}
+                    viewport={{ once: true }}
+                    initial="base"
+                    whileInView="show"
+                    transition={{
+                      ...rollInView.transition,
+                      delay: 0.2 + 0.02 * index,
+                    }}
+                    exit={{ opacity: 0 }}
+                    className="flex-shrink-0"
+                  >
+                    <Suspense>
+                      <Image
+                        src={img as string}
+                        width={400}
+                        height={400}
+                        style={{ height: `28rem` }}
+                        alt={`Slide ${index}`}
+                        className="w-auto object-cover "
+                      />
+                    </Suspense>
+                  </motion.div>
+                </Link>
+              ) : (
+                <motion.div
+                  key={img}
+                  variants={rollInView}
+                  viewport={{ once: true }}
+                  initial="base"
+                  whileInView="show"
+                  transition={{
+                    ...rollInView.transition,
+                    delay: 0.2 + 0.02 * index,
+                  }}
+                  exit={{ opacity: 0 }}
+                  className="flex-shrink-0"
+                >
+                  <Suspense>
+                    <Image
+                      src={img as string}
+                      width={400}
+                      height={400}
+                      style={{ height: `28rem` }}
+                      alt={`Slide ${index}`}
+                      className="w-auto object-cover "
+                    />
+                  </Suspense>
+                </motion.div>
+              )}
             </CarouselItem>
           ))}
         </CarouselContent>
