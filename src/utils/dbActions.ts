@@ -22,7 +22,6 @@ export async function getAllProjects() {
 
 export async function getAllProjectsByPDF() {
   try {
-
     // for some mf reason this is not working with filter not sure why !!!!!! panic 3hrs wasted
     const projects = await prisma.project.findMany({
       orderBy: {
@@ -74,23 +73,33 @@ export async function getAllProjectsGroupByType() {
     "Our architecture transforms your ideas into distinctive spaces, blending creativity with your specific needs and desires.",
   ];
 
-
   const allProjectTypesData = await allProjectTypes
     .filter((item) => item !== ProjectType.none)
     .map(async (item, index) => {
       const data = await filterAllProjects(undefined, item);
       const allRelatedImages = await data
         .filter((data) => data.type === item)
-        .map((data) => data.images)
-        .flat()
-        .map((image) => image?.url);
+        .map((project) => {
+          return project.images
+            ? (project.images as any[]).map(({ url }: { url: string }) => {
+                return {
+                  url: url,
+                  projectId: project.pdf ? project.id : null,
+                };
+              })
+            : [];
+        })
+        .flat();
 
       return {
         id: index,
         title: item,
         description: architecturalConcepts[index],
-          // "We create unique architectural concepts that reflect your personality and meet your needs and preferences",
-        images: allRelatedImages as string[],
+        // "We create unique architectural concepts that reflect your personality and meet your needs and preferences",
+        images: allRelatedImages as {
+          url: string;
+          projectId: string | null;
+        }[],
       };
     });
   return await Promise.all(allProjectTypesData);

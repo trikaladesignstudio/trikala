@@ -4,7 +4,7 @@ export enum sectionType {
   hero = "hero",
   features = "features",
   expertise = "expertise",
-  // interior = "interior",
+  priceEstimator = "priceEstimator",
   working = "working",
   testimonials = "testimonials",
   contact = "contact",

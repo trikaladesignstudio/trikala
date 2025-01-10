@@ -1,6 +1,9 @@
 "use client";
 
-import { expertiseDataType } from "@/jsonData/Home/Expertise";
+import {
+  expertiseDataType,
+  imagesWithProjectId,
+} from "@/jsonData/Home/Expertise";
 import { getAllProjectsGroupByType } from "@/utils/dbActions";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
@@ -15,14 +18,14 @@ import {
 } from "../ui/carousel";
 
 interface CarouselDataProps {
-  images: string[];
+  images: imagesWithProjectId[];
 }
 
 function CarouselData({ images }: CarouselDataProps) {
   return (
     <Carousel className="w-full m-auto" delay={2000}>
       <CarouselContent className="flex -ml-1">
-        {images.map((img, index) => (
+        {images.map(({ url: img }, index) => (
           <CarouselItem key={index} className="pl-1 md:basis-1/2 lg:basis-1/3">
             <motion.div
               initial={{ opacity: 0 }}
