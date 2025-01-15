@@ -28,10 +28,10 @@ export default function PriceEstimator() {
       id="price-estimator"
       className="py-10 w-full gap-10 flex flex-col items-center bg-gray-50"
     >
-      <Heading
+      {/* <Heading
         className="text-center w-full text-2xl font-bold text-gray-800"
         text="Price Estimator"
-      />
+      /> */}
 
       {estimator === "" ? (
         <div className="flex flex-col md:flex-row md:gap-12 gap-6 justify-center items-center">
@@ -108,23 +108,23 @@ export default function PriceEstimator() {
         </div>
       ) : (
         <div id={estimator} className="w-full flex flex-col items-center">
-          <button
+          {/* <button
             onClick={handleBack}
             className="mb-4 px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-all"
           >
             Back
-          </button>
+          </button> */}
           <div className="w-full">
             <PriceForm />
           </div>
-          <Section className="w-full flex flex-col lg:flex-row px-1 justify-center items-center">
+          {/* <Section className="w-full flex flex-col lg:flex-row px-1 justify-center items-center">
             <div className="w-full lg:w-1/3">
               <PieChartComponent />
             </div>
             <div className="w-full lg:w-2/3">
               <BarGraph />
             </div>
-          </Section>
+          </Section> */}
         </div>
       )}
     </Section>
