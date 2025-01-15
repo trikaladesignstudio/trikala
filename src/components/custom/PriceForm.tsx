@@ -35,7 +35,7 @@ export default function PriceEstimator() {
   };
 
   return (
-    <div className="min-h-screen bg-muted/10">
+    <div className="min-h-screen bg-muted/10 w-[60%] mx-auto">
       <div className=" mx-auto py-6 px-4 flex flex-col items-center">
         <div className="container mx-auto py-6 px-4 space-y-6">
           <div className="flex items-center">
@@ -246,12 +246,12 @@ export default function PriceEstimator() {
                 </p>
               </div>
             </CardContent>
+            <div className="mt-4">
+              <Button className="w-full" onClick={handleSubmit}>
+                Submit
+              </Button>
+            </div>
           </Card>
-        </div>
-        <div className="mt-4">
-          <Button className="w-full" onClick={handleSubmit}>
-            Submit
-          </Button>
         </div>
       </div>
       {isFormFilled && (
