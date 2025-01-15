@@ -98,17 +98,25 @@ export default function PriceEstimator() {
                   />
                   <div className="flex">
                     <Button
+                      className={`${
+                        unit === "sqft"
+                          ? "bg-gray-500 text-white"
+                          : " text-gray-700"
+                      }`}
                       size="sm"
                       variant={unit === "sqft" ? "secondary" : "outline"}
-                      className="rounded-r-none px-3 "
                       onClick={() => setUnit("sqft")}
                     >
                       ft²
                     </Button>
                     <Button
+                      className={`${
+                        unit === "sqm"
+                          ? "bg-gray-500 text-white"
+                          : " text-gray-700"
+                      }`}
                       size="sm"
                       variant={unit === "sqm" ? "secondary" : "outline"}
-                      className="rounded-l-none px-3"
                       onClick={() => setUnit("sqm")}
                     >
                       m²
@@ -119,53 +127,52 @@ export default function PriceEstimator() {
             </CardContent>
           </Card>
 
-          <div className="grid sm:grid-cols-2 gap-4">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-sm font-medium">
-                  Building Class
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="pt-0">
-                <div className="grid grid-cols-3 gap-2">
-                  <Button
-                    size="sm"
-                    className={`${
-                      buildingClass === "luxury"
-                        ? "bg-gray-500 text-white"
-                        : " text-gray-700"
-                    }`}
-                    onClick={() => setBuildingClass("luxury")}
-                  >
-                    Luxury
-                  </Button>
-                  <Button
-                    size="sm"
-                    className={`${
-                      buildingClass === "regular"
-                        ? "bg-gray-500 text-white"
-                        : " text-gray-700"
-                    }`}
-                    onClick={() => setBuildingClass("regular")}
-                  >
-                    Regular
-                  </Button>
-                  <Button
-                    size="sm"
-                    className={`${
-                      buildingClass === "dwelling"
-                        ? "bg-gray-500 text-white"
-                        : " text-gray-700"
-                    }`}
-                    onClick={() => setBuildingClass("dwelling")}
-                  >
-                    Dwelling
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-sm font-medium">
+                Building Class
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="pt-0">
+              <div className="grid grid-cols-3 gap-2">
+                <Button
+                  size="sm"
+                  className={`${
+                    buildingClass === "luxury"
+                      ? "bg-gray-500 text-white"
+                      : " text-gray-700"
+                  }`}
+                  onClick={() => setBuildingClass("luxury")}
+                >
+                  Luxury
+                </Button>
+                <Button
+                  size="sm"
+                  className={`${
+                    buildingClass === "regular"
+                      ? "bg-gray-500 text-white"
+                      : " text-gray-700"
+                  }`}
+                  onClick={() => setBuildingClass("regular")}
+                >
+                  Regular
+                </Button>
+                <Button
+                  size="sm"
+                  className={`${
+                    buildingClass === "dwelling"
+                      ? "bg-gray-500 text-white"
+                      : " text-gray-700"
+                  }`}
+                  onClick={() => setBuildingClass("dwelling")}
+                >
+                  Dwelling
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
 
-            <Card>
+          {/* <Card>
               <CardHeader>
                 <CardTitle className="text-sm font-medium">
                   Structure Type
@@ -197,8 +204,7 @@ export default function PriceEstimator() {
                   </Button>
                 </div>
               </CardContent>
-            </Card>
-          </div>
+            </Card> */}
 
           <Card>
             <CardHeader>
@@ -246,11 +252,15 @@ export default function PriceEstimator() {
                 </p>
               </div>
             </CardContent>
-            <div className="mt-4">
-              <Button className="w-full" onClick={handleSubmit}>
-                Submit
-              </Button>
-            </div>
+          </Card>
+          <Card className="mt-4">
+            <Button
+              variant="outline"
+              className="w-full bg-gray-200"
+              onClick={handleSubmit}
+            >
+              Submit
+            </Button>
           </Card>
         </div>
       </div>
