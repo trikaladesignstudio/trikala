@@ -67,10 +67,6 @@ const chartConfig = cData.reduce((obj, item) => {
 }, {} as Record<string, Record<string, string>>) satisfies ChartConfig;
 
 export function PieChartComponent({ totalValue }: { totalValue: string }) {
-  React.useEffect(() => {
-    console.log("Total Value:", chartConfig);
-  }, []);
-
   return (
     <Card className="flex flex-col w-full border-none shadow-none">
       <CardHeader className="items-center pb-0">

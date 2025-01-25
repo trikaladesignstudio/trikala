@@ -8,6 +8,9 @@ const regex = /\d+/g;
 
 // to do
 // update the data fields according to the sheet cols and interior and exterior data fields positions in the sheet also days if any
+// data conversion on st to ms and ms to st fix not using static data
+// MOBILE VERSION
+//  convert it into row /col 
 
 export async function getStates(): Promise<locationType[]> {
   "cache";
