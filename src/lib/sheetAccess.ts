@@ -10,6 +10,7 @@ const regex = /\d+/g;
 // update the data fields according to the sheet cols and interior and exterior data fields positions in the sheet also days if any
 
 export async function getStates(): Promise<locationType[]> {
+  "cache";
   await dataDoc.loadInfo(); // loads document properties and worksheets
 
   const states = dataDoc.sheetsByIndex
@@ -28,6 +29,7 @@ export async function getStates(): Promise<locationType[]> {
 }
 
 export async function get_cities(state_id: number) {
+  "cache";
   await dataDoc.loadInfo(); // loads document properties and worksheets
 
   const sheet = dataDoc.sheetsByIndex[state_id];
@@ -43,6 +45,7 @@ export async function get_cities(state_id: number) {
 }
 
 export async function get_data_by_location(state_id: number, city_id: number) {
+  "cache";
   await dataDoc.loadInfo(); // loads document properties and worksheets
   const sheet = dataDoc.sheetsByIndex[state_id];
 
@@ -62,17 +65,17 @@ export async function get_data_by_location(state_id: number, city_id: number) {
     regular: {
       interior: ilow,
       construction: 1000,
-      days: .15,
+      days: 0.15,
     },
     luxury: {
       interior: iavg,
       construction: 1000,
-      days: .15,
+      days: 0.15,
     },
     dwelling: {
       interior: ihigh,
       construction: 1000,
-      days: .15,
+      days: 0.15,
     },
   } as unknown as EstimaterDataType;
 }
