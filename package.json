@@ -39,6 +39,8 @@
     "embla-carousel-autoplay": "^8.5.1",
     "embla-carousel-react": "^8.5.1",
     "framer-motion": "^11.11.9",
+    "google-auth-library": "^9.15.1",
+    "google-spreadsheet": "^4.1.4",
     "jose": "^5.9.6",
     "lodash": "^4.17.21",
     "lucide-react": "^0.446.0",

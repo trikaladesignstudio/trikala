@@ -1,61 +1,74 @@
 "use client";
 
 import * as React from "react";
-import { TrendingUp } from "lucide-react";
 import { Label, Pie, PieChart } from "recharts";
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-  CardFooter,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-const chartData = [
-  { category: "A", value: 30, fill: "#FF6384" },
-  { category: "B", value: 25, fill: "#36A2EB" },
-  { category: "C", value: 20, fill: "#FFCE56" },
-  { category: "D", value: 15, fill: "#4BC0C0" },
-  { category: "E", value: 10, fill: "#9966FF" },
-];
-
-const chartConfig = {
-  value: {
-    label: "Value",
-  },
-  A: {
-    label: "Category A",
+const cData = [
+  {
+    category: "A",
+    value: 15.74,
+    title: "Brickwork and Plastering",
     color: "#FF6384",
   },
-  B: {
-    label: "Category B",
-    color: "#36A2EB",
-  },
-  C: {
-    label: "Category C",
-    color: "#FFCE56",
-  },
-  D: {
-    label: "Category D",
+  {
+    category: "D",
+    value: 9.26,
+    title: "Water Supply & Plumbing",
     color: "#4BC0C0",
   },
-  E: {
-    label: "Category E",
-    color: "#9966FF",
+  {
+    category: "G",
+    value: 9.26,
+    title: "RCC Work - Columns & Slabs",
+    color: "#4DFF9F",
   },
-} satisfies ChartConfig;
+  {
+    category: "H",
+    value: 9.26,
+    title: "Footing & Foundation",
+    color: "#0ACE19",
+  },
+  {
+    category: "J",
+    value: 9.26,
+    title: "Home Design & Approval",
+    color: "#AF6384",
+  },
+  { category: "I", value: 9.26, title: "Excavation", color: "#36FFEB" },
+  { category: "E", value: 9.26, title: "Door", color: "#9966FF" },
+  { category: "F", value: 12.04, title: "Roof Slab", color: "#FF9F40" },
+  { category: "B", value: 9.26, title: "Flooring & Tiling", color: "#36A2EB" },
+  { category: "C", value: 7.41, title: "Electric Wiring", color: "#FFCE56" },
+];
 
-export function PieChartComponent() {
-  const totalValue = React.useMemo(() => {
-    return chartData.reduce((acc, curr) => acc + curr.value, 0);
+const chartData = cData.map((item) => {
+  return {
+    category: item.category,
+    value: item.value,
+    fill: item.color,
+  };
+});
+
+const chartConfig = cData.reduce((obj, item) => {
+  obj[item.category] = {
+    label: `${item.title}`,
+    color: item.color,
+  };
+  return obj;
+}, {} as Record<string, Record<string, string>>) satisfies ChartConfig;
+
+export function PieChartComponent({ totalValue }: { totalValue: string }) {
+  React.useEffect(() => {
+    console.log("Total Value:", chartConfig);
   }, []);
 
   return (
@@ -69,12 +82,7 @@ export function PieChartComponent() {
           <PieChart>
             <ChartTooltip
               cursor={false}
-              content={
-                <ChartTooltipContent
-                  hideLabel
-                  className="text-white bg-black"
-                />
-              }
+              content={<ChartTooltipContent className="text-white bg-black" />}
             />
             <Pie
               data={chartData}
@@ -98,7 +106,7 @@ export function PieChartComponent() {
                           y={viewBox.cy}
                           className="fill-foreground text-3xl font-bold"
                         >
-                          {totalValue.toLocaleString()}
+                          {totalValue}
                         </tspan>
                         <tspan
                           x={viewBox.cx}
@@ -113,6 +121,10 @@ export function PieChartComponent() {
                 }}
               />
             </Pie>
+            {/* <ChartLegend
+              content={<ChartLegendContent nameKey="category" />}
+              className="flex w-full p-0  flex-wrap gap-1 [&>*]:basis-1/4 [&>*]:justify-left"
+            /> */}
           </PieChart>
         </ChartContainer>
       </CardContent>

@@ -11,11 +11,13 @@ import Video from "@/components/sections/Video";
 import Working from "@/components/sections/Working";
 
 export default async function OtherHomeConponent() {
-  const [workingData, testimonialData, expertiseData] = await Promise.all([
-    filterAllProjects(sectionType.working),
-    filterAllProjects(sectionType.testimonials),
-    getAllProjectsGroupByType(),
-  ]);
+  const [workingData, testimonialData, expertiseData, priceEstimatorData] =
+    await Promise.all([
+      filterAllProjects(sectionType.working),
+      filterAllProjects(sectionType.testimonials),
+      getAllProjectsGroupByType(),
+      filterAllProjects(sectionType.priceEstimator),
+    ]);
 
   return (
     <>
@@ -23,7 +25,7 @@ export default async function OtherHomeConponent() {
       <Expertise data={expertiseData} />
       <Working data={workingData} />
       <Testimonials data={testimonialData} />
-      <PriceEstimator />
+      <PriceEstimator data={priceEstimatorData} />
       <Video />
     </>
   );

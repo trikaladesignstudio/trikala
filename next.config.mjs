@@ -4,6 +4,13 @@ const nextConfig = {
     serverActions: {
       allowedOrigins: ["localhost:3000", "trikalarchitects.com/"],
     },
+    turbo: {
+      rules: {
+        "*.node": {
+          loaders : ["raw-loader"], 
+        },
+      },
+    },
   },
   webpack: (config, options) => {
     // Important: return the modified config
