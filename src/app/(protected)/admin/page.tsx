@@ -32,7 +32,9 @@ export default async function Admin() {
           className="flex flex-col gap-4 border border-gray-300 p-4 rounded-lg bg-gray-200 shadow-md"
           key={section}
         >
-          <h1 className="text-3xl font-bold">{section.toUpperCase()}</h1>
+          <h1 className="text-3xl font-bold">
+            {section.toUpperCase()}
+          </h1>
           <ProjectShowcase
             projects={projects.filter((p) => p.section === section)}
           />

@@ -41,7 +41,7 @@ function Featured() {
         })
         .flat();
 
-      console.log("data1234", projectImagesByProjectId);
+      // console.log("data1234", projectImagesByProjectId);
       return projectImagesByProjectId;
 
       // const projectImages = projectData[type]

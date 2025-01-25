@@ -4,6 +4,9 @@ import { Bar, BarChart, XAxis, YAxis } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartContainer } from "@/components/ui/chart";
 
+// old total 
+// ₹ 29,26,500
+
 const data = [
   {
     id: 1,
@@ -100,7 +103,13 @@ const chartConfig = {
   },
 };
 
-export function BarGraph() {
+export function BarGraph({
+  totalValue,
+  days,
+}: {
+  totalValue: number;
+  days: number;
+}) {
   // Transform data to create bars with custom start points
   const transformedData = data.map((item) => ({
     ...item,
@@ -114,7 +123,12 @@ export function BarGraph() {
           Construction Timeline & Cost Breakdown
         </CardTitle>
         <div className="text-center text-sm text-muted-foreground">
-          Total Project Duration: 247 Days | Total Cost: ₹ 29,26,500
+          totalValue Project Duration: {days} Days | Total Cost:{" "}
+          {new Intl.NumberFormat("en-IN", {
+            maximumFractionDigits: 1,
+            style: "currency",
+            currency: "INR",
+          }).format(totalValue)}
         </div>
       </CardHeader>
       <CardContent className="overflow-x-auto">

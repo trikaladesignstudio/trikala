@@ -1,9 +1,11 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { ArrowLeft } from "lucide-react";
+import { BarGraph } from "@/components/custom/BarGraph";
+import { PieChartComponent } from "@/components/custom/PieChart";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -11,45 +13,145 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@radix-ui/react-select";
-import { PieChartComponent } from "@/components/custom/PieChart";
-import { BarGraph } from "@/components/custom/BarGraph";
+import { get_cities, get_data_by_location, getStates } from "@/lib/sheetAccess";
+import {
+  BuildingClassType,
+  EstimaterDataType,
+  locationType,
+} from "@/types/actions";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowLeft } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
 
-export default function PriceEstimator() {
+const formatedNumber = (num: number) => {
+  return new Intl.NumberFormat("en-IN", {
+    maximumFractionDigits: 0,
+    style: "currency",
+    currency: "INR",
+    notation: "compact",
+  }).format(num);
+};
+
+const convertToSqft = (meters: number) => meters * 10.7639;
+const convertToSqM = (sqft: number) => sqft / 10.7639;
+
+export default function PriceForm({ handleBack }: { handleBack: () => void }) {
+  // static
   const [unit, setUnit] = useState<"sqft" | "sqm">("sqft");
-  const [buildingClass, setBuildingClass] = useState("regular");
-  const [structureType, setStructureType] = useState("framed");
+  const [buildingClass, setBuildingClass] =
+    useState<BuildingClassType>("regular");
+
+  // dynamic read data to show on load
+  const [stateData, setStateData] = useState<locationType[]>([]);
+  const [CityData, setCityData] = useState<locationType[]>([]);
+
   const [isFormFilled, setIsFormFilled] = useState(false);
+  const [area, setArea] = useState(0);
+  const [stateId, setStateId] = useState("");
+  const [cityId, setCityId] = useState("");
+  const [ValueToCalculator, setValueToCalculator] =
+    useState<EstimaterDataType | null>(null);
+
+  const [results, setResults] = useState<EstimaterDataType[BuildingClassType]>({
+    interior: 0,
+    construction: 0,
+    days: 0,
+  });
+
+  const [change, setChange] = useState<Boolean>(false);
 
   const resultSectionRef = useRef<HTMLDivElement>(null);
 
-  const handleSubmit = () => {
-    setIsFormFilled(true);
+  // dynamic location data
+  useEffect(() => {
+    getStates().then(setStateData);
+  }, []);
 
-    // Wait for the result section to render, then scroll into view
-    setTimeout(() => {
-      resultSectionRef.current?.scrollIntoView({ behavior: "smooth" });
-    }, 0);
+  useEffect(() => {
+    if (stateId !== "") {
+      setChange(true);
+      setCityData([]);
+      get_cities(parseInt(stateId)).then((res) => {
+        setCityData(res);
+      });
+    }
+  }, [stateId]);
+
+  useEffect(() => {
+    if (stateId && cityId && area > 0) {
+      setChange(true);
+    }
+  }, [cityId]);
+
+  // convert area accordingly
+  useEffect(() => {
+    if (unit === "sqm") {
+      setArea(convertToSqM(area));
+    }
+
+    if (unit === "sqft") {
+      setArea(convertToSqft(area));
+    }
+  }, [unit]);
+
+  useEffect(() => {
+    if (ValueToCalculator) {
+      const data = ValueToCalculator[buildingClass];
+      setResults({
+        interior: data.interior * area,
+        construction: data.construction * area,
+        days: data.days * area,
+      });
+    }
+  }, [buildingClass, area, ValueToCalculator]);
+
+  const getCostFromInputs = async (stateId: number, cityId: number) => {
+    const data = await get_data_by_location(stateId, cityId);
+    // console.log(data);
+
+    if (data) {
+      setValueToCalculator(data);
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!stateId || !cityId) {
+      toast.error("Please select state and city");
+      return;
+    }
+
+    if (area <= 0) {
+      toast.error("Please enter a valid area");
+      return;
+    }
+
+    if (change) {
+      await getCostFromInputs(parseInt(stateId), parseInt(cityId));
+      setIsFormFilled(true);
+      setChange(false);
+
+      // Wait for the result section to render, then scroll into view
+      setTimeout(() => {
+        resultSectionRef.current?.scrollIntoView({ behavior: "smooth" });
+        toast.success("Form submitted successfully");
+      }, 10);
+    } else {
+      toast.error("Please enter a valid area");
+    }
   };
 
   return (
-    <div className="min-h-screen bg-muted/10 w-[60%] mx-auto">
-      <div className=" mx-auto py-6 px-4 flex flex-col items-center">
-        <div className="container mx-auto py-6 px-4 space-y-6">
-          <div className="flex items-center">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => window.history.back()}
-            >
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back
-            </Button>
-          </div>
-
-          <div className="text-center space-y-2">
+    <div className="min-h-screen bg-muted/10 ">
+      <div className="mx-auto py-6 px-4 flex flex-col items-center lg:w-[60%]">
+        <div className="container mx-auto py-6 px-4 space-y-6 ">
+          <div className="text-center space-y-2 relative ">
+            <div className="flex items-center absolute top-0 lg:top-1/2 left-0 -translate-y-1/2">
+              <Button variant="ghost" size="sm" onClick={() => handleBack()}>
+                <ArrowLeft className="lg:mr-2 h-4 w-4" />
+                Back
+              </Button>
+            </div>
             <h1 className="text-3xl font-serif">Price Estimator</h1>
             <p className="text-muted-foreground text-sm">
               Get an instant estimate for your construction project
@@ -64,25 +166,32 @@ export default function PriceEstimator() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label className="text-sm">State</Label>
-                  <Select>
+                  <Select value={stateId} onValueChange={setStateId}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select state" />
                     </SelectTrigger>
                     <SelectContent className="bg-white">
-                      <SelectItem value="state1">State 1</SelectItem>
-                      <SelectItem value="state2">State 2</SelectItem>
+                      {stateData.map(({ title, id }) => (
+                        <SelectItem key={id} value={`${id}`}>
+                          {title}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </div>
                 <div className="space-y-2">
                   <Label className="text-sm">City</Label>
-                  <Select>
+                  <Select value={cityId} onValueChange={setCityId}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select city" />
                     </SelectTrigger>
+                    {/* city options dynamic */}
                     <SelectContent className="bg-white">
-                      <SelectItem value="city1">City 1</SelectItem>
-                      <SelectItem value="city2">City 2</SelectItem>
+                      {CityData.map(({ title, id }) => (
+                        <SelectItem key={id} value={`${id}`}>
+                          {title}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </div>
@@ -95,7 +204,10 @@ export default function PriceEstimator() {
                     type="number"
                     placeholder="Enter area"
                     className="flex-1"
+                    value={area || ""}
+                    onChange={(e) => setArea(Number(e.target.value))}
                   />
+
                   <div className="flex">
                     <Button
                       className={`${
@@ -137,17 +249,7 @@ export default function PriceEstimator() {
               <div className="grid grid-cols-3 gap-2">
                 <Button
                   size="sm"
-                  className={`${
-                    buildingClass === "luxury"
-                      ? "bg-gray-500 text-white"
-                      : " text-gray-700"
-                  }`}
-                  onClick={() => setBuildingClass("luxury")}
-                >
-                  Luxury
-                </Button>
-                <Button
-                  size="sm"
+                  variant={"outline"}
                   className={`${
                     buildingClass === "regular"
                       ? "bg-gray-500 text-white"
@@ -159,6 +261,19 @@ export default function PriceEstimator() {
                 </Button>
                 <Button
                   size="sm"
+                  variant={"outline"}
+                  className={`${
+                    buildingClass === "luxury"
+                      ? "bg-gray-500 text-white"
+                      : " text-gray-700"
+                  }`}
+                  onClick={() => setBuildingClass("luxury")}
+                >
+                  Luxury
+                </Button>
+                <Button
+                  size="sm"
+                  variant={"outline"}
                   className={`${
                     buildingClass === "dwelling"
                       ? "bg-gray-500 text-white"
@@ -172,109 +287,83 @@ export default function PriceEstimator() {
             </CardContent>
           </Card>
 
-          {/* <Card>
-              <CardHeader>
-                <CardTitle className="text-sm font-medium">
-                  Structure Type
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="pt-0">
-                <div className="grid grid-cols-2 gap-2">
+          <AnimatePresence mode="wait">
+            {change && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <Card className="mt-4">
                   <Button
-                    size="sm"
-                    className={`${
-                      structureType === "framed"
-                        ? "bg-gray-500 text-white"
-                        : " text-gray-700"
-                    }`}
-                    onClick={() => setStructureType("framed")}
+                    variant="outline"
+                    className="w-full bg-gray-200"
+                    onClick={handleSubmit}
                   >
-                    Framed
+                    Submit
                   </Button>
-                  <Button
-                    size="sm"
-                    className={`${
-                      structureType === "load"
-                        ? "bg-gray-500 text-white"
-                        : " text-gray-700"
-                    }`}
-                    onClick={() => setStructureType("load")}
-                  >
-                    Load
-                  </Button>
-                </div>
-              </CardContent>
-            </Card> */}
-
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Cost Breakdown</CardTitle>
-            </CardHeader>
-            <CardContent className="grid gap-4">
-              <div className="grid sm:grid-cols-3 gap-4">
-                <div className="space-y-1">
-                  <Label className="text-sm text-muted-foreground">
-                    Structural
-                  </Label>
-                  <Input
-                    type="text"
-                    value="₹3,60,000"
-                    className="text-right"
-                    readOnly
-                  />
-                </div>
-                <div className="space-y-1">
-                  <Label className="text-sm text-muted-foreground">
-                    Finishing
-                  </Label>
-                  <Input
-                    type="text"
-                    value="₹2,40,000"
-                    className="text-right"
-                    readOnly
-                  />
-                </div>
-                <div className="space-y-1">
-                  <Label className="text-sm text-muted-foreground">Total</Label>
-                  <Input
-                    type="text"
-                    value="₹6,00,000"
-                    className="text-right font-medium"
-                    readOnly
-                  />
-                </div>
-              </div>
-              <Separator />
-              <div className="space-y-1">
-                <div className="text-sm font-medium">Timeline & Summary</div>
-                <p className="text-sm text-muted-foreground">
-                  Total Duration: 247 Days • Estimated Cost: ₹29,26,500
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="mt-4">
-            <Button
-              variant="outline"
-              className="w-full bg-gray-200"
-              onClick={handleSubmit}
-            >
-              Submit
-            </Button>
-          </Card>
+                </Card>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
       {isFormFilled && (
-        <div
-          ref={resultSectionRef}
-          className="flex flex-col lg:flex-row justify-between items-center"
-        >
+        <div ref={resultSectionRef} className="flex flex-row gap-2">
           <div className="w-full lg:w-1/3">
-            <PieChartComponent />
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg text-center">
+                  Cost Breakdown
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="grid gap-1">
+                <div className="grid grid-row-3 gap-1">
+                  <div className="space-y-1  flex justify-between w-full">
+                    <div className="text-sm text-muted-foreground font-bold">
+                      Structural
+                    </div>
+                    {new Intl.NumberFormat("en-IN", {
+                      maximumFractionDigits: 1,
+                      style: "currency",
+                      currency: "INR",
+                    }).format(results.construction)}
+                  </div>
+                  <div className="space-y-1 flex justify-between w-full">
+                    <div className="text-sm text-muted-foreground font-bold">
+                      Finishing
+                    </div>
+                    {new Intl.NumberFormat("en-IN", {
+                      maximumFractionDigits: 1,
+                      style: "currency",
+                      currency: "INR",
+                    }).format(results.interior)}
+                  </div>
+                  <div className="space-y-1  flex justify-between w-full">
+                    <div className="text-sm text-muted-foreground font-bold">
+                      Total
+                    </div>
+                    {new Intl.NumberFormat("en-IN", {
+                      maximumFractionDigits: 1,
+                      style: "currency",
+                      currency: "INR",
+                    }).format(results.construction + results.interior)}
+                  </div>
+                </div>
+              </CardContent>
+              <PieChartComponent
+                totalValue={formatedNumber(
+                  results.construction + results.interior
+                )}
+              />
+            </Card>
           </div>
-          <div className="w-full lg:w-2/3">
-            <BarGraph />
-          </div>
+          <Card className="w-full lg:w-2/3 bord">
+            <BarGraph
+              days={results.days}
+              totalValue={results.construction + results.interior}
+            />
+          </Card>
         </div>
       )}
     </div>
