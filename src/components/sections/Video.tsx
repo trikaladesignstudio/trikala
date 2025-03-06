@@ -37,7 +37,7 @@ function Video() {
           loading="lazy"
           aria-label="Arogya Vanam of Rashtrapati Bhavan"
           className="w-full lg:h-full h-auto z-10 aspect-video rounded-xl shadow-xl"
-          src="https://www.youtube.com/embed/-WKHnGln5Yg?autoplay=1&mute=1&loop=1"
+          src="https://www.youtube.com/embed/-WKHnGln5Yg?autoplay=1&mute=1&loop=1&playlist=-WKHnGln5Yg"
           title="Arogya Vanam of Rashtrapati Bhavan"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerPolicy="strict-origin-when-cross-origin"
