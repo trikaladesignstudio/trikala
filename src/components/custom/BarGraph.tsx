@@ -2,93 +2,11 @@
 
 import { Bar, BarChart, XAxis, YAxis } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ChartContainer } from "@/components/ui/chart";
+import { ChartContainer, ChartTooltip } from "@/components/ui/chart";
+import { constructionPhases } from "@/constants";
 
 // old total 
 // ₹ 29,26,500
-
-const data = [
-  {
-    id: 1,
-    phase: "Home Design & Approval",
-    days: 46,
-    cost: 215000,
-    start: 0,
-    label: "46 Days | ₹ 2,15,000",
-  },
-  {
-    id: 2,
-    phase: "Excavation",
-    days: 14,
-    cost: 105750,
-    start: 46,
-    label: "14 Days | ₹ 1,05,750",
-  },
-  {
-    id: 3,
-    phase: "Footing & Foundation",
-    days: 41,
-    cost: 786000,
-    start: 60,
-    label: "41 Days | ₹ 7,86,000",
-  },
-  {
-    id: 4,
-    phase: "RCC Work - Columns & Slabs",
-    days: 17,
-    cost: 525000,
-    start: 101,
-    label: "17 Days | ₹ 5,25,000",
-  },
-  {
-    id: 5,
-    phase: "Roof Slab",
-    days: 37,
-    cost: 438000,
-    start: 118,
-    label: "37 Days | ₹ 4,38,000",
-  },
-  {
-    id: 6,
-    phase: "Brickwork and Plastering",
-    days: 8,
-    cost: 85500,
-    start: 155,
-    label: "08 Days | ₹ 85,500",
-  },
-  {
-    id: 7,
-    phase: "Flooring & Tiling",
-    days: 25,
-    cost: 380000,
-    start: 163,
-    label: "25 Days | ₹ 3,80,000",
-  },
-  {
-    id: 8,
-    phase: "Electric Wiring",
-    days: 14,
-    cost: 105750,
-    start: 188,
-    label: "14 Days | ₹ 1,05,750",
-  },
-  {
-    id: 9,
-    phase: "Water Supply & Plumbing",
-    days: 30,
-    cost: 65500,
-    start: 202,
-    label: "30 Days | ₹ 65,500",
-  },
-  {
-    id: 10,
-    phase: "Door",
-    days: 15,
-    cost: 220000,
-    start: 232,
-    label: "15 Days | ₹ 2,20,000",
-  },
-];
 
 const chartConfig = {
   days: {
@@ -110,66 +28,96 @@ export function BarGraph({
   totalValue: number;
   days: number;
 }) {
-  // Transform data to create bars with custom start points
-  const transformedData = data.map((item) => ({
-    ...item,
-    customBar: [item.start, item.start + item.days],
-  }));
+  const formatCurrency = (value: number) => {
+    return new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR",
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(value);
+  };
+
+  const transformedData = constructionPhases.map((item) => {
+    const cost = (item.percentage / 100) * totalValue;
+    return {
+      ...item,
+      cost,
+      customBar: [item.start, item.start + item.days],
+      label: `${item.days} Days | ${formatCurrency(cost)}`,
+    };
+  });
 
   return (
     <Card className="w-full flex flex-col border-none shadow-none">
-      <CardHeader>
-        <CardTitle className="text-center">
+      <CardHeader className="sm:p-6">
+        <CardTitle className="text-center text-base sm:text-lg md:text-xl font-semibold">
           Construction Timeline & Cost Breakdown
         </CardTitle>
-        <div className="text-center text-sm text-muted-foreground">
-          totalValue Project Duration: {days} Days | Total Cost:{" "}
-          {new Intl.NumberFormat("en-IN", {
-            maximumFractionDigits: 1,
-            style: "currency",
-            currency: "INR",
-          }).format(totalValue)}
+        <div className="text-center text-xs sm:text-sm text-muted-foreground">
+          Project Duration: {days} Days | Total Cost: {formatCurrency(totalValue)}
         </div>
       </CardHeader>
-      <CardContent className="overflow-x-auto">
+      <CardContent className="overflow-x-auto p-0 sm:p-6">
         <ChartContainer
           config={chartConfig}
-          className="flex lg:w-full w-[40rem] items-start"
+          className="w-screen sm:w-[calc(100vw-4rem)] lg:w-full h-[80vh] sm:h-[70vh] max-h-[600px]"
         >
           <BarChart
             data={transformedData}
             layout="vertical"
-            margin={{ top: 0, right: 150, bottom: 0, left: -50 }}
+            margin={{ top: 10, right: 100, bottom: 10, left: 0 }}
+            barSize={20}
           >
             <XAxis
               type="number"
-              domain={[0, 250]}
-              tickCount={20}
-              tick={{ fontSize: 10 }}
-              label={{ value: "Days", position: "bottom", offset: 0 }}
+              domain={[0, days]}
+              tickCount={4}
+              tick={{ fontSize: "0.65rem" }}
+              label={{
+                value: "Timeline (Days)",
+                position: "bottom",
+                offset: 0,
+                style: { fontSize: "0.65rem" }
+              }}
             />
             <YAxis
               type="category"
               dataKey="phase"
-              tick={{ fontSize: 10 }}
-              width={150}
+              tick={{ fontSize: "0.65rem" }}
+              width={75}
+            />
+            <ChartTooltip
+              cursor={{ fill: "rgba(0,0,0,0.05)" }}
+              content={({ active, payload }) => {
+                if (active && payload && payload.length) {
+                  const data = payload[0].payload;
+                  return (
+                    <div className="bg-black/80 text-white p-2 rounded-lg shadow-lg border border-white/10">
+                      <div className="font-semibold text-xs sm:text-sm">{data.phase}</div>
+                      <div className="text-xs">Duration: {data.days} Days</div>
+                      <div className="text-xs">Cost: {formatCurrency(data.cost)} ({data.percentage}%)</div>
+                    </div>
+                  );
+                }
+                return null;
+              }}
             />
             <Bar
               dataKey="customBar"
               fill="hsl(var(--chart-1))"
               radius={[4, 4, 4, 4]}
               label={(props) => {
-                const { x, y, width, value, label } = props;
+                const { x, y, width, value } = props;
                 const item = transformedData[props.index];
                 return (
                   <text
-                    x={x + width + 10}
-                    y={y + 12}
+                    x={x + width + 5}
+                    y={y + 10}
                     fill="currentColor"
-                    fontSize={12}
+                    fontSize="0.65rem"
                     textAnchor="start"
                   >
-                    {item.label}
+                    {item.days} Days | {formatCurrency(item.cost)}
                   </text>
                 );
               }}
