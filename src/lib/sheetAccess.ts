@@ -1,4 +1,5 @@
 "use server";
+
 import { EstimaterDataType, locationType } from "@/types/actions";
 import dataDoc from "./googleAuth";
 
@@ -8,6 +9,9 @@ const regex = /\d+/g;
 
 // to do
 // update the data fields according to the sheet cols and interior and exterior data fields positions in the sheet also days if any
+// data conversion on st to ms and ms to st fix not using static data
+// MOBILE VERSION
+//  convert it into row /col 
 
 export async function getStates(): Promise<locationType[]> {
   "cache";
@@ -50,14 +54,14 @@ export async function get_data_by_location(state_id: number, city_id: number) {
   const sheet = dataDoc.sheetsByIndex[state_id];
 
   const rows = await sheet.getRows(); // Fetch all rows from the sheet
-  const interior = rows[city_id].get(sheet.headerValues[2]).replace(",", "");
-  // const exterior = rows[city_id].get(sheet.headerValues[3]).replace(",", "");
+  const interior = rows[city_id].get(sheet.headerValues[2]).replace(/,/g, "");
+  // const exterior = rows[city_id].get(sheet.headerValues[3]).replace(/,/g, "");
 
-  // ₹850 - ₹1,050
-  // format it low and high use regex
+  // Format like "₹850 - ₹1050" or "₹1800 - ₹2300"
   const [ilow, ihigh] = interior.match(regex)!.map(Number);
   const iavg = (ilow + ihigh) / 2;
 
+  // interior: ₹1800 - ₹2,300
   // console.log("row:", interior, ilow, iavg, ihigh);
 
   // format the data

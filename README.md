@@ -56,3 +56,7 @@ project data (pending) - needed for [expertise, featured work, projects]
 
 2. hero section update and finalize
 3. data api layer
+
+
+
+265 / 30 = 8.83 months

@@ -2,137 +2,152 @@
 
 import * as React from "react";
 import { Label, Pie, PieChart } from "recharts";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
   ChartTooltip,
-  ChartTooltipContent,
 } from "@/components/ui/chart";
+import { useState, useEffect } from "react";
+import { pieChartData } from "@/constants";
 
-const cData = [
-  {
-    category: "A",
-    value: 15.74,
-    title: "Brickwork and Plastering",
-    color: "#FF6384",
-  },
-  {
-    category: "D",
-    value: 9.26,
-    title: "Water Supply & Plumbing",
-    color: "#4BC0C0",
-  },
-  {
-    category: "G",
-    value: 9.26,
-    title: "RCC Work - Columns & Slabs",
-    color: "#4DFF9F",
-  },
-  {
-    category: "H",
-    value: 9.26,
-    title: "Footing & Foundation",
-    color: "#0ACE19",
-  },
-  {
-    category: "J",
-    value: 9.26,
-    title: "Home Design & Approval",
-    color: "#AF6384",
-  },
-  { category: "I", value: 9.26, title: "Excavation", color: "#36FFEB" },
-  { category: "E", value: 9.26, title: "Door", color: "#9966FF" },
-  { category: "F", value: 12.04, title: "Roof Slab", color: "#FF9F40" },
-  { category: "B", value: 9.26, title: "Flooring & Tiling", color: "#36A2EB" },
-  { category: "C", value: 7.41, title: "Electric Wiring", color: "#FFCE56" },
-];
+const chartData = pieChartData.sort((a, b) => b.value - a.value); // Sort by value to optimize label placement
 
-const chartData = cData.map((item) => {
-  return {
-    category: item.category,
-    value: item.value,
-    fill: item.color,
-  };
-});
-
-const chartConfig = cData.reduce((obj, item) => {
+const chartConfig = pieChartData.reduce((obj, item) => {
   obj[item.category] = {
-    label: `${item.title}`,
+    label: item.title,
     color: item.color,
   };
   return obj;
 }, {} as Record<string, Record<string, string>>) satisfies ChartConfig;
 
-export function PieChartComponent({ totalValue }: { totalValue: string }) {
-  React.useEffect(() => {
-    console.log("Total Value:", chartConfig);
-  }, []);
+const RADIAN = Math.PI / 180;
+const wrapText = (text: string, maxLength: number = 10): string[] => {
+  const words = text.split(' ');
+  const lines: string[] = [];
+  let currentLine = words[0];
+
+  for (let i = 1; i < words.length; i++) {
+    const word = words[i];
+    const newLine = `${currentLine} ${word}`;
+
+    if (newLine.length <= maxLength) {
+      currentLine = newLine;
+    } else {
+      lines.push(currentLine);
+      currentLine = word;
+    }
+  }
+  lines.push(currentLine);
+  return lines;
+};
+
+const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, value, title }: any) => {
+  const radius2 = innerRadius + (outerRadius - innerRadius) * 1.3;
+  const x2 = cx + radius2 * Math.cos(-midAngle * RADIAN);
+  const y2 = cy + radius2 * Math.sin(-midAngle * RADIAN);
+  const cos = Math.cos(-midAngle * RADIAN);
+  const textAnchor = cos >= 0 ? 'start' : 'end';
+  const lines = wrapText(title);
+  const lineHeight = 11;
 
   return (
-    <Card className="flex flex-col w-full border-none shadow-none">
-      <CardHeader className="items-center pb-0">
-        {/* <CardTitle>Simple Pie Chart</CardTitle>
-        <CardDescription>Custom Colors</CardDescription> */}
-      </CardHeader>
-      <CardContent className="flex-1 pb-0 p-0">
-        <ChartContainer config={chartConfig} className="mx-auto aspect-square">
-          <PieChart>
+    <g>
+      {lines.map((line, index) => (
+        <text
+          key={index}
+          x={x2 + (cos >= 0 ? 2 : -2)}
+          y={y2 + (index - (lines.length - 1) / 2) * lineHeight}
+          textAnchor={textAnchor}
+          className="fill-muted-foreground text-[12px] font-medium"
+        >
+          {line}
+        </text>
+      ))}
+    </g>
+  );
+};
+
+export function PieChartComponent({ totalValue }: { totalValue: string }) {
+  const [containerRef, setContainerRef] = useState<HTMLDivElement | null>(null);
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+
+  useEffect(() => {
+    if (!containerRef) return;
+
+    const updateDimensions = () => {
+      const { width, height } = containerRef.getBoundingClientRect();
+      setDimensions({
+        width: width,
+        height: Math.min(width, height),
+      });
+    };
+
+    updateDimensions();
+    const resizeObserver = new ResizeObserver(updateDimensions);
+    resizeObserver.observe(containerRef);
+
+    return () => resizeObserver.disconnect();
+  }, [containerRef]);
+
+  return (
+    <Card className="flex flex-col w-full h-full border-none shadow-none">
+      <CardContent className="flex-1 p-0" ref={setContainerRef}>
+        <ChartContainer config={chartConfig} className="w-full h-full">
+          <PieChart width={dimensions.width} height={dimensions.height} margin={{ top: 10, right: 10, bottom: 10, left: 10 }}>
             <ChartTooltip
               cursor={false}
-              content={<ChartTooltipContent className="text-white bg-black" />}
+              content={({ active, payload }) => {
+                if (active && payload && payload.length) {
+                  const data = payload[0].payload;
+                  return (
+                    <div className="bg-black/80 text-white p-1 rounded-lg shadow-lg border border-white/10">
+                      <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 rounded-full" style={{ backgroundColor: data.color }}></div>
+                        <div className="font-medium">{data.title}</div>
+                      </div>
+                      <div className="text-sm opacity-90">{data.value}%</div>
+                    </div>
+                  );
+                }
+                return null;
+              }}
             />
             <Pie
               data={chartData}
               dataKey="value"
               nameKey="category"
-              innerRadius={60}
-              strokeWidth={5}
+              innerRadius={Math.min(dimensions.width, dimensions.height) * 0.15}
+              outerRadius={Math.min(dimensions.width, dimensions.height) * 0.3}
+              paddingAngle={2}
+              strokeWidth={1}
+              stroke="white"
+              label={renderCustomizedLabel}
+              labelLine={false}
             >
               <Label
                 content={({ viewBox }) => {
-                  if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                    return (
+                  if (!viewBox || !("cx" in viewBox) || !("cy" in viewBox)) return null;
+                  const { cx, cy } = viewBox;
+                  return (
+                    <g>
                       <text
-                        x={viewBox.cx}
-                        y={viewBox.cy}
+                        x={cx}
+                        y={cy}
                         textAnchor="middle"
                         dominantBaseline="middle"
+                        className="fill-foreground text-4xl font-bold"
                       >
-                        <tspan
-                          x={viewBox.cx}
-                          y={viewBox.cy}
-                          className="fill-foreground text-3xl font-bold"
-                        >
-                          {totalValue}
-                        </tspan>
-                        <tspan
-                          x={viewBox.cx}
-                          y={(viewBox.cy || 0) + 24}
-                          className="fill-muted-foreground"
-                        >
-                          Total
-                        </tspan>
+                        {totalValue}
                       </text>
-                    );
-                  }
+                    </g>
+                  );
                 }}
               />
             </Pie>
-            {/* <ChartLegend
-              content={<ChartLegendContent nameKey="category" />}
-              className="flex w-full p-0  flex-wrap gap-1 [&>*]:basis-1/4 [&>*]:justify-left"
-            /> */}
           </PieChart>
         </ChartContainer>
       </CardContent>
-      {/* <CardFooter className="flex-col gap-2 text-sm">
-        <div className="leading-none text-muted-foreground">
-          Showing simplified data with custom colors
-        </div>
-      </CardFooter> */}
     </Card>
   );
 }
