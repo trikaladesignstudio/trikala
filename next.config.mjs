@@ -30,13 +30,8 @@ const nextConfig = {
       },
     ],
   },
-  pageExtensions: ["mdx", "ts", "tsx"],
+  pageExtensions: ["ts", "tsx"],
   reactStrictMode: true,
-  compress: true,
-  swcMinify: true,
-  compiler: {
-    styledComponents: true,
-  },
 };
 
 export default nextConfig;
