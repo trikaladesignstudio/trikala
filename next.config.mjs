@@ -5,19 +5,13 @@ const nextConfig = {
       allowedOrigins: ["localhost:3000", "trikalarchitects.com/"],
     },
     turbo: {
-      rules: {
-        "*.node": {
-          loaders : ["raw-loader"], 
-        },
+      resolveAlias: {
+        canvas: "./empty-module.js",
       },
     },
   },
-  webpack: (config, options) => {
-    // Important: return the modified config
-    config.module.rules.push({
-      test: /\.node/,
-      use: "raw-loader",
-    });
+  webpack: (config) => {
+    config.resolve.alias.canvas = false;
     return config;
   },
   images: {
