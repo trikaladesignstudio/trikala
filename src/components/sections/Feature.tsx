@@ -3,9 +3,8 @@
 import {
   Carousel,
   CarouselContent,
+  CarouselControls,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 import { cn, rollInView } from "@/lib/utils";
 import { motion } from "framer-motion";
@@ -82,8 +81,8 @@ function Featured() {
   }, []);
 
   return (
-    <Section className="lg:px-0 px-0 lg:py-0 py-0 lg:justify-start">
-      <Section toSnap={false} className="min-h-fit lg:gap-12">
+    <Section className="lg:px-0 px-0 lg:py-0 py-0 justify-center">
+      <div className="flex flex-col gap-8 lg:gap-12 w-full px-[2rem] lg:px-[5rem]">
         <Heading className="text-5xl" text="Featured Work" />
         <motion.div className="top-8 lg:gap-8 gap-4 w-full grid grid-cols-2 lg:grid-cols-4 ">
           {types.map((type, index) => (
@@ -108,16 +107,40 @@ function Featured() {
             </motion.div>
           ))}
         </motion.div>
-      </Section>
-      <Carousel className="w-full" delay={3000}>
-        <CarouselContent className="-ml-1">
-          {filterType(currentActive).map(({ url: img, projectId }, index) => (
-            <CarouselItem
-              key={index}
-              className="pl-1 md:basis-1/2 lg:basis-1/3"
-            >
-              {projectId ? (
-                <Link href={`/projects/${projectId}`}>
+        <Carousel className="w-full" delay={3000}>
+          <CarouselContent className="-ml-2">
+            {filterType(currentActive).map(({ url: img, projectId }, index) => (
+              <CarouselItem
+                key={index}
+                className="pl-2 md:basis-1/2 lg:basis-1/3"
+              >
+                {projectId ? (
+                  <Link href={`/projects/${projectId}`}>
+                    <motion.div
+                      key={img}
+                      variants={rollInView}
+                      viewport={{ once: true }}
+                      initial="base"
+                      whileInView="show"
+                      transition={{
+                        ...rollInView.transition,
+                        delay: 0.2 + 0.02 * index,
+                      }}
+                      exit={{ opacity: 0 }}
+                      className="w-full"
+                    >
+                      <Suspense>
+                        <Image
+                          src={img as string}
+                          width={400}
+                          height={400}
+                          alt={`Slide ${index}`}
+                          className="w-full h-[24rem] md:h-[28rem] lg:h-[32rem] object-cover rounded-md"
+                        />
+                      </Suspense>
+                    </motion.div>
+                  </Link>
+                ) : (
                   <motion.div
                     key={img}
                     variants={rollInView}
@@ -129,53 +152,25 @@ function Featured() {
                       delay: 0.2 + 0.02 * index,
                     }}
                     exit={{ opacity: 0 }}
-                    className="flex-shrink-0"
+                    className="w-full"
                   >
                     <Suspense>
                       <Image
                         src={img as string}
                         width={400}
                         height={400}
-                        style={{ height: `28rem` }}
                         alt={`Slide ${index}`}
-                        className="w-auto object-cover "
+                        className="w-full h-[24rem] md:h-[28rem] lg:h-[32rem] object-cover rounded-md"
                       />
                     </Suspense>
                   </motion.div>
-                </Link>
-              ) : (
-                <motion.div
-                  key={img}
-                  variants={rollInView}
-                  viewport={{ once: true }}
-                  initial="base"
-                  whileInView="show"
-                  transition={{
-                    ...rollInView.transition,
-                    delay: 0.2 + 0.02 * index,
-                  }}
-                  exit={{ opacity: 0 }}
-                  className="flex-shrink-0"
-                >
-                  <Suspense>
-                    <Image
-                      src={img as string}
-                      width={400}
-                      height={400}
-                      style={{ height: `28rem` }}
-                      alt={`Slide ${index}`}
-                      className="w-auto object-cover "
-                    />
-                  </Suspense>
-                </motion.div>
-              )}
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
-      </Carousel>
-      {/* </Section> */}
+                )}
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselControls />
+        </Carousel>
+      </div>
     </Section>
   );
 }

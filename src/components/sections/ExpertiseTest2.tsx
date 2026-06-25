@@ -11,9 +11,8 @@ import Section from "../custom/Section";
 import {
   Carousel,
   CarouselContent,
+  CarouselControls,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "../ui/carousel";
 import { rollInView } from "@/lib/utils";
 import Link from "next/link";
@@ -25,9 +24,9 @@ interface CarouselDataProps {
 function CarouselData({ images }: CarouselDataProps) {
   return (
     <Carousel className="w-full m-auto" delay={4000}>
-      <CarouselContent className="flex -ml-1">
+      <CarouselContent className="-ml-2">
         {images.map(({ url: img, projectId }, index) => (
-          <CarouselItem key={index} className="pl-1 md:basis-1/2 lg:basis-1/3">
+          <CarouselItem key={index} className="pl-2 md:basis-1/2 lg:basis-1/3">
             <motion.div
               variants={rollInView}
               initial="base"
@@ -37,14 +36,14 @@ function CarouselData({ images }: CarouselDataProps) {
                 ...rollInView.transition,
                 delay: 0.2 + index * 0.02,
               }}
-              className="flex-shrink-0"
+              className="w-full"
             >
               {projectId ? (
                 <Link href={`/projects/${projectId}`}>
                   <Image
                     src={img}
                     alt={`Slide ${index}`}
-                    className="w-full object-cover rounded-md h-[20rem] lg:h-[25rem]"
+                    className="w-full object-cover rounded-md h-[24rem] md:h-[28rem] lg:h-[32rem]"
                     width={400}
                     height={400}
                   />
@@ -53,7 +52,7 @@ function CarouselData({ images }: CarouselDataProps) {
                 <Image
                   src={img}
                   alt={`Slide ${index}`}
-                  className="w-full object-cover rounded-md h-[20rem] lg:h-[25rem]"
+                  className="w-full object-cover rounded-md h-[24rem] md:h-[28rem] lg:h-[32rem]"
                   width={400}
                   height={400}
                 />
@@ -62,8 +61,7 @@ function CarouselData({ images }: CarouselDataProps) {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
+      <CarouselControls className="[&_button]:text-zinc-500 [&_button]:hover:text-white" />
     </Carousel>
   );
 }

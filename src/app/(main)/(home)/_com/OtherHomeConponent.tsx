@@ -24,8 +24,8 @@ export default async function OtherHomeConponent() {
       <Featured />
       <Expertise data={expertiseData} />
       <Working data={workingData} />
-      <Testimonials data={testimonialData} />
       <PriceEstimator data={priceEstimatorData} />
+      <Testimonials data={testimonialData} />
       <Video />
     </>
   );
