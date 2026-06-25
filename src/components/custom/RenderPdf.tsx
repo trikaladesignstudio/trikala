@@ -1,7 +1,7 @@
 "use client";
 
 // import processPDFs from "@/utils/pdfToImg";
-import { memo, useEffect, useRef } from "react";
+import { memo } from "react";
 import { Worker, Viewer } from "@react-pdf-viewer/core";
 import "../../app/pdfView.css";
 

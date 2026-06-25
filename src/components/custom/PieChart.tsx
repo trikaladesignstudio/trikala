@@ -42,7 +42,21 @@ const wrapText = (text: string, maxLength: number = 10): string[] => {
   return lines;
 };
 
-const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, value, title }: any) => {
+const renderCustomizedLabel = ({
+  cx,
+  cy,
+  midAngle,
+  innerRadius,
+  outerRadius,
+  title,
+}: {
+  cx: number;
+  cy: number;
+  midAngle: number;
+  innerRadius: number;
+  outerRadius: number;
+  title: string;
+}) => {
   const radius2 = innerRadius + (outerRadius - innerRadius) * 1.3;
   const x2 = cx + radius2 * Math.cos(-midAngle * RADIAN);
   const y2 = cy + radius2 * Math.sin(-midAngle * RADIAN);

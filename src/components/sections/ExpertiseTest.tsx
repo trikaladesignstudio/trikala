@@ -108,7 +108,7 @@ function ExpertiseTest() {
   useLayoutEffect(() => {
     const scrollref = scrollRef.current;
     if (scrollref) {
-      scrollRef && setScrollRange(scrollref?.scrollWidth);
+      setScrollRange(scrollref.scrollWidth);
     }
   }, [scrollRef]);
 

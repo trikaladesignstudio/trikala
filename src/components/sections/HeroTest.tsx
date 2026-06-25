@@ -4,7 +4,6 @@ import React, { memo, use, useEffect, useState } from "react";
 import Section from "../custom/Section";
 import Navbar from "../custom/NavBar";
 import Heading from "../custom/Heading";
-import { filterAllProjects } from "@/utils/dbActions";
 import Image from "next/image";
 import { Prisma } from "@prisma/client";
 
@@ -14,7 +13,7 @@ export default memo(function HeroTest({
   pData: Promise<Prisma.ProjectCreateInput[]>;
 }) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [images, setImages] = useState<String[]>([]);
+  const [images, setImages] = useState<string[]>([]);
   const data = use(pData);
   useEffect(() => {
     const interval = setInterval(() => {
@@ -38,7 +37,9 @@ export default memo(function HeroTest({
     } else {
       const imgArr = projectImages.flat();
       if (imgArr.length > 0) {
-        imgArr[0] && setImages([imgArr[0]]);
+        if (imgArr[0]) {
+          setImages([imgArr[0]]);
+        }
         imgArr.forEach((image, index) => {
           if (index === 0) return;
           setTimeout(() => {

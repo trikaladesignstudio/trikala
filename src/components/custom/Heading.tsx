@@ -1,7 +1,7 @@
 "use client";
 import { brurRenderVariant, cn, transition } from "@/lib/utils";
 import { motion } from "framer-motion";
-import React, { ReactNode } from "react";
+import React from "react";
 
 type Heading = {
   className?: string;

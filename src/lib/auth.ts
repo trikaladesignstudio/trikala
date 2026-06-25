@@ -6,8 +6,8 @@ import { cookies } from "next/headers";
 import { expiresin1Day } from "@/utils/client_utils";
 
 const expires1dayTime = () => {
-  var now = new Date();
-  var time = now.getTime();
+  const now = new Date();
+  const time = now.getTime();
   return time + expiresin1Day;
 };
 export async function login(formData: FormData) {
@@ -81,7 +81,7 @@ export async function updateSession(request: NextRequest) {
       expires: parsed.expires,
     });
     return res;
-  } catch (error) {
+  } catch {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 }

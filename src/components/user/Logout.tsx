@@ -16,7 +16,7 @@ export default function LogoutBtn() {
             toast.success("Logout done :(");
             router.push("/admin");
           })
-          .catch((err) => {
+          .catch(() => {
             toast.error("Logout Failed");
           });
       }}

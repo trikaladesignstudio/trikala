@@ -4,10 +4,9 @@ import {
   expertiseDataType,
   imagesWithProjectId,
 } from "@/jsonData/Home/Expertise";
-import { getAllProjectsGroupByType } from "@/utils/dbActions";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
-import { Fragment, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { Fragment } from "react";
 import Section from "../custom/Section";
 import {
   Carousel,

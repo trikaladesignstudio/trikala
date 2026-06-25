@@ -3,10 +3,8 @@ import { filterAllProjects } from "@/utils/dbActions";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { BiChevronLeft } from "react-icons/bi";
 import Heading from "../custom/Heading";
 import Sections from "../custom/Section";
-import { Button } from "../ui/button";
 import { rollInView } from "@/lib/utils";
 
 function Working({
@@ -19,27 +17,19 @@ function Working({
 
   useEffect(() => {
     // Remove number prefix from title and sort based on the extracted number
-    const formatedData = data
+    const formatedData = [...data]
+      .sort((a, b) => {
+        const numA = parseInt(a.title.match(/^\d+/)?.[0] || "0", 10);
+        const numB = parseInt(b.title.match(/^\d+/)?.[0] || "0", 10);
+        return numA - numB;
+      })
       .map((item) => ({
         ...item,
         title: item.title.replace(/^\d. /, ""),
-        numericTitle: parseInt(item.title.match(/^\d+/)?.[0] || "0", 10),
-      }))
-      .sort((a, b) => a.numericTitle - b.numericTitle)
-      .map(({ numericTitle, ...item }) => item);
+      }));
 
     setSlides(formatedData);
   }, [data]);
-
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + slides.length) % slides.length
-    );
-  };
 
   const handleClick = (index: number) => {
     setCurrentIndex(index);

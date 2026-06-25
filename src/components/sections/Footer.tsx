@@ -3,9 +3,8 @@
 import { FaFacebookF, FaTwitter, FaYoutube } from "react-icons/fa";
 import { ImInstagram } from "react-icons/im";
 import Link from "next/link";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import Heading from "../custom/Heading";
 import Sections from "../custom/Section";
 import { filterAllProjects } from "@/utils/dbActions";
@@ -18,7 +17,6 @@ export default function Footer({
 }: {
   data: Awaited<ReturnType<typeof filterAllProjects>>;
 }) {
-  const router = useRouter();
   const [contactData, setContactData] = useState<ContactDataType[]>([]);
   useEffect(() => {
     const formatData = data.map((ele) => {

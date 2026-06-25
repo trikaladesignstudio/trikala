@@ -10,8 +10,6 @@ import { useMeasure } from "react-use";
 
 const image = [image0, image1, image2, image3];
 const HeroImages = () => {
-  image;
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [images, setImages] = useState(image);
   const [ref, messure] = useMeasure<HTMLDivElement>();
 

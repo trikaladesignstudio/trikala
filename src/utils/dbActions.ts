@@ -4,7 +4,7 @@ import { Prisma } from "@prisma/client";
 import { UTApi } from "uploadthing/server";
 import { allProjectTypes, ProjectType, sectionType } from "./client_utils";
 import { revalidatePath } from "next/cache";
-import { expertiseDataType } from "@/jsonData/Home/Expertise";
+import { images } from "./types";
 
 export async function getAllProjects() {
   try {
@@ -45,7 +45,7 @@ export async function filterAllProjects(
   section?: sectionType,
   type?: ProjectType
 ) {
-  const filterConditions: any = {};
+  const filterConditions: Prisma.ProjectWhereInput = {};
   if (!section && !type) {
     return [];
   }
@@ -81,7 +81,7 @@ export async function getAllProjectsGroupByType() {
         .filter((data) => data.type === item)
         .map((project) => {
           return project.images
-            ? (project.images as any[]).map(({ url }: { url: string }) => {
+            ? (project.images as images[]).map(({ url }) => {
                 return {
                   url: url,
                   projectId: project.pdf ? project.id : null,
@@ -115,12 +115,11 @@ export async function getAllFeaturedProjects() {
     if (!projects) {
       return [];
     }
-    interface Product {
+    interface Product extends Prisma.ProjectCreateInput {
       category: string;
-      [key: string]: any; // Allows additional properties in the product object
     }
     return projects.reduce<Record<string, Product[]>>((acc, product) => {
-      (acc[product.type] = acc[product.type] || []).push(product as any);
+      (acc[product.type] = acc[product.type] || []).push(product as Product);
       return acc;
     }, {});
   } catch (error) {
@@ -207,7 +206,7 @@ export async function getProject(id: string) {
       },
     });
     return project;
-  } catch (error) {
+  } catch {
     return null;
   }
 }

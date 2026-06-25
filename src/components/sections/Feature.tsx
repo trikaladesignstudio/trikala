@@ -16,6 +16,7 @@ import Section from "../custom/Section";
 import { allProjectTypes } from "@/utils/client_utils";
 import { Prisma } from "@prisma/client";
 import { getAllFeaturedProjects } from "@/utils/dbActions";
+import { images } from "@/utils/types";
 import Link from "next/link";
 
 const types = Object.values(allProjectTypes);
@@ -31,7 +32,7 @@ function Featured() {
       const projectImagesByProjectId = projectData[type]
         .map((project) => {
           return project.images
-            ? (project.images as any[]).map(({ url }: { url: string }) => {
+            ? (project.images as images[]).map(({ url }) => {
                 return {
                   url: url,
                   projectId: project.pdf ? project.id : null,
@@ -73,7 +74,7 @@ function Featured() {
   useEffect(() => {
     getAllFeaturedProjects()
       .then((data) => {
-        setProjectData(data as any);
+        setProjectData(data as Record<string, Prisma.ProjectCreateInput[]>);
       })
       .catch((err) => {
         console.log(err);

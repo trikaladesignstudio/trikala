@@ -14,7 +14,7 @@ export default function ProjectViewClient({
 }: {
   projectData: Prisma.ProjectCreateInput;
 }) {
-  const [project, _] = useState<Prisma.ProjectCreateInput>(projectData);
+  const [project] = useState<Prisma.ProjectCreateInput>(projectData);
 
   return (
     <div className="flex flex-col gap-4 min-h-full w-full justify-start">

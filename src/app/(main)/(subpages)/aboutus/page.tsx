@@ -79,7 +79,7 @@ export default function AbboutUs() {
             <Heading text="Approach" className="text-white" />
             <div className="lg:text-xl text-sm text-justify ">
               Trikala Architects designs with purpose, focusing on comfort,
-              safety, and liveability while aligning with India's diverse
+              safety, and liveability while aligning with India&apos;s diverse
               climates. We prioritize sustainability, economic viability, and
               global relevance, delivering innovative, user-centric solutions
               tailored to each client’s needs and aspirations.

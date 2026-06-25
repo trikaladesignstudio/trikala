@@ -34,7 +34,7 @@ const RenderPdf = dynamic(() => import("./RenderPdf"), {
 export default function ProjectForm({ projectId }: { projectId?: string }) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [_isSubmited, setIsSubmited] = useState(false);
+  const [, setIsSubmited] = useState(false);
   const [filenames, setFileNames] = useState<images[] | null>(null);
   const [pdfFile, setPdfFile] = useState<{ name: string; url: string } | null>(
     null
@@ -51,7 +51,7 @@ export default function ProjectForm({ projectId }: { projectId?: string }) {
   });
 
   const getProjectInfo = async () => {
-    projectId &&
+    if (projectId) {
       getProject(projectId).then((project) => {
         // console.log("project:", project);
         if (project === null) {
@@ -74,10 +74,12 @@ export default function ProjectForm({ projectId }: { projectId?: string }) {
           setFileNames(project.images);
         }
       });
+    }
   };
 
   useEffect(() => {
     if (projectId) getProjectInfo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projectId]);
 
   useEffect(() => {

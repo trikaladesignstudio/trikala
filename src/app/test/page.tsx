@@ -1,7 +1,4 @@
 import { BarGraph } from "@/components/custom/BarGraph";
-import PriceEstimator from "@/components/sections/PriceEstimator";
-import { sectionType } from "@/utils/client_utils";
-import { filterAllProjects } from "@/utils/dbActions";
 
 // price data input format
 // state, city

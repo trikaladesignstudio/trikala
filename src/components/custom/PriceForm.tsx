@@ -59,7 +59,7 @@ export default function PriceForm({ handleBack }: { handleBack: () => void }) {
     days: 0,
   });
 
-  const [change, setChange] = useState<Boolean>(false);
+  const [change, setChange] = useState(false);
 
   const resultSectionRef = useRef<HTMLDivElement>(null);
 
@@ -82,7 +82,7 @@ export default function PriceForm({ handleBack }: { handleBack: () => void }) {
     if (stateId && cityId && area > 0) {
       setChange(true);
     }
-  }, [cityId]);
+  }, [cityId, stateId, area]);
 
   // convert area accordingly
   useEffect(() => {
@@ -93,6 +93,7 @@ export default function PriceForm({ handleBack }: { handleBack: () => void }) {
     if (unit === "sqft") {
       setArea(convertToSqft(area));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [unit]);
 
   useEffect(() => {
@@ -107,7 +108,7 @@ export default function PriceForm({ handleBack }: { handleBack: () => void }) {
         days: data.days * convertedAreaToSqft,
       });
     }
-  }, [buildingClass, area, ValueToCalculator]);
+  }, [buildingClass, area, ValueToCalculator, unit]);
 
   const getCostFromInputs = async (stateId: number, cityId: number) => {
     const data = await get_data_by_location(stateId, cityId);

@@ -1,4 +1,4 @@
-import data from "./db.json" assert { type: "json" };
+// import data from "./db.json" assert { type: "json" };
 
 export interface expertiseDataType {
   id: number;

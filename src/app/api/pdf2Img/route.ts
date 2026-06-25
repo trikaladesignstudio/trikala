@@ -11,7 +11,7 @@ export const POST = async (req: NextRequest) => {
   console.log("url:", url);
   // const document = await pdf(url, { scale: 3 });
 
-  let pages: string[] = [];
+  const pages: string[] = [];
   // for await (const image of document) {
   //   pages.push("data:image/png;base64," + image);
   // }

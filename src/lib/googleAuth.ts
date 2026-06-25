@@ -1,8 +1,5 @@
 import { GoogleAuth } from "google-auth-library";
 import { GoogleSpreadsheet } from "google-spreadsheet";
-// if json file not already exist create one
-
-const keyFileName = "./key.json";
 
 const serviceAccountAuth = new GoogleAuth({
   credentials: {

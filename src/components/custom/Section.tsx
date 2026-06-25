@@ -1,7 +1,7 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { motion, useAnimate, useInView } from "framer-motion";
-import { ReactNode, useEffect, useRef } from "react";
+import { ReactNode, useEffect } from "react";
 
 // need to add this
 //motion.dev/docs/react-use-animate#scroll-triggered-animations
@@ -25,7 +25,7 @@ function Section({ id, className, children, toSnap = true, style }: Section) {
         // await animate(".animateup", { opacity: 1, x: 0 });
       }
     })();
-  }, [isInView]);
+  }, [isInView, animate, ref]);
 
   return (
     <motion.section

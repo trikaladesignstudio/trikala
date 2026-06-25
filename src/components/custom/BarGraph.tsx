@@ -107,7 +107,7 @@ export function BarGraph({
               fill="hsl(var(--chart-1))"
               radius={[4, 4, 4, 4]}
               label={(props) => {
-                const { x, y, width, value } = props;
+                const { x, y, width } = props;
                 const item = transformedData[props.index];
                 return (
                   <text
