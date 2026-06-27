@@ -1,5 +1,5 @@
 "use server";
-import HeroTest from "@/components/sections/HeroTest";
+import Hero from "@/components/sections/Hero";
 import { sectionType } from "@/utils/client_utils";
 import { filterAllProjects } from "@/utils/dbActions";
 
@@ -17,7 +17,7 @@ export default async function FasterHome() {
           fetchPriority="high"
         />
       )}
-      <HeroTest pData={Promise.resolve(heroData)} />
+      <Hero pData={Promise.resolve(heroData)} />
     </>
   );
 }

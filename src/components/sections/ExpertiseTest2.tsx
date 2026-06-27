@@ -23,7 +23,7 @@ interface CarouselDataProps {
 
 function CarouselData({ images }: CarouselDataProps) {
   return (
-    <Carousel className="w-full m-auto" delay={4000}>
+    <Carousel className="w-full m-auto" delay={4000} loop={false}>
       <CarouselContent className="-ml-2">
         {images.map(({ url: img, projectId }, index) => (
           <CarouselItem key={index} className="pl-2 md:basis-1/2 lg:basis-1/3">

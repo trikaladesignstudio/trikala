@@ -70,7 +70,7 @@ export async function updateSession(request: NextRequest) {
 
     // if user is already login and trying to go to login page then just redirect to /admin page
     if (request.nextUrl.pathname === "/login") {
-      return NextResponse.redirect(new URL("/admin", request.url));
+      return NextResponse.redirect(new URL("/admin/all", request.url));
     }
     parsed.expires = expires1dayTime();
     const res = NextResponse.next();

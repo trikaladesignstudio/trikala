@@ -42,7 +42,7 @@ const ProjectShowcase = ({
       {projects.map((project) => (
         <div
           key={project.id}
-          className="rounded-lg p-1 shadow-md hover:shadow-lg transition-shadow flex flex-col bg-white"
+          className="flex flex-col rounded-xl border border-slate-200/50 bg-admin-canvas p-3 transition-shadow hover:shadow-[0_12px_30px_-12px_rgba(0,0,0,0.08)]"
         >
           <div className="flex flex-col h-full justify-between gap-2">
             <div className="w-full p-2 border rounded-sm">
@@ -83,24 +83,21 @@ const ProjectShowcase = ({
             <div className="w-full flex flex-col justify-between p-2">
               <div className="flex flex-col justify-between ">
                 <div>
-                  <h2 className="text-xl font-semibold mb-2">
+                  <h2 className="mb-2 text-lg font-semibold text-admin-ink">
                     {project.title}
                   </h2>
-                  <p
-                    className="text-gray-600 mb-4 line-clamp-3"
-                    style={{ WebkitLineClamp: 3, WebkitBoxOrient: "vertical" }}
-                  >
+                  <p className="mb-4 line-clamp-3 text-sm text-admin-muted">
                     {project.description}
                   </p>
                   {project.featured && (
-                    <span className="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded mb-4 inline-block">
+                    <span className="mb-4 inline-block rounded-full bg-admin-accent/10 px-2 py-1 text-xs text-admin-accent">
                       Featured
                     </span>
                   )}
                 </div>
                 <div className="flex justify-between">
                   <div className="flex flex-col gap-2 justify-end">
-                    <div className="mb-2 text-sm text-gray-500 flex ">
+                    <div className="mb-2 flex text-xs font-geist-mono text-admin-muted">
                       <b>{project.section !== "none" ? project.section : ""}</b>
                       {project.type !== "none" ? (
                         <p>&nbsp;-&nbsp;{project.type}</p>
@@ -111,7 +108,7 @@ const ProjectShowcase = ({
                   </div>
                   <div className="flex gap-2 justify-end">
                     <AlertDialog>
-                      <AlertDialogTrigger className="text-red-500 border border-red-500 hover:bg-red-600 hover:text-white px-4 py-2 rounded-md">
+                      <AlertDialogTrigger className="rounded-lg border border-red-200 px-4 py-2 text-sm text-red-600 transition-colors hover:bg-red-50">
                         Delete
                       </AlertDialogTrigger>
                       <AlertDialogContent className="bg-white">
@@ -141,7 +138,7 @@ const ProjectShowcase = ({
                     </AlertDialog>
                     <Link
                       href={`/admin/${project.id}`}
-                      className="text-blue-500 text-center p-2 px-4 rounded-md border border-blue-500 hover:bg-blue-500 hover:text-white transition-colors"
+                      className="rounded-lg border border-admin-accent px-4 py-2 text-center text-sm text-admin-accent transition-colors hover:bg-admin-accent hover:text-white"
                     >
                       Edit
                     </Link>

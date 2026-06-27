@@ -134,6 +134,7 @@ export async function addAProject(projectData: Prisma.ProjectCreateInput) {
       data: projectData,
     });
     revalidatePath("/admin");
+    revalidatePath("/");
     return project;
   } catch (error) {
     console.error("Error creating project:", error);
@@ -166,6 +167,7 @@ export async function deleteProject(projectData: Prisma.ProjectCreateInput) {
     });
 
     revalidatePath("/admin");
+    revalidatePath("/");
 
     return projectDel;
   } catch (error) {
@@ -188,6 +190,8 @@ export async function updateProject(
       data: projectData,
     });
     revalidatePath("/admin");
+    revalidatePath("/");
+    revalidatePath(`/admin/${id}`);
     return project;
   } catch (error) {
     console.error("Error updating project:", error);
@@ -216,5 +220,8 @@ const utapi = new UTApi();
 
 export const deleteFile = async (name: string) => {
   const data = await utapi.deleteFiles(name);
-  console.log("data:", data);
+  if (!data.success) {
+    throw new Error("Failed to delete file");
+  }
+  return data;
 };

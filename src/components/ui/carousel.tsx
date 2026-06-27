@@ -20,6 +20,7 @@ type CarouselProps = {
   orientation?: "horizontal" | "vertical";
   setApi?: (api: CarouselApi) => void;
   delay?: number;
+  loop?: boolean;
 };
 
 type CarouselContextProps = {
@@ -56,18 +57,23 @@ const Carousel = React.forwardRef<
       className,
       children,
       delay = 2000,
+      loop = true,
       ...props
     },
     ref
   ) => {
     const plugin = React.useRef(
-      Autoplay({ delay: delay || 2000, stopOnInteraction: false })
+      Autoplay({
+        delay: delay || 2000,
+        stopOnInteraction: false,
+        stopOnLastSnap: !loop,
+      })
     );
 
     const [carouselRef, api] = useEmblaCarousel(
       {
         ...opts,
-        loop: true,
+        loop,
         axis: orientation === "horizontal" ? "x" : "y",
       },
       plugins ? [...plugins, plugin.current] : [plugin.current]

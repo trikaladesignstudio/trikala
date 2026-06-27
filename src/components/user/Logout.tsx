@@ -3,24 +3,34 @@
 import { logout } from "@/lib/auth";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { BiPowerOff } from "react-icons/bi";
 
-export default function LogoutBtn() {
+export default function LogoutBtn({
+  fullWidth = false,
+  prominent = false,
+}: {
+  fullWidth?: boolean;
+  prominent?: boolean;
+}) {
   const router = useRouter();
 
   return (
-    <BiPowerOff
+    <button
+      type="button"
       onClick={() => {
         logout()
           .then(() => {
-            toast.success("Logout done :(");
-            router.push("/admin");
+            toast.success("Logged out");
+            router.push("/login");
           })
           .catch(() => {
-            toast.error("Logout Failed");
+            toast.error("Logout failed");
           });
       }}
-      className="shadow-md border border-black/30  p-1 w-8 h-8 rounded-full bg-gray-400/30 hover:scale-110 cursor-pointer"
-    />
+      className={`inline-flex min-h-[44px] items-center rounded-lg border border-admin-border font-medium text-admin-muted transition-colors hover:bg-admin-canvas hover:text-admin-ink ${
+        fullWidth ? "w-full justify-center" : ""
+      } ${prominent ? "px-4 py-3.5 text-base" : "px-3 py-2 text-sm"}`}
+    >
+      Logout
+    </button>
   );
 }

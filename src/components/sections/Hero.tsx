@@ -8,7 +8,7 @@ import Image from "next/image";
 import { Prisma } from "@prisma/client";
 import { shimmerBlur } from "@/lib/shimmer";
 
-export default memo(function HeroTest({
+export default memo(function Hero({
   pData,
 }: {
   pData: Promise<Prisma.ProjectCreateInput[]>;
@@ -31,8 +31,6 @@ export default memo(function HeroTest({
       .map((image) => image?.url)
       .flat();
 
-    // console.log("projectImages", projectImages);
-
     if (projectImages.length === 0) {
       setImages(["/static/logo.webp"]);
     } else {
@@ -44,7 +42,6 @@ export default memo(function HeroTest({
         imgArr.forEach((image, index) => {
           if (index === 0) return;
           setTimeout(() => {
-            // console.log("image", index);
             setImages((prevImages) => [...prevImages, image as string]);
           }, index * 6000);
         });
@@ -53,7 +50,7 @@ export default memo(function HeroTest({
   }, [data]);
 
   return (
-    <Section className="relative max-h-[100svh] bg-black">
+    <Section className="relative min-h-[100dvh] max-h-[100dvh] overflow-hidden bg-black">
       <Navbar />
       {images.map((image, index) => (
         <Image
@@ -65,21 +62,16 @@ export default memo(function HeroTest({
           key={index}
           blurDataURL={shimmerBlur}
           placeholder="blur"
-          // onLoad={() => {
-          //   console.log("image loaded", image);
-          // }}
-          className={`lg:aspect-[1.78] aspect-auto absolute inset-0 w-full h-full bg-cover bg-no-repeat object-cover lg:object-fill bg-center transition-opacity duration-1000 ${
+          className={`absolute inset-0 aspect-auto h-full w-full bg-cover bg-center bg-no-repeat object-cover transition-opacity duration-1000 lg:aspect-[1.78] lg:object-fill ${
             currentIndex === index ? "opacity-100" : "opacity-0"
           }`}
-          // style={{ backgroundImage: `url(${image})` }}
         />
       ))}
-      {/* background black and opacity */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center text-white bg-black bg-opacity-70">
+      <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-b from-black/35 via-black/25 to-black/45 text-white">
         <Heading
           customDelay={1}
           text="Trikala Architect"
-          className=" text-[4rem] md:text-[6em] lg:text-[10rem] mt-40 font-bold"
+          className="text-center text-[4rem] font-bold md:text-[6rem] lg:text-[8rem]"
         />
       </div>
     </Section>
