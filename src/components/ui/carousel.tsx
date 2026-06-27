@@ -61,7 +61,7 @@ const Carousel = React.forwardRef<
     ref
   ) => {
     const plugin = React.useRef(
-      Autoplay({ delay: delay || 2000, stopOnInteraction: true })
+      Autoplay({ delay: delay || 2000, stopOnInteraction: false })
     );
 
     const [carouselRef, api] = useEmblaCarousel(

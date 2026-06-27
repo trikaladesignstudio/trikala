@@ -1,6 +1,7 @@
 "use client";
 
 import { cn, rollInView } from "@/lib/utils";
+import { shimmerBlur } from "@/lib/shimmer";
 import { filterAllProjects } from "@/utils/dbActions";
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import Image from "next/image";
@@ -43,6 +44,9 @@ function formatSlides(
 
 const PANEL_ANIMATION_MS = 300;
 
+const sectionClassName =
+  "relative z-10 isolate bg-[#f5f5f5] snap-start min-h-[100svh] justify-center gap-4 py-6 lg:snap-center lg:gap-10 lg:py-10";
+
 function Working({
   data,
 }: {
@@ -78,6 +82,15 @@ function Working({
     return () => window.clearTimeout(timer);
   }, [currentIndex]);
 
+  useEffect(() => {
+    if (slides.length <= 1) return;
+    const id = window.setInterval(() => {
+      setShowExpandedDescription(false);
+      setCurrentIndex((prev) => (prev + 1) % slides.length);
+    }, 4000);
+    return () => window.clearInterval(id);
+  }, [slides.length]);
+
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent, index: number) => {
       if (event.key === "ArrowRight" || event.key === "ArrowDown") {
@@ -94,15 +107,21 @@ function Working({
 
   if (slides.length === 0) {
     return (
-      <Sections className="lg:py-0 justify-center lg:gap-10">
-        <Heading text="Our work is based on the development of an individual approach to each client" />
+      <Sections className={sectionClassName}>
+        <Heading
+          text="Our work is based on the development of an individual approach to each client"
+          className="text-3xl leading-tight md:text-5xl lg:text-7xl lg:leading-none"
+        />
       </Sections>
     );
   }
 
   return (
-    <Sections className="lg:py-0 justify-center lg:gap-10">
-      <Heading text="Our work is based on the development of an individual approach to each client" />
+    <Sections className={sectionClassName}>
+      <Heading
+        text="Our work is based on the development of an individual approach to each client"
+        className="text-3xl leading-tight md:text-5xl lg:text-7xl lg:leading-none"
+      />
 
       {/* Mobile: hero image + step list */}
       <motion.div
@@ -111,9 +130,9 @@ function Working({
         initial="base"
         whileInView="show"
         transition={{ ...rollInView.transition, delay: 0.2 }}
-        className="md:hidden flex flex-col gap-6 w-full"
+        className="md:hidden flex flex-col gap-4 w-full shrink-0"
       >
-        <div className="relative aspect-[4/3] w-full overflow-hidden border border-white/10">
+        <div className="relative h-[min(40svh,20rem)] w-full overflow-hidden border border-zinc-200/80">
           <AnimatePresence initial={false}>
             <motion.div
               key={activeSlide.id}
@@ -130,16 +149,48 @@ function Working({
                 className="h-full w-full object-cover"
                 fill
                 sizes="100vw"
+                placeholder="blur"
+                blurDataURL={shimmerBlur}
               />
-              <div className="absolute inset-0 bg-zinc-950/35" />
             </motion.div>
           </AnimatePresence>
+          <div className="absolute inset-0 bg-zinc-950/25 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/85 via-zinc-950/35 to-transparent pointer-events-none" />
+          <div
+            id={`working-panel-${activeSlide.id}`}
+            role="tabpanel"
+            aria-labelledby={`working-tab-${activeSlide.id}`}
+            className="absolute inset-x-0 bottom-0 z-10 p-4 text-white"
+          >
+            <span className="text-sm tabular-nums text-white/70 leading-none">
+              {activeSlide.stepNumber}
+            </span>
+            <h3 className="font-bold text-lg leading-tight mt-1">
+              {activeSlide.title}
+            </h3>
+            <AnimatePresence initial={false}>
+              {showExpandedDescription && (
+                <motion.div
+                  key={`mobile-desc-${activeSlide.id}-${currentIndex}`}
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={contentSpring}
+                  className="overflow-hidden"
+                >
+                  <p className="text-sm text-justify leading-snug pt-2 text-zinc-100">
+                    {activeSlide.description}
+                  </p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
 
         <div
           role="tablist"
           aria-label="Design process steps"
-          className="flex flex-col divide-y divide-white/10 border-t border-b border-white/10"
+          className="flex flex-col divide-y divide-zinc-200 border-t border-b border-zinc-200"
         >
           {slides.map((slide, index) => {
             const isActive = index === currentIndex;
@@ -155,25 +206,27 @@ function Working({
                 onClick={() => selectStep(index)}
                 onKeyDown={(event) => handleKeyDown(event, index)}
                 className={cn(
-                  "grid grid-cols-[2.5rem_1fr] gap-x-3 items-baseline py-4 text-left transition-colors duration-300 w-full",
-                  "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/50",
-                  isActive ? "text-white" : "text-white/60 hover:text-white/80"
+                  "grid grid-cols-[2rem_1fr] gap-x-2.5 items-center py-1.5 px-1 text-left transition-colors duration-300 w-full",
+                  "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900/40",
+                  isActive
+                    ? "bg-zinc-100 text-black"
+                    : "text-zinc-600 hover:text-zinc-900 hover:bg-zinc-50"
                 )}
               >
                 <span
                   className={cn(
                     "tabular-nums shrink-0 leading-none transition-all duration-300 text-right",
                     isActive
-                      ? "text-sm text-white/70"
-                      : "text-xl font-bold text-white/45"
+                      ? "text-sm font-semibold text-zinc-500"
+                      : "text-lg font-bold text-zinc-400"
                   )}
                 >
                   {slide.stepNumber}
                 </span>
                 <span
                   className={cn(
-                    "text-[1.2rem] leading-snug",
-                    isActive ? "font-bold" : "font-semibold"
+                    "text-sm leading-snug",
+                    isActive ? "font-bold text-black" : "font-medium"
                   )}
                 >
                   {slide.title}
@@ -182,25 +235,6 @@ function Working({
             );
           })}
         </div>
-
-        <AnimatePresence mode="wait" initial={false}>
-          {showExpandedDescription && (
-            <motion.div
-              key={activeSlide.id}
-              id={`working-panel-${activeSlide.id}`}
-              role="tabpanel"
-              aria-labelledby={`working-tab-${activeSlide.id}`}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -6 }}
-              transition={contentSpring}
-            >
-              <p className="text-sm px-2 text-justify leading-4">
-                {activeSlide.description}
-              </p>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </motion.div>
 
       {/* Desktop: horizontal accordion */}
@@ -246,6 +280,8 @@ function Working({
                       className="h-full w-full object-cover"
                       fill
                       sizes={isActive ? "60vw" : "8vw"}
+                      placeholder="blur"
+                      blurDataURL={shimmerBlur}
                     />
                   </div>
                   <div className="absolute inset-0 bg-zinc-950/35" />

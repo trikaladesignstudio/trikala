@@ -6,6 +6,7 @@ import Navbar from "../custom/NavBar";
 import Heading from "../custom/Heading";
 import Image from "next/image";
 import { Prisma } from "@prisma/client";
+import { shimmerBlur } from "@/lib/shimmer";
 
 export default memo(function HeroTest({
   pData,
@@ -56,13 +57,13 @@ export default memo(function HeroTest({
       <Navbar />
       {images.map((image, index) => (
         <Image
-          priority={index == 0 ? true : false}
+          priority={index === 0}
           src={image as string}
-          width={400}
-          height={200}
+          fill
+          sizes="100vw"
           alt={`Image ${index}`}
           key={index}
-          blurDataURL="URL"
+          blurDataURL={shimmerBlur}
           placeholder="blur"
           // onLoad={() => {
           //   console.log("image loaded", image);

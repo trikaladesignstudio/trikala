@@ -1,76 +1,197 @@
 "use client";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
+
+import { cn } from "@/lib/utils";
+import { allProjectTypes } from "@/utils/client_utils";
 import { Prisma } from "@prisma/client";
+import { ArrowRightIcon } from "@radix-ui/react-icons";
+import { motion } from "framer-motion";
 import Image from "next/image";
-import { Card } from "../ui/card";
 import Link from "next/link";
+import { useMemo, useState } from "react";
+
+const spring = {
+  type: "spring" as const,
+  stiffness: 100,
+  damping: 20,
+};
+
+const filterTypes = Object.values(allProjectTypes).filter(
+  (type) => type !== "none"
+);
+
+function getGridSpan(index: number) {
+  return index % 3 === 0 ? "md:col-span-2" : "";
+}
+
+function getAspect(index: number) {
+  if (index % 3 === 0) return "aspect-[16/9] md:aspect-[21/9]";
+  return index % 2 === 0 ? "aspect-[4/3]" : "aspect-[3/4] md:aspect-[4/5]";
+}
 
 const ProjectShowClient = ({
   projects,
 }: {
   projects: Prisma.ProjectCreateInput[];
 }) => {
+  const [activeType, setActiveType] = useState<string>("All");
+
+  const filteredProjects = useMemo(() => {
+    if (activeType === "All") return projects;
+    return projects.filter((project) => project.type === activeType);
+  }, [projects, activeType]);
+
+  if (projects.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center gap-4 py-24 text-center">
+        <div className="h-px w-16 bg-zinc-300" />
+        <p className="font-silver text-2xl tracking-tight text-zinc-900">
+          No projects yet
+        </p>
+        <p className="max-w-sm text-sm leading-relaxed text-zinc-500">
+          Our portfolio is being curated. Check back soon for new work.
+        </p>
+      </div>
+    );
+  }
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {projects.map((project) => (
-        <Card
-          key={project.id}
-          className="relative overflow-hidden max-h-96 lg:max-h-[14rem] "
-        >
-          <Link
-            href={`/projects/${project.id}`}
-            className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-slate-900 via-transparent to-slate-50/10 z-10"
-          />
-          <div className="w-full h-full hover:scale-[1.01] transition-all">
-            <div className="flex flex-col h-full justify-between gap-2 cursor-pointer">
-              <div className="w-full aspect-w-16 aspect-h-9 ">
-                {project.images && (
-                  <Carousel>
-                    <CarouselContent className="-ml-4">
-                      {Array.isArray(project.images) &&
-                        project.images?.map(({ url }, index) => (
-                          <CarouselItem key={index} className="pl-4">
-                            <Image
-                              loading="lazy"
-                              src={url}
-                              width={400}
-                              height={200}
-                              alt={`Slide ${index}`}
-                              className="object-cover rounded-lg w-full "
-                            />
-                          </CarouselItem>
-                        ))}
-                    </CarouselContent>
-                    <CarouselPrevious />
-                    <CarouselNext />
-                  </Carousel>
-                )}
-              </div>
-              <div className="flex justify-between  items-center absolute left-0 bottom-0 px-4 p-2 w-full   ">
-                <div className="flex flex-row gap-2 w-full justify-between z-20 pointer-events-none">
-                  <div className="text-xl font-semibold mb-2 text-white capitalize">
-                    {project.title}
-                  </div>
-                  <div className="text-lg font-semibold mb-2 text-white capitalize opacity-45">
-                    Public
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Card>
-      ))}
-      {projects.length === 0 && (
-        <div className="text-center">
-          <p>No projects found.</p>
+    <div className="flex w-full flex-col gap-10 lg:gap-14">
+      <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <p className="max-w-md text-sm leading-relaxed text-zinc-500 lg:text-base">
+          Selected architecture, interior, and landscape work from across India.
+        </p>
+        <div className="flex flex-wrap gap-2">
+          {["All", ...filterTypes].map((type) => (
+            <button
+              key={type}
+              type="button"
+              onClick={() => setActiveType(type)}
+              className={cn(
+                "rounded-full border px-4 py-2 text-xs font-medium tracking-wide transition-all duration-300 active:scale-[0.98] lg:text-sm",
+                activeType === type
+                  ? "border-zinc-900 bg-zinc-900 text-white"
+                  : "border-zinc-200 bg-white text-zinc-600 hover:border-zinc-400"
+              )}
+            >
+              {type === "All" ? "All Work" : type.replace(" Design", "")}
+            </button>
+          ))}
         </div>
+      </div>
+
+      {filteredProjects.length === 0 ? (
+        <div className="flex flex-col items-center gap-3 py-16 text-center">
+          <p className="text-sm text-zinc-500">
+            No projects in this category yet.
+          </p>
+          <button
+            type="button"
+            onClick={() => setActiveType("All")}
+            className="text-sm font-medium text-zinc-900 underline underline-offset-4 transition-opacity hover:opacity-70"
+          >
+            View all work
+          </button>
+        </div>
+      ) : (
+        <motion.div
+          className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.08 } },
+          }}
+        >
+          {filteredProjects.map((project, index) => {
+            const images = Array.isArray(project.images) ? project.images : [];
+            const coverUrl = images[0]?.url;
+            const typeLabel =
+              project.type && project.type !== "none"
+                ? project.type.replace(" Design", "")
+                : null;
+
+            return (
+              <motion.article
+                key={project.id}
+                variants={{
+                  hidden: { opacity: 0, y: 24 },
+                  visible: {
+                    opacity: 1,
+                    y: 0,
+                    transition: spring,
+                  },
+                }}
+                className={cn("group flex flex-col gap-3", getGridSpan(index))}
+              >
+                <Link
+                  href={`/projects/${project.id}`}
+                  className="block overflow-hidden rounded-2xl bg-zinc-100"
+                >
+                  <div
+                    className={cn(
+                      "relative w-full overflow-hidden",
+                      getAspect(index)
+                    )}
+                  >
+                    {coverUrl ? (
+                      <Image
+                        loading={index < 3 ? "eager" : "lazy"}
+                        src={coverUrl}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                        alt={project.title ?? "Project image"}
+                        className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
+                      />
+                    ) : (
+                      <div className="flex h-full min-h-[14rem] items-center justify-center bg-zinc-100">
+                        <span className="text-sm text-zinc-400">No preview</span>
+                      </div>
+                    )}
+
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-zinc-950/50 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+
+                    {images.length > 1 && (
+                      <span className="absolute right-3 top-3 rounded-full border border-white/20 bg-zinc-950/40 px-2.5 py-1 text-[10px] font-medium tracking-wider text-white backdrop-blur-sm">
+                        {images.length} views
+                      </span>
+                    )}
+
+                    <span className="absolute bottom-4 right-4 flex h-9 w-9 translate-y-2 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white opacity-0 backdrop-blur-sm transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+                      <ArrowRightIcon className="h-4 w-4" />
+                    </span>
+                  </div>
+                </Link>
+
+                <div className="flex items-start justify-between gap-4 px-0.5">
+                  <div className="min-w-0 flex-1">
+                    <Link href={`/projects/${project.id}`}>
+                      <h2 className="truncate font-medium capitalize text-zinc-900 transition-colors group-hover:text-zinc-600">
+                        {project.title}
+                      </h2>
+                    </Link>
+                    {project.description && (
+                      <p className="mt-1 line-clamp-2 text-sm leading-relaxed text-zinc-500">
+                        {project.description}
+                      </p>
+                    )}
+                  </div>
+                  {typeLabel && (
+                    <span className="shrink-0 text-[11px] font-medium uppercase tracking-widest text-zinc-400">
+                      {typeLabel}
+                    </span>
+                  )}
+                </div>
+              </motion.article>
+            );
+          })}
+        </motion.div>
       )}
+
+      <p className="text-xs tracking-wide text-zinc-400">
+        {filteredProjects.length}{" "}
+        {filteredProjects.length === 1 ? "project" : "projects"}
+        {activeType !== "All" && ` in ${activeType.replace(" Design", "")}`}
+      </p>
     </div>
   );
 };

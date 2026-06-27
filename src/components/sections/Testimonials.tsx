@@ -3,6 +3,7 @@
 import useScreenWidth from "@/hooks/ScreenResize";
 import Image from "next/image";
 import { cn, rollInView } from "@/lib/utils";
+import { shimmerBlur } from "@/lib/shimmer";
 import { filterAllProjects } from "@/utils/dbActions";
 import { useEffect, useState } from "react";
 import { TestimonialsDataType } from "@/types";
@@ -56,6 +57,8 @@ const ReviewCard = ({
           alt={title}
           width={20}
           height={20}
+          placeholder="blur"
+          blurDataURL={shimmerBlur}
         />
         <div className="">
           <div className="text-xl font-medium text-black">{title}</div>

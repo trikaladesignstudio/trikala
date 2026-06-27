@@ -9,6 +9,7 @@ import { Toaster } from "react-hot-toast";
 import { extractRouterConfig } from "uploadthing/server";
 import "./globals.css";
 import BackToTopBtn from "@/components/BackToTop";
+import MainScrollContainer from "@/components/MainScrollContainer";
 import PsudoScollBar from "@/components/PseudoScollBar";
 
 const silver = localFont({
@@ -88,6 +89,17 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://utfs.io" />
+        <link rel="dns-prefetch" href="https://utfs.io" />
+        <link
+          rel="preload"
+          href="/static/logo.webp"
+          as="image"
+          type="image/webp"
+          fetchPriority="high"
+        />
+      </head>
       <body
         suppressHydrationWarning
         className={`${silver.variable} antialiased`}
@@ -95,14 +107,11 @@ export default async function RootLayout({
         {/* <TwScreenInfo /> */}
         <NextTopLoader height={3} color="#1A1A1A" showSpinner={false} />
         <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
-        <main
-          id="mainCointainer"
-          className="relative flex flex-col snap-y snap-mandatory h-[100svh] overflow-x-hidden scroll-smooth"
-        >
+        <MainScrollContainer>
           <BackToTopBtn />
           <PsudoScollBar />
           {children}
-        </main>
+        </MainScrollContainer>
         <Toaster />
         <Analytics />
         <SpeedInsights />

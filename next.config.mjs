@@ -14,7 +14,21 @@ const nextConfig = {
     config.resolve.alias.canvas = false;
     return config;
   },
+  async headers() {
+    return [
+      {
+        source: "/static/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+    ];
+  },
   images: {
+    minimumCacheTTL: 2592000,
     remotePatterns: [
       {
         protocol: "https",

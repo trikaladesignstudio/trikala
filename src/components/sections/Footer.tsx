@@ -6,7 +6,6 @@ import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 import Image from "next/image";
 import Heading from "../custom/Heading";
-import Sections from "../custom/Section";
 import { filterAllProjects } from "@/utils/dbActions";
 import { useEffect, useState } from "react";
 import { ContactDataType } from "@/types";
@@ -45,9 +44,8 @@ export default function Footer({
   const twitterUrl = matches.twitter || "https://twitter.com/example";
 
   return (
-    <footer className="bg-black text-zinc-100">
-      <Sections className="justify-center min-h-fit h-auto">
-        <div className=" mx-auto space-y-16">
+    <footer className="w-full shrink-0 snap-start bg-black text-zinc-100">
+      <div className="mx-auto max-w-[1400px] space-y-16 px-[2rem] py-16 lg:px-[5rem] lg:py-20">
           <div className="flex lg:flex-row flex-col justify-between lg:gap-20 gap-8">
             {/* Main CTA Section */}
             <div className="space-y-4  lg:text-left text-center">
@@ -208,7 +206,6 @@ export default function Footer({
             </div>
           </div>
         </div>
-      </Sections>
     </footer>
   );
 }

@@ -6,11 +6,11 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
-      <div className="min-h-[70px] relative bg-black flex justify-center items-center">
+    <div className="flex w-full min-h-0 flex-1 flex-col snap-none">
+      <div className="relative flex min-h-[70px] shrink-0 items-center justify-center bg-black">
         <Navbar />
       </div>
       {children}
-    </>
+    </div>
   );
 }
