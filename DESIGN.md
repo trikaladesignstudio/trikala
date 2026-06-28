@@ -89,7 +89,31 @@ The centered load-state headline is the **only allowed exception** to the "no ce
 
 **`prefers-reduced-motion`:** headline skips travel animation; services scale breathe skipped; globe orbit skipped.
 
-## 7. Anti-Patterns (Banned)
+## 8. Price Estimator
+
+The estimator is a two-state section inside `#price-estimator`: a project-type grid, then an asymmetric split calculator.
+
+| State | Layout |
+|-------|--------|
+| Grid | Left-aligned heading + 2-column project cards (`md:grid-cols-2`). Cards use `rounded-[2rem]`, terracotta hover on arrow pill. |
+| Calculator | `lg:grid-cols-[1fr_1.15fr]` — form left, live results right. Project title replaces generic "Price Estimator" heading. |
+
+**Form panel rules**
+- Labels above inputs; city disabled until state selected
+- Area stored internally as sqft; display toggles ft²/m² without corrupting value
+- Building class uses asymmetric segmented tabs (`1.2fr 1fr 1fr`), not equal 3-column cards
+- Primary CTA: Terracotta Accent (`#774931`), single button
+
+**Results panel rules**
+- Cost breakdown: structural (Charcoal Ink) vs finishing (Terracotta) — 2-slice pie + progress bars
+- Timeline chart: phases scaled to calculated `days`, not static 264-day reference
+- Chart colors: zinc/earth palette only — no neon phase colors
+- Chart height capped: `min(420px, 60svh)` — never `w-screen` or `80vh` inside scroll container
+- Scroll-to-results uses `#mainCointainer` scroll context, not window scroll
+
+**Motion:** `AnimatePresence` between grid ↔ form. Results cascade with spring (`stiffness: 100, damping: 20`).
+
+## 9. Anti-Patterns (Banned)
 
 - No emojis anywhere
 - No Inter font

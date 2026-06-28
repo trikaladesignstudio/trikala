@@ -490,7 +490,7 @@ class ArcballControl {
       );
 
       if (this.snapTargetDirection) {
-        const SNAPPING_INTENSITY = 0.2;
+        const SNAPPING_INTENSITY = 0.28;
         const a = this.snapTargetDirection;
         const b = this.snapDirection;
         const sqrDist = vec3.squaredDistance(a, b);
@@ -512,7 +512,7 @@ class ArcballControl {
     );
     quat.normalize(this.orientation, this.orientation);
 
-    const RA_INTENSITY = 0.8 * timeScale;
+    const RA_INTENSITY = 0.65 * timeScale;
     quat.slerp(
       this._combinedQuat,
       this._combinedQuat,
@@ -531,7 +531,7 @@ class ArcballControl {
       this.rotationAxis[2] = this._combinedQuat[2] / s;
     }
 
-    const RV_INTENSITY = 0.5 * timeScale;
+    const RV_INTENSITY = 0.65 * timeScale;
     this._rotationVelocity += (rv - this._rotationVelocity) * RV_INTENSITY;
     this.rotationVelocity = this._rotationVelocity / timeScale;
 
@@ -639,6 +639,7 @@ class InfiniteGridMenu {
   introCameraZ = 3;
   introProjectionHeight = 0.7;
   onIntroActiveChange?: (isIntroActive: boolean) => void;
+  onTexturesReady?: () => void;
   interactionLocked = false;
 
   constructor(
@@ -648,13 +649,15 @@ class InfiniteGridMenu {
     onMovementChange: (isMoving: boolean) => void,
     onInit: ((sk: InfiniteGridMenu) => void) | null = null,
     scale = 1.0,
-    onIntroActiveChange?: (isIntroActive: boolean) => void
+    onIntroActiveChange?: (isIntroActive: boolean) => void,
+    onTexturesReady?: () => void
   ) {
     this.canvas = canvas;
     this.items = items.length ? items : defaultItems;
     this.onActiveItemChange = onActiveItemChange;
     this.onMovementChange = onMovementChange;
     this.onIntroActiveChange = onIntroActiveChange;
+    this.onTexturesReady = onTexturesReady;
     this.scaleFactor = scale;
     this.camera.position[2] = 3 * scale;
     this.introCameraZ = 3 * scale;
@@ -691,18 +694,18 @@ class InfiniteGridMenu {
     if (this.introPhase === "idle" || this.introPhase === "complete") return;
 
     this.introElapsed += deltaTime;
-    const defaultZ = 3 * this.scaleFactor;
-    const superZoomZ = 14 * this.scaleFactor;
-    const defaultHeight = this.SPHERE_RADIUS * 0.35;
-    const superZoomHeight = this.SPHERE_RADIUS * 1.5;
+    const idleZ = 3 * this.scaleFactor;
+    const introPeakZ = 11 * this.scaleFactor;
+    const idleHeight = this.SPHERE_RADIUS * 0.35;
+    const introPeakHeight = this.SPHERE_RADIUS * 1.35;
 
     if (this.introPhase === "zoomOut") {
       const duration = 1400;
       const t = Math.min(1, this.introElapsed / duration);
       const eased = 1 - Math.pow(1 - t, 3);
-      this.introCameraZ = defaultZ + (superZoomZ - defaultZ) * eased;
+      this.introCameraZ = idleZ + (introPeakZ - idleZ) * eased;
       this.introProjectionHeight =
-        defaultHeight + (superZoomHeight - defaultHeight) * eased;
+        idleHeight + (introPeakHeight - idleHeight) * eased;
       if (t >= 1) {
         this.introPhase = "hold";
         this.introElapsed = 0;
@@ -711,8 +714,8 @@ class InfiniteGridMenu {
     }
 
     if (this.introPhase === "hold") {
-      this.introCameraZ = superZoomZ;
-      this.introProjectionHeight = superZoomHeight;
+      this.introCameraZ = introPeakZ;
+      this.introProjectionHeight = introPeakHeight;
       const duration = 550;
       if (this.introElapsed >= duration) {
         this.introPhase = "spin";
@@ -722,8 +725,8 @@ class InfiniteGridMenu {
     }
 
     if (this.introPhase === "spin") {
-      this.introCameraZ = superZoomZ;
-      this.introProjectionHeight = superZoomHeight;
+      this.introCameraZ = introPeakZ;
+      this.introProjectionHeight = introPeakHeight;
       const duration = 2600;
       const t = Math.min(1, this.introElapsed / duration);
       const eased = 1 - Math.pow(1 - t, 2);
@@ -740,13 +743,13 @@ class InfiniteGridMenu {
       const duration = 1700;
       const t = Math.min(1, this.introElapsed / duration);
       const eased = 1 - Math.pow(1 - t, 3);
-      this.introCameraZ = superZoomZ + (defaultZ - superZoomZ) * eased;
+      this.introCameraZ = introPeakZ + (idleZ - introPeakZ) * eased;
       this.introProjectionHeight =
-        superZoomHeight + (defaultHeight - superZoomHeight) * eased;
+        introPeakHeight + (idleHeight - introPeakHeight) * eased;
       if (t >= 1) {
         this.introPhase = "complete";
-        this.introCameraZ = defaultZ;
-        this.introProjectionHeight = defaultHeight;
+        this.introCameraZ = idleZ;
+        this.introProjectionHeight = idleHeight;
         this._setInteractionLocked(false);
         this.onIntroActiveChange?.(false);
       }
@@ -891,7 +894,7 @@ class InfiniteGridMenu {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const cellSize = 512;
+    const cellSize = 256;
 
     canvas.width = this.atlasSize * cellSize;
     canvas.height = this.atlasSize * cellSize;
@@ -930,6 +933,8 @@ class InfiniteGridMenu {
         );
         gl.generateMipmap(gl.TEXTURE_2D);
       }
+
+      this.onTexturesReady?.();
     });
   }
 
@@ -978,7 +983,7 @@ class InfiniteGridMenu {
 
     if (introActive) {
       this.camera.position[2] +=
-        (this.introCameraZ - this.camera.position[2]) / 14;
+        (this.introCameraZ - this.camera.position[2]) / 9;
       this._updateCameraMatrix();
       this._updateProjectionMatrix(gl);
 
@@ -1145,7 +1150,7 @@ class InfiniteGridMenu {
 
   _onControlUpdate(deltaTime: number) {
     const timeScale = deltaTime / this.TARGET_FRAME_DURATION + 0.0001;
-    let damping = 5 / timeScale;
+    let damping = 3.5 / timeScale;
     let cameraTargetZ = 3 * this.scaleFactor;
 
     const introActive =
@@ -1164,7 +1169,7 @@ class InfiniteGridMenu {
 
     if (introActive) {
       cameraTargetZ = this.introCameraZ;
-      damping = 8 / timeScale;
+      damping = 5 / timeScale;
 
       const nearestVertexIndex = this._findNearestVertexIndex();
       const itemIndex = nearestVertexIndex % Math.max(1, this.items.length);
@@ -1180,7 +1185,7 @@ class InfiniteGridMenu {
       this.control.snapTargetDirection = snapDirection;
     } else {
       cameraTargetZ += this.control.rotationVelocity * 80 + 2.5;
-      damping = 7 / timeScale;
+      damping = 4.5 / timeScale;
     }
 
     this.camera.position[2] +=
@@ -1243,10 +1248,13 @@ export default function InfiniteMenu({
   const [activeItem, setActiveItem] = useState<InfiniteMenuItem | null>(null);
   const [isMoving, setIsMoving] = useState(false);
   const [isIntroActive, setIsIntroActive] = useState(false);
+  const [texturesReady, setTexturesReady] = useState(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+
+    setTexturesReady(false);
 
     const menuItems = items.length ? items : defaultItems;
 
@@ -1267,6 +1275,10 @@ export default function InfiniteMenu({
       onIntroActiveChange?.(introActive);
     };
 
+    const handleTexturesReady = () => {
+      setTexturesReady(true);
+    };
+
     const sketch = new InfiniteGridMenu(
       canvas,
       menuItems,
@@ -1274,7 +1286,8 @@ export default function InfiniteMenu({
       handleMovementChange,
       (sk) => sk.run(),
       scale,
-      handleIntroActive
+      handleIntroActive,
+      handleTexturesReady
     );
     sketchRef.current = sketch;
 
@@ -1317,9 +1330,16 @@ export default function InfiniteMenu({
 
   return (
     <div ref={containerRef} className="absolute inset-0">
-      <canvas id="infinite-grid-menu-canvas" ref={canvasRef} />
+      <canvas
+        id="infinite-grid-menu-canvas"
+        ref={canvasRef}
+        className={cn(
+          "transition-opacity duration-500",
+          texturesReady ? "opacity-100" : "opacity-0"
+        )}
+      />
 
-      {showOverlay && activeItem && (
+      {showOverlay && activeItem && !isIntroActive && (
         <>
           {activeItem.title ? (
             <h2

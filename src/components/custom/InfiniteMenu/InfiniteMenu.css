@@ -141,10 +141,60 @@
   transform: translate(-50%, -50%) scale(0.96);
 }
 
+@media (max-width: 1280px) {
+  .face-title,
+  .face-description {
+    top: auto;
+    transform: none;
+    width: auto;
+    max-width: none;
+    left: max(1.25rem, 4vw);
+    right: max(1.25rem, 4vw);
+  }
+
+  .face-title {
+    bottom: calc(max(3.8em, 8vh) + 4.75rem);
+  }
+
+  .face-description {
+    bottom: calc(max(3.8em, 8vh) + 1.25rem);
+    text-align: left;
+  }
+}
+
 @media (max-width: 1024px) {
   .face-title,
   .face-description {
     display: none;
+  }
+
+  .action-button.active {
+    left: auto;
+    right: max(1.25rem, 4vw);
+    bottom: max(1.25rem, 4vh);
+    width: 48px;
+    height: 48px;
+    transform: scale(1);
+  }
+
+  .action-button.active:hover {
+    transform: scale(1.06);
+  }
+
+  .action-button.active:active {
+    transform: scale(0.96);
+  }
+}
+
+@media (max-width: 640px) {
+  .action-button.active {
+    bottom: max(1rem, 3.5vh);
+    width: 44px;
+    height: 44px;
+  }
+
+  .action-button-icon {
+    font-size: 20px;
   }
 }
 

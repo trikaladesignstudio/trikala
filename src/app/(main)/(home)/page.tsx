@@ -3,6 +3,7 @@ import { FeaturedSectionShell } from "@/components/sections/FeaturedSection";
 import { Suspense } from "react";
 import FasterHome from "./_com/FastestHero";
 import FeaturedHome from "./_com/FeaturedHome";
+import FeaturedSectionFallback from "./_com/FeaturedSectionFallback";
 import HeroIntroClock from "./_com/HeroIntroClock";
 import HomeClickSpark from "./_com/HomeClickSpark";
 import HomeHeroFallback from "./_com/HomeHeroFallback";
@@ -18,11 +19,9 @@ export default function Home() {
         <FasterHome />
       </Suspense>
       <FeaturedSectionShell>
-        <LazyMount>
-          <Suspense fallback={null}>
-            <FeaturedHome />
-          </Suspense>
-        </LazyMount>
+        <Suspense fallback={<FeaturedSectionFallback />}>
+          <FeaturedHome />
+        </Suspense>
       </FeaturedSectionShell>
       <LazyMount>
         <Suspense fallback={null}>

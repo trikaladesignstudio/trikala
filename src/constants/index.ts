@@ -8,7 +8,7 @@ export const constructionPhases = [
         days: 20,
         percentage: 10,
         start: 0,
-        color: "#AF6384",
+        color: "#774931",
     },
     {
         id: 2,
@@ -17,7 +17,7 @@ export const constructionPhases = [
         days: 15,
         percentage: 4,
         start: 20,
-        color: "#36FFEB",
+        color: "#1A1A1A",
     },
     {
         id: 3,
@@ -26,7 +26,7 @@ export const constructionPhases = [
         days: 45,
         percentage: 27,
         start: 35,
-        color: "#0ACE19",
+        color: "#52525B",
     },
     {
         id: 4,
@@ -35,7 +35,7 @@ export const constructionPhases = [
         days: 20,
         percentage: 18,
         start: 80,
-        color: "#4DFF9F",
+        color: "#A38B7A",
     },
     {
         id: 5,
@@ -44,7 +44,7 @@ export const constructionPhases = [
         days: 10,
         percentage: 3,
         start: 100,
-        color: "#FF6384",
+        color: "#71717A",
     },
     {
         id: 6,
@@ -53,7 +53,7 @@ export const constructionPhases = [
         days: 20,
         percentage: 15,
         start: 110,
-        color: "#FF9F40",
+        color: "#D1C1A4",
     },
     {
         id: 7,
@@ -62,7 +62,7 @@ export const constructionPhases = [
         days: 14,
         percentage: 4,
         start: 130,
-        color: "#FFCE56",
+        color: "#3F3F46",
     },
     {
         id: 8,
@@ -71,7 +71,7 @@ export const constructionPhases = [
         days: 30,
         percentage: 2,
         start: 144,
-        color: "#4BC0C0",
+        color: "#9CA3AF",
     },
     {
         id: 9,
@@ -80,9 +80,13 @@ export const constructionPhases = [
         days: 90,
         percentage: 19,
         start: 174,
-        color: "#36A2EB",
+        color: "#8B6F5C",
     },
 ];
+
+export const REFERENCE_TIMELINE_DAYS =
+    constructionPhases[constructionPhases.length - 1].start +
+    constructionPhases[constructionPhases.length - 1].days;
 
 // Calculate total days and cost
 export const totalDays = constructionPhases.reduce((sum, phase) => sum + phase.days, 0);
