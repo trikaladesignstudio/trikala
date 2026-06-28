@@ -1,10 +1,6 @@
 import AdminPageShell from "@/components/custom/admin/AdminPageShell";
 import SectionDetailPanel from "@/components/custom/admin/SectionDetailPanel";
-import {
-  getAdminHeaderStats,
-  getAdminProjects,
-  sectionLabels,
-} from "@/lib/adminUtils";
+import { getAdminProjects, sectionLabels } from "@/lib/adminUtils";
 import { sectionType } from "@/utils/client_utils";
 import { notFound } from "next/navigation";
 
@@ -26,15 +22,10 @@ export default async function SectionPage({
   }
 
   const projects = await getAdminProjects();
-  const stats = getAdminHeaderStats(projects);
   const label = sectionLabels[sectionParam];
 
   return (
-    <AdminPageShell
-      title={label}
-      description={`Manage projects assigned to the ${label.toLowerCase()} section on the website.`}
-      {...stats}
-    >
+    <AdminPageShell title={label}>
       <SectionDetailPanel section={sectionParam} projects={projects} />
     </AdminPageShell>
   );

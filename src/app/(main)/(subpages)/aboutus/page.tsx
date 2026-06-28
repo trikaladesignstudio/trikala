@@ -1,3 +1,4 @@
+import sampleSize from "lodash/sampleSize";
 import { getAllProjectsGroupByType } from "@/utils/dbActions";
 import { unstable_noStore as noStore } from "next/cache";
 import AboutApproach from "./_com/AboutApproach";
@@ -27,12 +28,7 @@ function pickTwoRandomImages(urls: string[]) {
     return { heroImage: urls[0], inlineImage: urls[0] };
   }
 
-  const pool = [...urls];
-  const firstIndex = Math.floor(Math.random() * pool.length);
-  const heroImage = pool[firstIndex];
-  pool.splice(firstIndex, 1);
-  const inlineImage = pool[Math.floor(Math.random() * pool.length)];
-
+  const [heroImage, inlineImage] = sampleSize(urls, 2);
   return { heroImage, inlineImage };
 }
 

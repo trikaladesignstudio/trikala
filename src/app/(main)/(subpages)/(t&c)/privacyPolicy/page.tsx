@@ -3,7 +3,10 @@ import Link from "next/link";
 
 export default function PrivacyPolicy() {
   return (
-    <Section className="m-4 p-4 lg:mx-auto lg:w-[70%]">
+    <Section
+      toSnap={false}
+      className="min-h-0 w-full max-w-4xl justify-start gap-6 bg-[#f5f5f5] pb-16 lg:mx-auto"
+    >
       <h1 className="text-3xl font-extrabold">Privacy Policy</h1>
       <>
         Trikala Architects and Associates, We operates as an architectural firm

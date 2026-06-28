@@ -1,3 +1,5 @@
+"use client";
+
 import Navbar from "@/components/custom/NavBar";
 import Section from "@/components/custom/Section";
 import Link from "next/link";
@@ -5,7 +7,7 @@ import Link from "next/link";
 export default function Custom404() {
   return (
     <>
-      <div className="min-h-[70px] relative bg-black">
+      <div className="relative shrink-0 bg-black">
         <Navbar />
       </div>
       <Section className="flex flex-col items-center justify-center h-[100svh] gap-8">

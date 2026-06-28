@@ -1,12 +1,12 @@
 "use client";
 
 import React, { memo, use, useEffect, useState } from "react";
-import Section from "../custom/Section";
-import Navbar from "../custom/NavBar";
-import Heading from "../custom/Heading";
 import Image from "next/image";
 import { Prisma } from "@prisma/client";
-import { shimmerBlur } from "@/lib/shimmer";
+
+import FramedHeroShell from "@/components/custom/FramedHeroShell";
+import HeroHeadline from "@/components/custom/HeroHeadline";
+import { shimmerBlur } from "@/lib/utils";
 
 export default memo(function Hero({
   pData,
@@ -16,12 +16,15 @@ export default memo(function Hero({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [images, setImages] = useState<string[]>([]);
   const data = use(pData);
+
   useEffect(() => {
+    if (images.length === 0) return;
+
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 10000); // Change image every 10 seconds
+    }, 10000);
 
-    return () => clearInterval(interval); // Clean up interval on component unmount
+    return () => clearInterval(interval);
   }, [images]);
 
   useEffect(() => {
@@ -50,30 +53,27 @@ export default memo(function Hero({
   }, [data]);
 
   return (
-    <Section className="relative min-h-[100dvh] max-h-[100dvh] overflow-hidden bg-black">
-      <Navbar />
-      {images.map((image, index) => (
-        <Image
-          priority={index === 0}
-          src={image as string}
-          fill
-          sizes="100vw"
-          alt={`Image ${index}`}
-          key={index}
-          blurDataURL={shimmerBlur}
-          placeholder="blur"
-          className={`absolute inset-0 aspect-auto h-full w-full bg-cover bg-center bg-no-repeat object-cover transition-opacity duration-1000 lg:aspect-[1.78] lg:object-fill ${
-            currentIndex === index ? "opacity-100" : "opacity-0"
-          }`}
-        />
-      ))}
-      <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-b from-black/35 via-black/25 to-black/45 text-white">
-        <Heading
-          customDelay={1}
-          text="Trikala Architect"
-          className="text-center text-[4rem] font-bold md:text-[6rem] lg:text-[8rem]"
-        />
-      </div>
-    </Section>
+    <FramedHeroShell
+      background={
+        <>
+          {images.map((image, index) => (
+            <Image
+              priority={index === 0}
+              src={image as string}
+              fill
+              sizes="100vw"
+              alt={`Trikala Architects project ${index + 1}`}
+              key={index}
+              blurDataURL={shimmerBlur}
+              placeholder="blur"
+              className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${
+                currentIndex === index ? "opacity-100" : "opacity-0"
+              }`}
+            />
+          ))}
+        </>
+      }
+      headline={<HeroHeadline text="Trikala Architect" />}
+    />
   );
 });

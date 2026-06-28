@@ -15,7 +15,7 @@ import Section from "../custom/Section";
 import { allProjectTypes } from "@/utils/client_utils";
 import { Prisma } from "@prisma/client";
 import { getAllFeaturedProjects } from "@/utils/dbActions";
-import { images } from "@/utils/types";
+import { images } from "@/types";
 import Link from "next/link";
 
 const types = Object.values(allProjectTypes);
@@ -82,7 +82,7 @@ function Featured() {
 
   return (
     <Section className="lg:px-0 px-0 lg:py-0 py-0 justify-center">
-      <div className="flex flex-col gap-8 lg:gap-12 w-full px-[2rem] lg:px-[5rem]">
+      <div className="page-px flex flex-col gap-8 lg:gap-12 w-full">
         <Heading className="text-5xl" text="Featured Work" />
         <motion.div className="top-8 lg:gap-8 gap-4 w-full grid grid-cols-2 lg:grid-cols-4 ">
           {types.map((type, index) => (

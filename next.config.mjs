@@ -2,7 +2,7 @@
 const nextConfig = {
   experimental: {
     serverActions: {
-      allowedOrigins: ["localhost:3000", "trikalarchitects.com/"],
+      allowedOrigins: ["localhost:3000", "trikalarchitects.com"],
     },
     turbo: {
       resolveAlias: {

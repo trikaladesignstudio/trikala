@@ -43,7 +43,7 @@ function Section({ id, className, children, toSnap = true, style }: Section) {
       }}
       className={cn(
         "relative min-h-[100svh] w-screen flex flex-col gap-4 justify-evenly",
-        "px-[2rem] lg:px-[5rem] py-6 lg:py-10 ",
+        "page-px py-6 lg:py-10 ",
         toSnap && "snap-center shrink-0",
         className
       )}

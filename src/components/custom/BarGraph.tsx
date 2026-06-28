@@ -60,7 +60,7 @@ export function BarGraph({
       <CardContent className="overflow-x-auto p-0 sm:p-6">
         <ChartContainer
           config={chartConfig}
-          className="w-screen sm:w-[calc(100vw-4rem)] lg:w-full h-[80vh] sm:h-[70vh] max-h-[600px]"
+          className="w-screen sm:w-[calc(100vw-2*var(--page-gutter))] lg:w-full h-[80vh] sm:h-[70vh] max-h-[600px]"
         >
           <BarChart
             data={transformedData}

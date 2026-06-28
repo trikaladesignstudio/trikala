@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  expertiseDataType,
-  imagesWithProjectId,
-} from "@/jsonData/Home/Expertise";
+import { expertiseDataType, imagesWithProjectId } from "@/types";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Fragment } from "react";

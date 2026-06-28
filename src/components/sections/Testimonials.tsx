@@ -2,8 +2,7 @@
 
 import useScreenWidth from "@/hooks/ScreenResize";
 import Image from "next/image";
-import { cn, rollInView } from "@/lib/utils";
-import { shimmerBlur } from "@/lib/shimmer";
+import { cn, rollInView, shimmerBlur } from "@/lib/utils";
 import { filterAllProjects } from "@/utils/dbActions";
 import { useEffect, useState } from "react";
 import { TestimonialsDataType } from "@/types";
@@ -104,7 +103,7 @@ function Testimonials({
   const secondRow = testimonials.slice(testimonials.length / 2);
   return (
     <Section className="lg:px-0 px-0 py-0 lg:py-0">
-      <div className="flex flex-col px-[2rem] py-[0.1rem] lg:px-[5rem] gap-2 md:gap-6">
+      <div className="page-px flex flex-col py-[0.1rem] gap-2 md:gap-6">
         <Heading className="text-left flex-none" text="What Our Clients Have to Say" />
         <motion.div
           variants={rollInView}

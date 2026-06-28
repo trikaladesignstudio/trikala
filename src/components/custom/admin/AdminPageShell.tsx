@@ -4,9 +4,6 @@ import AdminHeader, {
 
 type AdminPageShellProps = {
   title: string;
-  description: string;
-  totalProjects: number;
-  activeSections: number;
   action?: AdminHeaderAction;
   fullWidth?: boolean;
   children: React.ReactNode;
@@ -14,23 +11,13 @@ type AdminPageShellProps = {
 
 export default function AdminPageShell({
   title,
-  description,
-  totalProjects,
-  activeSections,
   action,
   fullWidth = false,
   children,
 }: AdminPageShellProps) {
   return (
     <div className="min-h-full">
-      <AdminHeader
-        title={title}
-        description={description}
-        totalProjects={totalProjects}
-        activeSections={activeSections}
-        action={action}
-        fullWidth={fullWidth}
-      />
+      <AdminHeader title={title} action={action} />
       <div
         className={
           fullWidth

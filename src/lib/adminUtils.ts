@@ -1,4 +1,4 @@
-import { images } from "@/utils/types";
+import { images } from "@/types";
 import { getAllProjects } from "@/utils/dbActions";
 import { sectionType } from "@/utils/client_utils";
 
@@ -66,16 +66,3 @@ export function buildSectionCounts(projects: AdminProject[]) {
   );
 }
 
-export function countActiveSections(sectionCounts: Record<string, number>) {
-  return Object.values(sectionType).filter(
-    (section) => section !== sectionType.none && sectionCounts[section] > 0
-  ).length;
-}
-
-export function getAdminHeaderStats(projects: AdminProject[]) {
-  const sectionCounts = buildSectionCounts(projects);
-  return {
-    totalProjects: projects.length,
-    activeSections: countActiveSections(sectionCounts),
-  };
-}

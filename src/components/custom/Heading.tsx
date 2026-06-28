@@ -7,10 +7,20 @@ type Heading = {
   className?: string;
   text: string;
   customDelay?: number;
+  playOnMount?: boolean;
+  speed?: "normal" | "fast";
 };
 
-function Heading({ className, text, customDelay = 0 }: Heading) {
+function Heading({
+  className,
+  text,
+  customDelay = 0,
+  playOnMount = false,
+  speed = "normal",
+}: Heading) {
   const words = text.split(" ");
+  const wordStagger = speed === "fast" ? 0.1 : 0.2;
+  const wordDuration = speed === "fast" ? 0.45 : transition.duration;
 
   return (
     <motion.h1
@@ -24,10 +34,15 @@ function Heading({ className, text, customDelay = 0 }: Heading) {
           <motion.span
             className="inline-block"
             viewport={{ once: true }}
-            transition={{ ...transition, delay: customDelay + index * 0.2 }}
+            transition={{
+              ...transition,
+              duration: wordDuration,
+              delay: customDelay + index * wordStagger,
+            }}
             variants={brurRenderVariant}
             initial="hidden"
-            whileInView="visible"
+            animate={playOnMount ? "visible" : "hidden"}
+            whileInView={playOnMount ? undefined : "visible"}
           >
             {word}
           </motion.span>

@@ -3,72 +3,94 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion } from "framer-motion";
 
 import StaggeredMenu from "@/components/custom/StaggeredMenu";
 import { startAProjectLink } from "@/constants";
 import { cn } from "@/lib/utils";
 import { navlinks } from "@/types";
 
-const linkClassName =
-  "text-sm font-normal uppercase tracking-[0.2em] text-white/90 transition-colors hover:text-white";
+const navLabel =
+  "text-[13px] font-normal uppercase leading-none tracking-normal text-[#222F30]";
 
-const ctaClassName =
-  "text-sm font-normal uppercase tracking-[0.2em] text-custom-lb transition-colors hover:text-custom-premium active:-translate-y-[1px]";
-
-const mobileMenuItems = navlinks.map((link) => ({
-  label: link.name,
-  ariaLabel: `Go to ${link.name}`,
-  link: link.href,
-}));
+const SIZES = {
+  hero: {
+    row: "py-4 lg:py-6",
+    logo: "h-[3.3rem] w-auto lg:h-[4.56rem]",
+    pill: "h-11 lg:h-[3.375rem]",
+    link: "h-[calc(2.75rem-0.875rem)] lg:h-[calc(3.375rem-0.875rem)]",
+    cta: "h-[calc(2.75rem-0.5rem)] lg:h-[calc(3.375rem-0.5rem)]",
+  },
+  default: {
+    row: "py-3 lg:py-3.5",
+    logo: "h-[2.84rem] w-auto lg:h-[3.8rem]",
+    pill: "h-9 lg:h-11",
+    link: "h-[calc(2.25rem-0.875rem)] lg:h-[calc(2.75rem-0.875rem)]",
+    cta: "h-[calc(2.25rem-0.5rem)] lg:h-[calc(2.75rem-0.5rem)]",
+  },
+} as const;
 
 const Navbar = () => {
-  const pathname = usePathname();
-  const isHome = pathname === "/";
+  const isOverlay = usePathname() === "/";
+  const s = SIZES[isOverlay ? "hero" : "default"];
 
-  return (
-    <motion.nav
-      initial={{ opacity: 0, y: -10 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.3 }}
-      className={cn(
-        "z-20 flex w-full snap-start flex-row items-center justify-between",
-        isHome
-          ? "absolute left-0 right-0 top-0 px-4 py-5 lg:px-12 lg:py-6"
-          : "relative px-4 py-3 lg:px-12"
-      )}
-    >
+  const inner = (
+    <div className={cn("page-x flex items-center justify-between", s.row)}>
       <Link href="/" className="shrink-0">
         <Image
           priority
           src="/static/logo.webp"
           alt="Trikala Architects"
-          width={88}
-          height={88}
-          className="invert"
+          width={120}
+          height={120}
+          className={cn(s.logo, "invert")}
         />
       </Link>
 
-      <div className="hidden items-center gap-10 lg:flex">
-        {navlinks.map((link) => (
-          <Link key={link.name} href={link.href} className={linkClassName}>
-            {link.name}
-          </Link>
-        ))}
-        <Link
-          href={startAProjectLink}
-          className={ctaClassName}
-          target="_blank"
-          rel="noopener noreferrer"
+      <div
+        className="hidden shrink-0 items-center lg:flex"
+        aria-label="Primary navigation"
+      >
+        <div
+          className={cn(
+            "inline-flex items-center gap-3 rounded-xl border border-[#222F30]/5 bg-white/80 py-1 pl-3 pr-1 backdrop-blur-[14px]",
+            s.pill
+          )}
         >
-          Start a Project
-        </Link>
+          {navlinks.map((link) => (
+            <Link
+              key={link.name}
+              href={link.href}
+              className={cn(
+                navLabel,
+                "inline-flex items-center rounded-lg px-[17px] transition-colors hover:bg-[#222F30]/5",
+                s.link
+              )}
+            >
+              {link.name}
+            </Link>
+          ))}
+          <Link
+            href={startAProjectLink}
+            className={cn(
+              navLabel,
+              "inline-flex shrink-0 items-center rounded-lg bg-[#222F30] px-5 text-white transition-colors hover:bg-[#222F30]/90 active:scale-[0.98]",
+              s.cta
+            )}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Start a Project
+          </Link>
+        </div>
       </div>
 
-      <div className="flex items-center gap-6 lg:hidden">
+      <div className="flex items-center gap-5 lg:hidden">
         <Link
           href={startAProjectLink}
-          className={ctaClassName}
+          className={cn(
+            navLabel,
+            "text-custom-premium transition-colors hover:text-white"
+          )}
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -77,25 +99,31 @@ const Navbar = () => {
         <StaggeredMenu
           embedded
           hideLogo
-          position="right"
-          items={mobileMenuItems}
+          items={navlinks.map((link) => ({
+            label: link.name,
+            ariaLabel: `Go to ${link.name}`,
+            link: link.href,
+          }))}
           cta={{
             label: "Start a Project",
             link: startAProjectLink,
             ariaLabel: "Start a project with Trikala",
             external: true,
           }}
-          displaySocials={false}
-          displayItemNumbering
-          colors={["#D1C1A4", "#774931"]}
-          accentColor="#774931"
-          menuButtonColor="#ffffff"
-          openMenuButtonColor="#170800"
-          changeMenuColorOnOpen
         />
       </div>
-    </motion.nav>
+    </div>
   );
+
+  if (isOverlay) {
+    return (
+      <nav className="absolute inset-x-0 top-0 z-30 bg-transparent">
+        {inner}
+      </nav>
+    );
+  }
+
+  return <nav className="relative z-30 w-full snap-start">{inner}</nav>;
 };
 
 export default Navbar;

@@ -1,4 +1,3 @@
-"use server";
 import Hero from "@/components/sections/Hero";
 import { sectionType } from "@/utils/client_utils";
 import { filterAllProjects } from "@/utils/dbActions";

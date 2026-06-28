@@ -12,6 +12,8 @@
     "build": "npm run pgen && next build",
     "start": "next start",
     "lint": "next lint",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "pgen": "prisma generate",
     "pstudio": "prisma studio",
     "pmig": "prisma migrate dev",
@@ -39,8 +41,10 @@
     "embla-carousel-react": "^8.5.1",
     "framer-motion": "^11.11.9",
     "geist": "^1.7.2",
+    "gl-matrix": "^3.4.4",
     "google-auth-library": "^9.15.1",
     "google-spreadsheet": "^4.1.4",
+    "gsap": "^3.15.0",
     "jose": "^5.9.6",
     "lodash": "^4.17.21",
     "next": "14.2.13",
@@ -49,7 +53,6 @@
     "react-dom": "^18",
     "react-hot-toast": "^2.4.1",
     "react-icons": "^5.3.0",
-    "react-use": "^17.5.1",
     "recharts": "^2.15.0",
     "sharp": "^0.33.5",
     "tailwind-merge": "^2.5.2",
@@ -66,6 +69,7 @@
     "postcss": "^8",
     "prisma": "^6.1.0",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^3.2.6"
   }
 }

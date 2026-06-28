@@ -44,7 +44,7 @@ export default function ThrivePrinciples() {
 
   return (
     <section className="w-full bg-[#f5f5f5]">
-      <div className="mx-auto max-w-[1400px] px-[2rem] py-10 lg:px-[5rem] lg:py-16">
+      <div className="page-x py-10 lg:py-16">
         <div className="mb-8 flex flex-col gap-3 lg:mb-12">
           <Heading text="THRIVE" className="text-left text-zinc-900" />
           <p className="max-w-[65ch] text-left text-sm text-zinc-600 md:text-base">

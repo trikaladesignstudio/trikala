@@ -1,7 +1,7 @@
 "use client";
 
 import { cn, rollInView } from "@/lib/utils";
-import { shimmerBlur } from "@/lib/shimmer";
+import { shimmerBlur } from "@/lib/utils";
 import { filterAllProjects } from "@/utils/dbActions";
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import Image from "next/image";

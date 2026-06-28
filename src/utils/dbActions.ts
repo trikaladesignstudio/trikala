@@ -4,7 +4,7 @@ import { Prisma } from "@prisma/client";
 import { UTApi } from "uploadthing/server";
 import { allProjectTypes, ProjectType, sectionType } from "./client_utils";
 import { revalidatePath } from "next/cache";
-import { images } from "./types";
+import { images } from "@/types";
 
 export async function getAllProjects() {
   try {
@@ -65,7 +65,6 @@ export async function filterAllProjects(
 }
 
 export async function getAllProjectsGroupByType() {
-  // const tempExpertiseData: expertiseDataType[] = [];
   const architecturalConcepts = [
     "We design bespoke architectural solutions that embody your vision, ensuring functionality and aesthetics seamlessly align with your unique lifestyle.",
     "Our architectural concepts are tailored to reflect your individuality, creating spaces that resonate with your preferences and aspirations.",

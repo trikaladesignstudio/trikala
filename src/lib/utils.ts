@@ -15,10 +15,8 @@ export const brurRenderVariant = {
   visible: { filter: "blur(0)", transform: "translateY(0)", opacity: 1 },
 };
 
-export const brurRenderVariantWithoutMove = {
-  hidden: { filter: "blur(10px)", delay: 5, opacity: 0 },
-  visible: { filter: "blur(0)", delay: 5, opacity: 1 },
-};
+export const shimmerBlur =
+  "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzAwIiBoZWlnaHQ9IjQ3NSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNzAwIiBoZWlnaHQ9IjQ3NSIgZmlsbD0iIzFhMWExYSIvPjwvc3ZnPg==";
 
 export const rollInView = {
   base: { opacity: 0, y: 10 },

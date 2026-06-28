@@ -52,6 +52,43 @@ Max 1 accent (Terracotta). Saturation below 80%. No purple, blue neon, or gradie
 - **Staggered orchestration:** Cascade delays on section mount (`staggerChildren`)
 - **Performance:** Animate exclusively via `transform` and `opacity`. Grain/noise on fixed pseudo-elements only.
 
+### 6a. Hero Scroll Choreography
+
+Section 1 is a single home section composed of the hero intro and a services scroll showcase. Section 2 is a standalone Featured / InfiniteMenu globe.
+
+**Hero intro — `200svh` sticky, `scrollYProgress ∈ [0, 1]`**
+
+| Timestamp | What happens |
+|-----------|-------------|
+| 0.00 | White frame at full inset (14 px), headline large and centered |
+| 0.00→0.50 | Frame inset shrinks to 0; border-radius collapses to 0 |
+| 0.25→0.50 | Black scrim (#1A1A1A) fades in to 75% opacity |
+| 0.00→0.50 | Headline travels center → bottom-left via spring (stiffness 100, damping 20) and scales down to ~0.48× |
+| 0.75→0.95 | Headline fades out before services scroll takes over |
+
+The centered load-state headline is the **only allowed exception** to the "no centered hero" rule — it is transient and resolves to an asymmetric anchor by the halfway scroll.
+
+**Services scroll — Framer Motion, inside Section 1**
+
+| Behavior | Detail |
+|----------|--------|
+| Layout | Two columns on desktop: sticky left image stack, scrolling right text blocks |
+| Active slide | `useInView` with `#mainCointainer` as root; centered block opacity 1, others 0.2 |
+| Images | Crossfade on active index; slow scale breathe `[1, 1.05, 1]` on active image |
+| Mobile | No sticky pin; image + text stacked per slide at full opacity |
+| Copy | "Designing Spaces. Defining Lifestyles." + 4 service slides |
+
+**Section 2 — Featured globe**
+
+| Detail | Value |
+|--------|-------|
+| Component | `FeaturedSection` + `HeroFeaturedMenu` / `InfiniteMenu` |
+| Height | `min-h-[100svh]`, dark Charcoal Ink background |
+| Tiles | Rectangular (4:3 aspect), NOT circular — `QuadGeometry` with non-uniform scale `[1.25, 0.95, 1]` |
+| Shader | `containerAspect = 4.0/3.0` for correct cover-fill of 4:3 images |
+
+**`prefers-reduced-motion`:** headline skips travel animation; services scale breathe skipped; globe orbit skipped.
+
 ## 7. Anti-Patterns (Banned)
 
 - No emojis anywhere
@@ -63,9 +100,10 @@ Max 1 accent (Terracotta). Saturation below 80%. No purple, blue neon, or gradie
 - No custom mouse cursors
 - No overlapping elements — clean spatial separation always
 - No 3-column or 6-column equal card/tab grids
-- No centered Hero sections
+- No centered Hero sections (exception: transient hero headline at load — see §6a)
 - No generic names ("John Doe", "Acme", "Nexus")
 - No fake round numbers (`99.99%`, `50%`)
 - No AI copywriting clichés ("Elevate", "Seamless", "Unleash", "Next-Gen", "Holistic Innovation")
 - No filler UI text: "Scroll to explore", "Swipe down", scroll arrows, bouncing chevrons
 - No broken Unsplash links — use project DB images or `/static/` assets
+- No circular featured tiles — always use rectangular/square frames for project photography

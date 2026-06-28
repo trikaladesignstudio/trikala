@@ -19,7 +19,7 @@ export default async function Page({
     notFound();
   }
   return (
-    <Section className="lg:px-0 px-0 lg:py-0 py-0 max-h-fit justify-start">
+    <Section className="lg:px-0 px-0 lg:py-0 py-0 max-h-fit justify-start bg-[#f5f5f5]">
       <ProjectViewClient projectData={projectData} />
     </Section>
   );

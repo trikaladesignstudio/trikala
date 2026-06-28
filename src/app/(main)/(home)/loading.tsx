@@ -1,3 +1,5 @@
+import HomeHeroFallback from "./_com/HomeHeroFallback";
+
 export default function Loading() {
-  return <div className="w-full h-[100svh] bg-black" />;
+  return <HomeHeroFallback />;
 }

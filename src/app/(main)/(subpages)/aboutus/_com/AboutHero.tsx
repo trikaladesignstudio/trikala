@@ -1,7 +1,7 @@
 "use client";
 
 import { brurRenderVariant, cn, transition } from "@/lib/utils";
-import { shimmerBlur } from "@/lib/shimmer";
+import { shimmerBlur } from "@/lib/utils";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
@@ -13,7 +13,7 @@ type AboutHeroProps = {
 function AboutHero({ heroImage, inlineImage }: AboutHeroProps) {
   return (
     <section className="w-full bg-[#f5f5f5]">
-      <div className="mx-auto grid max-w-[1400px] grid-cols-1 items-center gap-8 px-[2rem] py-10 lg:grid-cols-2 lg:gap-12 lg:px-[5rem] lg:py-16">
+      <div className="page-x grid grid-cols-1 items-center gap-8 py-10 lg:grid-cols-2 lg:gap-12 lg:py-16">
         <div className="flex flex-col gap-6 lg:pr-8">
           <h1 className="font-silver text-left text-4xl tracking-tight text-zinc-900 md:text-5xl lg:text-7xl">
             <motion.span

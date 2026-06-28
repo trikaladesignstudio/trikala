@@ -22,7 +22,6 @@ model Project {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   title       String
   description String
-  // haveProject Boolean
   pdf         Image?
   images      Image[]
   type        String

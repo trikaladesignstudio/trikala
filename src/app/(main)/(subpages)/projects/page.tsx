@@ -9,7 +9,7 @@ export default async function Home() {
 
   return (
     <section className="w-full bg-white">
-      <div className="mx-auto max-w-[1400px] px-[2rem] py-10 lg:px-[5rem] lg:py-16">
+      <div className="page-x py-10 lg:py-16">
         <div className="mb-8 flex flex-col gap-3 lg:mb-12">
           <Heading
             className="text-left text-zinc-900"

@@ -3,7 +3,6 @@
 import { cn } from "@/lib/utils";
 import { allProjectTypes } from "@/utils/client_utils";
 import { Prisma } from "@prisma/client";
-import { ArrowRightIcon } from "@radix-ui/react-icons";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -121,12 +120,13 @@ const ProjectShowClient = ({
                     transition: spring,
                   },
                 }}
-                className={cn("group flex flex-col gap-3", getGridSpan(index))}
+                className={cn("group flex flex-col gap-5", getGridSpan(index))}
               >
                 <Link
                   href={`/projects/${project.id}`}
-                  className="block overflow-hidden rounded-2xl bg-zinc-100"
+                  className="group/link relative block"
                 >
+                  <div className="overflow-hidden rounded-2xl bg-zinc-100">
                   <div
                     className={cn(
                       "relative w-full overflow-hidden",
@@ -140,7 +140,7 @@ const ProjectShowClient = ({
                         fill
                         sizes="(max-width: 768px) 100vw, 50vw"
                         alt={project.title ?? "Project image"}
-                        className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
+                        className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/link:scale-[1.04]"
                       />
                     ) : (
                       <div className="flex h-full min-h-[14rem] items-center justify-center bg-zinc-100">
@@ -148,12 +148,16 @@ const ProjectShowClient = ({
                       </div>
                     )}
 
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-zinc-950/50 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-
-                    <span className="absolute bottom-4 right-4 flex h-9 w-9 translate-y-2 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white opacity-0 backdrop-blur-sm transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
-                      <ArrowRightIcon className="h-4 w-4" />
-                    </span>
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-zinc-950/40 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover/link:opacity-100" />
                   </div>
+                  </div>
+
+                  <span
+                    className="absolute bottom-0 left-1/2 z-10 flex h-14 w-14 -translate-x-1/2 translate-y-1/2 items-center justify-center rounded-full border-4 border-zinc-900 bg-custom-lb text-white shadow-[0_0_0_1px_rgba(255,255,255,0.06)] transition-transform duration-300 group-hover/link:scale-105"
+                    aria-hidden="true"
+                  >
+                    <span className="relative top-0.5 text-2xl leading-none">↗</span>
+                  </span>
                 </Link>
 
                 <div className="flex items-start justify-between gap-4 px-0.5">

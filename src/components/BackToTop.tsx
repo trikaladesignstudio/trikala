@@ -3,15 +3,14 @@
 import { motion, useAnimation } from "framer-motion";
 import { useEffect, useState } from "react";
 import { BiSolidUpArrowAlt } from "react-icons/bi";
-
-const mainId = "mainCointainer";
+import { MAIN_SCROLL_CONTAINER_ID, scrollToTop } from "@/lib/scrollToTop";
 
 function BackToTopBtn() {
   const [scrollY, setScrollY] = useState(0);
   const controls = useAnimation();
 
   useEffect(() => {
-    const main = document.getElementById(mainId);
+    const main = document.getElementById(MAIN_SCROLL_CONTAINER_ID);
 
     const handleScroll = () => {
       const mainScroll = main?.scrollTop ?? 0;
@@ -36,17 +35,6 @@ function BackToTopBtn() {
       controls.start({ opacity: 0, y: 50 });
     }
   }, [scrollY, controls]);
-
-  const scrollToTop = () => {
-    const main = document.getElementById(mainId);
-    const mainScrollable = main && main.scrollHeight > main.clientHeight;
-
-    if (mainScrollable) {
-      main.scrollTo({ top: 0, behavior: "smooth" });
-    } else {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  };
 
   return (
     <motion.button

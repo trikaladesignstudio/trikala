@@ -145,7 +145,7 @@ export function SidebarNav({
       />
       <NavLink
         href="/admin/projects"
-        label="Projects"
+        label="Showcase"
         count={pdfCount}
         isActive={pathname === "/admin/projects"}
         onNavigate={onNavigate}
@@ -179,7 +179,7 @@ export function SidebarNav({
 
 function getPageTitle(pathname: string) {
   if (pathname === "/admin/all") return "All";
-  if (pathname === "/admin/projects") return "Projects";
+  if (pathname === "/admin/projects") return "Showcase";
   if (pathname === "/admin/featured") return "Featured";
   if (pathname === "/admin/pricing") return "Pricing";
   if (pathname.startsWith("/admin/sections/")) {

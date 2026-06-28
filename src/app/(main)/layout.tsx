@@ -1,25 +1,23 @@
-import { filterAllProjects } from "@/utils/dbActions";
+import DeferredFooter from "@/components/custom/DeferredFooter";
 import { sectionType } from "@/utils/client_utils";
-import dynamic from "next/dynamic";
+import { filterAllProjects } from "@/utils/dbActions";
 import { Suspense } from "react";
 
-const Footer = dynamic(() => import("@/components/sections/Footer"), {
-  ssr: false,
-  suspense: true,
-});
+async function FooterWithData() {
+  const footerData = await filterAllProjects(sectionType.contact);
+  return <DeferredFooter data={footerData} />;
+}
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const footerData = await filterAllProjects(sectionType.contact);
-
   return (
     <>
       {children}
-      <Suspense>
-        <Footer data={footerData} />
+      <Suspense fallback={null}>
+        <FooterWithData />
       </Suspense>
     </>
   );

@@ -4,11 +4,15 @@ interface NavLink {
 }
 
 export const navlinks: NavLink[] = [
-  // { name: "Home", href: "#" },
-  { name: "About Us", href: "/aboutus" },
+  { name: "About", href: "/aboutus" },
   { name: "Projects", href: "/projects" },
-  { name: "Price Estimate", href: "/#price-estimator" },
+  { name: "Estimate", href: "/#price-estimator" },
 ];
+
+export type images = {
+  url: string;
+  name: string;
+};
 
 export interface TestimonialsDataType {
   title: string;
@@ -16,7 +20,20 @@ export interface TestimonialsDataType {
   description: string;
   images: string;
 }
+
 export interface ContactDataType {
   title: string;
   description: string;
 }
+
+export interface expertiseDataType {
+  id: number;
+  title: string;
+  description: string;
+  images: imagesWithProjectId[];
+}
+
+export type imagesWithProjectId = {
+  url: string;
+  projectId: string | null;
+};

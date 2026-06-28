@@ -4,7 +4,6 @@ import {
   getAllProjectsGroupByType,
 } from "@/utils/dbActions";
 import Expertise from "@/components/sections/ExpertiseTest2";
-import Featured from "@/components/sections/Feature";
 import PriceEstimator from "@/components/sections/PriceEstimator";
 import Testimonials from "@/components/sections/Testimonials";
 import Video from "@/components/sections/Video";
@@ -21,7 +20,6 @@ export default async function OtherHomeConponent() {
 
   return (
     <>
-      <Featured />
       <Expertise data={expertiseData} />
       <Working data={workingData} />
       <PriceEstimator data={priceEstimatorData} />
