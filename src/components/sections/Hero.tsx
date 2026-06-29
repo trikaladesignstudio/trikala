@@ -43,6 +43,39 @@ export default memo(function Hero({
   }, []);
 
   useEffect(() => {
+    const url = allImages[0];
+    if (!url) {
+      handlePriorityImageReady();
+      return;
+    }
+
+    const img = new window.Image();
+    const onReady = () => handlePriorityImageReady();
+
+    img.onload = onReady;
+    img.onerror = onReady;
+    img.src = url;
+
+    if (img.complete && img.naturalWidth > 0) {
+      onReady();
+    }
+
+    return () => {
+      img.onload = null;
+      img.onerror = null;
+    };
+  }, [allImages, handlePriorityImageReady]);
+
+  const priorityImageRef = useCallback(
+    (node: HTMLImageElement | null) => {
+      if (node?.complete && node.naturalWidth > 0) {
+        handlePriorityImageReady();
+      }
+    },
+    [handlePriorityImageReady]
+  );
+
+  useEffect(() => {
     if (allImages.length <= 1) return;
 
     const timeouts = allImages.slice(1).map((image, index) =>
@@ -74,6 +107,7 @@ export default memo(function Hero({
             <Image
               priority={index === 0}
               fetchPriority={index === 0 ? "high" : "auto"}
+              ref={index === 0 ? priorityImageRef : undefined}
               src={image}
               fill
               sizes="100vw"

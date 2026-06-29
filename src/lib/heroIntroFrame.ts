@@ -1,17 +1,30 @@
+import { INTRO_REVEAL_MS } from "./heroIntro";
+
 export const FRAME_INSET_START = 14;
 export const FRAME_RADIUS_START = 22;
 export const INTRO_HOLD_END = 0.04;
-export const FRAME_EXPAND_END = 0.3;
+export const PILL_EXPAND_MS = 600;
+
+/** Pill expansion ends after hold + PILL_EXPAND_MS on the master intro clock */
+export const FRAME_EXPAND_END =
+  INTRO_HOLD_END + PILL_EXPAND_MS / INTRO_REVEAL_MS;
+
 export const PILL_HEIGHT = 12;
 export const PILL_WIDTH = 48;
 
 /** ease-out bezier for pill → hero expansion */
 export const EXPAND_EASE = [0.16, 1, 0.3, 1] as const;
 
-/** Stagger nav, then headline after pill reaches hero size */
+const NAV_REVEAL = 0.1;
+const HEADLINE_REVEAL = 0.09;
+
+/** Nav + headline chain immediately after pill expansion */
 export const CONTENT_STAGGER = {
-  nav: [0.32, 0.48] as const,
-  headline: [0.52, 0.76] as const,
+  nav: [FRAME_EXPAND_END, FRAME_EXPAND_END + NAV_REVEAL] as const,
+  headline: [
+    FRAME_EXPAND_END + NAV_REVEAL,
+    FRAME_EXPAND_END + NAV_REVEAL + HEADLINE_REVEAL,
+  ] as const,
 } as const;
 
 export type PillInsets = {

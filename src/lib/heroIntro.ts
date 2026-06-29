@@ -1,7 +1,7 @@
 export const HERO_INTRO_COMPLETE_EVENT = "hero-intro-complete";
 export const HERO_INTRO_START_EVENT = "hero-intro-start";
 
-export const INTRO_REVEAL_MS = 2600;
+export const INTRO_REVEAL_MS = 1400;
 /** Safety fallback if hero image never loads */
 export const INTRO_IMAGE_TIMEOUT_MS = 4000;
 /** Linear master clock — easing lives on expansion + stagger phases */

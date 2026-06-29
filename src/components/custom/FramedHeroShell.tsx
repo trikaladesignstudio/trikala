@@ -66,13 +66,13 @@ function staggerRange(range: readonly [number, number]) {
   };
 }
 
-function staggerLift(range: readonly [number, number], px = 14) {
+function staggerFromTop(range: readonly [number, number], px = 16) {
   return (intro: number) => {
     const [start, end] = range;
-    if (intro <= start) return px;
+    if (intro <= start) return -px;
     if (intro >= end) return 0;
     const t = (intro - start) / (end - start);
-    return px * (1 - t);
+    return -px * (1 - t);
   };
 }
 
@@ -262,7 +262,7 @@ export default function FramedHeroShell({
   );
 
   const navOpacity = useTransform(introReveal, staggerRange(CONTENT_STAGGER.nav));
-  const navY = useTransform(introReveal, staggerLift(CONTENT_STAGGER.nav));
+  const navY = useTransform(introReveal, staggerFromTop(CONTENT_STAGGER.nav));
 
   const headlineWithRef =
     headline && isValidElement(headline)
