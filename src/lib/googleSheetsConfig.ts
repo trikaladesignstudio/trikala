@@ -15,7 +15,7 @@ export function getGoogleSheetUrl() {
 }
 
 export function getBlockedSheetTabs() {
-  const raw = process.env.GOOGLE_SHEET_BLOCKED_TABS ?? "Sheet";
+  const raw = process.env.GOOGLE_SHEET_BLOCKED_TABS ?? "";
   return raw
     .split(",")
     .map((tab) => tab.trim())

@@ -6,7 +6,7 @@ import { getGoogleSheetUrl, getStates } from "@/lib/sheetAccess";
 export const revalidate = 0;
 
 export default async function PricingPage() {
-  const states = await getStates().catch(() => []);
+  const states = await getStates();
   const sheetUrl = getGoogleSheetUrl();
 
   return (

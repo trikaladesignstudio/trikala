@@ -7,8 +7,6 @@ import { revalidatePath } from "next/cache";
 
 export { getGoogleSheetUrl };
 
-const blockedSheetsInDoc = getBlockedSheetTabs();
-
 const regex = /\d+/g;
 
 export type CityRowType = {
@@ -41,7 +39,7 @@ export async function getStates(): Promise<locationType[]> {
 
   const states = dataDoc.sheetsByIndex
     .map((sheet, index) => {
-      if (!blockedSheetsInDoc.includes(sheet.title)) {
+      if (!getBlockedSheetTabs().includes(sheet.title)) {
         return {
           title: sheet.title,
           id: index,
@@ -112,7 +110,7 @@ export async function get_data_by_location(state_id: number, city_id: number) {
 async function getDefaultHeaders() {
   await dataDoc.loadInfo();
   const templateSheet = dataDoc.sheetsByIndex.find(
-    (sheet) => !blockedSheetsInDoc.includes(sheet.title)
+    (sheet) => !getBlockedSheetTabs().includes(sheet.title)
   );
 
   if (templateSheet) {
@@ -214,7 +212,7 @@ export async function deleteCityRow(state_id: number, row_index: number) {
 
 export async function deleteState(state_id: number) {
   const sheet = await getSheetByIndex(state_id);
-  if (blockedSheetsInDoc.includes(sheet.title)) {
+  if (getBlockedSheetTabs().includes(sheet.title)) {
     throw new Error("This sheet cannot be deleted");
   }
 
