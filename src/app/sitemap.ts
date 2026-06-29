@@ -1,47 +1,49 @@
+import { getAllProjectsByPDF } from "@/utils/dbActions";
 import { MetadataRoute } from "next";
+import { SITE_URL } from "@/lib/seo";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  //   const posts = await getAllBlogMeta();
-  // const isoDate = moment(inputDate, 'DD-MM-YYYY').format('YYYY-MM-DD');
-  //   const isoDate = (date: string) =>
-  //     format(parse(date, "dd-MM-yyyy", new Date()), "yyyy-MM-dd");
-  //   const blogposts = posts.map((post) => ({
-  //     url: `${process.env.FRONTEND}/blog/${post.slug}`,
-  //     lastModified: isoDate(post.date),
-  //     changeFrequency: "weekly",
-  //     priority: 1,
-  //   }));
-  return [
+  const projects = await getAllProjectsByPDF();
+
+  const staticPages: MetadataRoute.Sitemap = [
     {
-      url: `${process.env.FRONTEND}/`,
+      url: `${SITE_URL}/`,
       lastModified: new Date(),
-      changeFrequency: "monthly",
+      changeFrequency: "weekly",
       priority: 1,
     },
     {
-      url: `${process.env.FRONTEND}/aboutus`,
+      url: `${SITE_URL}/aboutus`,
       lastModified: new Date(),
       changeFrequency: "monthly",
-      priority: 1,
+      priority: 0.8,
     },
     {
-      url: `${process.env.FRONTEND}/projects`,
+      url: `${SITE_URL}/projects`,
       lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 1,
+      changeFrequency: "weekly",
+      priority: 0.9,
     },
     {
-      url: `${process.env.FRONTEND}/privacyPolicy`,
+      url: `${SITE_URL}/privacyPolicy`,
       lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 1,
+      changeFrequency: "yearly",
+      priority: 0.3,
     },
     {
-      url: `${process.env.FRONTEND}/termAndCondition`,
+      url: `${SITE_URL}/termAndCondition`,
       lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 1,
+      changeFrequency: "yearly",
+      priority: 0.3,
     },
-    // ...(blogposts as any),
   ];
+
+  const projectPages: MetadataRoute.Sitemap = projects.map((project) => ({
+    url: `${SITE_URL}/projects/${project.id}`,
+    lastModified: project.updatedAt ?? new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
+  }));
+
+  return [...staticPages, ...projectPages];
 }

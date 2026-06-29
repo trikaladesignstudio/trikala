@@ -134,7 +134,7 @@ function Featured() {
                           src={img as string}
                           width={400}
                           height={400}
-                          alt={`Slide ${index}`}
+                          alt={`${currentActive} featured project`}
                           className="w-full h-[24rem] md:h-[28rem] lg:h-[32rem] object-cover rounded-md"
                         />
                       </Suspense>
@@ -159,7 +159,7 @@ function Featured() {
                         src={img as string}
                         width={400}
                         height={400}
-                        alt={`Slide ${index}`}
+                        alt={`${currentActive} featured project`}
                         className="w-full h-[24rem] md:h-[28rem] lg:h-[32rem] object-cover rounded-md"
                       />
                     </Suspense>

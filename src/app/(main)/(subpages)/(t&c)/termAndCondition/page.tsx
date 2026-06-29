@@ -1,5 +1,14 @@
 import Section from "@/components/custom/Section";
+import { buildPageMetadata } from "@/lib/seo";
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = buildPageMetadata({
+  title: "Terms & Conditions",
+  description: "Terms and Conditions for Trikal Architects and Associates.",
+  path: "/termAndCondition",
+  noIndex: true,
+});
 
 export default function TandC() {
   return (

@@ -125,6 +125,7 @@ const ProjectShowClient = ({
                 <Link
                   href={`/projects/${project.id}`}
                   className="group/link relative block"
+                  aria-label={`View project: ${project.title}`}
                 >
                   <div className="overflow-hidden rounded-2xl bg-zinc-100">
                   <div

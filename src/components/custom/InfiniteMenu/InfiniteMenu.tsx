@@ -440,7 +440,7 @@ class ArcballControl {
       }
     });
 
-    canvas.style.touchAction = "none";
+    canvas.style.touchAction = "pan-y";
   }
 
   update(deltaTime: number, targetFrameDuration = 16) {

@@ -1,5 +1,7 @@
 import LazyMount from "@/components/custom/LazyMount";
 import { FeaturedSectionShell } from "@/components/sections/FeaturedSection";
+import { buildPageMetadata, SITE_NAME } from "@/lib/seo";
+import type { Metadata } from "next";
 import { Suspense } from "react";
 import FasterHome from "./_com/FastestHero";
 import FeaturedHome from "./_com/FeaturedHome";
@@ -10,6 +12,13 @@ import HomeHeroFallback from "./_com/HomeHeroFallback";
 import OtherHomeConponent from "./_com/OtherHomeConponent";
 
 export const revalidate = 300;
+
+export const metadata: Metadata = buildPageMetadata({
+  title: SITE_NAME,
+  description:
+    "Trikal Architects — eco-friendly architecture and interior design studio serving Delhi NCR. Residential, commercial, and landscape projects.",
+  path: "/",
+});
 
 export default function Home() {
   return (
@@ -23,7 +32,7 @@ export default function Home() {
           <FeaturedHome />
         </Suspense>
       </FeaturedSectionShell>
-      <LazyMount>
+      <LazyMount waitForHeroIntro={false}>
         <Suspense fallback={null}>
           <OtherHomeConponent />
         </Suspense>

@@ -16,9 +16,10 @@ import Link from "next/link";
 
 interface CarouselDataProps {
   images: imagesWithProjectId[];
+  categoryTitle: string;
 }
 
-function CarouselData({ images }: CarouselDataProps) {
+function CarouselData({ images, categoryTitle }: CarouselDataProps) {
   return (
     <Carousel className="w-full m-auto" delay={4000} loop={false}>
       <CarouselContent className="-ml-2">
@@ -39,7 +40,7 @@ function CarouselData({ images }: CarouselDataProps) {
                 <Link href={`/projects/${projectId}`}>
                   <Image
                     src={img}
-                    alt={`Slide ${index}`}
+                    alt={`${categoryTitle} project showcase`}
                     className="w-full object-cover rounded-md h-[24rem] md:h-[28rem] lg:h-[32rem]"
                     width={400}
                     height={400}
@@ -48,7 +49,7 @@ function CarouselData({ images }: CarouselDataProps) {
               ) : (
                 <Image
                   src={img}
-                  alt={`Slide ${index}`}
+                  alt={`${categoryTitle} project showcase`}
                   className="w-full object-cover rounded-md h-[24rem] md:h-[28rem] lg:h-[32rem]"
                   width={400}
                   height={400}
@@ -93,7 +94,7 @@ function SingleExperize({ expertise }: { expertise: expertiseDataType }) {
               </motion.p>
             </motion.div>
           </div>
-          <CarouselData images={expertise.images} />
+          <CarouselData images={expertise.images} categoryTitle={expertise.title} />
         </div>
       </div>
     </div>

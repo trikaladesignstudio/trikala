@@ -10,14 +10,14 @@ export const HERO_ELEMENT_VIEWPORTS = 1 + HERO_APPROACH_VIEWPORTS;
 /** White edge bleed during approach scroll (first ~8% of approach) */
 export const FRAME_BLEED_PORTION = 0.08;
 
-/** Headline fade + drift window */
-export const HEADLINE_FADE_START = 0.12;
-export const HEADLINE_FADE_END = 0.58;
+/** Headline fade + drift window (late in approach scroll) */
+export const HEADLINE_FADE_START = 0.90;
+export const HEADLINE_FADE_END = 0.95;
 export const HEADLINE_TRAVEL_PX = 80;
 
-/** Charcoal overlay ramps in and finishes before scroll ends */
-export const DARK_BLEED_START = 0.42;
-export const DARK_BLEED_END = 0.88;
+/** Charcoal overlay ramps in at the very end of approach scroll */
+export const DARK_BLEED_START = 0.95;
+export const DARK_BLEED_END = 1;
 
 export function segmentProgress(
   progress: number,

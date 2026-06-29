@@ -3,6 +3,7 @@ import prisma from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
 import { UTApi } from "uploadthing/server";
 import { allProjectTypes, ProjectType, sectionType } from "./client_utils";
+import { revalidatePublicSite } from "@/lib/revalidateSite";
 import { revalidatePath } from "next/cache";
 import { images } from "@/types";
 
@@ -133,7 +134,7 @@ export async function addAProject(projectData: Prisma.ProjectCreateInput) {
       data: projectData,
     });
     revalidatePath("/admin");
-    revalidatePath("/");
+    revalidatePublicSite(project.id);
     return project;
   } catch (error) {
     console.error("Error creating project:", error);
@@ -166,7 +167,7 @@ export async function deleteProject(projectData: Prisma.ProjectCreateInput) {
     });
 
     revalidatePath("/admin");
-    revalidatePath("/");
+    revalidatePublicSite(projectData.id);
 
     return projectDel;
   } catch (error) {
@@ -189,7 +190,7 @@ export async function updateProject(
       data: projectData,
     });
     revalidatePath("/admin");
-    revalidatePath("/");
+    revalidatePublicSite(id);
     revalidatePath(`/admin/${id}`);
     return project;
   } catch (error) {

@@ -73,7 +73,7 @@ export default memo(function Hero({
           ))}
         </>
       }
-      headline={<HeroHeadline text="Trikala Architect" />}
+      headline={<HeroHeadline text="Trikala Architects" />}
     />
   );
 });

@@ -2,6 +2,14 @@ import { ourFileRouter } from "@/app/api/uploadthing/core";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import JsonLd from "@/components/seo/JsonLd";
+import {
+  DEFAULT_DESCRIPTION,
+  ORGANIZATION_JSON_LD,
+  SITE_NAME,
+  SITE_URL,
+  WEBSITE_JSON_LD,
+} from "@/lib/seo";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import NextTopLoader from "nextjs-toploader";
@@ -9,6 +17,7 @@ import { Toaster } from "react-hot-toast";
 import { extractRouterConfig } from "uploadthing/server";
 import "./globals.css";
 import BackToTopBtn from "@/components/BackToTop";
+import GoogleAnalytics from "@/components/seo/GoogleAnalytics";
 import MainScrollContainer from "@/components/MainScrollContainer";
 import PsudoScollBar from "@/components/PseudoScollBar";
 
@@ -19,23 +28,33 @@ const silver = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Trikal Architects - Architects & Interior Designers",
-  description:
-    "Trikala Architects creates eco-friendly, functional, and innovative spaces, inspiring communities through impactful architecture.",
+  title: {
+    default: `${SITE_NAME} - Architects & Interior Designers`,
+    template: `%s | ${SITE_NAME}`,
+  },
+  description: DEFAULT_DESCRIPTION,
+  metadataBase: new URL(SITE_URL),
+  robots: { index: true, follow: true },
   openGraph: {
-    title: "Trikal Architects",
-    description: "Trikal Architects - Architects & Interior Designers",
-    url: "https://trikalarchitects.com",
-    siteName: "Trikal Architects",
+    title: SITE_NAME,
+    description: `${SITE_NAME} - Architects & Interior Designers`,
+    url: SITE_URL,
+    siteName: SITE_NAME,
     images: [
       {
-        url: "https://trikalarchitects.com/static/logo.webp",
+        url: "/static/logo.webp",
         width: 800,
         height: 600,
       },
     ],
     locale: "en-IN",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_NAME,
+    description: `${SITE_NAME} - Architects & Interior Designers`,
+    images: ["/static/logo.webp"],
   },
   keywords: [
     "Trikal Architects",
@@ -49,37 +68,32 @@ export const metadata: Metadata = {
     "Commercial Design",
     "Office Design",
     "Residential Design",
-    "Design",
-    "Sketches",
-    "3D Models",
     "Interior Designers in Delhi NCR",
     "Interior Designers in Delhi",
     "Interior Designers in Gurgaon",
     "Interior Designers in Gurugram",
     "Interior Designers in Noida",
-    "Interior Designers in Noida",
     "Interior Designers in Faridabad",
     "Interior Designers in Ghaziabad",
-    "Inspiration for Interior Design",
-    "Interior Design Ideas",
-    "Interior Design Sketches",
-    "Interior Sketches",
-    "3D Models for Interior Design",
-    "Architect neer delhi",
-    "Architect neer me",
+    "Architect near Delhi",
+    "Architect near me",
   ],
   icons: {
     icon: ["/logo.png?v=1"],
     apple: ["/logo.png?v=1"],
     shortcut: ["/logo.png?v=1"],
   },
-  metadataBase: new URL("https://trikalarchitects.com"),
   authors: [
     {
       name: "Tanya Agarwal",
       url: "https://www.instagram.com/trikalaarchitects/",
     },
   ],
+  ...(process.env.GOOGLE_SITE_VERIFICATION && {
+    verification: {
+      google: process.env.GOOGLE_SITE_VERIFICATION,
+    },
+  }),
 };
 
 export default async function RootLayout({
@@ -90,6 +104,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <head>
+        <JsonLd data={[ORGANIZATION_JSON_LD, WEBSITE_JSON_LD]} />
         <link rel="preconnect" href="https://utfs.io" />
         <link rel="dns-prefetch" href="https://utfs.io" />
         <link
@@ -113,6 +128,7 @@ export default async function RootLayout({
           {children}
         </MainScrollContainer>
         <Toaster />
+        <GoogleAnalytics />
         <Analytics />
         <SpeedInsights />
       </body>
