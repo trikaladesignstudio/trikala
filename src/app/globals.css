@@ -6,6 +6,7 @@
   --page-max: 1400px;
   --page-gutter: 1.5rem;
   --page-gutter-lg: 3rem;
+  --viewport-height: 100dvh;
 }
 
 @media (min-width: 1024px) {
@@ -30,6 +31,7 @@
 
 html,
 body {
+  min-height: var(--viewport-height);
   height: 100%;
   font-size: 16px;
   line-height: 22px;
@@ -88,6 +90,16 @@ main::-webkit-scrollbar {
 
 .rpv-core__inner-page{
   background: transparent;
+}
+
+.pdf-viewer--page-scroll .rpv-core__viewer,
+.pdf-viewer--page-scroll .rpv-core__inner-container,
+.pdf-viewer--page-scroll .rpv-core__inner-pages,
+.pdf-viewer--page-scroll .rpv-core__inner-pages--single,
+.pdf-viewer--page-scroll .rpv-core__inner-page-container--single {
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: visible !important;
 }
 
 /* main::-webkit-scrollbar-track {

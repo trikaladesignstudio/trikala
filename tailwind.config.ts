@@ -51,6 +51,13 @@ const config: Config = withUt({
         geist: ["var(--font-geist-sans)"],
         "geist-mono": ["var(--font-geist-mono)"],
       },
+      height: {
+        screen: "var(--viewport-height)",
+        "viewport-unit": "calc(var(--viewport-height) / 100)",
+      },
+      minHeight: {
+        screen: "var(--viewport-height)",
+      },
     },
   },
   safelist: ["lg:[--divider:4]", "md:[--divider:10]", "sm:[--divider:10]"],

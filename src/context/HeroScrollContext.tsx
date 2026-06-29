@@ -5,6 +5,7 @@ import { motionValue, type MotionValue } from "framer-motion";
 
 type HeroScrollContextValue = {
   introReveal: MotionValue<number>;
+  introComplete: boolean;
 };
 
 export const HeroScrollContext = createContext<HeroScrollContextValue | null>(
@@ -17,6 +18,7 @@ export function useHeroScroll(): HeroScrollContextValue {
   return (
     useContext(HeroScrollContext) ?? {
       introReveal: FALLBACK_REVEAL,
+      introComplete: true,
     }
   );
 }

@@ -4,8 +4,21 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { mat4, quat, vec2, vec3 } from "gl-matrix";
 
+import {
+  GLOBE_HINT_TEXT,
+  INTRO_CAMERA_DEFAULT,
+  INTRO_CAMERA_ZOOM_OUT,
+  INTRO_READY_DURATION_MS,
+  INTRO_ROTATION_VELOCITY,
+  INTRO_SETTLE_DURATION_MS,
+  INTRO_SPIN_AXIS,
+  INTRO_SPIN_DURATION_MS,
+  INTRO_SPIN_ROTATIONS,
+  MOBILE_GLOBE_MAX_WIDTH,
+} from "@/lib/featuredGlobeIntro";
 import { FALLBACK_MENU_ITEMS } from "@/lib/heroFeaturedUtils";
 import { cn } from "@/lib/utils";
+import { useScrollContainer } from "@/context/ScrollContainerContext";
 
 import "./InfiniteMenu.css";
 
@@ -20,7 +33,22 @@ type InfiniteMenuProps = {
   items?: InfiniteMenuItem[];
   scale?: number;
   showOverlay?: boolean;
+  introPrepareRequested?: boolean;
+  introRequested?: boolean;
+  introPlaying?: boolean;
+  introComplete?: boolean;
+  onIntroComplete?: () => void;
 };
+
+type IntroMode = "idle" | "ready" | "spin" | "settle" | "done";
+
+function easeInOutCubic(t: number) {
+  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+}
+
+function easeOutCubic(t: number) {
+  return 1 - Math.pow(1 - t, 3);
+}
 
 const discVertShaderSource = `#version 300 es
 
@@ -148,13 +176,13 @@ function loadMenuImage(src: string, ms = 8000): Promise<HTMLImageElement> {
 
 function drawCoverSquare(
   ctx: CanvasRenderingContext2D,
-  img: CanvasImageSource,
+  img: HTMLImageElement,
   x: number,
   y: number,
   size: number
 ) {
-  const iw = "naturalWidth" in img ? img.naturalWidth : img.width;
-  const ih = "naturalHeight" in img ? img.naturalHeight : img.height;
+  const iw = img.naturalWidth || img.width;
+  const ih = img.naturalHeight || img.height;
   const side = Math.min(iw, ih);
   const sx = (iw - side) / 2;
   const sy = (ih - side) / 2;
@@ -404,12 +432,12 @@ function resizeCanvasToDisplaySize(canvas: HTMLCanvasElement) {
 
 function makeBuffer(
   gl: WebGL2RenderingContext,
-  sizeOrData: ArrayBufferView | number,
+  data: ArrayBufferView,
   usage: number
 ) {
   const buf = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-  gl.bufferData(gl.ARRAY_BUFFER, sizeOrData, usage);
+  gl.bufferData(gl.ARRAY_BUFFER, data, usage);
   gl.bindBuffer(gl.ARRAY_BUFFER, null);
   return buf;
 }
@@ -431,7 +459,16 @@ function createAndSetupTexture(
 }
 
 class ArcballControl {
+  static DRAG_COMMIT_PX = 12;
+  static SCROLL_VERTICAL_BIAS = 1.15;
+
+  pointerEnabled = true;
+  scrollFriendly =
+    typeof window !== "undefined" &&
+    window.matchMedia("(pointer: coarse)").matches;
   isPointerDown = false;
+  activePointerId: number | null = null;
+  pointerStart = vec2.create();
   orientation = quat.create();
   pointerRotation = quat.create();
   rotationVelocity = 0;
@@ -453,22 +490,72 @@ class ArcballControl {
   ) {
     this.canvas = canvas;
     this.updateCallback = updateCallback;
+    canvas.style.touchAction = this.scrollFriendly ? "pan-y" : "none";
+
+    const endPointer = (e: PointerEvent) => {
+      if (this.activePointerId !== null && e.pointerId !== this.activePointerId) {
+        return;
+      }
+      this.releasePointer();
+    };
 
     canvas.addEventListener("pointerdown", (e) => {
+      if (!this.pointerEnabled) return;
+      if (e.pointerType === "mouse" && e.button !== 0) return;
+
+      this.activePointerId = e.pointerId;
+      vec2.set(this.pointerStart, e.clientX, e.clientY);
       vec2.set(this.pointerPos, e.clientX, e.clientY);
       vec2.copy(this.previousPointerPos, this.pointerPos);
-      this.isPointerDown = true;
+
+      if (!this.scrollFriendly) {
+        this.isPointerDown = true;
+        canvas.setPointerCapture(e.pointerId);
+      }
     });
-    canvas.addEventListener("pointerup", () => {
-      this.isPointerDown = false;
-    });
-    canvas.addEventListener("pointerleave", () => {
-      this.isPointerDown = false;
-    });
+    canvas.addEventListener("pointerup", endPointer);
+    canvas.addEventListener("pointercancel", endPointer);
+    canvas.addEventListener("pointerleave", endPointer);
     canvas.addEventListener("pointermove", (e) => {
-      if (this.isPointerDown) vec2.set(this.pointerPos, e.clientX, e.clientY);
+      if (!this.pointerEnabled) return;
+      if (this.activePointerId === null || e.pointerId !== this.activePointerId) {
+        return;
+      }
+
+      if (this.scrollFriendly && !this.isPointerDown) {
+        const dx = e.clientX - this.pointerStart[0];
+        const dy = e.clientY - this.pointerStart[1];
+        const distance = Math.hypot(dx, dy);
+        if (distance < ArcballControl.DRAG_COMMIT_PX) return;
+
+        if (Math.abs(dy) > Math.abs(dx) * ArcballControl.SCROLL_VERTICAL_BIAS) {
+          this.releasePointer();
+          return;
+        }
+
+        this.isPointerDown = true;
+        vec2.set(this.pointerPos, e.clientX, e.clientY);
+        vec2.copy(this.previousPointerPos, this.pointerPos);
+        canvas.setPointerCapture(e.pointerId);
+        return;
+      }
+
+      if (this.isPointerDown) {
+        vec2.set(this.pointerPos, e.clientX, e.clientY);
+      }
     });
-    canvas.style.touchAction = "none";
+  }
+
+  releasePointer() {
+    if (this.activePointerId !== null) {
+      try {
+        this.canvas.releasePointerCapture(this.activePointerId);
+      } catch {
+        /* pointer may not be captured */
+      }
+    }
+    this.activePointerId = null;
+    this.isPointerDown = false;
   }
 
   update(deltaTime: number, targetFrameDuration = 16) {
@@ -602,7 +689,12 @@ class InfiniteGridMenu {
   discProgram!: WebGLProgram;
   discLocations!: Record<string, WebGLUniformLocation | number>;
   discGeo!: DiscGeometry;
-  discBuffers!: ReturnType<Geometry["data"]>;
+  discBuffers!: {
+    vertices: Float32Array;
+    indices: Uint16Array;
+    normals: Float32Array;
+    uvs: Float32Array;
+  };
   discVAO!: WebGLVertexArrayObject | null;
   icoGeo!: IcosahedronGeometry;
   instancePositions!: vec3[];
@@ -619,6 +711,15 @@ class InfiniteGridMenu {
   nearestVertexIndex: number | null = null;
   smoothRotationVelocity = 0;
   movementActive = false;
+  introMode: IntroMode = "idle";
+  introSpinAxis = vec3.create();
+  introElapsed = 0;
+  introSettleElapsed = 0;
+  introReadyElapsed = 0;
+  introReadyDone = false;
+  spinQueued = false;
+  introPrevAngle = 0;
+  introCompleteCallback: (() => void) | null = null;
 
   camera = {
     matrix: mat4.create(),
@@ -648,8 +749,137 @@ class InfiniteGridMenu {
     this.onActiveItemChange = onActiveItemChange;
     this.onMovementChange = onMovementChange;
     this.scaleFactor = scale;
-    this.camera.position[2] = 3 * scale;
+    this.camera.position[2] = INTRO_CAMERA_DEFAULT * scale;
+    vec3.normalize(this.introSpinAxis, vec3.fromValues(...INTRO_SPIN_AXIS));
     this.init(onInit);
+  }
+
+  prepareIntro() {
+    if (this.introMode !== "idle") return;
+    this.introMode = "ready";
+    this.introReadyElapsed = 0;
+    this.introReadyDone = false;
+    this.control.pointerEnabled = false;
+    this.control.isPointerDown = false;
+    this.control.snapTargetDirection = null;
+    this.movementActive = true;
+    this.onMovementChange(true);
+  }
+
+  queueSpin(onComplete?: () => void) {
+    this.introCompleteCallback = onComplete ?? null;
+    this.spinQueued = true;
+    if (this.introMode === "ready" && this.introReadyDone) {
+      this.beginSpin();
+    } else if (this.introMode === "idle") {
+      this.prepareIntro();
+    }
+  }
+
+  beginSpin() {
+    if (this.introMode === "spin" || this.introMode === "settle" || this.introMode === "done") {
+      return;
+    }
+    this.introMode = "spin";
+    this.introElapsed = 0;
+    this.introSettleElapsed = 0;
+    this.introPrevAngle = 0;
+    this.control.pointerEnabled = false;
+    this.control.isPointerDown = false;
+    this.control.snapTargetDirection = null;
+    this.camera.position[2] = INTRO_CAMERA_ZOOM_OUT * this.scaleFactor;
+    this.updateCameraMatrix();
+    this.movementActive = true;
+    this.onMovementChange(true);
+  }
+
+  startIntro(onComplete?: () => void) {
+    this.queueSpin(onComplete);
+  }
+
+  completeIntro() {
+    this.introMode = "done";
+    this.control.pointerEnabled = true;
+    this.control.rotationVelocity = 0;
+    this.smoothRotationVelocity = 0;
+    this.camera.position[2] = INTRO_CAMERA_DEFAULT * this.scaleFactor;
+    this.updateCameraMatrix();
+    this.movementActive = false;
+    this.onMovementChange(false);
+    const cb = this.introCompleteCallback;
+    this.introCompleteCallback = null;
+    cb?.();
+  }
+
+  updateIntro(deltaTime: number) {
+    if (this.introMode === "ready") {
+      this.introReadyElapsed += deltaTime;
+      const t = Math.min(1, this.introReadyElapsed / INTRO_READY_DURATION_MS);
+      const zoomOutZ = INTRO_CAMERA_ZOOM_OUT * this.scaleFactor;
+      const defaultZ = INTRO_CAMERA_DEFAULT * this.scaleFactor;
+      const targetZ = defaultZ + (zoomOutZ - defaultZ) * easeOutCubic(t);
+      this.camera.position[2] += (targetZ - this.camera.position[2]) / 6;
+      this.updateCameraMatrix();
+
+      if (t >= 1) {
+        this.introReadyDone = true;
+        this.camera.position[2] = zoomOutZ;
+        this.updateCameraMatrix();
+        if (this.spinQueued) this.beginSpin();
+      }
+      return;
+    }
+
+    if (this.introMode === "spin") {
+      this.introElapsed += deltaTime;
+      const t = Math.min(1, this.introElapsed / INTRO_SPIN_DURATION_MS);
+      const eased = easeInOutCubic(t);
+      const targetAngle = eased * Math.PI * 2 * INTRO_SPIN_ROTATIONS;
+      const deltaAngle = targetAngle - this.introPrevAngle;
+      this.introPrevAngle = targetAngle;
+
+      const spinQuat = quat.create();
+      quat.setAxisAngle(spinQuat, this.introSpinAxis, deltaAngle);
+      this.control.orientation = quat.multiply(
+        quat.create(),
+        spinQuat,
+        this.control.orientation
+      );
+      quat.normalize(this.control.orientation, this.control.orientation);
+
+      vec3.copy(this.control.rotationAxis, this.introSpinAxis);
+      const spinIntensity = 1 - Math.abs(2 * t - 1);
+      this.control.rotationVelocity = INTRO_ROTATION_VELOCITY * spinIntensity;
+      this.smoothRotationVelocity = this.control.rotationVelocity;
+
+      this.onControlUpdate(deltaTime);
+
+      if (t >= 1) {
+        this.introMode = "settle";
+        this.introSettleElapsed = 0;
+        const nearestVertexIndex = this.findNearestVertexIndex();
+        const itemIndex = nearestVertexIndex % Math.max(1, this.items.length);
+        this.onActiveItemChange(itemIndex);
+        this.control.snapTargetDirection = vec3.normalize(
+          vec3.create(),
+          this.getVertexWorldPosition(nearestVertexIndex)
+        );
+      }
+      return;
+    }
+
+    if (this.introMode === "settle") {
+      this.introSettleElapsed += deltaTime;
+      const t = Math.min(1, this.introSettleElapsed / INTRO_SETTLE_DURATION_MS);
+      this.control.update(deltaTime, this.TARGET_FRAME_DURATION);
+
+      this.control.rotationVelocity *= 0.92;
+      this.smoothRotationVelocity *= 0.9;
+
+      if (t >= 1) {
+        this.completeIntro();
+      }
+    }
   }
 
   destroy() {
@@ -666,7 +896,7 @@ class InfiniteGridMenu {
     if (needsResize) {
       this.gl.viewport(0, 0, this.gl.drawingBufferWidth, this.gl.drawingBufferHeight);
     }
-    this.updateProjectionMatrix(this.gl);
+    this.updateProjectionMatrix();
   }
 
   run(time = 0) {
@@ -735,7 +965,7 @@ class InfiniteGridMenu {
     this.initTexture();
     this.control = new ArcballControl(this.canvas, (dt) => this.onControlUpdate(dt));
     this.updateCameraMatrix();
-    this.updateProjectionMatrix(gl);
+    this.updateProjectionMatrix();
     this.resize();
     if (onInit) onInit(this);
   }
@@ -821,7 +1051,11 @@ class InfiniteGridMenu {
 
   animate(deltaTime: number) {
     const gl = this.gl;
-    this.control.update(deltaTime, this.TARGET_FRAME_DURATION);
+    if (this.introMode === "spin" || this.introMode === "settle" || this.introMode === "ready") {
+      this.updateIntro(deltaTime);
+    } else {
+      this.control.update(deltaTime, this.TARGET_FRAME_DURATION);
+    }
 
     const positions = this.instancePositions.map((p) =>
       vec3.transformQuat(vec3.create(), p, this.control.orientation)
@@ -912,8 +1146,8 @@ class InfiniteGridMenu {
     mat4.invert(this.camera.matrices.view, this.camera.matrix);
   }
 
-  updateProjectionMatrix(gl: WebGL2RenderingContext) {
-    this.camera.aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
+  updateProjectionMatrix() {
+    this.camera.aspect = this.canvas.clientWidth / this.canvas.clientHeight;
     const height = this.SPHERE_RADIUS * 0.35;
     const distance = this.camera.position[2];
     this.camera.fov =
@@ -934,11 +1168,41 @@ class InfiniteGridMenu {
   }
 
   onControlUpdate(deltaTime: number) {
+    if (this.introMode === "ready") {
+      if (!this.movementActive) {
+        this.movementActive = true;
+        this.onMovementChange(true);
+      }
+      return;
+    }
+
+    if (this.introMode === "spin") {
+      const zoomOutZ = INTRO_CAMERA_ZOOM_OUT * this.scaleFactor;
+      this.camera.position[2] += (zoomOutZ - this.camera.position[2]) / 6;
+      this.updateCameraMatrix();
+      if (!this.movementActive) {
+        this.movementActive = true;
+        this.onMovementChange(true);
+      }
+      return;
+    }
+
     const timeScale = deltaTime / this.TARGET_FRAME_DURATION + 0.0001;
     let damping = 5 / timeScale;
-    let cameraTargetZ = 3 * this.scaleFactor;
+    let cameraTargetZ = INTRO_CAMERA_DEFAULT * this.scaleFactor;
+
+    if (this.introMode === "settle") {
+      const t = Math.min(1, this.introSettleElapsed / INTRO_SETTLE_DURATION_MS);
+      const zoomOutZ = INTRO_CAMERA_ZOOM_OUT * this.scaleFactor;
+      const defaultZ = INTRO_CAMERA_DEFAULT * this.scaleFactor;
+      cameraTargetZ = defaultZ + (zoomOutZ - defaultZ) * (1 - easeOutCubic(t));
+      damping = 6 / timeScale;
+    }
+
     const isMoving =
-      this.control.isPointerDown || Math.abs(this.smoothRotationVelocity) > 0.01;
+      this.introMode === "settle" ||
+      this.control.isPointerDown ||
+      Math.abs(this.smoothRotationVelocity) > 0.01;
 
     if (isMoving !== this.movementActive) {
       this.movementActive = isMoving;
@@ -991,11 +1255,47 @@ export default function InfiniteMenu({
   items = [],
   scale = 1.0,
   showOverlay = false,
+  introPrepareRequested = false,
+  introRequested = false,
+  introPlaying = false,
+  introComplete = false,
+  onIntroComplete,
 }: InfiniteMenuProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sketchRef = useRef<InfiniteGridMenu | null>(null);
+  const scrollContainer = useScrollContainer();
+  const introPrepareStartedRef = useRef(false);
+  const introStartedRef = useRef(false);
   const [activeItem, setActiveItem] = useState<InfiniteMenuItem | null>(null);
   const [isMoving, setIsMoving] = useState(false);
+  const [isScrolling, setIsScrolling] = useState(false);
+  const [isMobileOverlay, setIsMobileOverlay] = useState(false);
+
+  useEffect(() => {
+    const root = scrollContainer?.current;
+    if (!root) return;
+
+    let timeout = 0;
+    const onScroll = () => {
+      setIsScrolling(true);
+      window.clearTimeout(timeout);
+      timeout = window.setTimeout(() => setIsScrolling(false), 180);
+    };
+
+    root.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      root.removeEventListener("scroll", onScroll);
+      window.clearTimeout(timeout);
+    };
+  }, [scrollContainer]);
+
+  useEffect(() => {
+    const mq = window.matchMedia(`(max-width: ${MOBILE_GLOBE_MAX_WIDTH - 1}px)`);
+    const update = () => setIsMobileOverlay(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -1025,58 +1325,151 @@ export default function InfiniteMenu({
       window.removeEventListener("resize", handleResize);
       sketch.destroy();
       sketchRef.current = null;
+      introPrepareStartedRef.current = false;
+      introStartedRef.current = false;
     };
   }, [items, scale]);
 
+  useEffect(() => {
+    if (!introPrepareRequested || introPrepareStartedRef.current) return;
+
+    let raf = 0;
+    const tryPrepare = () => {
+      const sketch = sketchRef.current;
+      if (!sketch) {
+        raf = requestAnimationFrame(tryPrepare);
+        return;
+      }
+      introPrepareStartedRef.current = true;
+      sketch.prepareIntro();
+    };
+
+    tryPrepare();
+    return () => cancelAnimationFrame(raf);
+  }, [introPrepareRequested]);
+
+  useEffect(() => {
+    if (!introRequested || introStartedRef.current) return;
+
+    let raf = 0;
+    const tryStart = () => {
+      const sketch = sketchRef.current;
+      if (!sketch) {
+        raf = requestAnimationFrame(tryStart);
+        return;
+      }
+      introStartedRef.current = true;
+      sketch.queueSpin(() => {
+        onIntroComplete?.();
+      });
+    };
+
+    tryStart();
+    return () => cancelAnimationFrame(raf);
+  }, [introRequested, onIntroComplete]);
+
   const projectLink = activeItem?.link?.trim() ?? "";
   const isExternalLink = projectLink.startsWith("http");
-  const textVisible = !isMoving;
+  const overlayVisible = !introPlaying && !isMoving && !isScrolling;
+  const overlayHidden = introPlaying;
+  const showLinkButton = Boolean(projectLink) && overlayVisible;
+
+  const linkButtonClass = cn(
+    "action-button active globe-reveal-item globe-reveal-item--button",
+    isMobileOverlay && "action-button--mobile"
+  );
+
+  const linkButton =
+    showLinkButton &&
+    (isExternalLink ? (
+      <a
+        href={projectLink}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={linkButtonClass}
+        aria-label={`Open ${activeItem?.title ?? "project"}`}
+      >
+        <span className="action-button-icon">&#x2197;</span>
+      </a>
+    ) : (
+      <Link
+        href={projectLink}
+        className={linkButtonClass}
+        aria-label={`View ${activeItem?.title ?? "project"}`}
+      >
+        <span className="action-button-icon">&#x2197;</span>
+      </Link>
+    ));
 
   return (
     <div className="relative h-full w-full">
       <canvas id="infinite-grid-menu-canvas" ref={canvasRef} />
 
       {showOverlay && activeItem && (
-        <>
-          {activeItem.title ? (
-            <h2 className={cn("face-title", textVisible ? "active" : "inactive")}>
+        <div
+          className={cn(
+            "globe-overlay",
+            overlayHidden && "hidden",
+            introComplete && "globe-overlay--revealed"
+          )}
+        >
+          {overlayVisible && activeItem.title ? (
+            <h2
+              className={cn(
+                "face-title font-silver font-medium tracking-[-0.03em] max-lg:font-semibold max-lg:tracking-[-0.025em]",
+                "globe-reveal-item globe-reveal-item--title",
+                "max-lg:hidden active"
+              )}
+            >
               {activeItem.title}
             </h2>
           ) : null}
 
-          {activeItem.description ? (
+          {overlayVisible && activeItem.description ? (
             <p
               className={cn(
-                "face-description",
-                textVisible ? "active" : "inactive"
+                "face-description globe-reveal-item globe-reveal-item--description active"
               )}
             >
               {activeItem.description}
             </p>
           ) : null}
 
-          {textVisible && projectLink && (
-            isExternalLink ? (
-              <a
-                href={projectLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="action-button active"
-                aria-label={`Open ${activeItem.title}`}
-              >
-                <span className="action-button-icon">&#x2197;</span>
-              </a>
-            ) : (
-              <Link
-                href={projectLink}
-                className="action-button active"
-                aria-label={`View ${activeItem.title}`}
-              >
-                <span className="action-button-icon">&#x2197;</span>
-              </Link>
-            )
+          {!isMobileOverlay && linkButton}
+        </div>
+      )}
+
+      {isMobileOverlay && showOverlay && activeItem && (
+        <div
+          className={cn(
+            "globe-overlay globe-overlay--mobile-title",
+            overlayHidden && "hidden",
+            introComplete && "globe-overlay--revealed"
           )}
-        </>
+        >
+          {overlayVisible && activeItem.title ? (
+            <h2
+              className={cn(
+                "face-title font-silver font-semibold tracking-[-0.025em]",
+                "globe-reveal-item globe-reveal-item--title",
+                "active"
+              )}
+            >
+              {activeItem.title}
+            </h2>
+          ) : null}
+        </div>
+      )}
+
+      {isMobileOverlay && showOverlay && linkButton}
+
+      {introComplete && !isMobileOverlay && (
+        <p
+          className="globe-hint globe-reveal-item globe-reveal-item--hint visible"
+          aria-hidden
+        >
+          {GLOBE_HINT_TEXT}
+        </p>
       )}
     </div>
   );

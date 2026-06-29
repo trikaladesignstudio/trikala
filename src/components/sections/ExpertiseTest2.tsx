@@ -41,7 +41,7 @@ function CarouselData({ images, categoryTitle }: CarouselDataProps) {
                   <Image
                     src={img}
                     alt={`${categoryTitle} project showcase`}
-                    className="w-full object-cover rounded-md h-[24rem] md:h-[28rem] lg:h-[32rem]"
+                    className="w-full object-cover rounded-md h-[14rem] sm:h-[18rem] md:h-[28rem] lg:h-[32rem]"
                     width={400}
                     height={400}
                   />
@@ -50,7 +50,7 @@ function CarouselData({ images, categoryTitle }: CarouselDataProps) {
                 <Image
                   src={img}
                   alt={`${categoryTitle} project showcase`}
-                  className="w-full object-cover rounded-md h-[24rem] md:h-[28rem] lg:h-[32rem]"
+                  className="w-full object-cover rounded-md h-[14rem] sm:h-[18rem] md:h-[28rem] lg:h-[32rem]"
                   width={400}
                   height={400}
                 />
@@ -78,7 +78,7 @@ function SingleExperize({ expertise }: { expertise: expertiseDataType }) {
                 initial="base"
                 whileInView="show"
                 transition={{ ...rollInView.transition, delay: 0.2 }}
-                className="text-5xl font-semibold text-white"
+                className="text-3xl font-semibold text-white md:text-4xl lg:text-5xl"
               >
                 {expertise.title}
               </motion.div>
@@ -88,7 +88,7 @@ function SingleExperize({ expertise }: { expertise: expertiseDataType }) {
                 initial="base"
                 whileInView="show"
                 transition={{ ...rollInView.transition, delay: 0.4 }}
-                className="text-xl pt-5 text-white"
+                className="pt-3 text-base text-white md:pt-4 md:text-lg lg:pt-5 lg:text-xl"
               >
                 {expertise.description}
               </motion.p>

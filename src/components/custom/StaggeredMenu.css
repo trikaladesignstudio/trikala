@@ -11,7 +11,7 @@
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
+  height: var(--viewport-height);
   z-index: 50;
   overflow: hidden;
   pointer-events: none;
@@ -30,7 +30,7 @@
   position: fixed;
   top: 0;
   bottom: 0;
-  height: 100vh;
+  height: var(--viewport-height);
 }
 
 .staggered-menu-header {

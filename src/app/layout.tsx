@@ -18,6 +18,7 @@ import { extractRouterConfig } from "uploadthing/server";
 import "./globals.css";
 import BackToTopBtn from "@/components/BackToTop";
 import GoogleAnalytics from "@/components/seo/GoogleAnalytics";
+import ViewportHeightSync from "@/components/ViewportHeightSync";
 import MainScrollContainer from "@/components/MainScrollContainer";
 import PsudoScollBar from "@/components/PseudoScollBar";
 
@@ -122,6 +123,7 @@ export default async function RootLayout({
         {/* <TwScreenInfo /> */}
         <NextTopLoader height={3} color="#1A1A1A" showSpinner={false} />
         <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
+        <ViewportHeightSync />
         <MainScrollContainer>
           <BackToTopBtn />
           <PsudoScollBar />

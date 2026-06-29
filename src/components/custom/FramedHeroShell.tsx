@@ -8,7 +8,7 @@ import {
   useHeroScrollTrigger,
   type HeroScrollTriggerTargets,
 } from "@/hooks/useHeroScrollTrigger";
-import { dispatchHeroIntroComplete } from "@/lib/heroIntro";
+import { armHeroIntro, dispatchHeroIntroComplete } from "@/lib/heroIntro";
 import {
   applyFrameWindow,
   CONTENT_STAGGER,
@@ -23,6 +23,11 @@ import {
 } from "@/lib/heroIntroFrame";
 import { INTRO_REVEAL_MS } from "@/lib/heroIntro";
 import { HERO_ELEMENT_VIEWPORTS } from "@/lib/heroScrollPhases";
+import {
+  getViewportHeight,
+  getViewportWidth,
+  VIEWPORT_HEIGHT_CHANGE_EVENT,
+} from "@/lib/viewportHeight";
 import { cn } from "@/lib/utils";
 import {
   motion,
@@ -98,16 +103,27 @@ export default function FramedHeroShell({
     window.setTimeout(() => setIntroMounted(false), 300);
   }, []);
 
-  const introReveal = useHeroIntroReveal({ onComplete: handleIntroComplete });
+  const introReveal = useHeroIntroReveal({
+    onComplete: handleIntroComplete,
+    prefersReducedMotion,
+  });
+
+  useLayoutEffect(() => {
+    armHeroIntro();
+  }, []);
 
   useLayoutEffect(() => {
     const update = () => {
-      viewportHeightRef.current = window.innerHeight;
-      setPillInsets(getPillInsets(window.innerHeight, window.innerWidth));
+      viewportHeightRef.current = getViewportHeight();
+      setPillInsets(getPillInsets(getViewportHeight(), getViewportWidth()));
     };
     update();
     window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
+    window.addEventListener(VIEWPORT_HEIGHT_CHANGE_EVENT, update);
+    return () => {
+      window.removeEventListener("resize", update);
+      window.removeEventListener(VIEWPORT_HEIGHT_CHANGE_EVENT, update);
+    };
   }, []);
 
   useEffect(() => {
@@ -122,12 +138,13 @@ export default function FramedHeroShell({
   useEffect(() => {
     if (introComplete) return;
     const fallback = window.setTimeout(() => {
+      introReveal.set(1);
       setIntroComplete(true);
       setIntroMounted(false);
       dispatchHeroIntroComplete();
     }, INTRO_REVEAL_MS + 800);
     return () => window.clearTimeout(fallback);
-  }, [introComplete]);
+  }, [introComplete, introReveal]);
 
   useEffect(() => {
     if (!introComplete) return;
@@ -239,7 +256,10 @@ export default function FramedHeroShell({
     frameInsetStart,
   ]);
 
-  const contextValue = useMemo(() => ({ introReveal }), [introReveal]);
+  const contextValue = useMemo(
+    () => ({ introReveal, introComplete }),
+    [introReveal, introComplete]
+  );
 
   const navOpacity = useTransform(introReveal, staggerRange(CONTENT_STAGGER.nav));
   const navY = useTransform(introReveal, staggerLift(CONTENT_STAGGER.nav));
@@ -259,9 +279,11 @@ export default function FramedHeroShell({
           "hero-block relative w-full shrink-0 snap-start snap-always bg-[#1a1a1a]",
           className
         )}
-        style={{ height: `${HERO_ELEMENT_VIEWPORTS * 100}svh` }}
+        style={{
+          height: `calc(var(--viewport-height) * ${HERO_ELEMENT_VIEWPORTS})`,
+        }}
       >
-        <div className="sticky top-0 h-[100svh] overflow-hidden">
+        <div className="sticky top-0 h-screen overflow-hidden">
           <div ref={bgRef} className="absolute inset-0 opacity-0">
             {background}
             <div
@@ -295,7 +317,8 @@ export default function FramedHeroShell({
             <div
               className={cn(
                 "relative z-30",
-                "[--hero-header:6.5rem] lg:[--hero-header:8.25rem]"
+                "[--hero-header:6.5rem] lg:[--hero-header:8.25rem]",
+                introComplete && "pt-[var(--frame-inset)]"
               )}
               style={
                 { "--frame-inset": `${frameInsetStart}px` } as React.CSSProperties
@@ -303,8 +326,17 @@ export default function FramedHeroShell({
             >
               <motion.div
                 ref={navRef}
-                style={{ opacity: navOpacity, y: navY }}
-                className="max-lg:absolute max-lg:inset-x-[var(--frame-inset)] max-lg:top-[var(--frame-inset)] lg:relative"
+                style={
+                  introComplete
+                    ? undefined
+                    : { opacity: navOpacity, y: navY }
+                }
+                className={cn(
+                  "lg:relative",
+                  introComplete
+                    ? "max-lg:absolute max-lg:inset-x-[var(--frame-inset)] max-lg:top-0"
+                    : "max-lg:absolute max-lg:inset-x-0 max-lg:top-0"
+                )}
               >
                 <Navbar />
               </motion.div>

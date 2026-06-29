@@ -10,7 +10,7 @@ export default function Custom404() {
       <div className="relative shrink-0 bg-black">
         <Navbar />
       </div>
-      <Section className="flex flex-col items-center justify-center h-[100svh] gap-8">
+      <Section className="flex flex-col items-center justify-center h-screen gap-8">
         <div className="">
           <h1 className="text-4xl font-bold mb-4">404 - Page Not Found</h1>
           <p className="text-lg">

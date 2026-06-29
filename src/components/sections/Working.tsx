@@ -45,7 +45,7 @@ function formatSlides(
 const PANEL_ANIMATION_MS = 300;
 
 const sectionClassName =
-  "relative z-10 isolate bg-[#f5f5f5] snap-start min-h-[100svh] justify-center gap-4 py-6 lg:snap-center lg:gap-10 lg:py-10";
+  "relative z-10 isolate bg-[#f5f5f5] snap-start min-h-screen justify-center gap-4 py-6 lg:snap-center lg:gap-10 lg:py-10";
 
 function Working({
   data,
@@ -130,9 +130,9 @@ function Working({
         initial="base"
         whileInView="show"
         transition={{ ...rollInView.transition, delay: 0.2 }}
-        className="md:hidden flex flex-col gap-4 w-full shrink-0"
+        className="md:hidden flex w-full shrink-0 flex-col gap-3 sm:gap-4"
       >
-        <div className="relative h-[min(40svh,20rem)] w-full overflow-hidden border border-zinc-200/80">
+        <div className="relative h-[min(28svh,12rem)] w-full overflow-hidden border border-zinc-200/80 sm:h-[min(32svh,14rem)]">
           <AnimatePresence initial={false}>
             <motion.div
               key={activeSlide.id}
@@ -160,12 +160,12 @@ function Working({
             id={`working-panel-${activeSlide.id}`}
             role="tabpanel"
             aria-labelledby={`working-tab-${activeSlide.id}`}
-            className="absolute inset-x-0 bottom-0 z-10 p-4 text-white"
+            className="absolute inset-x-0 bottom-0 z-10 p-3 text-white sm:p-4"
           >
             <span className="text-sm tabular-nums text-white/70 leading-none">
               {activeSlide.stepNumber}
             </span>
-            <h3 className="font-bold text-lg leading-tight mt-1">
+            <h3 className="mt-1 text-base font-bold leading-tight sm:text-lg">
               {activeSlide.title}
             </h3>
             <AnimatePresence initial={false}>
@@ -250,7 +250,7 @@ function Working({
           <div
             role="tablist"
             aria-label="Design process steps"
-            className="flex w-full h-[55vh] gap-1 overflow-hidden"
+            className="flex w-full h-[55svh] gap-1 overflow-hidden"
           >
             {slides.map((slide, index) => {
               const isActive = index === currentIndex;

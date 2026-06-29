@@ -12,6 +12,10 @@ import {
   HERO_APPROACH_VIEWPORTS,
   segmentProgress,
 } from "@/lib/heroScrollPhases";
+import {
+  getViewportHeight,
+  VIEWPORT_HEIGHT_CHANGE_EVENT,
+} from "@/lib/viewportHeight";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { RefObject, useLayoutEffect, useRef } from "react";
@@ -134,7 +138,7 @@ export function useHeroScrollTrigger({
         nodes as Required<ReturnType<typeof collectTargets>>;
 
       const insetStart = frameWindowFrom(frameInsetStart, frameInsetStart);
-      const approachPx = HERO_APPROACH_VIEWPORTS * window.innerHeight;
+      const approachPx = HERO_APPROACH_VIEWPORTS * getViewportHeight();
 
       gsap.set(edgeMask, insetStart);
       gsap.set(contentClip, frameWindowTo);
@@ -220,10 +224,12 @@ export function useHeroScrollTrigger({
 
       refresh();
       window.addEventListener("resize", refresh);
+      window.addEventListener(VIEWPORT_HEIGHT_CHANGE_EVENT, refresh);
       window.addEventListener(HERO_INTRO_COMPLETE_EVENT, refresh);
 
       cleanup = () => {
         window.removeEventListener("resize", refresh);
+        window.removeEventListener(VIEWPORT_HEIGHT_CHANGE_EVENT, refresh);
         window.removeEventListener(HERO_INTRO_COMPLETE_EVENT, refresh);
         approachTrigger.kill();
       };

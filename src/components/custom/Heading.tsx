@@ -8,6 +8,7 @@ type Heading = {
   text: string;
   customDelay?: number;
   playOnMount?: boolean;
+  startVisible?: boolean;
   speed?: "normal" | "fast";
 };
 
@@ -16,11 +17,13 @@ function Heading({
   text,
   customDelay = 0,
   playOnMount = false,
+  startVisible = false,
   speed = "normal",
 }: Heading) {
   const words = text.split(" ");
   const wordStagger = speed === "fast" ? 0.1 : 0.2;
   const wordDuration = speed === "fast" ? 0.45 : transition.duration;
+  const initialState = startVisible ? "visible" : "hidden";
 
   return (
     <motion.h1
@@ -40,9 +43,9 @@ function Heading({
               delay: customDelay + index * wordStagger,
             }}
             variants={brurRenderVariant}
-            initial="hidden"
-            animate={playOnMount ? "visible" : "hidden"}
-            whileInView={playOnMount ? undefined : "visible"}
+            initial={initialState}
+            animate={playOnMount || startVisible ? "visible" : "hidden"}
+            whileInView={playOnMount || startVisible ? undefined : "visible"}
           >
             {word}
           </motion.span>

@@ -15,7 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useScrollContainer } from "@/context/ScrollContainerContext";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { get_cities, get_data_by_location, getStates } from "@/lib/sheetAccess";
 import { cn } from "@/lib/utils";
 import {
@@ -24,8 +24,7 @@ import {
   locationType,
 } from "@/types/actions";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowLeftIcon } from "@radix-ui/react-icons";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 
 const formatedNumber = (num: number) => {
@@ -60,18 +59,13 @@ const buildingClassOptions: {
 const panelClass =
   "overflow-hidden rounded-[2rem] border border-zinc-200/80 bg-white shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]";
 
-export default function PriceForm({
-  handleBack,
-  projectType,
-}: {
-  handleBack: () => void;
-  projectType: string;
-}) {
-  const scrollContainerRef = useScrollContainer();
+type MobileTab = "details" | "estimate";
 
+export default function PriceForm({ projectType }: { projectType: string }) {
   const [unit, setUnit] = useState<"sqft" | "sqm">("sqft");
   const [buildingClass, setBuildingClass] =
     useState<BuildingClassType>("regular");
+  const [mobileTab, setMobileTab] = useState<MobileTab>("details");
 
   const [stateData, setStateData] = useState<locationType[]>([]);
   const [cityData, setCityData] = useState<locationType[]>([]);
@@ -91,77 +85,6 @@ export default function PriceForm({
 
   const [isDirty, setIsDirty] = useState(false);
   const [isCalculating, setIsCalculating] = useState(false);
-  const [scrollRequestId, setScrollRequestId] = useState(0);
-
-  const resultSectionRef = useRef<HTMLDivElement>(null);
-
-  const requestResultsScroll = useCallback(() => {
-    setScrollRequestId((id) => id + 1);
-  }, []);
-
-  const scrollToResults = useCallback(() => {
-    const container = scrollContainerRef?.current;
-    const target = resultSectionRef.current;
-    if (!target) return false;
-
-    const isMobile = window.innerWidth < 768;
-    const offset = isMobile ? 88 : 24;
-
-    const applyScroll = () => {
-      if (container) {
-        const containerRect = container.getBoundingClientRect();
-        const targetRect = target.getBoundingClientRect();
-        container.scrollTo({
-          top: Math.max(
-            0,
-            container.scrollTop + (targetRect.top - containerRect.top) - offset
-          ),
-          behavior: "smooth",
-        });
-      } else {
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    };
-
-    requestAnimationFrame(() => requestAnimationFrame(applyScroll));
-    return true;
-  }, [scrollContainerRef]);
-
-  useEffect(() => {
-    if (scrollRequestId === 0 || !isFormFilled) return;
-
-    let cancelled = false;
-    let observer: ResizeObserver | undefined;
-    const retryTimers: ReturnType<typeof setTimeout>[] = [];
-
-    const runScroll = () => {
-      if (cancelled) return;
-      scrollToResults();
-    };
-
-    const startScroll = () => {
-      const target = resultSectionRef.current;
-      if (!target) {
-        retryTimers.push(setTimeout(runScroll, 80));
-        return;
-      }
-
-      observer = new ResizeObserver(runScroll);
-      observer.observe(target);
-      runScroll();
-
-      retryTimers.push(setTimeout(runScroll, 200));
-      retryTimers.push(setTimeout(runScroll, 500));
-    };
-
-    retryTimers.push(setTimeout(startScroll, 50));
-
-    return () => {
-      cancelled = true;
-      observer?.disconnect();
-      retryTimers.forEach(clearTimeout);
-    };
-  }, [scrollRequestId, isFormFilled, scrollToResults]);
 
   const displayArea =
     unit === "sqft" ? areaSqft : areaSqft > 0 ? convertToSqM(areaSqft) : 0;
@@ -245,7 +168,7 @@ export default function PriceForm({
     }
 
     if (!isDirty && isFormFilled) {
-      requestResultsScroll();
+      setMobileTab("estimate");
       return;
     }
 
@@ -265,7 +188,7 @@ export default function PriceForm({
       setValueToCalculator(data);
       setIsFormFilled(true);
       setIsDirty(false);
-      requestResultsScroll();
+      setMobileTab("estimate");
       toast.success("Estimate ready");
     } catch {
       toast.error("Could not fetch pricing data. Try again.");
@@ -274,317 +197,343 @@ export default function PriceForm({
     }
   };
 
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ type: "spring", stiffness: 100, damping: 20 }}
-      className="w-full"
-    >
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:items-start lg:gap-10">
-        <div className="flex flex-col gap-6">
-          <div className="flex flex-col gap-4 border-b border-zinc-200/80 pb-5">
-            <div className="flex items-start justify-between gap-4">
-              <div className="space-y-2">
-                <p className="text-xs uppercase tracking-[0.14em] text-zinc-500">
-                  Estimating
-                </p>
-                <h2 className="font-silver text-2xl tracking-tight text-black sm:text-3xl md:text-4xl">
-                  {projectType}
-                </h2>
-              </div>
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={handleBack}
-                className="shrink-0 rounded-full border-zinc-200 bg-white/90 px-3.5 font-semibold text-zinc-700 shadow-none hover:border-zinc-300 hover:bg-zinc-50 hover:text-black"
-              >
-                <ArrowLeftIcon className="h-4 w-4" />
-                Back
-              </Button>
+  const ctaLabel = isCalculating
+    ? "Calculating..."
+    : isFormFilled && !isDirty
+      ? "View estimate"
+      : "Calculate estimate";
+
+  const formFields = (
+    <>
+      <p className="max-w-[65ch] text-sm leading-relaxed text-zinc-600 sm:text-base lg:hidden">
+        Enter your location and build area for an indicative project cost for{" "}
+        {projectType}.
+      </p>
+
+      <div className={panelClass}>
+        <div className="border-b border-zinc-100 bg-zinc-50/60 px-5 py-4 sm:px-6">
+          <h3 className="text-sm font-medium tracking-tight text-zinc-900">
+            Location & Area
+          </h3>
+        </div>
+        <div className="grid gap-5 px-5 py-5 sm:px-6 sm:py-6">
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="space-y-2">
+              <Label className="text-sm text-zinc-700">State</Label>
+              <Select value={stateId} onValueChange={setStateId}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select state" />
+                </SelectTrigger>
+                <SelectContent className="bg-white">
+                  {stateData.map(({ title, id }) => (
+                    <SelectItem key={id} value={`${id}`}>
+                      {title}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
-            <p className="max-w-[65ch] text-sm leading-relaxed text-zinc-600 sm:text-base">
-              Enter your location and build area for an indicative project cost.
-            </p>
+            <div className="space-y-2">
+              <Label className="text-sm text-zinc-700">City</Label>
+              <Select
+                value={cityId}
+                onValueChange={(value) => {
+                  setCityId(value);
+                  setIsDirty(true);
+                }}
+                disabled={!stateId}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select city" />
+                </SelectTrigger>
+                <SelectContent className="bg-white">
+                  {cityData.map(({ title, id }) => (
+                    <SelectItem key={id} value={`${id}`}>
+                      {title}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
 
+          <div className="space-y-2">
+            <Label className="text-sm text-zinc-700">Area</Label>
+            <div className="flex gap-2">
+              <Input
+                type="number"
+                min={0}
+                placeholder="Enter area"
+                className="flex-1"
+                value={displayArea || ""}
+                onChange={(e) => handleAreaChange(e.target.value)}
+              />
+              <div className="flex overflow-hidden rounded-xl border border-zinc-200">
+                <Button
+                  type="button"
+                  className={cn(
+                    "rounded-none px-4",
+                    unit === "sqft"
+                      ? "bg-custom-db text-white hover:bg-black"
+                      : "bg-white text-zinc-600 hover:bg-zinc-50"
+                  )}
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => handleUnitChange("sqft")}
+                >
+                  ft²
+                </Button>
+                <Button
+                  type="button"
+                  className={cn(
+                    "rounded-none border-l border-zinc-200 px-4",
+                    unit === "sqm"
+                      ? "bg-custom-db text-white hover:bg-black"
+                      : "bg-white text-zinc-600 hover:bg-zinc-50"
+                  )}
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => handleUnitChange("sqm")}
+                >
+                  m²
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className={panelClass}>
+        <div className="border-b border-zinc-100 bg-zinc-50/60 px-5 py-4 sm:px-6">
+          <h3 className="text-sm font-medium tracking-tight text-zinc-900">
+            Building Class
+          </h3>
+        </div>
+        <div className="p-2 sm:p-3">
+          <div
+            role="tablist"
+            aria-label="Building class"
+            className="grid grid-cols-1 gap-2 sm:grid-cols-[1.2fr_1fr_1fr]"
+          >
+            {buildingClassOptions.map((option) => (
+              <button
+                key={option.id}
+                type="button"
+                role="tab"
+                aria-selected={buildingClass === option.id}
+                className={cn(
+                  "flex flex-col items-start rounded-2xl border px-4 py-3 text-left transition-all active:scale-[0.98]",
+                  buildingClass === option.id
+                    ? "border-custom-db bg-custom-db text-white"
+                    : "border-zinc-200 bg-white text-zinc-800 hover:border-custom-lb/40"
+                )}
+                onClick={() => {
+                  setBuildingClass(option.id);
+                  setIsDirty(true);
+                }}
+              >
+                <span className="text-sm font-medium">{option.label}</span>
+                <span
+                  className={cn(
+                    "mt-1 text-xs",
+                    buildingClass === option.id
+                      ? "text-white/75"
+                      : "text-zinc-500"
+                  )}
+                >
+                  {option.description}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+
+  const resultsPanel = (
+    <AnimatePresence mode="wait">
+      {!isFormFilled ? (
+        <motion.div
+          key="placeholder"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className={cn(
+            panelClass,
+            "flex min-h-[320px] flex-col justify-center px-6 py-10 sm:px-8"
+          )}
+        >
+          <p className="text-xs uppercase tracking-[0.14em] text-zinc-500">
+            Results preview
+          </p>
+          <h3 className="mt-2 font-silver text-2xl tracking-tight text-zinc-900">
+            Your estimate appears here
+          </h3>
+          <p className="mt-3 max-w-[45ch] text-sm leading-relaxed text-zinc-600">
+            Fill in location, area, and building class, then calculate to see
+            cost breakdown and construction timeline.
+          </p>
+        </motion.div>
+      ) : (
+        <motion.div
+          key="results"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 12 }}
+          transition={{ type: "spring", stiffness: 100, damping: 20 }}
+          className="flex flex-col gap-6"
+        >
           <div className={panelClass}>
             <div className="border-b border-zinc-100 bg-zinc-50/60 px-5 py-4 sm:px-6">
               <h3 className="text-sm font-medium tracking-tight text-zinc-900">
-                Location & Area
+                Cost Breakdown
               </h3>
             </div>
-            <div className="grid gap-5 px-5 py-5 sm:px-6 sm:py-6">
-              <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid gap-6 px-5 py-5 sm:px-6 sm:py-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]">
+              <div className="grid gap-4">
                 <div className="space-y-2">
-                  <Label className="text-sm text-zinc-700">State</Label>
-                  <Select
-                    value={stateId}
-                    onValueChange={(value) => {
-                      setStateId(value);
-                    }}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select state" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-white">
-                      {stateData.map(({ title, id }) => (
-                        <SelectItem key={id} value={`${id}`}>
-                          {title}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-sm text-zinc-700">City</Label>
-                  <Select
-                    value={cityId}
-                    onValueChange={(value) => {
-                      setCityId(value);
-                      setIsDirty(true);
-                    }}
-                    disabled={!stateId}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select city" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-white">
-                      {cityData.map(({ title, id }) => (
-                        <SelectItem key={id} value={`${id}`}>
-                          {title}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label className="text-sm text-zinc-700">Area</Label>
-                <div className="flex gap-2">
-                  <Input
-                    type="number"
-                    min={0}
-                    placeholder="Enter area"
-                    className="flex-1"
-                    value={displayArea || ""}
-                    onChange={(e) => handleAreaChange(e.target.value)}
-                  />
-                  <div className="flex overflow-hidden rounded-xl border border-zinc-200">
-                    <Button
-                      type="button"
-                      className={cn(
-                        "rounded-none px-4",
-                        unit === "sqft"
-                          ? "bg-custom-db text-white hover:bg-black"
-                          : "bg-white text-zinc-600 hover:bg-zinc-50"
-                      )}
-                      size="sm"
-                      variant="ghost"
-                      onClick={() => handleUnitChange("sqft")}
-                    >
-                      ft²
-                    </Button>
-                    <Button
-                      type="button"
-                      className={cn(
-                        "rounded-none border-l border-zinc-200 px-4",
-                        unit === "sqm"
-                          ? "bg-custom-db text-white hover:bg-black"
-                          : "bg-white text-zinc-600 hover:bg-zinc-50"
-                      )}
-                      size="sm"
-                      variant="ghost"
-                      onClick={() => handleUnitChange("sqm")}
-                    >
-                      m²
-                    </Button>
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-2 text-sm font-medium text-zinc-700">
+                      <div className="h-2.5 w-2.5 rounded-full bg-black" />
+                      Structural
+                    </div>
+                    <div className="font-mono text-sm font-semibold tabular-nums text-zinc-900">
+                      {formatCurrency(results.construction)}
+                    </div>
+                  </div>
+                  <div className="h-1.5 overflow-hidden rounded-full bg-zinc-100">
+                    <div
+                      className="h-full rounded-full bg-black transition-all duration-500"
+                      style={{ width: `${structuralShare}%` }}
+                    />
                   </div>
                 </div>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-2 text-sm font-medium text-zinc-700">
+                      <div className="h-2.5 w-2.5 rounded-full bg-custom-lb" />
+                      Interior
+                    </div>
+                    <div className="font-mono text-sm font-semibold tabular-nums text-zinc-900">
+                      {formatCurrency(results.interior)}
+                    </div>
+                  </div>
+                  <div className="h-1.5 overflow-hidden rounded-full bg-zinc-100">
+                    <div
+                      className="h-full rounded-full bg-custom-lb transition-all duration-500"
+                      style={{ width: `${interiorShare}%` }}
+                    />
+                  </div>
+                </div>
+                <div className="border-t border-zinc-100 pt-4">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="text-sm font-medium text-zinc-600">
+                      Total Cost
+                    </div>
+                    <div className="font-mono text-xl font-semibold tabular-nums tracking-tight text-zinc-900">
+                      {formatCurrency(totalCost)}
+                    </div>
+                  </div>
+                  <p className="mt-2 font-mono text-xs tabular-nums text-zinc-500">
+                    Estimated duration:{" "}
+                    {Math.max(1, Math.round(results.days)).toLocaleString(
+                      "en-IN"
+                    )}{" "}
+                    days
+                  </p>
+                </div>
+              </div>
+              <div className="h-[240px] w-full sm:h-[260px]">
+                <PieChartComponent
+                  totalValue={formatedNumber(totalCost)}
+                  data={costBreakdownSlices}
+                  compact
+                />
               </div>
             </div>
           </div>
 
           <div className={panelClass}>
-            <div className="border-b border-zinc-100 bg-zinc-50/60 px-5 py-4 sm:px-6">
-              <h3 className="text-sm font-medium tracking-tight text-zinc-900">
-                Building Class
-              </h3>
-            </div>
-            <div className="p-2 sm:p-3">
-              <div
-                role="tablist"
-                aria-label="Building class"
-                className="grid grid-cols-1 gap-2 sm:grid-cols-[1.2fr_1fr_1fr]"
-              >
-                {buildingClassOptions.map((option) => (
-                  <button
-                    key={option.id}
-                    type="button"
-                    role="tab"
-                    aria-selected={buildingClass === option.id}
-                    className={cn(
-                      "flex flex-col items-start rounded-2xl border px-4 py-3 text-left transition-all active:scale-[0.98]",
-                      buildingClass === option.id
-                        ? "border-custom-db bg-custom-db text-white"
-                        : "border-zinc-200 bg-white text-zinc-800 hover:border-custom-lb/40"
-                    )}
-                    onClick={() => {
-                      setBuildingClass(option.id);
-                      setIsDirty(true);
-                    }}
-                  >
-                    <span className="text-sm font-medium">{option.label}</span>
-                    <span
-                      className={cn(
-                        "mt-1 text-xs",
-                        buildingClass === option.id
-                          ? "text-white/75"
-                          : "text-zinc-500"
-                      )}
-                    >
-                      {option.description}
-                    </span>
-                  </button>
-                ))}
-              </div>
-            </div>
+            <BarGraph days={results.days} totalValue={totalCost} />
           </div>
 
+          <p className="max-w-[65ch] text-sm leading-relaxed text-zinc-500">
+            <span className="font-medium text-zinc-700">Note:</span> This is an
+            indicative estimate. Final costs may vary with site conditions,
+            specifications, and project scope. Contact us for a detailed quote.
+          </p>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+
+  return (
+    <div className="w-full">
+      {/* Desktop: asymmetric split layout */}
+      <div className="hidden lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:items-start lg:gap-10">
+        <div className="flex flex-col gap-6">
+          <p className="max-w-[65ch] text-sm leading-relaxed text-zinc-600 sm:text-base">
+            Enter your location and build area for an indicative project cost.
+          </p>
+          {formFields}
           <Button
             className="h-12 w-full rounded-2xl bg-custom-db text-white hover:bg-black active:scale-[0.99]"
             onClick={handleSubmit}
             disabled={isCalculating}
           >
-            {isCalculating
-              ? "Calculating..."
-              : isFormFilled && !isDirty
-                ? "View estimate"
-                : "Calculate estimate"}
+            {ctaLabel}
           </Button>
         </div>
-
-        <div className="flex flex-col gap-6">
-          <AnimatePresence mode="wait">
-            {!isFormFilled ? (
-              <motion.div
-                key="placeholder"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className={cn(
-                  panelClass,
-                  "flex min-h-[320px] flex-col justify-center px-6 py-10 sm:px-8"
-                )}
-              >
-                <p className="text-xs uppercase tracking-[0.14em] text-zinc-500">
-                  Results preview
-                </p>
-                <h3 className="mt-2 font-silver text-2xl tracking-tight text-zinc-900">
-                  Your estimate appears here
-                </h3>
-                <p className="mt-3 max-w-[45ch] text-sm leading-relaxed text-zinc-600">
-                  Fill in location, area, and building class, then calculate to
-                  see cost breakdown and construction timeline.
-                </p>
-              </motion.div>
-            ) : (
-              <motion.div
-                key="results"
-                ref={resultSectionRef}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 12 }}
-                transition={{ type: "spring", stiffness: 100, damping: 20 }}
-                className="flex scroll-mt-24 flex-col gap-6 lg:scroll-mt-6"
-              >
-                <div className={panelClass}>
-                  <div className="border-b border-zinc-100 bg-zinc-50/60 px-5 py-4 sm:px-6">
-                    <h3 className="text-sm font-medium tracking-tight text-zinc-900">
-                      Cost Breakdown
-                    </h3>
-                  </div>
-                  <div className="grid gap-6 px-5 py-5 sm:px-6 sm:py-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]">
-                    <div className="grid gap-4">
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between gap-3">
-                          <div className="flex items-center gap-2 text-sm font-medium text-zinc-700">
-                            <div className="h-2.5 w-2.5 rounded-full bg-black" />
-                            Structural
-                          </div>
-                          <div className="font-mono text-sm font-semibold tabular-nums text-zinc-900">
-                            {formatCurrency(results.construction)}
-                          </div>
-                        </div>
-                        <div className="h-1.5 overflow-hidden rounded-full bg-zinc-100">
-                          <div
-                            className="h-full rounded-full bg-black transition-all duration-500"
-                            style={{ width: `${structuralShare}%` }}
-                          />
-                        </div>
-                      </div>
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between gap-3">
-                          <div className="flex items-center gap-2 text-sm font-medium text-zinc-700">
-                            <div className="h-2.5 w-2.5 rounded-full bg-custom-lb" />
-                            Interior
-                          </div>
-                          <div className="font-mono text-sm font-semibold tabular-nums text-zinc-900">
-                            {formatCurrency(results.interior)}
-                          </div>
-                        </div>
-                        <div className="h-1.5 overflow-hidden rounded-full bg-zinc-100">
-                          <div
-                            className="h-full rounded-full bg-custom-lb transition-all duration-500"
-                            style={{ width: `${interiorShare}%` }}
-                          />
-                        </div>
-                      </div>
-                      <div className="border-t border-zinc-100 pt-4">
-                        <div className="flex items-center justify-between gap-3">
-                          <div className="text-sm font-medium text-zinc-600">
-                            Total Cost
-                          </div>
-                          <div className="font-mono text-xl font-semibold tabular-nums tracking-tight text-zinc-900">
-                            {formatCurrency(totalCost)}
-                          </div>
-                        </div>
-                        <p className="mt-2 font-mono text-xs tabular-nums text-zinc-500">
-                          Estimated duration:{" "}
-                          {Math.max(1, Math.round(results.days)).toLocaleString(
-                            "en-IN"
-                          )}{" "}
-                          days
-                        </p>
-                      </div>
-                    </div>
-                    <div className="h-[240px] w-full sm:h-[260px]">
-                      <PieChartComponent
-                        totalValue={formatedNumber(totalCost)}
-                        data={costBreakdownSlices}
-                        compact
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className={panelClass}>
-                  <BarGraph days={results.days} totalValue={totalCost} />
-                </div>
-
-                <p className="max-w-[65ch] text-sm leading-relaxed text-zinc-500">
-                  <span className="font-medium text-zinc-700">Note:</span> This
-                  is an indicative estimate. Final costs may vary with site
-                  conditions, specifications, and project scope. Contact us for
-                  a detailed quote.
-                </p>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
+        <div className="flex flex-col gap-6">{resultsPanel}</div>
       </div>
-    </motion.div>
+
+      {/* Mobile: tabbed layout */}
+      <div className="lg:hidden">
+        <Tabs
+          value={mobileTab}
+          onValueChange={(value) => setMobileTab(value as MobileTab)}
+          className="flex flex-col gap-4"
+        >
+          <TabsList className="grid h-11 w-full grid-cols-2 rounded-2xl border border-zinc-200/80 bg-white p-1 shadow-none">
+            <TabsTrigger
+              value="details"
+              className="rounded-xl data-[state=active]:bg-zinc-100 data-[state=active]:shadow-none"
+            >
+              Details
+            </TabsTrigger>
+            <TabsTrigger
+              value="estimate"
+              className="relative rounded-xl data-[state=active]:bg-zinc-100 data-[state=active]:shadow-none"
+            >
+              Estimate
+              {isFormFilled ? (
+                <span className="absolute right-3 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full bg-custom-lb" />
+              ) : null}
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="details" className="mt-0">
+            <div className="flex flex-col gap-6 pb-24">{formFields}</div>
+          </TabsContent>
+
+          <TabsContent value="estimate" className="mt-0">
+            <div className="flex flex-col gap-6 pb-6">{resultsPanel}</div>
+          </TabsContent>
+        </Tabs>
+
+        {mobileTab === "details" ? (
+          <div className="pointer-events-none fixed inset-x-0 bottom-0 z-[60] border-t border-zinc-200/80 bg-zinc-50/95 p-4 backdrop-blur-md pb-[max(1rem,env(safe-area-inset-bottom))]">
+            <Button
+              className="pointer-events-auto h-12 w-full rounded-2xl bg-custom-db text-white hover:bg-black active:scale-[0.99]"
+              onClick={handleSubmit}
+              disabled={isCalculating}
+            >
+              {ctaLabel}
+            </Button>
+          </div>
+        ) : null}
+      </div>
+    </div>
   );
 }

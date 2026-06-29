@@ -262,12 +262,19 @@ export function BarGraph({
                 <Cell key={entry.id} fill={entry.color} />
               ))}
               <LabelList
-                content={(labelProps) => (
-                  <TimelineDayLabel
-                    {...labelProps}
-                    payload={labelProps.payload as PhaseRow | undefined}
-                  />
-                )}
+                content={(labelProps) => {
+                  const index = labelProps.index ?? 0;
+                  return (
+                    <TimelineDayLabel
+                      x={Number(labelProps.x ?? 0)}
+                      y={Number(labelProps.y ?? 0)}
+                      width={Number(labelProps.width ?? 0)}
+                      height={Number(labelProps.height ?? 0)}
+                      index={index}
+                      payload={transformedData[index]}
+                    />
+                  );
+                }}
               />
             </Bar>
           </BarChart>

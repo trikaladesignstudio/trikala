@@ -60,8 +60,8 @@ const ReviewCard = ({
           blurDataURL={shimmerBlur}
         />
         <div className="">
-          <div className="text-xl font-medium text-black">{title}</div>
-          <p className="text-gray-500">{company}</p>
+          <div className="text-base font-medium text-black md:text-lg lg:text-xl">{title}</div>
+          <p className="text-xs text-gray-500 md:text-sm">{company}</p>
         </div>
       </div>
       <div
@@ -70,7 +70,7 @@ const ReviewCard = ({
           width: description.length / (inMobileView ? 7 : 4) + "ch",
         }}
       >
-        <p className="text-gray-700 break-words text-[0.9rem] lg:text-[.8rem] xl:text-[.95rem] text-justify">
+        <p className="break-words text-justify text-[0.78rem] leading-relaxed text-gray-700 sm:text-[0.85rem] lg:text-[0.95rem]">
           {description}
         </p>
       </div>
@@ -104,7 +104,10 @@ function Testimonials({
   return (
     <Section className="lg:px-0 px-0 py-0 lg:py-0">
       <div className="page-px flex flex-col py-[0.1rem] gap-2 md:gap-6">
-        <Heading className="text-left flex-none" text="What Our Clients Have to Say" />
+        <Heading
+          className="text-left flex-none text-3xl md:text-5xl lg:text-7xl"
+          text="What Our Clients Have to Say"
+        />
         <motion.div
           variants={rollInView}
           viewport={{ once: true }}
@@ -115,7 +118,7 @@ function Testimonials({
             delay: 0.4,
             duration: 0.5,
           }}
-          className="z-30 justify-between items-start text-justify text-md lg:text-lg"
+          className="z-30 items-start justify-between text-justify text-sm md:text-base lg:text-lg"
         >
           Our testimonials reflect the trust of clients who’ve partnered with
           Trikala Architecture and Associates. From dream homes to innovative

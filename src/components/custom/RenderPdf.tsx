@@ -1,11 +1,23 @@
 "use client";
 
 // import processPDFs from "@/utils/pdfToImg";
+import { cn } from "@/lib/utils";
 import { memo } from "react";
-import { Worker, Viewer } from "@react-pdf-viewer/core";
+import {
+  ScrollMode,
+  SpecialZoomLevel,
+  Viewer,
+  Worker,
+} from "@react-pdf-viewer/core";
 import "../../app/pdfView.css";
 
-const PdfRenderer = memo(function RenderPdf({ url }: { url: string }) {
+const PdfRenderer = memo(function RenderPdf({
+  url,
+  pageScroll = false,
+}: {
+  url: string;
+  pageScroll?: boolean;
+}) {
   // <embed
   //   data-embed="true"
   //   src={
@@ -24,8 +36,28 @@ const PdfRenderer = memo(function RenderPdf({ url }: { url: string }) {
   // ></embed>
   return (
     <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js">
-      <div className="w-full bg-transparent">
-        <Viewer fileUrl={url} />
+      <div
+        className={cn(
+          "w-full bg-transparent",
+          pageScroll && "pdf-viewer--page-scroll"
+        )}
+      >
+        <Viewer
+          fileUrl={url}
+          defaultScale={
+            pageScroll ? SpecialZoomLevel.PageWidth : undefined
+          }
+          enableSmoothScroll={!pageScroll}
+          scrollMode={ScrollMode.Vertical}
+          setRenderRange={
+            pageScroll
+              ? ({ numPages }) => ({
+                  startPage: 0,
+                  endPage: numPages - 1,
+                })
+              : undefined
+          }
+        />
       </div>
     </Worker>
   );

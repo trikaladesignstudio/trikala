@@ -42,7 +42,7 @@ function Section({ id, className, children, toSnap = true, style }: Section) {
         filter: "blur(5px)",
       }}
       className={cn(
-        "relative min-h-[100svh] w-screen flex flex-col gap-4 justify-evenly",
+        "relative min-h-screen w-screen flex flex-col gap-4 justify-evenly",
         "page-px py-6 lg:py-10 ",
         toSnap && "snap-center shrink-0",
         className

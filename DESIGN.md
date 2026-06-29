@@ -38,7 +38,7 @@ Max 1 accent (Terracotta). Saturation below 80%. No purple, blue neon, or gradie
 - Asymmetric split Hero: left-aligned copy, right full-bleed project image
 - Inline image typography in Hero headline — small rounded photo between words at cap-height
 - Max-width containment: `max-w-[1400px] mx-auto`
-- Full-height sections: `min-h-[100dvh]` — never `h-screen`
+- Full-height sections: `min-h-screen` / `h-screen` (backed by `--viewport-height`, synced via Visual Viewport API)
 - Single-column collapse below 768px — no horizontal scroll on mobile
 - Centered Hero sections banned — force split screen or left-aligned asymmetric whitespace
 - Generic 3-column equal card rows banned — use 2-column zig-zag or left-rail + panel

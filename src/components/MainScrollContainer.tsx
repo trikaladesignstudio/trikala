@@ -1,6 +1,9 @@
 "use client";
 
-import { ScrollContainerContext } from "@/context/ScrollContainerContext";
+import {
+  ScrollContainerContext,
+  useScrollContainerState,
+} from "@/context/ScrollContainerContext";
 import {
   HERO_INTRO_COMPLETE_EVENT,
   isHeroIntroFinished,
@@ -25,6 +28,7 @@ export default function MainScrollContainer({
   const isHome = pathname === "/";
   const scrollRef = useRef<HTMLElement>(null);
   const [snapEnabled, setSnapEnabled] = useState(false);
+  const { scrollLocked, setScrollLocked } = useScrollContainerState();
 
   useEffect(() => {
     if (typeof history !== "undefined") {
@@ -63,8 +67,12 @@ export default function MainScrollContainer({
     };
   }, [isHome]);
 
+  const snapActive = snapEnabled && !scrollLocked;
+
   return (
-    <ScrollContainerContext.Provider value={scrollRef}>
+    <ScrollContainerContext.Provider
+      value={{ scrollRef, scrollLocked, setScrollLocked }}
+    >
       <main
         ref={scrollRef}
         id="mainCointainer"
@@ -72,10 +80,11 @@ export default function MainScrollContainer({
           "relative flex flex-col overflow-x-hidden",
           isHome
             ? cn(
-                "h-[100svh] overflow-y-auto overflow-x-hidden",
-                snapEnabled ? "snap-y snap-mandatory" : "snap-none"
+                "h-screen overflow-x-hidden",
+                scrollLocked ? "overflow-hidden" : "overflow-y-auto",
+                snapActive ? "snap-y snap-mandatory" : "snap-none"
               )
-            : "min-h-[100svh] overflow-y-visible scroll-smooth"
+            : "min-h-screen overflow-y-visible scroll-smooth"
         )}
       >
         {children}

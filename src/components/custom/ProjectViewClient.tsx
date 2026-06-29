@@ -15,8 +15,8 @@ export default function ProjectViewClient({
   if (!projectData.pdf?.url) return null;
 
   return (
-    <div className="mb-4">
-      <RenderPdf url={projectData.pdf.url as string} />
+    <div className="w-full flex-1">
+      <RenderPdf pageScroll url={projectData.pdf.url as string} />
     </div>
   );
 }

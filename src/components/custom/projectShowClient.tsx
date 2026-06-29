@@ -23,8 +23,8 @@ function getGridSpan(index: number) {
 }
 
 function getAspect(index: number) {
-  if (index % 3 === 0) return "aspect-[16/9] md:aspect-[21/9]";
-  return index % 2 === 0 ? "aspect-[4/3]" : "aspect-[3/4] md:aspect-[4/5]";
+  if (index % 3 === 0) return "aspect-[3/2] md:aspect-[21/9]";
+  return index % 2 === 0 ? "aspect-[4/3]" : "aspect-[4/5] md:aspect-[4/5]";
 }
 
 const ProjectShowClient = ({
@@ -93,7 +93,7 @@ const ProjectShowClient = ({
         </div>
       ) : (
         <motion.div
-          className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2"
+          className="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-2 md:gap-y-12"
           initial="hidden"
           animate="visible"
           variants={{
@@ -144,7 +144,7 @@ const ProjectShowClient = ({
                         className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/link:scale-[1.04]"
                       />
                     ) : (
-                      <div className="flex h-full min-h-[14rem] items-center justify-center bg-zinc-100">
+                      <div className="flex h-full min-h-[10rem] items-center justify-center bg-zinc-100 md:min-h-[14rem]">
                         <span className="text-sm text-zinc-400">No preview</span>
                       </div>
                     )}
@@ -152,13 +152,6 @@ const ProjectShowClient = ({
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-zinc-950/40 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover/link:opacity-100" />
                   </div>
                   </div>
-
-                  <span
-                    className="absolute bottom-0 left-1/2 z-10 flex h-14 w-14 -translate-x-1/2 translate-y-1/2 items-center justify-center rounded-full border-4 border-zinc-900 bg-custom-lb text-white shadow-[0_0_0_1px_rgba(255,255,255,0.06)] transition-transform duration-300 group-hover/link:scale-105"
-                    aria-hidden="true"
-                  >
-                    <span className="relative top-0.5 text-2xl leading-none">↗</span>
-                  </span>
                 </Link>
 
                 <div className="flex items-start justify-between gap-4 px-0.5">

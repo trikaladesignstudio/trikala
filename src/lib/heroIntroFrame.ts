@@ -1,17 +1,17 @@
 export const FRAME_INSET_START = 14;
 export const FRAME_RADIUS_START = 22;
 export const INTRO_HOLD_END = 0.04;
-export const FRAME_EXPAND_END = 0.28;
+export const FRAME_EXPAND_END = 0.3;
 export const PILL_HEIGHT = 12;
 export const PILL_WIDTH = 48;
 
 /** ease-out bezier for pill → hero expansion */
 export const EXPAND_EASE = [0.16, 1, 0.3, 1] as const;
 
-/** Stagger nav + headline after pill reaches hero size */
+/** Stagger nav, then headline after pill reaches hero size */
 export const CONTENT_STAGGER = {
-  nav: [0.24, 0.34] as const,
-  headline: [0.28, 0.42] as const,
+  nav: [0.32, 0.48] as const,
+  headline: [0.52, 0.76] as const,
 } as const;
 
 export type PillInsets = {

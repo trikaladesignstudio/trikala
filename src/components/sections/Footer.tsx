@@ -126,6 +126,7 @@ function FooterColumn({
 }
 
 const LEGAL_PATHS = new Set(["/privacyPolicy", "/termAndCondition"]);
+const PROJECT_DETAIL_PATH = /^\/projects\/[^/]+$/;
 
 export default function Footer({
   data,
@@ -134,7 +135,7 @@ export default function Footer({
 }) {
   const pathname = usePathname();
   const isHome = pathname === "/";
-  const useOverlap = !LEGAL_PATHS.has(pathname);
+  const useOverlap = !LEGAL_PATHS.has(pathname) && !PROJECT_DETAIL_PATH.test(pathname);
   const scrollContainer = useScrollContainer();
   const [contactData, setContactData] = useState<ContactDataType[]>([]);
 
