@@ -5,7 +5,6 @@ import {
   HERO_INTRO_COMPLETE_EVENT,
   isHeroIntroFinished,
 } from "@/lib/heroIntro";
-import { HERO_ELEMENT_VIEWPORTS } from "@/lib/heroScrollPhases";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import { ReactNode, useEffect, useRef, useState } from "react";
@@ -49,22 +48,9 @@ export default function MainScrollContainer({
     const container = scrollRef.current;
     if (!container) return;
 
-    const heroScrollEnd = HERO_ELEMENT_VIEWPORTS * window.innerHeight;
-    const snapOnThreshold = heroScrollEnd * 0.35;
-    const snapOffThreshold = heroScrollEnd * 0.22;
-
-    const syncSnap = () => {
-      setSnapEnabled((enabled) => {
-        if (enabled) {
-          return container.scrollTop >= snapOffThreshold;
-        }
-        return container.scrollTop >= snapOnThreshold;
-      });
-    };
-
     const onIntroComplete = () => {
       pinScrollTop(container);
-      syncSnap();
+      setSnapEnabled(true);
     };
 
     if (isHeroIntroFinished()) onIntroComplete();
@@ -72,12 +58,8 @@ export default function MainScrollContainer({
       once: true,
     });
 
-    container.addEventListener("scroll", syncSnap, { passive: true });
-    syncSnap();
-
     return () => {
       window.removeEventListener(HERO_INTRO_COMPLETE_EVENT, onIntroComplete);
-      container.removeEventListener("scroll", syncSnap);
     };
   }, [isHome]);
 
@@ -91,7 +73,7 @@ export default function MainScrollContainer({
           isHome
             ? cn(
                 "h-[100svh] overflow-y-auto overflow-x-hidden",
-                snapEnabled ? "snap-y snap-proximity" : "snap-none"
+                snapEnabled ? "snap-y snap-mandatory" : "snap-none"
               )
             : "min-h-[100svh] overflow-y-visible scroll-smooth"
         )}

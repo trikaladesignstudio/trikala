@@ -3,12 +3,12 @@
 import { HERO_INTRO_COMPLETE_EVENT } from "@/lib/heroIntro";
 import { FRAME_RADIUS_START } from "@/lib/heroIntroFrame";
 import {
-  DARK_BLEED_END,
-  DARK_BLEED_START,
   FRAME_BLEED_PORTION,
-  HEADLINE_FADE_END,
-  HEADLINE_FADE_START,
-  HEADLINE_TRAVEL_PX,
+  HEADLINE_EXIT_END,
+  HEADLINE_HOLD_END,
+  HEADLINE_HOLD_START,
+  HEADLINE_SCALE_EXIT,
+  HEADLINE_SCALE_PEAK,
   HERO_APPROACH_VIEWPORTS,
   segmentProgress,
 } from "@/lib/heroScrollPhases";
@@ -47,7 +47,6 @@ function collectTargets(targets: HeroScrollTriggerTargets) {
     scrim: targets.scrim.current,
     nav: targets.nav.current,
     headline: targets.headline.current,
-    darkBleed: targets.darkBleed.current,
   };
 }
 
@@ -61,10 +60,7 @@ function targetsReady(
       nodes.edgeMask &&
       nodes.contentClip &&
       nodes.bg &&
-      nodes.scrim &&
-      nodes.nav &&
-      nodes.headline &&
-      nodes.darkBleed
+      nodes.headline
   );
 }
 
@@ -134,16 +130,8 @@ export function useHeroScrollTrigger({
         return;
       }
 
-      const {
-        hero,
-        edgeMask,
-        contentClip,
-        bg,
-        scrim,
-        nav,
-        headline,
-        darkBleed,
-      } = nodes as Required<ReturnType<typeof collectTargets>>;
+      const { hero, edgeMask, contentClip, bg, scrim, nav, headline } =
+        nodes as Required<ReturnType<typeof collectTargets>>;
 
       const insetStart = frameWindowFrom(frameInsetStart, frameInsetStart);
       const approachPx = HERO_APPROACH_VIEWPORTS * window.innerHeight;
@@ -153,12 +141,17 @@ export function useHeroScrollTrigger({
       gsap.set(bg, { opacity: 1, scale: 1, transformOrigin: "center center" });
       gsap.set(scrim, { opacity: 1 });
       gsap.set(nav, { clearProps: "opacity,transform" });
-      gsap.set(headline, { y: 0, opacity: 1, visibility: "visible" });
-      gsap.set(darkBleed, { opacity: 0 });
+      gsap.set(headline, {
+        y: 0,
+        opacity: 1,
+        scale: 1,
+        visibility: "visible",
+        transformOrigin: "center center",
+      });
 
       lastProgressRef.current = -1;
 
-      const scrub = prefersReducedMotion ? false : 0.35;
+      const scrub = prefersReducedMotion ? false : 0.2;
 
       const approachTrigger = ScrollTrigger.create({
         trigger: hero,
@@ -169,8 +162,7 @@ export function useHeroScrollTrigger({
         invalidateOnRefresh: true,
         onLeave: () => {
           gsap.set(edgeMask, frameHidden);
-          gsap.set(darkBleed, { opacity: 1 });
-          gsap.set(bg, { opacity: 0 });
+          gsap.set(headline, { opacity: 0, visibility: "hidden" });
         },
         onUpdate(self) {
           const progress = self.progress;
@@ -187,24 +179,40 @@ export function useHeroScrollTrigger({
             gsap.set(contentClip, frameWindowTo);
           }
 
-          const headlineT = segmentProgress(
-            progress,
-            HEADLINE_FADE_START,
-            HEADLINE_FADE_END
-          );
-          gsap.set(headline, {
-            y: -headlineT * HEADLINE_TRAVEL_PX,
-            opacity: Math.max(0, 1 - headlineT * 1.15),
-            visibility: headlineT >= 1 ? "hidden" : "visible",
-          });
-
-          const darkT = segmentProgress(
-            progress,
-            DARK_BLEED_START,
-            DARK_BLEED_END
-          );
-          gsap.set(darkBleed, { opacity: darkT });
-          gsap.set(bg, { opacity: 1 - darkT * 0.85 });
+          if (progress < HEADLINE_HOLD_START) {
+            gsap.set(headline, {
+              y: 0,
+              opacity: 1,
+              scale: 1,
+              visibility: "visible",
+            });
+          } else if (progress < HEADLINE_HOLD_END) {
+            const holdT = segmentProgress(
+              progress,
+              HEADLINE_HOLD_START,
+              HEADLINE_HOLD_END
+            );
+            gsap.set(headline, {
+              y: 0,
+              opacity: 1,
+              scale: 1 + holdT * (HEADLINE_SCALE_PEAK - 1),
+              visibility: "visible",
+            });
+          } else {
+            const exitT = segmentProgress(
+              progress,
+              HEADLINE_HOLD_END,
+              HEADLINE_EXIT_END
+            );
+            gsap.set(headline, {
+              y: 0,
+              opacity: Math.max(0, 1 - exitT),
+              scale:
+                HEADLINE_SCALE_PEAK +
+                exitT * (HEADLINE_SCALE_EXIT - HEADLINE_SCALE_PEAK),
+              visibility: exitT >= 1 ? "hidden" : "visible",
+            });
+          }
         },
       });
 

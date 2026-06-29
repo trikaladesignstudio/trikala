@@ -5,7 +5,12 @@ import { ImInstagram } from "react-icons/im";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { filterAllProjects } from "@/utils/dbActions";
+import { useScrollContainer } from "@/context/ScrollContainerContext";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useRef, useState } from "react";
+
+gsap.registerPlugin(ScrollTrigger);
 import { ContactDataType, navlinks } from "@/types";
 import { startAProjectLink } from "@/constants";
 import HeroCta from "@/components/custom/HeroCta";
@@ -128,8 +133,19 @@ export default function Footer({
   data: Awaited<ReturnType<typeof filterAllProjects>>;
 }) {
   const pathname = usePathname();
+  const isHome = pathname === "/";
   const useOverlap = !LEGAL_PATHS.has(pathname);
+  const scrollContainer = useScrollContainer();
   const [contactData, setContactData] = useState<ContactDataType[]>([]);
+
+  useEffect(() => {
+    if (!isHome) return;
+
+    const container = scrollContainer?.current;
+    const scrollTop = container?.scrollTop ?? 0;
+    ScrollTrigger.refresh();
+    if (container) container.scrollTop = scrollTop;
+  }, [isHome, scrollContainer, contactData]);
 
   useEffect(() => {
     const formatData = data.map((ele) => ({
@@ -171,7 +187,10 @@ export default function Footer({
   return (
     <footer
       id={SITE_FOOTER_ID}
-      className="relative z-0 w-full min-w-0 shrink-0 bg-black text-zinc-100"
+      className={cn(
+        "relative z-0 w-full min-w-0 shrink-0 bg-black text-zinc-100",
+        isHome && "snap-start snap-always"
+      )}
       style={
         useOverlap
           ? {

@@ -7,15 +7,11 @@ function getRequiredEnv(name: string, fallback?: string) {
 }
 
 export function getGoogleSheetId() {
-  return getRequiredEnv("GOOGLE_SHEET_ID", process.env.SHEET_ID);
+  return getRequiredEnv("GOOGLE_SHEET_ID");
 }
 
 export function getGoogleSheetUrl() {
-  const sheetId = getGoogleSheetId();
-  return (
-    process.env.GOOGLE_SHEET_URL ??
-    `https://docs.google.com/spreadsheets/d/${sheetId}/edit`
-  );
+  return `https://docs.google.com/spreadsheets/d/${getGoogleSheetId()}/edit`;
 }
 
 export function getBlockedSheetTabs() {
@@ -27,14 +23,10 @@ export function getBlockedSheetTabs() {
 }
 
 export function getGoogleServiceAccountCredentials() {
-  const privateKey = (
-    process.env.GOOGLE_PRIVATE_KEY ?? process.env.private_google_key
-  )?.replace(/\\n/g, "\n");
+  const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n");
 
   if (!privateKey) {
-    throw new Error(
-      "Missing GOOGLE_PRIVATE_KEY (or legacy private_google_key)"
-    );
+    throw new Error("Missing GOOGLE_PRIVATE_KEY");
   }
 
   return {

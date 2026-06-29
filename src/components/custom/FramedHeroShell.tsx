@@ -256,7 +256,7 @@ export default function FramedHeroShell({
       <div
         ref={heroRef}
         className={cn(
-          "hero-block relative w-full shrink-0 snap-none bg-[#1a1a1a]",
+          "hero-block relative w-full shrink-0 snap-start snap-always bg-[#1a1a1a]",
           className
         )}
         style={{ height: `${HERO_ELEMENT_VIEWPORTS * 100}svh` }}

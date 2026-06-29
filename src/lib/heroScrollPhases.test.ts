@@ -1,25 +1,23 @@
 import { describe, expect, it } from "vitest";
 import {
-  DARK_BLEED_END,
-  DARK_BLEED_START,
   FRAME_BLEED_PORTION,
-  HEADLINE_FADE_END,
-  HEADLINE_FADE_START,
+  HEADLINE_HOLD_END,
+  HEADLINE_HOLD_START,
   HERO_APPROACH_VIEWPORTS,
   HERO_ELEMENT_VIEWPORTS,
   segmentProgress,
 } from "./heroScrollPhases";
 
 describe("heroScrollPhases", () => {
-  it("keeps a short approach scroll budget", () => {
-    expect(HERO_APPROACH_VIEWPORTS).toBe(0.45);
-    expect(HERO_ELEMENT_VIEWPORTS).toBeCloseTo(1.45);
+  it("reserves approach scroll room for sticky hero", () => {
+    expect(HERO_APPROACH_VIEWPORTS).toBe(0.35);
+    expect(HERO_ELEMENT_VIEWPORTS).toBeCloseTo(1.35);
   });
 
-  it("orders animation windows without overlap gaps", () => {
-    expect(FRAME_BLEED_PORTION).toBeLessThan(HEADLINE_FADE_START);
-    expect(HEADLINE_FADE_END).toBeLessThan(DARK_BLEED_END);
-    expect(DARK_BLEED_START).toBeLessThan(DARK_BLEED_END);
+  it("orders bleed then headline hold then exit", () => {
+    expect(FRAME_BLEED_PORTION).toBe(0.08);
+    expect(HEADLINE_HOLD_START).toBe(FRAME_BLEED_PORTION);
+    expect(HEADLINE_HOLD_END).toBeCloseTo(0.28);
   });
 
   it("maps segment progress between bounds", () => {

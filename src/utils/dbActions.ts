@@ -107,21 +107,9 @@ export async function getAllProjectsGroupByType() {
 
 export async function getAllFeaturedProjects() {
   try {
-    const projects = await prisma.project.findMany({
-      where: {
-        featured: true,
-      },
+    return await prisma.project.findMany({
+      where: { featured: true },
     });
-    if (!projects) {
-      return [];
-    }
-    interface Product extends Prisma.ProjectCreateInput {
-      category: string;
-    }
-    return projects.reduce<Record<string, Product[]>>((acc, product) => {
-      (acc[product.type] = acc[product.type] || []).push(product as Product);
-      return acc;
-    }, {});
   } catch (error) {
     console.error("Error fetching projects:", error);
     return [];

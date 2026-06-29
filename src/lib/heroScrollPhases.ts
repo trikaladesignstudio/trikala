@@ -1,23 +1,20 @@
-/**
- * Extra hero height beyond one viewport — user scrolls this distance
- * while the sticky viewport animates frame bleed, headline exit, and dark handoff.
- */
-export const HERO_APPROACH_VIEWPORTS = 0.45;
+/** Extra scroll room while sticky hero pins the viewport */
+export const HERO_APPROACH_VIEWPORTS = 0.35;
 
-/** Hero block = one viewport + approach scroll room */
+/** Hero block = one viewport + approach scroll */
 export const HERO_ELEMENT_VIEWPORTS = 1 + HERO_APPROACH_VIEWPORTS;
 
-/** White edge bleed during approach scroll (first ~8% of approach) */
+/** White edge bleed — first 8% of approach scroll */
 export const FRAME_BLEED_PORTION = 0.08;
 
-/** Headline fade + drift window (late in approach scroll) */
-export const HEADLINE_FADE_START = 0.90;
-export const HEADLINE_FADE_END = 0.95;
-export const HEADLINE_TRAVEL_PX = 80;
+/** Headline hold — 20% window after bleed, text fully visible */
+export const HEADLINE_HOLD_START = FRAME_BLEED_PORTION;
+export const HEADLINE_HOLD_END = HEADLINE_HOLD_START + 0.2;
 
-/** Charcoal overlay ramps in at the very end of approach scroll */
-export const DARK_BLEED_START = 0.95;
-export const DARK_BLEED_END = 1;
+/** Headline exits during the remaining approach scroll */
+export const HEADLINE_EXIT_END = 1;
+export const HEADLINE_SCALE_PEAK = 1.28;
+export const HEADLINE_SCALE_EXIT = 1.45;
 
 export function segmentProgress(
   progress: number,

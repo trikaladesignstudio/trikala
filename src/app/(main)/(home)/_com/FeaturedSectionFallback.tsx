@@ -1,11 +1,10 @@
-import { featuredSectionLabelClassName } from "@/lib/featuredSectionStyles";
+import FeaturedMenu from "@/components/custom/FeaturedMenu";
+import { FALLBACK_MENU_ITEMS } from "@/lib/heroFeaturedUtils";
 
-/** Suspense fallback — mirrors Featured Work section shell while data loads */
 export default function FeaturedSectionFallback() {
   return (
-    <div className="relative flex h-full w-full flex-col overflow-hidden lg:block">
-      <p className={featuredSectionLabelClassName}>Featured Work</p>
-      <div className="relative min-h-0 flex-1" aria-hidden />
+    <div className="flex h-full min-h-0 flex-1 flex-col">
+      <FeaturedMenu items={FALLBACK_MENU_ITEMS} loading />
     </div>
   );
 }
