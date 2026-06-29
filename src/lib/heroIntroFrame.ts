@@ -16,7 +16,8 @@ export const PILL_WIDTH = 48;
 export const EXPAND_EASE = [0.16, 1, 0.3, 1] as const;
 
 const NAV_REVEAL = 0.1;
-const HEADLINE_REVEAL = 0.09;
+const HEADLINE_REVEAL_MS = 320;
+const HEADLINE_REVEAL = HEADLINE_REVEAL_MS / INTRO_REVEAL_MS;
 
 /** Nav + headline chain immediately after pill expansion */
 export const CONTENT_STAGGER = {

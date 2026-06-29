@@ -14,13 +14,28 @@ type HeroHeadlineProps = {
   text: string;
 };
 
+function easeOutCubic(t: number) {
+  return 1 - (1 - t) ** 3;
+}
+
+function headlineReveal(intro: number, start: number, end: number) {
+  if (intro <= start) return 0;
+  if (intro >= end) return 1;
+  return easeOutCubic((intro - start) / (end - start));
+}
+
 const HeroHeadline = forwardRef<HTMLDivElement, HeroHeadlineProps>(
   function HeroHeadline({ text }, ref) {
     const { introReveal, introComplete } = useHeroScroll();
     const [start, end] = CONTENT_STAGGER.headline;
 
-    const introOpacity = useTransform(introReveal, [start, end], [0, 1]);
-    const introBlur = useTransform(introReveal, [start, end], [14, 0]);
+    const introOpacity = useTransform(introReveal, (intro) =>
+      headlineReveal(intro, start, end)
+    );
+    const introBlur = useTransform(introReveal, (intro) => {
+      const progress = headlineReveal(intro, start, end);
+      return 16 * (1 - progress);
+    });
     const introFilter = useMotionTemplate`blur(${introBlur}px)`;
 
     return (
@@ -31,7 +46,7 @@ const HeroHeadline = forwardRef<HTMLDivElement, HeroHeadlineProps>(
         <motion.div
           style={
             introComplete
-              ? undefined
+              ? { opacity: 1, filter: "blur(0px)" }
               : { opacity: introOpacity, filter: introFilter }
           }
         >
