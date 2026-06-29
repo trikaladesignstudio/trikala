@@ -2,6 +2,7 @@ import type { Config } from "tailwindcss";
 import { withUt } from "uploadthing/tw";
 
 const config: Config = withUt({
+  darkMode: "class",
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {
@@ -36,9 +37,26 @@ const config: Config = withUt({
         "custom-lb": "#774931",
         "custom-bg": "#DEDEDE",
         black: "#1A1A1A",
+        admin: {
+          canvas: "var(--admin-canvas)",
+          surface: "var(--admin-surface)",
+          ink: "var(--admin-ink)",
+          muted: "var(--admin-muted)",
+          accent: "var(--admin-accent)",
+          border: "var(--admin-border)",
+        },
       },
       fontFamily: {
         silver: ["var(--font-silver)"],
+        geist: ["var(--font-geist-sans)"],
+        "geist-mono": ["var(--font-geist-mono)"],
+      },
+      height: {
+        screen: "var(--viewport-height)",
+        "viewport-unit": "calc(var(--viewport-height) / 100)",
+      },
+      minHeight: {
+        screen: "var(--viewport-height)",
       },
     },
   },

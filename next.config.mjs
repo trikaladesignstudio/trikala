@@ -2,25 +2,33 @@
 const nextConfig = {
   experimental: {
     serverActions: {
-      allowedOrigins: ["localhost:3000", "trikalarchitects.com/"],
+      allowedOrigins: ["localhost:3000", "trikalarchitects.com"],
     },
     turbo: {
-      rules: {
-        "*.node": {
-          loaders : ["raw-loader"], 
-        },
+      resolveAlias: {
+        canvas: "./empty-module.js",
       },
     },
   },
-  webpack: (config, options) => {
-    // Important: return the modified config
-    config.module.rules.push({
-      test: /\.node/,
-      use: "raw-loader",
-    });
+  webpack: (config) => {
+    config.resolve.alias.canvas = false;
     return config;
   },
+  async headers() {
+    return [
+      {
+        source: "/static/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+    ];
+  },
   images: {
+    minimumCacheTTL: 2592000,
     remotePatterns: [
       {
         protocol: "https",
@@ -36,13 +44,8 @@ const nextConfig = {
       },
     ],
   },
-  pageExtensions: ["mdx", "ts", "tsx"],
+  pageExtensions: ["ts", "tsx"],
   reactStrictMode: true,
-  compress: true,
-  swcMinify: true,
-  compiler: {
-    styledComponents: true,
-  },
 };
 
 export default nextConfig;

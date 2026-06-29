@@ -1,136 +1,350 @@
 "use client";
+
+import { cn, rollInView } from "@/lib/utils";
+import { shimmerBlur } from "@/lib/utils";
 import { filterAllProjects } from "@/utils/dbActions";
-import { motion } from "framer-motion";
+import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { BiChevronLeft } from "react-icons/bi";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Heading from "../custom/Heading";
 import Sections from "../custom/Section";
-import { Button } from "../ui/button";
-import { rollInView } from "@/lib/utils";
+
+const panelSpring = {
+  type: "spring" as const,
+  stiffness: 220,
+  damping: 28,
+  mass: 0.75,
+};
+
+const contentSpring = {
+  type: "spring" as const,
+  stiffness: 200,
+  damping: 28,
+};
+
+type Slide = Awaited<ReturnType<typeof filterAllProjects>>[number] & {
+  stepNumber: string;
+};
+
+function formatSlides(
+  data: Awaited<ReturnType<typeof filterAllProjects>>
+): Slide[] {
+  return [...data]
+    .sort((a, b) => {
+      const numA = parseInt(a.title.match(/^\d+/)?.[0] || "0", 10);
+      const numB = parseInt(b.title.match(/^\d+/)?.[0] || "0", 10);
+      return numA - numB;
+    })
+    .map((item, index) => ({
+      ...item,
+      stepNumber: String(index + 1).padStart(2, "0"),
+      title: item.title.replace(/^\d+\.\s*/, ""),
+    }));
+}
+
+const PANEL_ANIMATION_MS = 300;
+
+const sectionClassName =
+  "relative z-10 isolate bg-[#f5f5f5] snap-start min-h-screen justify-center gap-4 py-6 lg:snap-center lg:gap-10 lg:py-10";
 
 function Working({
   data,
 }: {
   data: Awaited<ReturnType<typeof filterAllProjects>>;
 }) {
+  const slides = useMemo(() => formatSlides(data), [data]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [slides, setSlides] = useState<typeof data>([]);
+  const [showExpandedDescription, setShowExpandedDescription] = useState(true);
+  const hasMountedRef = useRef(false);
+
+  const activeSlide = slides[currentIndex];
+
+  const selectStep = useCallback(
+    (index: number) => {
+      if (index === currentIndex) return;
+      setShowExpandedDescription(false);
+      setCurrentIndex(index);
+    },
+    [currentIndex]
+  );
 
   useEffect(() => {
-    // Remove number prefix from title and sort based on the extracted number
-    const formatedData = data
-      .map((item) => ({
-        ...item,
-        title: item.title.replace(/^\d. /, ""),
-        numericTitle: parseInt(item.title.match(/^\d+/)?.[0] || "0", 10),
-      }))
-      .sort((a, b) => a.numericTitle - b.numericTitle)
-      .map(({ numericTitle, ...item }) => item);
+    if (!hasMountedRef.current) {
+      hasMountedRef.current = true;
+      return;
+    }
 
-    setSlides(formatedData);
-  }, [data]);
+    setShowExpandedDescription(false);
+    const timer = window.setTimeout(() => {
+      setShowExpandedDescription(true);
+    }, PANEL_ANIMATION_MS);
 
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
-  };
+    return () => window.clearTimeout(timer);
+  }, [currentIndex]);
 
-  const prevSlide = () => {
-    setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + slides.length) % slides.length
+  useEffect(() => {
+    if (slides.length <= 1) return;
+    const id = window.setInterval(() => {
+      setShowExpandedDescription(false);
+      setCurrentIndex((prev) => (prev + 1) % slides.length);
+    }, 4000);
+    return () => window.clearInterval(id);
+  }, [slides.length]);
+
+  const handleKeyDown = useCallback(
+    (event: React.KeyboardEvent, index: number) => {
+      if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+        event.preventDefault();
+        selectStep(Math.min(index + 1, slides.length - 1));
+      }
+      if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+        event.preventDefault();
+        selectStep(Math.max(index - 1, 0));
+      }
+    },
+    [selectStep, slides.length]
+  );
+
+  if (slides.length === 0) {
+    return (
+      <Sections className={sectionClassName}>
+        <Heading
+          text="Our work is based on the development of an individual approach to each client"
+          className="text-3xl leading-tight md:text-5xl lg:text-7xl lg:leading-none"
+        />
+      </Sections>
     );
-  };
-
-  const handleClick = (index: number) => {
-    setCurrentIndex(index);
-  };
+  }
 
   return (
-    <Sections className="lg:py-0 justify-center lg:gap-10">
-      <Heading text="Our work is based on the development of an individual approach to each client" />
+    <Sections className={sectionClassName}>
+      <Heading
+        text="Our work is based on the development of an individual approach to each client"
+        className="text-3xl leading-tight md:text-5xl lg:text-7xl lg:leading-none"
+      />
+
+      {/* Mobile: hero image + step list */}
       <motion.div
         variants={rollInView}
         viewport={{ once: true }}
         initial="base"
         whileInView="show"
-        transition={{
-          ...rollInView.transition,
-          delay: 0.4,
-          duration: 0.5,
-        }}
-        className="flex flex-col md:flex-row overflow-hidden w-full justify-center gap-2 md:h-auto h-full"
+        transition={{ ...rollInView.transition, delay: 0.2 }}
+        className="md:hidden flex w-full shrink-0 flex-col gap-3 sm:gap-4"
       >
-        {slides.map((slide, index) => (
-          <motion.div
-            key={index}
-            className={`relative cursor-pointer  transition-all duration-500 ease-in-out md:h-[55vh] border-2   ${
-              index === currentIndex
-                ? "md:w-4/5 w-full h-[18vh]"
-                : "md:w-1/6 w-full h-[6vh]"
-            }`}
-            onClick={() => handleClick(index)}
-          >
-            <div
-              className={`absolute group h-full bottom-0 left-0 bg-gradient-to-t from-black/30 md:via-transparent via-black/30 md:to-transparent to-black/30  text-white w-full flex flex-col justify-center p-2 z-20 ${
-                currentIndex !== index
-                  ? "md:justify-center items-center"
-                  : "md:justify-end"
-              }`}
+        <div className="relative h-[min(28svh,12rem)] w-full overflow-hidden border border-zinc-200/80 sm:h-[min(32svh,14rem)]">
+          <AnimatePresence initial={false}>
+            <motion.div
+              key={activeSlide.id}
+              initial={{ opacity: 0, scale: 1.03 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.02 }}
+              transition={panelSpring}
+              className="absolute inset-0"
             >
-              <div className="flex-col items-center justify-center ">
+              <Image
+                loading="lazy"
+                src={activeSlide.images?.[0]?.url ?? "/static/logo.webp"}
+                alt={`${activeSlide.title}, step ${activeSlide.stepNumber} of our design process`}
+                className="h-full w-full object-cover"
+                fill
+                sizes="100vw"
+                placeholder="blur"
+                blurDataURL={shimmerBlur}
+              />
+            </motion.div>
+          </AnimatePresence>
+          <div className="absolute inset-0 bg-zinc-950/25 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/85 via-zinc-950/35 to-transparent pointer-events-none" />
+          <div
+            id={`working-panel-${activeSlide.id}`}
+            role="tabpanel"
+            aria-labelledby={`working-tab-${activeSlide.id}`}
+            className="absolute inset-x-0 bottom-0 z-10 p-3 text-white sm:p-4"
+          >
+            <span className="text-sm tabular-nums text-white/70 leading-none">
+              {activeSlide.stepNumber}
+            </span>
+            <h3 className="mt-1 text-base font-bold leading-tight sm:text-lg">
+              {activeSlide.title}
+            </h3>
+            <AnimatePresence initial={false}>
+              {showExpandedDescription && (
                 <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.5 }}
-                  exit={{ opacity: 0 }}
-                  className={`font-bold p-2 md:hidden ${
-                    currentIndex !== index
-                      ? "transform lg:-rotate-90 rotate-0  lg:group-hover:block lg:rotate-270 lg:my-0 my-4 lg:text-[1.2rem]  text-center  lg:w-[100vw]"
-                      : "lg:text-[1.5rem] text-left hidden "
-                  }`}
+                  key={`mobile-desc-${activeSlide.id}-${currentIndex}`}
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={contentSpring}
+                  className="overflow-hidden"
+                >
+                  <p className="text-sm text-justify leading-snug pt-2 text-zinc-100">
+                    {activeSlide.description}
+                  </p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
+
+        <div
+          role="tablist"
+          aria-label="Design process steps"
+          className="flex flex-col divide-y divide-zinc-200 border-t border-b border-zinc-200"
+        >
+          {slides.map((slide, index) => {
+            const isActive = index === currentIndex;
+            return (
+              <button
+                key={slide.id}
+                type="button"
+                role="tab"
+                id={`working-tab-${slide.id}`}
+                aria-selected={isActive}
+                aria-controls={`working-panel-${slide.id}`}
+                tabIndex={isActive ? 0 : -1}
+                onClick={() => selectStep(index)}
+                onKeyDown={(event) => handleKeyDown(event, index)}
+                className={cn(
+                  "grid grid-cols-[2rem_1fr] gap-x-2.5 items-center py-1.5 px-1 text-left transition-colors duration-300 w-full",
+                  "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900/40",
+                  isActive
+                    ? "bg-zinc-100 text-black"
+                    : "text-zinc-600 hover:text-zinc-900 hover:bg-zinc-50"
+                )}
+              >
+                <span
+                  className={cn(
+                    "tabular-nums shrink-0 leading-none transition-all duration-300 text-right",
+                    isActive
+                      ? "text-sm font-semibold text-zinc-500"
+                      : "text-lg font-bold text-zinc-400"
+                  )}
+                >
+                  {slide.stepNumber}
+                </span>
+                <span
+                  className={cn(
+                    "text-sm leading-snug",
+                    isActive ? "font-bold text-black" : "font-medium"
+                  )}
                 >
                   {slide.title}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </motion.div>
+
+      {/* Desktop: horizontal accordion */}
+      <motion.div
+        variants={rollInView}
+        viewport={{ once: true }}
+        initial="base"
+        whileInView="show"
+        transition={{ ...rollInView.transition, delay: 0.25 }}
+        className="hidden md:block w-full"
+      >
+        <LayoutGroup id="working-accordion">
+          <div
+            role="tablist"
+            aria-label="Design process steps"
+            className="flex w-full h-[55svh] gap-1 overflow-hidden"
+          >
+            {slides.map((slide, index) => {
+              const isActive = index === currentIndex;
+              return (
+                <motion.div
+                  key={slide.id}
+                  role="tab"
+                  id={`working-tab-${slide.id}`}
+                  aria-selected={isActive}
+                  aria-controls={`working-panel-${slide.id}`}
+                  tabIndex={isActive ? 0 : -1}
+                  onClick={() => selectStep(index)}
+                  onKeyDown={(event) => handleKeyDown(event, index)}
+                  animate={{ flex: isActive ? 5 : 1 }}
+                  transition={panelSpring}
+                  whileTap={{ scale: 0.995 }}
+                  className={cn(
+                    "relative h-full min-w-0 cursor-pointer overflow-hidden border border-white/10",
+                    "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/50"
+                  )}
+                >
+                  <div className="absolute inset-0">
+                    <Image
+                      loading="lazy"
+                      src={slide.images?.[0]?.url ?? "/static/logo.webp"}
+                      alt={`${slide.title}, step ${slide.stepNumber} of our design process`}
+                      className="h-full w-full object-cover"
+                      fill
+                      sizes={isActive ? "60vw" : "8vw"}
+                      placeholder="blur"
+                      blurDataURL={shimmerBlur}
+                    />
+                  </div>
+                  <div className="absolute inset-0 bg-zinc-950/35" />
+                  <div
+                    className={cn(
+                      "absolute inset-0 bg-gradient-to-t from-zinc-950/70 via-zinc-950/20 to-transparent",
+                      "text-white z-10 pointer-events-none flex flex-col justify-end p-4",
+                      isActive ? "items-stretch" : "items-center"
+                    )}
+                  >
+                    {!isActive ? (
+                      <div className="flex flex-col items-center justify-end w-full h-full pb-1">
+                        <span className="tabular-nums text-2xl lg:text-3xl font-bold leading-none text-white shrink-0">
+                          {slide.stepNumber}
+                        </span>
+                      </div>
+                    ) : (
+                      <motion.div
+                        layout
+                        id={`working-panel-${slide.id}`}
+                        role="tabpanel"
+                        aria-labelledby={`working-tab-${slide.id}`}
+                        transition={panelSpring}
+                        className="w-full px-2 pb-2 text-left flex flex-col gap-1"
+                      >
+                        <motion.span
+                          layout="position"
+                          transition={panelSpring}
+                          className="text-sm tabular-nums text-white/70 leading-none"
+                        >
+                          {slide.stepNumber}
+                        </motion.span>
+                        <motion.h3
+                          layout="position"
+                          transition={panelSpring}
+                          className="font-bold text-[1.2rem] lg:text-[1.8rem] leading-tight"
+                        >
+                          {slide.title}
+                        </motion.h3>
+                        <AnimatePresence initial={false}>
+                          {showExpandedDescription && (
+                            <motion.div
+                              key={`desc-${slide.id}-${currentIndex}`}
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={contentSpring}
+                              className="overflow-hidden"
+                            >
+                              <p className="text-sm text-justify leading-4 pt-1">
+                                {slide.description}
+                              </p>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </motion.div>
+                    )}
+                  </div>
                 </motion.div>
-                {index === currentIndex && (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.5 }}
-                    exit={{ opacity: 0 }}
-                    className="font-bold p-2 lg:text-[1.8rem] text-[1.2rem] text-left "
-                  >
-                    {slide.title}
-                  </motion.div>
-                )}
-
-                {index === currentIndex && (
-                  //add delay for animation after slide get fully transformed to prevent flickering
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.5 }}
-                    exit={{ opacity: 0 }}
-                    className="text-sm p-2 text-justify leading-4"
-                  >
-                    {slide.description}
-                  </motion.div>
-                )}
-              </div>
-            </div>
-
-            <Image
-              loading="lazy"
-              src={slide?.images?.[0]?.url ?? "/static/logo.webp"}
-              alt={`Slide ${index + 1}`}
-              className={`h-full w-full transition-all duration-500 ease-in-out ${
-                index === currentIndex ? "w-full h-52" : "w-auto object-cover"
-              }`}
-              width={300}
-              height={300}
-            />
-            <div className="absolute inset-0 bg-black bg-opacity-35"></div>
-          </motion.div>
-        ))}
+              );
+            })}
+          </div>
+        </LayoutGroup>
       </motion.div>
     </Sections>
   );

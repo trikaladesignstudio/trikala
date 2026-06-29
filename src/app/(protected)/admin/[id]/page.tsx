@@ -1,6 +1,6 @@
-import PathHeading from "@/components/custom/PathHeading";
+import AdminPageShell from "@/components/custom/admin/AdminPageShell";
 import ProjectForm from "@/components/custom/ProjectForm";
-import Section from "@/components/custom/Section";
+import { Suspense } from "react";
 
 export default async function Page({
   params,
@@ -10,9 +10,10 @@ export default async function Page({
   const id = (await params).id;
 
   return (
-    <Section className="container px-4 py-8 gap-4 flex flex-col mx-auto w-fit">
-      <PathHeading />
-      <ProjectForm projectId={id} />
-    </Section>
+    <AdminPageShell title="Edit project">
+      <Suspense fallback={<div className="text-admin-muted">Loading form...</div>}>
+        <ProjectForm projectId={id} />
+      </Suspense>
+    </AdminPageShell>
   );
 }

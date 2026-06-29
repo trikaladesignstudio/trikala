@@ -1,12 +1,13 @@
-import PathHeading from "@/components/custom/PathHeading";
+import AdminPageShell from "@/components/custom/admin/AdminPageShell";
 import ProjectForm from "@/components/custom/ProjectForm";
-import Section from "@/components/custom/Section";
+import { Suspense } from "react";
 
-export default function CreateProject() {
+export default async function CreateProject() {
   return (
-    <Section className="container px-4 py-8 gap-4 flex flex-col mx-auto w-fit">
-      <PathHeading />
-      <ProjectForm projectId={undefined} />
-    </Section>
+    <AdminPageShell title="New project">
+      <Suspense fallback={<div className="text-admin-muted">Loading form...</div>}>
+        <ProjectForm projectId={undefined} />
+      </Suspense>
+    </AdminPageShell>
   );
 }

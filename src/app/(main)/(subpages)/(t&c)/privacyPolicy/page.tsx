@@ -1,9 +1,21 @@
 import Section from "@/components/custom/Section";
+import { buildPageMetadata } from "@/lib/seo";
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = buildPageMetadata({
+  title: "Privacy Policy",
+  description: "Privacy Policy for Trikal Architects and Associates.",
+  path: "/privacyPolicy",
+  noIndex: true,
+});
 
 export default function PrivacyPolicy() {
   return (
-    <Section className="m-4 p-4 lg:mx-auto lg:w-[70%]">
+    <Section
+      toSnap={false}
+      className="min-h-0 w-full max-w-4xl justify-start gap-6 bg-[#f5f5f5] pb-16 lg:mx-auto"
+    >
       <h1 className="text-3xl font-extrabold">Privacy Policy</h1>
       <>
         Trikala Architects and Associates, We operates as an architectural firm
@@ -24,9 +36,9 @@ export default function PrivacyPolicy() {
       </>
 
       <>
-        <h1 className="text-3xl font-extrabold my-4 pt-4">
+        <h2 className="text-3xl font-extrabold my-4 pt-4">
           Information Collection and Use
-        </h1>
+        </h2>
       </>
       <>
         For a better experience while using our services, we may require you to
@@ -45,9 +57,9 @@ export default function PrivacyPolicy() {
       </>
 
       <>
-        <h1 className="text-3xl font-extrabold my-4 pt-4">
+        <h2 className="text-3xl font-extrabold my-4 pt-4">
           Third-Party Services
-        </h1>
+        </h2>
       </>
       <>
         We may use third-party services to support our operations, such as
@@ -58,7 +70,7 @@ export default function PrivacyPolicy() {
       </>
 
       <>
-        <h1 className="text-3xl font-extrabold my-4 pt-4">Log Data</h1>
+        <h2 className="text-3xl font-extrabold my-4 pt-4">Log Data</h2>
       </>
       <>
         When you visit our website or contact us, we may collect data regarding
@@ -69,7 +81,7 @@ export default function PrivacyPolicy() {
       </>
 
       <>
-        <h1 className="text-3xl font-extrabold my-4 pt-4">Cookies</h1>
+        <h2 className="text-3xl font-extrabold my-4 pt-4">Cookies</h2>
       </>
       <>
         Cookies are small files stored on your device that allow us to analyze
@@ -78,7 +90,7 @@ export default function PrivacyPolicy() {
       </>
 
       <>
-        <h1 className="text-3xl font-extrabold my-4 pt-4">Security</h1>
+        <h2 className="text-3xl font-extrabold my-4 pt-4">Security</h2>
       </>
       <>
         We value your trust in providing personal information and strive to use
@@ -88,9 +100,9 @@ export default function PrivacyPolicy() {
       </>
 
       <>
-        <h1 className="text-3xl font-extrabold my-4 pt-4">
+        <h2 className="text-3xl font-extrabold my-4 pt-4">
           Links to External Sites
-        </h1>
+        </h2>
       </>
       <>
         Our website may contain links to third-party websites. We are not
@@ -99,9 +111,9 @@ export default function PrivacyPolicy() {
       </>
 
       <>
-        <h1 className="text-3xl font-extrabold my-4 pt-4">
+        <h2 className="text-3xl font-extrabold my-4 pt-4">
           Children’s Privacy
-        </h1>
+        </h2>
       </>
       <>
         Our services are not directed toward individuals under the age of 13. We
@@ -111,9 +123,9 @@ export default function PrivacyPolicy() {
       </>
 
       <>
-        <h1 className="text-3xl font-extrabold my-4 pt-4">
+        <h2 className="text-3xl font-extrabold my-4 pt-4">
           Changes to This Privacy Policy
-        </h1>
+        </h2>
       </>
       <>
         We may update this Privacy Policy periodically. Any changes will be
@@ -122,7 +134,7 @@ export default function PrivacyPolicy() {
       </>
 
       <>
-        <h1 className="text-3xl font-extrabold my-4 pt-4">Contact Us</h1>
+        <h2 className="text-3xl font-extrabold my-4 pt-4">Contact Us</h2>
       </>
       <>
         If you have any questions or concerns about our Privacy Policy, please

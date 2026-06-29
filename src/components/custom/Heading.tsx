@@ -1,16 +1,29 @@
 "use client";
 import { brurRenderVariant, cn, transition } from "@/lib/utils";
 import { motion } from "framer-motion";
-import React, { ReactNode } from "react";
+import React from "react";
 
 type Heading = {
   className?: string;
   text: string;
   customDelay?: number;
+  playOnMount?: boolean;
+  startVisible?: boolean;
+  speed?: "normal" | "fast";
 };
 
-function Heading({ className, text, customDelay = 0 }: Heading) {
+function Heading({
+  className,
+  text,
+  customDelay = 0,
+  playOnMount = false,
+  startVisible = false,
+  speed = "normal",
+}: Heading) {
   const words = text.split(" ");
+  const wordStagger = speed === "fast" ? 0.1 : 0.2;
+  const wordDuration = speed === "fast" ? 0.45 : transition.duration;
+  const initialState = startVisible ? "visible" : "hidden";
 
   return (
     <motion.h1
@@ -24,10 +37,15 @@ function Heading({ className, text, customDelay = 0 }: Heading) {
           <motion.span
             className="inline-block"
             viewport={{ once: true }}
-            transition={{ ...transition, delay: customDelay + index * 0.2 }}
+            transition={{
+              ...transition,
+              duration: wordDuration,
+              delay: customDelay + index * wordStagger,
+            }}
             variants={brurRenderVariant}
-            initial="hidden"
-            whileInView="visible"
+            initial={initialState}
+            animate={playOnMount || startVisible ? "visible" : "hidden"}
+            whileInView={playOnMount || startVisible ? undefined : "visible"}
           >
             {word}
           </motion.span>

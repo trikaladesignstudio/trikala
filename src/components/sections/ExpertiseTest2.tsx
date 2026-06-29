@@ -1,34 +1,30 @@
 "use client";
 
-import {
-  expertiseDataType,
-  imagesWithProjectId,
-} from "@/jsonData/Home/Expertise";
-import { getAllProjectsGroupByType } from "@/utils/dbActions";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { expertiseDataType, imagesWithProjectId } from "@/types";
+import { motion } from "framer-motion";
 import Image from "next/image";
-import { Fragment, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { Fragment } from "react";
 import Section from "../custom/Section";
 import {
   Carousel,
   CarouselContent,
+  CarouselControls,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "../ui/carousel";
 import { rollInView } from "@/lib/utils";
 import Link from "next/link";
 
 interface CarouselDataProps {
   images: imagesWithProjectId[];
+  categoryTitle: string;
 }
 
-function CarouselData({ images }: CarouselDataProps) {
+function CarouselData({ images, categoryTitle }: CarouselDataProps) {
   return (
-    <Carousel className="w-full m-auto" delay={4000}>
-      <CarouselContent className="flex -ml-1">
+    <Carousel className="w-full m-auto" delay={4000} loop={false}>
+      <CarouselContent className="-ml-2">
         {images.map(({ url: img, projectId }, index) => (
-          <CarouselItem key={index} className="pl-1 md:basis-1/2 lg:basis-1/3">
+          <CarouselItem key={index} className="pl-2 md:basis-1/2 lg:basis-1/3">
             <motion.div
               variants={rollInView}
               initial="base"
@@ -38,14 +34,14 @@ function CarouselData({ images }: CarouselDataProps) {
                 ...rollInView.transition,
                 delay: 0.2 + index * 0.02,
               }}
-              className="flex-shrink-0"
+              className="w-full"
             >
               {projectId ? (
                 <Link href={`/projects/${projectId}`}>
                   <Image
                     src={img}
-                    alt={`Slide ${index}`}
-                    className="w-full object-cover rounded-md h-[20rem] lg:h-[25rem]"
+                    alt={`${categoryTitle} project showcase`}
+                    className="w-full object-cover rounded-md h-[14rem] sm:h-[18rem] md:h-[28rem] lg:h-[32rem]"
                     width={400}
                     height={400}
                   />
@@ -53,8 +49,8 @@ function CarouselData({ images }: CarouselDataProps) {
               ) : (
                 <Image
                   src={img}
-                  alt={`Slide ${index}`}
-                  className="w-full object-cover rounded-md h-[20rem] lg:h-[25rem]"
+                  alt={`${categoryTitle} project showcase`}
+                  className="w-full object-cover rounded-md h-[14rem] sm:h-[18rem] md:h-[28rem] lg:h-[32rem]"
                   width={400}
                   height={400}
                 />
@@ -63,8 +59,7 @@ function CarouselData({ images }: CarouselDataProps) {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
+      <CarouselControls className="[&_button]:text-zinc-500 [&_button]:hover:text-white" />
     </Carousel>
   );
 }
@@ -83,7 +78,7 @@ function SingleExperize({ expertise }: { expertise: expertiseDataType }) {
                 initial="base"
                 whileInView="show"
                 transition={{ ...rollInView.transition, delay: 0.2 }}
-                className="text-5xl font-semibold text-white"
+                className="text-3xl font-semibold text-white md:text-4xl lg:text-5xl"
               >
                 {expertise.title}
               </motion.div>
@@ -93,13 +88,13 @@ function SingleExperize({ expertise }: { expertise: expertiseDataType }) {
                 initial="base"
                 whileInView="show"
                 transition={{ ...rollInView.transition, delay: 0.4 }}
-                className="text-xl pt-5 text-white"
+                className="pt-3 text-base text-white md:pt-4 md:text-lg lg:pt-5 lg:text-xl"
               >
                 {expertise.description}
               </motion.p>
             </motion.div>
           </div>
-          <CarouselData images={expertise.images} />
+          <CarouselData images={expertise.images} categoryTitle={expertise.title} />
         </div>
       </div>
     </div>

@@ -3,8 +3,9 @@ import prisma from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
 import { UTApi } from "uploadthing/server";
 import { allProjectTypes, ProjectType, sectionType } from "./client_utils";
+import { revalidatePublicSite } from "@/lib/revalidateSite";
 import { revalidatePath } from "next/cache";
-import { expertiseDataType } from "@/jsonData/Home/Expertise";
+import { images } from "@/types";
 
 export async function getAllProjects() {
   try {
@@ -45,7 +46,7 @@ export async function filterAllProjects(
   section?: sectionType,
   type?: ProjectType
 ) {
-  const filterConditions: any = {};
+  const filterConditions: Prisma.ProjectWhereInput = {};
   if (!section && !type) {
     return [];
   }
@@ -65,7 +66,6 @@ export async function filterAllProjects(
 }
 
 export async function getAllProjectsGroupByType() {
-  // const tempExpertiseData: expertiseDataType[] = [];
   const architecturalConcepts = [
     "We design bespoke architectural solutions that embody your vision, ensuring functionality and aesthetics seamlessly align with your unique lifestyle.",
     "Our architectural concepts are tailored to reflect your individuality, creating spaces that resonate with your preferences and aspirations.",
@@ -81,7 +81,7 @@ export async function getAllProjectsGroupByType() {
         .filter((data) => data.type === item)
         .map((project) => {
           return project.images
-            ? (project.images as any[]).map(({ url }: { url: string }) => {
+            ? (project.images as images[]).map(({ url }) => {
                 return {
                   url: url,
                   projectId: project.pdf ? project.id : null,
@@ -107,22 +107,9 @@ export async function getAllProjectsGroupByType() {
 
 export async function getAllFeaturedProjects() {
   try {
-    const projects = await prisma.project.findMany({
-      where: {
-        featured: true,
-      },
+    return await prisma.project.findMany({
+      where: { featured: true },
     });
-    if (!projects) {
-      return [];
-    }
-    interface Product {
-      category: string;
-      [key: string]: any; // Allows additional properties in the product object
-    }
-    return projects.reduce<Record<string, Product[]>>((acc, product) => {
-      (acc[product.type] = acc[product.type] || []).push(product as any);
-      return acc;
-    }, {});
   } catch (error) {
     console.error("Error fetching projects:", error);
     return [];
@@ -135,6 +122,7 @@ export async function addAProject(projectData: Prisma.ProjectCreateInput) {
       data: projectData,
     });
     revalidatePath("/admin");
+    revalidatePublicSite(project.id);
     return project;
   } catch (error) {
     console.error("Error creating project:", error);
@@ -167,6 +155,7 @@ export async function deleteProject(projectData: Prisma.ProjectCreateInput) {
     });
 
     revalidatePath("/admin");
+    revalidatePublicSite(projectData.id);
 
     return projectDel;
   } catch (error) {
@@ -189,6 +178,8 @@ export async function updateProject(
       data: projectData,
     });
     revalidatePath("/admin");
+    revalidatePublicSite(id);
+    revalidatePath(`/admin/${id}`);
     return project;
   } catch (error) {
     console.error("Error updating project:", error);
@@ -207,7 +198,7 @@ export async function getProject(id: string) {
       },
     });
     return project;
-  } catch (error) {
+  } catch {
     return null;
   }
 }
@@ -217,5 +208,8 @@ const utapi = new UTApi();
 
 export const deleteFile = async (name: string) => {
   const data = await utapi.deleteFiles(name);
-  console.log("data:", data);
+  if (!data.success) {
+    throw new Error("Failed to delete file");
+  }
+  return data;
 };

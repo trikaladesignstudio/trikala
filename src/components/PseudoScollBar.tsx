@@ -3,7 +3,6 @@
 import {
   motion,
   useAnimation,
-  useMotionTemplate,
   useMotionValueEvent,
   useScroll,
   useSpring,

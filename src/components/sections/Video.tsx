@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 
 function Video() {
   return (
-    <Section className="lg:min-h-[100svh] min-h-fit px-0 py-20 justify-center items-center">
+    <Section className="lg:min-h-screen min-h-fit px-0 py-20 justify-center items-center bg-[#f5f5f5]">
       <motion.div
         variants={rollInView}
         viewport={{ once: true }}

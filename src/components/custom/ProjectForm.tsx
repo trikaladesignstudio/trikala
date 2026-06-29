@@ -13,52 +13,159 @@ import {
   getProject,
   updateProject,
 } from "@/utils/dbActions";
-import { images } from "@/utils/types";
+import { images } from "@/types";
 import { UploadButton, UploadDropzone } from "@/utils/uploadthing";
 import { Prisma } from "@prisma/client";
-import { Cross1Icon } from "@radix-ui/react-icons";
+import { Cross1Icon, ImageIcon } from "@radix-ui/react-icons";
 import { AnimatePresence, motion } from "framer-motion";
-import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Button } from "../ui/button";
-import { Card, CardContent } from "../ui/card";
-// import RenderPdf from "./RenderPdf";
-import dynamic from "next/dynamic";
+
 const RenderPdf = dynamic(() => import("./RenderPdf"), {
   ssr: false,
 });
 
+const inputClassName =
+  "w-full rounded-lg border border-admin-border bg-admin-canvas px-3 py-2.5 text-sm text-admin-ink outline-none transition-[border-color,box-shadow] focus:border-admin-accent/40 focus:ring-2 focus:ring-admin-accent/20";
+
+const labelClassName = "mb-1.5 block text-sm font-medium text-admin-ink";
+
+const uploadConfig = { mode: "auto" as const };
+
+const uploadButtonAppearance = {
+  button:
+    "ut-ready:bg-admin-accent ut-ready:hover:bg-admin-accent/90 ut-uploading:bg-admin-accent/70 ut-uploading:cursor-wait rounded-lg px-4 py-2 text-sm font-medium text-white transition-colors active:scale-[0.98]",
+  allowedContent: "text-admin-muted text-xs",
+  container: "w-fit",
+};
+
+const uploadDropzoneAppearance = {
+  container:
+    "border-admin-border bg-admin-canvas ut-uploading:border-admin-accent/40 rounded-xl border border-dashed px-4 py-6",
+  uploadIcon: "text-admin-muted",
+  label: "text-sm font-medium text-admin-ink",
+  allowedContent: "text-admin-muted text-xs",
+  button:
+    "ut-ready:bg-admin-accent ut-ready:hover:bg-admin-accent/90 ut-uploading:bg-admin-accent/70 rounded-lg px-4 py-2 text-sm font-medium text-white transition-colors",
+};
+
+function getImages(formData: Prisma.ProjectCreateInput): images[] {
+  return Array.isArray(formData.images) ? (formData.images as images[]) : [];
+}
+
+function UploadedImageTile({
+  file,
+  onRemove,
+}: {
+  file: images;
+  onRemove: () => void;
+}) {
+  const [failed, setFailed] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+
+  return (
+    <motion.div
+      className="relative"
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      transition={{ duration: 0.15 }}
+    >
+      <button
+        type="button"
+        onClick={onRemove}
+        aria-label={`Remove ${file.name}`}
+        className="absolute right-1.5 top-1.5 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-admin-accent text-white shadow-[0_2px_10px_rgba(0,0,0,0.45)] ring-2 ring-admin-surface transition-transform hover:bg-admin-accent/90 active:scale-95"
+      >
+        <Cross1Icon className="h-3.5 w-3.5" />
+      </button>
+      <a
+        href={file.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block overflow-hidden rounded-lg border border-admin-border bg-admin-canvas"
+      >
+        <div className="relative aspect-square w-full">
+          {!failed ? (
+            <>
+              {!loaded && (
+                <div
+                  className="absolute inset-0 animate-pulse bg-admin-border"
+                  aria-hidden
+                />
+              )}
+              {/* Load directly from UploadThing; Next image optimizer 500s on some utfs.io files */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={file.url}
+                alt=""
+                loading="lazy"
+                decoding="async"
+                onLoad={() => setLoaded(true)}
+                onError={() => setFailed(true)}
+                className={cn(
+                  "h-full w-full object-cover transition-opacity duration-200",
+                  loaded ? "opacity-100" : "opacity-0"
+                )}
+              />
+            </>
+          ) : (
+            <div className="flex h-full flex-col items-center justify-center gap-1.5 p-3 text-center">
+              <ImageIcon className="h-6 w-6 text-admin-muted" aria-hidden />
+              <span className="text-[11px] leading-tight text-admin-muted">
+                Preview unavailable
+              </span>
+              <span className="text-[11px] font-medium text-admin-accent">
+                Open original
+              </span>
+            </div>
+          )}
+        </div>
+      </a>
+    </motion.div>
+  );
+}
+
 export default function ProjectForm({ projectId }: { projectId?: string }) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const presetSection = searchParams.get("section") as sectionType | null;
+
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [_isSubmited, setIsSubmited] = useState(false);
-  const [filenames, setFileNames] = useState<images[] | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [, setIsSubmited] = useState(false);
   const [pdfFile, setPdfFile] = useState<{ name: string; url: string } | null>(
     null
   );
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(Boolean(projectId));
   const [formData, setFormData] = useState<Prisma.ProjectCreateInput>({
     title: "",
     description: "",
-    section: sectionType.none,
+    section:
+      presetSection && Object.values(sectionType).includes(presetSection)
+        ? presetSection
+        : sectionType.none,
     type: ProjectType.none,
     featured: false,
     images: [],
     pdf: null,
   });
 
+  const uploadedImages = getImages(formData);
+
   const getProjectInfo = async () => {
-    projectId &&
+    if (projectId) {
+      setIsLoading(true);
       getProject(projectId).then((project) => {
-        // console.log("project:", project);
         if (project === null) {
-          toast.error("Error fetching project");
+          toast.error("Project not found");
           setTimeout(() => {
-            router.push("/admin");
-          }, 2000);
+            router.push("/admin/all");
+          }, 1500);
         }
         if (project) {
           setFormData({
@@ -71,30 +178,39 @@ export default function ProjectForm({ projectId }: { projectId?: string }) {
             pdf: project.pdf,
           });
           setPdfFile(project.pdf);
-          setFileNames(project.images);
         }
+        setIsLoading(false);
       });
+    }
   };
 
   useEffect(() => {
     if (projectId) getProjectInfo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projectId]);
 
-  useEffect(() => {
-    if (filenames) {
-      setFormData((prev) => ({
-        ...prev,
-        images: filenames,
-      }));
-    }
-  }, [filenames]);
+  const removeImage = (file: images) => {
+    const prev = getImages(formData);
+    const next = prev.filter((f) => f.name !== file.name);
+    setFormData((p) => ({ ...p, images: next }));
 
-  const deleteFileWithFilename = async (filename: images) => {
-    console.log("Deleting file:", filename);
-    await deleteFile(filename.name);
-    if (filenames) {
-      setFileNames(filenames.filter((file) => file.name !== filename.name));
-    }
+    deleteFile(file.name).catch(() => {
+      setFormData((p) => ({ ...p, images: prev }));
+      toast.error("Could not remove image. Try again.");
+    });
+  };
+
+  const removePdf = () => {
+    if (!pdfFile) return;
+    const prevPdf = pdfFile;
+    setPdfFile(null);
+    setFormData((p) => ({ ...p, pdf: null }));
+
+    deleteFile(prevPdf.name).catch(() => {
+      setPdfFile(prevPdf);
+      setFormData((p) => ({ ...p, pdf: prevPdf }));
+      toast.error("Could not remove PDF. Try again.");
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -102,17 +218,19 @@ export default function ProjectForm({ projectId }: { projectId?: string }) {
     setIsSubmitting(true);
     setError(null);
     setIsSubmited(true);
-    // console.log("formData:", formData);
 
     try {
       if (projectId) {
         await updateProject(projectId, formData);
+        toast.success("Project updated");
       } else {
         await addAProject(formData);
+        toast.success("Project created");
       }
-      router.push("/admin");
+      router.push("/admin/all");
+      router.refresh();
     } catch (err) {
-      setError("Failed to create project. Please try again.");
+      setError("Failed to save project. Please try again.");
       console.error("Error creating project:", err);
     } finally {
       setIsSubmitting(false);
@@ -132,302 +250,277 @@ export default function ProjectForm({ projectId }: { projectId?: string }) {
     }));
   };
 
-  const pdfUploadHandler = (data: { url: string; name: string }) => {
-    setFormData((prev) => ({
-      ...prev,
-      pdf: data,
-    }));
+  const handlePdfUploadComplete = (res: { url: string; name: string }[]) => {
+    const neededData = res.map(({ url, name }) => ({ url, name }))[0];
+    setPdfFile(neededData);
+    setFormData((prev) => ({ ...prev, pdf: neededData }));
+    setIsUploading(false);
   };
 
-  // useEffect(() => {
-  //   if (pdfFile) {
-  //     toImg(pdfFile.url).then((imgs) => {
-  //       console.log("imgs:", imgs);
-  //     });
-  //   }
-  // }, [pdfFile]);
+  const handleImageUploadComplete = (
+    res: { url: string; key: string }[]
+  ) => {
+    const files = res.map(({ url, key }) => ({ name: key, url }));
+    setFormData((prev) => ({
+      ...prev,
+      images: [...getImages(prev), ...files],
+    }));
+    toast.success("Upload completed");
+    setIsUploading(false);
+  };
+
+  const handleUploadError = (uploadError: Error) => {
+    toast.error(uploadError.message);
+    setIsUploading(false);
+  };
 
   return (
     <>
       {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+        <div className="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-900/50 dark:bg-red-950/40 dark:text-red-300">
           {error}
         </div>
       )}
-      <motion.div className={cn("h-fit flex flex-col lg:flex-row gap-4")}>
-        <motion.form onSubmit={handleSubmit} className="space-y-2 max-w-2xl">
-          <Card className="h-full bg-white">
-            <CardContent className="p-4 flex flex-col gap-2 ">
-              <div className="grid grid-cols-3 gap-2">
-                <div>
-                  <label
-                    htmlFor="section"
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                  >
-                    Section *
-                  </label>
-                  <select
-                    id="section"
-                    name="section"
-                    className="block w-full px-3 py-2 text-base text-gray-700 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                    value={formData.section}
-                    onChange={handleInputChange}
-                  >
-                    {/* {"asdfas" + allSections} */}
 
-                    {allSections.map((section) => (
-                      <option key={section} value={section}>
-                        {section}
-                      </option>
-                    ))}
-                  </select>
+      {isLoading ? (
+        <div className="w-full max-w-4xl space-y-4 rounded-2xl border border-admin-border bg-admin-surface p-6">
+          <div className="h-4 w-32 animate-pulse rounded bg-admin-canvas" />
+          <div className="h-10 animate-pulse rounded-lg bg-admin-canvas" />
+          <div className="h-10 animate-pulse rounded-lg bg-admin-canvas" />
+          <div className="h-24 animate-pulse rounded-lg bg-admin-canvas" />
+        </div>
+      ) : (
+        <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(280px,360px)]">
+          <form
+            onSubmit={handleSubmit}
+            className="flex min-w-0 flex-col rounded-2xl border border-admin-border bg-admin-surface shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] dark:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.35)]"
+          >
+            <div className="border-b border-admin-border px-5 py-4 md:px-6">
+              <h2 className="text-lg font-semibold text-admin-ink">
+                {projectId ? "Update project" : "Create project"}
+              </h2>
+              <p className="mt-1 text-sm text-admin-muted">
+                Edit metadata, uploads, and featured visibility.
+              </p>
+            </div>
+
+            <div className="space-y-6 px-5 py-5 md:px-6">
+              <fieldset className="space-y-4">
+                <legend className="sr-only">Classification</legend>
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                  <div>
+                    <label htmlFor="section" className={labelClassName}>
+                      Section
+                    </label>
+                    <select
+                      id="section"
+                      name="section"
+                      className={inputClassName}
+                      value={formData.section}
+                      onChange={handleInputChange}
+                    >
+                      {allSections.map((section) => (
+                        <option key={section} value={section}>
+                          {section}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label htmlFor="type" className={labelClassName}>
+                      Category
+                    </label>
+                    <select
+                      id="type"
+                      name="type"
+                      className={inputClassName}
+                      value={formData.type}
+                      onChange={handleInputChange}
+                    >
+                      {Object.values(allProjectTypes).map((type) => (
+                        <option key={type} value={type}>
+                          {type}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <span className={labelClassName}>Featured</span>
+                    <label
+                      htmlFor="featured"
+                      className={cn(
+                        inputClassName,
+                        "flex h-[42px] cursor-pointer items-center gap-2.5 !py-0"
+                      )}
+                    >
+                      <input
+                        type="checkbox"
+                        id="featured"
+                        name="featured"
+                        checked={formData.featured}
+                        onChange={handleInputChange}
+                        className="h-4 w-4 shrink-0 rounded border-admin-border text-admin-accent focus:ring-admin-accent"
+                      />
+                      <span className="truncate text-sm text-admin-muted">
+                        Show in featured grid
+                      </span>
+                    </label>
+                  </div>
                 </div>
+              </fieldset>
 
+              <fieldset className="space-y-4">
+                <legend className="sr-only">Content</legend>
                 <div>
-                  <label
-                    htmlFor="type"
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                  >
-                    Architecture Category *
-                  </label>
-                  <select
-                    id="type"
-                    name="type"
-                    className="block w-full px-3 py-2 text-base text-gray-700 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                    value={formData.type}
-                    onChange={handleInputChange}
-                  >
-                    {Object.values(allProjectTypes).map((type) => (
-                      <option key={type} value={type}>
-                        {type}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className="flex items-baseline space-x-2 flex-col gap-1 ">
-                  <label
-                    htmlFor="featured"
-                    className="block text-sm font-medium text-gray-700 "
-                  >
-                    Featured Project
+                  <label htmlFor="title" className={labelClassName}>
+                    Title
                   </label>
                   <input
-                    type="checkbox"
-                    id="featured"
-                    name="featured"
-                    checked={formData.featured}
+                    type="text"
+                    id="title"
+                    name="title"
+                    required
+                    value={formData.title}
                     onChange={handleInputChange}
-                    className="h-6 w-6 text-blue-600 border-gray-300 rounded focus:ring-blue-500 "
+                    className={inputClassName}
                   />
                 </div>
-              </div>
-              <div>
-                <label
-                  htmlFor="title"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  Title *
-                </label>
-                <input
-                  type="text"
-                  id="title"
-                  name="title"
-                  required
-                  value={formData.title}
-                  onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="description"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  Description
-                </label>
-                <input
-                  id="description"
-                  name="description"
-                  value={formData.description}
-                  onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                />
-              </div>
 
-              {/* pdf */}
-              <div>
-                <label
-                  htmlFor="pdf"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  Project PDF *
-                </label>
-                {!pdfFile && (
-                  <UploadButton
-                    endpoint="uploadPDF"
-                    onClientUploadComplete={(res) => {
-                      // Do something with the response
-                      const neededData = res.map(({ url, name }) => {
-                        return {
-                          url,
-                          name,
-                        };
-                      })[0];
-                      setPdfFile(neededData);
-                      pdfUploadHandler(neededData);
-                    }}
-                    onUploadError={(error: Error) => {
-                      // Do something with the error.
-                      toast.error(error.message);
-                    }}
+                <div>
+                  <label htmlFor="description" className={labelClassName}>
+                    Description
+                  </label>
+                  <textarea
+                    id="description"
+                    name="description"
+                    rows={4}
+                    value={formData.description}
+                    onChange={handleInputChange}
+                    className={cn(inputClassName, "min-h-[112px] resize-y")}
                   />
-                )}
-                {pdfFile && (
-                  <div
-                    className="text-sm  w-full h-12 border flex justify-between items-center rounded-md p-2"
-                    onClick={() => {
-                      deleteFile(pdfFile.name);
-                      setPdfFile(null);
-                    }}
-                  >
-                    <div>Currently uploaded:</div>
-                    <div className="font-semibold text-white hover:text-white hover:bg-red-400 cursor-pointer bg-black p-2 rounded-md">
-                      {pdfFile.name}
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              <div>
-                <label
-                  htmlFor="pdf"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  Images
-                </label>
-                <UploadDropzone
-                  endpoint={"imageUploader"}
-                  onUploadBegin={() => {
-                    setIsSubmitting(true);
-                  }}
-                  onClientUploadComplete={(res) => {
-                    // Do something with the response
-                    console.log("Files: ", res);
-                    const files = res.map(({ url, key }) => {
-                      return {
-                        name: key,
-                        url,
-                      };
-                    });
-                    setFileNames((prev) =>
-                      prev ? [...prev, ...files] : files
-                    );
-                    console.log("Files: ", files);
-                    toast.success("Upload Completed");
-                    setIsSubmitting(false);
-                  }}
-                  onUploadError={(error: Error) => {
-                    // Do something with the error.
-                    toast.error(error.message);
-                  }}
-                />
-              </div>
-
-              <div className="flex justify-end space-x-4">
-                <Button
-                  type="button"
-                  onClick={() => {
-                    router.push("/admin");
-                  }}
-                  className="px-4 py-2 text-gray-700 border border-gray-300 rounded-md hover:bg-gray-50"
-                >
-                  Cancel
-                </Button>
-                <Button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:bg-blue-300"
-                >
-                  {isSubmitting
-                    ? "Creating..."
-                    : projectId
-                    ? "Update Project"
-                    : "Create Project"}
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </motion.form>
-        {filenames && filenames.length > 0 && (
-          <motion.div className="flex-1 w-full space-y-2 rounded-lg flex flex-col h-full">
-            <Card className="h-full bg-white">
-              <CardContent className="p-4 flex flex-col gap-4 ">
-                <div className="text-3xl font-thin font-poppins">
-                  Uploaded Files : {filenames.length}
                 </div>
-                <motion.div className="space-y-2 flex-1">
-                  <AnimatePresence mode="wait">
-                    {filenames && filenames.length > 0 && (
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.5 }}
-                        className="grid grid-cols-2 "
+              </fieldset>
+
+              <fieldset className="space-y-4">
+                <legend className="sr-only">Media</legend>
+                <div>
+                  <label htmlFor="pdf" className={labelClassName}>
+                    Project PDF
+                  </label>
+                  {!pdfFile ? (
+                    <UploadButton
+                      endpoint="uploadPDF"
+                      config={uploadConfig}
+                      appearance={uploadButtonAppearance}
+                      onUploadBegin={() => setIsUploading(true)}
+                      onClientUploadComplete={handlePdfUploadComplete}
+                      onUploadError={handleUploadError}
+                    />
+                  ) : (
+                    <div className="flex min-h-[42px] items-center justify-between gap-3 rounded-lg border border-admin-border bg-admin-canvas px-3">
+                      <span className="truncate text-sm text-admin-ink">
+                        {pdfFile.name}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={removePdf}
+                        className="shrink-0 rounded-md border border-admin-border px-3 py-1.5 text-xs font-medium text-admin-muted transition-colors hover:bg-admin-surface hover:text-admin-ink"
                       >
-                        {filenames?.map((filename) => (
-                          <motion.div
-                            key={filename.name}
-                            className="m-2 relative group"
-                          >
-                            <motion.div
-                              onClick={() => deleteFileWithFilename(filename)}
-                              className="group-hover:opacity-100 opacity-0 absolute top-0 right-0 bg-black text-white rounded-full p-1"
-                            >
-                              <Cross1Icon />
-                            </motion.div>
-                            <Link
-                              href={filename.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              <Image
-                                loading="lazy"
-                                alt="Forms"
-                                height={100}
-                                width={100}
-                                src={filename.url}
-                                className="m-2 h-auto bg-black/10 w-[15em] hover:border-1 hover:shadow-lg rounded-lg shadow-md border border-black/20 "
-                              />
-                            </Link>
-                          </motion.div>
-                        ))}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </motion.div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        )}
-        {pdfFile && (
-          <motion.div className="flex-1 w-full space-y-2 rounded-lg flex flex-col h-full">
-            <Card className="h-full bg-white">
-              <AnimatePresence mode="wait">
-                <CardContent className="p-4 flex flex-col gap-4 h-full">
-                  <div className="text-3xl font-thin font-poppins">
-                    Rendered Pdf 
+                        Remove
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+                <div>
+                  <label htmlFor="images" className={labelClassName}>
+                    Images
+                  </label>
+                  <UploadDropzone
+                    endpoint="imageUploader"
+                    config={uploadConfig}
+                    appearance={uploadDropzoneAppearance}
+                    onUploadBegin={() => setIsUploading(true)}
+                    onClientUploadComplete={handleImageUploadComplete}
+                    onUploadError={handleUploadError}
+                  />
+                  <p className="mt-1.5 text-xs text-admin-muted">
+                    Up to 10 images, 5MB each.
+                  </p>
+                </div>
+              </fieldset>
+            </div>
+
+            <div className="sticky bottom-0 mt-auto flex flex-wrap justify-end gap-3 border-t border-admin-border bg-admin-surface/95 px-5 py-4 backdrop-blur-sm md:px-6">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => router.push("/admin/all")}
+                className="min-h-[44px] border-admin-border text-admin-muted hover:bg-admin-canvas"
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                disabled={isSubmitting || isUploading}
+                className="min-h-[44px] bg-admin-accent text-white hover:bg-admin-accent/90 active:scale-[0.98]"
+              >
+                {isUploading
+                  ? "Uploading..."
+                  : isSubmitting
+                    ? "Saving..."
+                    : projectId
+                      ? "Update project"
+                      : "Create project"}
+              </Button>
+            </div>
+          </form>
+
+          {(uploadedImages.length > 0 || pdfFile) && (
+            <aside className="flex min-w-0 flex-col gap-6">
+              {uploadedImages.length > 0 && (
+                <section className="rounded-2xl border border-admin-border bg-admin-surface">
+                  <div className="border-b border-admin-border px-5 py-4">
+                    <h3 className="text-base font-semibold text-admin-ink">
+                      Uploaded images
+                    </h3>
+                    <p className="mt-0.5 text-sm text-admin-muted">
+                      {uploadedImages.length}{" "}
+                      {uploadedImages.length === 1 ? "file" : "files"}
+                    </p>
                   </div>
-                  <motion.div className="flex-1">
-                    <RenderPdf url={pdfFile?.url || ""} />
-                  </motion.div>
-                </CardContent>
-              </AnimatePresence>
-            </Card>
-          </motion.div>
-        )}
-      </motion.div>
+                  <div className="grid grid-cols-2 gap-3 p-5">
+                    <AnimatePresence initial={false}>
+                      {uploadedImages.map((filename) => (
+                        <UploadedImageTile
+                          key={filename.name}
+                          file={filename}
+                          onRemove={() => removeImage(filename)}
+                        />
+                      ))}
+                    </AnimatePresence>
+                  </div>
+                </section>
+              )}
+
+              {pdfFile && (
+                <section className="rounded-2xl border border-admin-border bg-admin-surface">
+                  <div className="border-b border-admin-border px-5 py-4">
+                    <h3 className="text-base font-semibold text-admin-ink">
+                      PDF preview
+                    </h3>
+                  </div>
+                  <div className="overflow-hidden p-4">
+                    <RenderPdf url={pdfFile.url} />
+                  </div>
+                </section>
+              )}
+            </aside>
+          )}
+        </div>
+      )}
     </>
   );
 }

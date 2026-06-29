@@ -7,7 +7,7 @@ if (process.env.NODE_ENV === "production") {
 		errorFormat: "pretty",
 	});
 } else {
-	let globalWithPrisma = global as typeof globalThis & {
+	const globalWithPrisma = global as typeof globalThis & {
 		prisma: PrismaClient;
 	};
 	if (!globalWithPrisma.prisma) {

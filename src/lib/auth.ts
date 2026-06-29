@@ -6,8 +6,8 @@ import { cookies } from "next/headers";
 import { expiresin1Day } from "@/utils/client_utils";
 
 const expires1dayTime = () => {
-  var now = new Date();
-  var time = now.getTime();
+  const now = new Date();
+  const time = now.getTime();
   return time + expiresin1Day;
 };
 export async function login(formData: FormData) {
@@ -70,7 +70,7 @@ export async function updateSession(request: NextRequest) {
 
     // if user is already login and trying to go to login page then just redirect to /admin page
     if (request.nextUrl.pathname === "/login") {
-      return NextResponse.redirect(new URL("/admin", request.url));
+      return NextResponse.redirect(new URL("/admin/all", request.url));
     }
     parsed.expires = expires1dayTime();
     const res = NextResponse.next();
@@ -81,7 +81,7 @@ export async function updateSession(request: NextRequest) {
       expires: parsed.expires,
     });
     return res;
-  } catch (error) {
+  } catch {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 }

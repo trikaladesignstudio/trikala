@@ -2,7 +2,7 @@
 
 import useScreenWidth from "@/hooks/ScreenResize";
 import Image from "next/image";
-import { cn, rollInView } from "@/lib/utils";
+import { cn, rollInView, shimmerBlur } from "@/lib/utils";
 import { filterAllProjects } from "@/utils/dbActions";
 import { useEffect, useState } from "react";
 import { TestimonialsDataType } from "@/types";
@@ -56,10 +56,12 @@ const ReviewCard = ({
           alt={title}
           width={20}
           height={20}
+          placeholder="blur"
+          blurDataURL={shimmerBlur}
         />
         <div className="">
-          <div className="text-xl font-medium text-black">{title}</div>
-          <p className="text-gray-500">{company}</p>
+          <div className="text-base font-medium text-black md:text-lg lg:text-xl">{title}</div>
+          <p className="text-xs text-gray-500 md:text-sm">{company}</p>
         </div>
       </div>
       <div
@@ -68,7 +70,7 @@ const ReviewCard = ({
           width: description.length / (inMobileView ? 7 : 4) + "ch",
         }}
       >
-        <p className="text-gray-700 break-words text-[0.9rem] lg:text-[.8rem] xl:text-[.95rem] text-justify">
+        <p className="break-words text-justify text-[0.78rem] leading-relaxed text-gray-700 sm:text-[0.85rem] lg:text-[0.95rem]">
           {description}
         </p>
       </div>
@@ -101,11 +103,11 @@ function Testimonials({
   const secondRow = testimonials.slice(testimonials.length / 2);
   return (
     <Section className="lg:px-0 px-0 py-0 lg:py-0">
-      <div className="flex lg:flex-row flex-col px-[2rem] py-[1rem] lg:px-[5rem] gap-2 md:gap-20">
-        <div className="text-left flex-none">
-          <Heading className="text-left flex-none" text="What Our Clients" />
-          <Heading className="text-left flex-none" text="have to say" />
-        </div>
+      <div className="page-px flex flex-col py-[0.1rem] gap-2 md:gap-6">
+        <Heading
+          className="text-left flex-none text-3xl md:text-5xl lg:text-7xl"
+          text="What Our Clients Have to Say"
+        />
         <motion.div
           variants={rollInView}
           viewport={{ once: true }}
@@ -116,7 +118,7 @@ function Testimonials({
             delay: 0.4,
             duration: 0.5,
           }}
-          className="flex lg:flex-row flex-col lg:gap-[20vh] z-30 justify-between items-start text-justify text-md lg:text-lg"
+          className="z-30 items-start justify-between text-justify text-sm md:text-base lg:text-lg"
         >
           Our testimonials reflect the trust of clients who’ve partnered with
           Trikala Architecture and Associates. From dream homes to innovative
@@ -124,36 +126,31 @@ function Testimonials({
           relationships, bringing visions to life with thoughtful design.
         </motion.div>
       </div>
-      <Section
-        toSnap={false}
-        className="gap-4 lg:py-0  min-h-fit lg:px-0 px-0 "
-      >
+      <div className="relative w-full">
+        <div className="absolute top-0 left-0 z-10 h-full w-full bg-custom-gradient pointer-events-none" />
         <div className="relative w-full">
-          <div className="absolute top-0 left-0 w-full h-full bg-custom-gradient z-10 pointer-events-none" />
-          <div className="relative w-full">
-            <Marquee pauseOnHover className="[--duration:30s]">
-              {firstRow.map((review) => (
-                <ReviewCard
-                  key={review.title}
-                  {...review}
-                  screenSize={screenSize}
-                  animationDelay={0.4}
-                />
-              ))}
-            </Marquee>
-            <Marquee reverse pauseOnHover className="[--duration:30s]">
-              {secondRow.map((review) => (
-                <ReviewCard
-                  key={review.title}
-                  {...review}
-                  screenSize={screenSize}
-                  animationDelay={0.6}
-                />
-              ))}
-            </Marquee>
-          </div>
+          <Marquee pauseOnHover className="[--duration:30s]">
+            {firstRow.map((review) => (
+              <ReviewCard
+                key={review.title}
+                {...review}
+                screenSize={screenSize}
+                animationDelay={0.4}
+              />
+            ))}
+          </Marquee>
+          <Marquee reverse pauseOnHover className="[--duration:30s]">
+            {secondRow.map((review) => (
+              <ReviewCard
+                key={review.title}
+                {...review}
+                screenSize={screenSize}
+                animationDelay={0.6}
+              />
+            ))}
+          </Marquee>
         </div>
-      </Section>
+      </div>
     </Section>
   );
 }

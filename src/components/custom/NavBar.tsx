@@ -1,131 +1,129 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
-import { navlinks } from "@/types";
-import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+import StaggeredMenu from "@/components/custom/StaggeredMenu";
 import { startAProjectLink } from "@/constants";
-import { buttonVariants } from "../ui/button";
-import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { navlinks } from "@/types";
+
+const navLabel =
+  "text-[13px] font-normal uppercase leading-none tracking-normal text-[#222F30]";
+
+const SIZES = {
+  hero: {
+    row: "py-4 lg:py-6",
+    logo: "h-[3.3rem] w-auto lg:h-[4.56rem]",
+    pill: "h-11 lg:h-[3.375rem]",
+    link: "h-[calc(2.75rem-0.875rem)] lg:h-[calc(3.375rem-0.875rem)]",
+    cta: "h-[calc(2.75rem-0.5rem)] lg:h-[calc(3.375rem-0.5rem)]",
+  },
+  default: {
+    row: "py-3 lg:py-3.5",
+    logo: "h-[2.84rem] w-auto lg:h-[3.8rem]",
+    pill: "h-9 lg:h-11",
+    link: "h-[calc(2.25rem-0.875rem)] lg:h-[calc(2.75rem-0.875rem)]",
+    cta: "h-[calc(2.25rem-0.5rem)] lg:h-[calc(2.75rem-0.5rem)]",
+  },
+} as const;
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const toggleMenu = () => setIsOpen(!isOpen);
+  const isOverlay = usePathname() === "/";
+  const s = SIZES[isOverlay ? "hero" : "default"];
 
-  return (
-    <motion.nav
-      initial={{
-        opacity: 0,
-        y: -10,
-      }}
-      whileInView={{
-        opacity: 1,
-        y: 0,
-      }}
-      transition={{ duration: 0.5, delay: 0.5 }}
-      className="px-[.2rem] lg:px-[5rem] absolute left-0 right-0 -top-2 z-20 text-black/90 flex flex-row items-center min-h-fit justify-between w-full py-1
-      snap-start"
-    >
-      <Link href={"/"} className="font-bold">
+  const inner = (
+    <div className={cn("page-x flex items-center justify-between", s.row)}>
+      <Link href="/" className="shrink-0">
         <Image
           priority
-          src={"/static/logo.webp"}
-          alt="Brand Logo"
-          width={130}
-          height={130}
-          className="invert"
+          src="/static/logo.webp"
+          alt="Trikala Architects"
+          width={120}
+          height={120}
+          className={cn(s.logo, "invert")}
         />
       </Link>
-      <div className="lg:hidden">
-        <button className="text-white focus:outline-none" onClick={toggleMenu}>
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M4 6h16M4 12h16m-7 6h7"
-            ></path>
-          </svg>
-        </button>
-      </div>
-      <div className="hidden lg:flex space-x-16">
-        {navlinks.map((link) => (
-          <div className="relative group" key={link.name}>
-            <a href={link.href} className="text-white font-semibold">
-              {link.name}
-            </a>
-            <span className="absolute bottom-0 left-0 block w-0 h-[1.5px] bg-white font-semibold transition-all duration-300 group-hover:w-[70%]"></span>
-          </div>
-        ))}
-      </div>
-      <Link
-        href={startAProjectLink}
-        className={cn(
-          buttonVariants({
-            variant: "default",
-          }),
-          "lg:block bg-black border-gray-500/50 border-2 text-white px-4 transition-all duration-300 ease-in-out rounded-full",
-          "flex items-center justify-center",
-          "shadow-md hover:shadow-lg "
-        )}
-      >
-        Start a Project &rarr;
-      </Link>
-      <div
-        className={cn(
-          "fixed inset-0 z-50 transform bg-gray-100 bg-opacity-90 w-full h-full transition-transform duration-300 ease-in-out lg:hidden",
-          isOpen ? "translate-x-0" : "translate-x-full"
-        )}
-      >
-        <div className="   h-full flex flex-col justify-center items-center relative">
-          <button
-            className="absolute top-4 right-4 text-custom-db focus:outline-none"
-            onClick={toggleMenu}
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M6 18L18 6M6 6l12 12"
-              ></path>
-            </svg>
-          </button>
 
-          <nav className="flex flex-col space-y-6 text-xl w-full ">
-            {navlinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className="hover:text-gray-500 focus:underline underline-offset-4 animate-[underline] ease-in-out delay-75  text-center w-full"
-              >
-                {link.name}
-              </a>
-            ))}
-          </nav>
+      <div
+        className="hidden shrink-0 items-center lg:flex"
+        aria-label="Primary navigation"
+      >
+        <div
+          className={cn(
+            "inline-flex items-center gap-3 rounded-xl border border-[#222F30]/5 bg-white/80 py-1 pl-3 pr-1 backdrop-blur-[14px]",
+            s.pill
+          )}
+        >
+          {navlinks.map((link) => (
+            <Link
+              key={link.name}
+              href={link.href}
+              className={cn(
+                navLabel,
+                "inline-flex items-center rounded-lg px-[17px] transition-colors hover:bg-[#222F30]/5",
+                s.link
+              )}
+            >
+              {link.name}
+            </Link>
+          ))}
+          <Link
+            href={startAProjectLink}
+            className={cn(
+              navLabel,
+              "inline-flex shrink-0 items-center rounded-lg bg-[#222F30] px-5 text-white transition-colors hover:bg-[#222F30]/90 active:scale-[0.98]",
+              s.cta
+            )}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Start a Project
+          </Link>
         </div>
       </div>
-      {isOpen && (
-        <div
-          className="fixed inset-0 z-40 bg-black opacity-50 lg:hidden"
-          onClick={toggleMenu}
-        ></div>
-      )}
-    </motion.nav>
+
+      <div className="flex items-center gap-5 lg:hidden">
+        <Link
+          href={startAProjectLink}
+          className={cn(
+            navLabel,
+            "text-custom-premium transition-colors hover:text-white"
+          )}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Inquire
+        </Link>
+        <StaggeredMenu
+          embedded
+          hideLogo
+          items={navlinks.map((link) => ({
+            label: link.name,
+            ariaLabel: `Go to ${link.name}`,
+            link: link.href,
+          }))}
+          cta={{
+            label: "Start a Project",
+            link: startAProjectLink,
+            ariaLabel: "Start a project with Trikala",
+            external: true,
+          }}
+        />
+      </div>
+    </div>
   );
+
+  if (isOverlay) {
+    return (
+      <nav className="absolute inset-x-0 top-0 z-30 bg-transparent">
+        {inner}
+      </nav>
+    );
+  }
+
+  return <nav className="relative z-30 w-full snap-start">{inner}</nav>;
 };
 
 export default Navbar;
