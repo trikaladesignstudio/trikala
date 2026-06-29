@@ -50,6 +50,18 @@ export function AdminThemeProvider({
     if (mounted) localStorage.setItem(STORAGE_KEY, theme);
   }, [theme, mounted]);
 
+  useEffect(() => {
+    if (!mounted) return;
+
+    const root = document.documentElement;
+    root.classList.add("admin-theme");
+    root.classList.toggle("dark", theme === "dark");
+
+    return () => {
+      root.classList.remove("admin-theme", "dark");
+    };
+  }, [theme, mounted]);
+
   const toggleTheme = useCallback(() => {
     setTheme((prev) => (prev === "dark" ? "light" : "dark"));
   }, []);

@@ -1,5 +1,6 @@
 "use client";
 
+import { FormattedText } from "@/components/custom/FormattedText";
 import { cn } from "@/lib/utils";
 import { allProjectTypes } from "@/utils/client_utils";
 import { Prisma } from "@prisma/client";
@@ -162,9 +163,9 @@ const ProjectShowClient = ({
                       </h2>
                     </Link>
                     {project.description && (
-                      <p className="mt-1 line-clamp-2 text-sm leading-relaxed text-zinc-500">
+                      <FormattedText className="mt-1 line-clamp-2 text-sm leading-relaxed text-zinc-500">
                         {project.description}
-                      </p>
+                      </FormattedText>
                     )}
                   </div>
                   {typeLabel && (

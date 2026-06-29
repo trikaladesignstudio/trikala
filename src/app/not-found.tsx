@@ -1,6 +1,4 @@
-"use client";
-
-import Navbar from "@/components/custom/NavBar";
+import NavBarWithData from "@/components/custom/NavBarWithData";
 import Section from "@/components/custom/Section";
 import Link from "next/link";
 
@@ -8,7 +6,7 @@ export default function Custom404() {
   return (
     <>
       <div className="relative shrink-0 bg-black">
-        <Navbar />
+        <NavBarWithData />
       </div>
       <Section className="flex flex-col items-center justify-center h-screen gap-8">
         <div className="">

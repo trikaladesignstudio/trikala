@@ -2,6 +2,7 @@
 import prisma from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
 import { UTApi } from "uploadthing/server";
+import { cache } from "react";
 import { allProjectTypes, ProjectType, sectionType } from "./client_utils";
 import { revalidatePublicSite } from "@/lib/revalidateSite";
 import { revalidatePath } from "next/cache";
@@ -64,6 +65,10 @@ export async function filterAllProjects(
 
   return filteredData;
 }
+
+export const getContactProjects = cache(async () =>
+  filterAllProjects(sectionType.contact)
+);
 
 export async function getAllProjectsGroupByType() {
   const architecturalConcepts = [

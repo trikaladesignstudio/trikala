@@ -1,4 +1,5 @@
 "use cache";
+import { FormattedText } from "@/components/custom/FormattedText";
 import JsonLd from "@/components/seo/JsonLd";
 import ProjectViewClient from "@/components/custom/ProjectViewClient";
 import Section from "@/components/custom/Section";
@@ -74,9 +75,9 @@ export default async function Page({
           <h1 className="text-4xl md:text-5xl lg:text-6xl tracking-tight font-silver text-left text-zinc-900">
             {projectData.title}
           </h1>
-          <p className="max-w-3xl text-base text-zinc-700 lg:text-lg">
+          <FormattedText className="max-w-3xl text-base text-zinc-700 lg:text-lg">
             {projectData.description}
-          </p>
+          </FormattedText>
         </header>
 
         <ProjectViewClient projectData={projectData} />

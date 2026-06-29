@@ -12,7 +12,8 @@ import { useEffect, useRef, useState } from "react";
 
 gsap.registerPlugin(ScrollTrigger);
 import { ContactDataType, navlinks } from "@/types";
-import { startAProjectLink } from "@/constants";
+import { resolveStartAProjectLink } from "@/lib/contactData";
+import { FormattedText } from "@/components/custom/FormattedText";
 import HeroCta from "@/components/custom/HeroCta";
 import { scrollToTop, SITE_FOOTER_ID } from "@/lib/scrollToTop";
 import { cn } from "@/lib/utils";
@@ -178,6 +179,8 @@ export default function Footer({
   const email =
     contactData.find((ele) => ele.title === "EMAIL")?.description ?? "";
 
+  const startAProjectLink = resolveStartAProjectLink(data);
+
   const socialLinks = [
     { label: "Instagram", href: instagramUrl, icon: ImInstagram },
     { label: "Facebook", href: facebookUrl, icon: FaFacebookF },
@@ -252,7 +255,9 @@ export default function Footer({
                   <p className="mb-1 font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-500">
                     Address
                   </p>
-                  <p className="text-zinc-100">{address}</p>
+                  <FormattedText className="text-zinc-100">
+                    {address}
+                  </FormattedText>
                 </div>
               ) : null}
               {phone ? (
@@ -261,10 +266,10 @@ export default function Footer({
                     Phone
                   </p>
                   <Link
-                    href={`tel:${phone}`}
+                    href={`tel:${phone.trim()}`}
                     className="text-zinc-100 transition-colors hover:text-zinc-300"
                   >
-                    {phone}
+                    <FormattedText as="span">{phone}</FormattedText>
                   </Link>
                 </div>
               ) : null}
@@ -274,10 +279,10 @@ export default function Footer({
                     Mail
                   </p>
                   <Link
-                    href={`mailto:${email}`}
+                    href={`mailto:${email.trim()}`}
                     className="text-zinc-100 transition-colors hover:text-zinc-300"
                   >
-                    {email}
+                    <FormattedText as="span">{email}</FormattedText>
                   </Link>
                 </div>
               ) : null}

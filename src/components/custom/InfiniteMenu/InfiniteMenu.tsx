@@ -16,6 +16,7 @@ import {
   INTRO_SPIN_ROTATIONS,
   MOBILE_GLOBE_MAX_WIDTH,
 } from "@/lib/featuredGlobeIntro";
+import { FormattedText } from "@/components/custom/FormattedText";
 import { FALLBACK_MENU_ITEMS } from "@/lib/heroFeaturedUtils";
 import { cn } from "@/lib/utils";
 import { useScrollContainer } from "@/context/ScrollContainerContext";
@@ -1426,13 +1427,13 @@ export default function InfiniteMenu({
           ) : null}
 
           {overlayVisible && activeItem.description ? (
-            <p
+            <FormattedText
               className={cn(
                 "face-description globe-reveal-item globe-reveal-item--description active"
               )}
             >
               {activeItem.description}
-            </p>
+            </FormattedText>
           ) : null}
 
           {!isMobileOverlay && linkButton}

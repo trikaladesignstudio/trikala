@@ -1,4 +1,4 @@
-import Navbar from "@/components/custom/NavBar";
+import NavBarWithData from "@/components/custom/NavBarWithData";
 
 export default async function RootLayout({
   children,
@@ -8,7 +8,7 @@ export default async function RootLayout({
   return (
     <div className="flex w-full min-h-0 flex-1 flex-col snap-none">
       <div className="relative shrink-0 bg-black">
-      <Navbar />
+      <NavBarWithData />
     </div>
       {children}
     </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import { FormattedText } from "@/components/custom/FormattedText";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -86,9 +87,9 @@ export default function AdminProjectCard({
           )}
         </div>
 
-        <p className="mt-1 line-clamp-2 text-sm text-admin-muted">
+        <FormattedText className="mt-1 line-clamp-2 text-sm text-admin-muted">
           {project.description || "No description"}
-        </p>
+        </FormattedText>
 
         <p className="mt-2 font-geist-mono text-xs text-admin-muted">
           {showSection && project.section !== "none"
@@ -117,20 +118,22 @@ export default function AdminProjectCard({
                 Delete
               </button>
             </AlertDialogTrigger>
-            <AlertDialogContent className="border border-admin-border bg-admin-surface sm:max-w-md">
+            <AlertDialogContent className="border border-admin-border bg-admin-surface text-admin-ink sm:max-w-md">
               <AlertDialogHeader>
-                <AlertDialogTitle>Delete this project?</AlertDialogTitle>
-                <AlertDialogDescription>
+                <AlertDialogTitle className="text-admin-ink">
+                  Delete this project?
+                </AlertDialogTitle>
+                <AlertDialogDescription className="text-admin-muted">
                   &ldquo;{project.title}&rdquo; will be permanently removed.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter className="flex-col gap-2 sm:flex-row">
-                <AlertDialogCancel className="min-h-[44px] w-full sm:w-auto">
+                <AlertDialogCancel className="min-h-[44px] w-full border-admin-border bg-admin-surface text-admin-ink hover:bg-admin-canvas sm:w-auto">
                   Cancel
                 </AlertDialogCancel>
                 <AlertDialogAction
                   onClick={handleDelete}
-                  className="min-h-[44px] w-full bg-red-600 hover:bg-red-700 sm:w-auto"
+                  className="min-h-[44px] w-full bg-red-600 text-white hover:bg-red-700 sm:w-auto"
                 >
                   Delete project
                 </AlertDialogAction>

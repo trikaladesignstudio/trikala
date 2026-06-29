@@ -1,5 +1,3 @@
-export const startAProjectLink = "https://wa.me/message/XYR3GG2PO7KRC1";
-
 export const constructionPhases = [
     {
         id: 1,

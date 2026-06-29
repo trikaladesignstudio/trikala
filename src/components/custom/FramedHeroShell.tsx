@@ -52,6 +52,7 @@ type FramedHeroShellProps = {
   background: ReactNode;
   headline?: ReactNode;
   className?: string;
+  startAProjectLink: string;
 };
 
 const EDGE_MASK_SHADOW = "0 0 0 9999px #ffffff";
@@ -80,6 +81,7 @@ export default function FramedHeroShell({
   background,
   headline,
   className,
+  startAProjectLink,
 }: FramedHeroShellProps) {
   const heroRef = useRef<HTMLDivElement>(null);
   const edgeMaskRef = useRef<HTMLDivElement>(null);
@@ -338,7 +340,7 @@ export default function FramedHeroShell({
                     : "max-lg:absolute max-lg:inset-x-0 max-lg:top-0"
                 )}
               >
-                <Navbar />
+                <Navbar startAProjectLink={startAProjectLink} />
               </motion.div>
             </div>
 

@@ -26,8 +26,10 @@ function getHeroImageUrls(data: Prisma.ProjectCreateInput[]) {
 
 export default memo(function Hero({
   pData,
+  startAProjectLink,
 }: {
   pData: Promise<Prisma.ProjectCreateInput[]>;
+  startAProjectLink: string;
 }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const data = use(pData);
@@ -101,6 +103,7 @@ export default memo(function Hero({
 
   return (
     <FramedHeroShell
+      startAProjectLink={startAProjectLink}
       background={
         <>
           {images.map((image, index) => (

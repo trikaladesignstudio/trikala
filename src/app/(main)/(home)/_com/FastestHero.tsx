@@ -1,9 +1,14 @@
 import Hero from "@/components/sections/Hero";
+import { resolveStartAProjectLink } from "@/lib/contactData";
 import { sectionType } from "@/utils/client_utils";
-import { filterAllProjects } from "@/utils/dbActions";
+import { filterAllProjects, getContactProjects } from "@/utils/dbActions";
 
 export default async function FasterHome() {
-  const heroData = await filterAllProjects(sectionType.hero);
+  const [heroData, contactProjects] = await Promise.all([
+    filterAllProjects(sectionType.hero),
+    getContactProjects(),
+  ]);
+  const startAProjectLink = resolveStartAProjectLink(contactProjects);
   const firstImageUrl = heroData?.[0]?.images?.[0]?.url;
 
   return (
@@ -16,7 +21,10 @@ export default async function FasterHome() {
           fetchPriority="high"
         />
       )}
-      <Hero pData={Promise.resolve(heroData)} />
+      <Hero
+        pData={Promise.resolve(heroData)}
+        startAProjectLink={startAProjectLink}
+      />
     </>
   );
 }

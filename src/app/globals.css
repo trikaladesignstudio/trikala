@@ -7,6 +7,18 @@
   --page-gutter: 1.5rem;
   --page-gutter-lg: 3rem;
   --viewport-height: 100dvh;
+  --background: #ffffff;
+  --foreground: #18181b;
+  --muted-foreground: #71717a;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #18181b;
+  --primary: #18181b;
+  --primary-foreground: #fafafa;
+  --accent: #f4f4f5;
+  --accent-foreground: #18181b;
+  --destructive: #ef4444;
+  --destructive-foreground: #fafafa;
 }
 
 @media (min-width: 1024px) {
@@ -134,6 +146,18 @@ main::-webkit-scrollbar-thumb {
   --admin-muted: #71717a;
   --admin-accent: #c2410c;
   --admin-border: #e2e8f0;
+  --background: var(--admin-surface);
+  --foreground: var(--admin-ink);
+  --muted-foreground: var(--admin-muted);
+  --border: var(--admin-border);
+  --input: var(--admin-border);
+  --ring: var(--admin-accent);
+  --primary: var(--admin-accent);
+  --primary-foreground: #ffffff;
+  --accent: var(--admin-canvas);
+  --accent-foreground: var(--admin-ink);
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
   color-scheme: light;
 }
 
@@ -145,6 +169,12 @@ main::-webkit-scrollbar-thumb {
   --admin-accent: #f97316;
   --admin-border: #27272a;
   color-scheme: dark;
+}
+
+html.admin-theme,
+html.admin-theme body {
+  background-color: var(--admin-canvas);
+  color: var(--admin-ink);
 }
 
 /* Rounded sheet transition into footer */

@@ -1,10 +1,9 @@
 import DeferredFooter from "@/components/custom/DeferredFooter";
-import { sectionType } from "@/utils/client_utils";
-import { filterAllProjects } from "@/utils/dbActions";
+import { getContactProjects } from "@/utils/dbActions";
 import { Suspense } from "react";
 
 async function FooterWithData() {
-  const footerData = await filterAllProjects(sectionType.contact);
+  const footerData = await getContactProjects();
   return <DeferredFooter data={footerData} />;
 }
 

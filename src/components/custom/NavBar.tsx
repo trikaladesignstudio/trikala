@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import StaggeredMenu from "@/components/custom/StaggeredMenu";
-import { startAProjectLink } from "@/constants";
 import { cn } from "@/lib/utils";
 import { navlinks } from "@/types";
 
@@ -29,7 +28,7 @@ const SIZES = {
   },
 } as const;
 
-const Navbar = () => {
+const Navbar = ({ startAProjectLink }: { startAProjectLink: string }) => {
   const isOverlay = usePathname() === "/";
   const s = SIZES[isOverlay ? "hero" : "default"];
 

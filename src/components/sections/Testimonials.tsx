@@ -6,6 +6,7 @@ import { cn, rollInView, shimmerBlur } from "@/lib/utils";
 import { filterAllProjects } from "@/utils/dbActions";
 import { useEffect, useState } from "react";
 import { TestimonialsDataType } from "@/types";
+import { FormattedText } from "@/components/custom/FormattedText";
 import Section from "../custom/Section";
 import Heading from "../custom/Heading";
 import Marquee from "../ui/marquee";
@@ -70,9 +71,9 @@ const ReviewCard = ({
           width: description.length / (inMobileView ? 7 : 4) + "ch",
         }}
       >
-        <p className="break-words text-justify text-[0.78rem] leading-relaxed text-gray-700 sm:text-[0.85rem] lg:text-[0.95rem]">
+        <FormattedText className="break-words text-justify text-[0.78rem] leading-relaxed text-gray-700 sm:text-[0.85rem] lg:text-[0.95rem]">
           {description}
-        </p>
+        </FormattedText>
       </div>
     </motion.div>
   );
