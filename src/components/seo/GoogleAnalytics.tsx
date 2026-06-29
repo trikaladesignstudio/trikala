@@ -1,7 +1,7 @@
+import { GA_MEASUREMENT_ID } from "@/lib/ga";
 import Script from "next/script";
-
-const GA_MEASUREMENT_ID =
-  process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? "G-3W6HG8151V";
+import { Suspense } from "react";
+import GoogleAnalyticsPageView from "./GoogleAnalyticsPageView";
 
 export default function GoogleAnalytics() {
   if (!GA_MEASUREMENT_ID) return null;
@@ -20,6 +20,9 @@ export default function GoogleAnalytics() {
           gtag('config', '${GA_MEASUREMENT_ID}');
         `}
       </Script>
+      <Suspense fallback={null}>
+        <GoogleAnalyticsPageView />
+      </Suspense>
     </>
   );
 }
