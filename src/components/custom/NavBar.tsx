@@ -122,7 +122,7 @@ const Navbar = ({ startAProjectLink }: { startAProjectLink: string }) => {
     );
   }
 
-  return <nav className="relative z-30 w-full snap-start">{inner}</nav>;
+  return <nav className="relative z-30 w-full">{inner}</nav>;
 };
 
 export default Navbar;

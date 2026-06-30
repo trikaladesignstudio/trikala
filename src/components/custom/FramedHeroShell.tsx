@@ -278,13 +278,17 @@ export default function FramedHeroShell({
       <div
         ref={heroRef}
         className={cn(
-          "hero-block relative w-full shrink-0 snap-start snap-always bg-[#1a1a1a]",
+          "hero-block relative w-full shrink-0 bg-[#1a1a1a]",
           className
         )}
         style={{
           height: `calc(var(--viewport-height) * ${HERO_ELEMENT_VIEWPORTS})`,
         }}
       >
+        <div
+          aria-hidden
+          className="pointer-events-none h-px w-full shrink-0 snap-start snap-always"
+        />
         <div className="sticky top-0 h-screen overflow-hidden">
           <div ref={bgRef} className="absolute inset-0 opacity-0">
             {background}

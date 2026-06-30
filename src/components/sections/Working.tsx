@@ -46,7 +46,7 @@ function formatSlides(
 const PANEL_ANIMATION_MS = 300;
 
 const sectionClassName =
-  "relative z-10 isolate bg-[#f5f5f5] snap-start min-h-screen justify-center gap-4 py-6 lg:snap-center lg:gap-10 lg:py-10";
+  "relative z-10 isolate bg-[#f5f5f5] snap-start snap-always min-h-screen justify-center gap-4 py-6 lg:snap-center lg:gap-10 lg:py-10";
 
 function Working({
   data,
