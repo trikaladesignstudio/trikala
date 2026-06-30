@@ -1,0 +1,136 @@
+.masonry-list {
+  position: relative;
+  width: 100%;
+}
+
+.masonry-loading {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 12px;
+}
+
+@media (min-width: 640px) {
+  .masonry-loading {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.masonry-loading-tile {
+  border-radius: 1.25rem;
+  background: linear-gradient(110deg,
+      rgb(228 228 231 / 0.55) 0%,
+      rgb(244 244 245 / 0.95) 45%,
+      rgb(228 228 231 / 0.55) 100%);
+  background-size: 200% 100%;
+  animation: masonry-shimmer 1.8s ease-in-out infinite;
+}
+
+.masonry-item-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 8px;
+  will-change: transform, width, height, opacity;
+}
+
+.masonry-item-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+}
+
+.masonry-item-img {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 1.25rem;
+  background-position: center;
+  background-size: cover;
+  background-color: rgb(228 228 231 / 0.8);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(24, 24, 27, 0.06);
+}
+
+.masonry-item-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.masonry-item-img--empty {
+  background-color: rgb(228 228 231 / 0.8);
+}
+
+.masonry-item-shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.45),
+      transparent);
+  animation: masonry-shimmer 2.4s ease-in-out infinite;
+}
+
+.masonry-item-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.35rem;
+  padding: 1.25rem 1.35rem;
+  background: linear-gradient(to top,
+      rgba(24, 24, 27, 0.82) 0%,
+      rgba(24, 24, 27, 0.35) 45%,
+      transparent 72%);
+  pointer-events: none;
+}
+
+.masonry-item-type {
+  width: fit-content;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.12);
+  padding: 0.15rem 0.55rem;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.masonry-item-title {
+  font-size: 1.05rem;
+  font-weight: 500;
+  line-height: 1.35;
+  color: #fafafa;
+  text-transform: capitalize;
+}
+
+.masonry-color-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: 1.25rem;
+  opacity: 0;
+  pointer-events: none;
+  background: linear-gradient(45deg,
+      rgba(119, 73, 49, 0.35),
+      rgba(24, 24, 27, 0.25));
+}
+
+@keyframes masonry-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
