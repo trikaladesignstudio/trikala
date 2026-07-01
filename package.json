@@ -15,7 +15,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "pgen": "prisma generate",
-    "sync-locations": "tsx --env-file=.env scripts/sync-locations.ts",
+    "sync-locations": "test -f .env && tsx --env-file=.env scripts/sync-locations.ts || tsx scripts/sync-locations.ts",
     "pstudio": "prisma studio",
     "pmig": "prisma migrate dev",
     "ppull": "prisma db pull",
