@@ -74,9 +74,6 @@ importers:
       jose:
         specifier: ^5.9.6
         version: 5.9.6
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
       next:
         specifier: 14.2.13
         version: 14.2.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -92,9 +89,6 @@ importers:
       react-hot-toast:
         specifier: ^2.4.1
         version: 2.5.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      react-icons:
-        specifier: ^5.3.0
-        version: 5.4.0(react@18.3.1)
       recharts:
         specifier: ^2.15.0
         version: 2.15.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -111,9 +105,6 @@ importers:
         specifier: ^7.3.0
         version: 7.4.4(next@14.2.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@3.4.17)
     devDependencies:
-      '@types/lodash':
-        specifier: ^4.17.13
-        version: 4.17.14
       '@types/node':
         specifier: ^20
         version: 20.17.12
@@ -1145,9 +1136,6 @@ packages:
 
   '@types/json5@0.0.29':
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
-
-  '@types/lodash@4.17.14':
-    resolution: {integrity: sha512-jsxagdikDiDBeIRaPYtArcT8my4tN1og7MtMRquFT3XNA6axxyHDRUemqDz/taRDdOUn0GnGHRCuff4q48sW9A==}
 
   '@types/node@20.17.12':
     resolution: {integrity: sha512-vo/wmBgMIiEA23A/knMfn/cf37VnuF52nZh5ZoW0GWt4e4sxNquibrMRJ7UQsA06+MBx9r/H1jsI9grYjQCQlw==}
@@ -2939,11 +2927,6 @@ packages:
       react: '>=16'
       react-dom: '>=16'
 
-  react-icons@5.4.0:
-    resolution: {integrity: sha512-7eltJxgVt7X64oHh6wSWNwwbKTCtMfK35hcjvJS0yxEAhPM8oUKdS3+kqaW1vicIltw+kR2unHaa12S9pPALoQ==}
-    peerDependencies:
-      react: '*'
-
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
@@ -4375,8 +4358,6 @@ snapshots:
   '@types/estree@1.0.9': {}
 
   '@types/json5@0.0.29': {}
-
-  '@types/lodash@4.17.14': {}
 
   '@types/node@20.17.12':
     dependencies:
@@ -6344,10 +6325,6 @@ snapshots:
       goober: 2.1.16(csstype@3.1.3)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
-
-  react-icons@5.4.0(react@18.3.1):
-    dependencies:
-      react: 18.3.1
 
   react-is@16.13.1: {}
 
