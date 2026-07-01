@@ -1,12 +1,16 @@
-import NavBarWithData from "@/components/custom/NavBarWithData";
+import Navbar from "@/components/custom/NavBar";
 import Section from "@/components/custom/Section";
+import { resolveStartAProjectLink } from "@/lib/contactData";
+import { getContactProjects } from "@/utils/dbActions";
 import Link from "next/link";
 
-export default function Custom404() {
+export default async function Custom404() {
+  const startAProjectLink = resolveStartAProjectLink(await getContactProjects());
+
   return (
     <>
       <div className="relative shrink-0 bg-black">
-        <NavBarWithData />
+        <Navbar startAProjectLink={startAProjectLink} />
       </div>
       <Section className="flex flex-col items-center justify-center h-screen gap-8">
         <div className="">

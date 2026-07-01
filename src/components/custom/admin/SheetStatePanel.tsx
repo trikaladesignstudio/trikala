@@ -1,7 +1,7 @@
 "use client";
 
 import { CityRowType, getStateRows } from "@/lib/sheetAccess";
-import { locationType } from "@/types/actions";
+import { locationType } from "@/types";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";

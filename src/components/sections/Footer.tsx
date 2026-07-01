@@ -1,7 +1,6 @@
 "use client";
 
-import { FaFacebookF, FaTwitter, FaYoutube } from "react-icons/fa";
-import { ImInstagram } from "react-icons/im";
+import { InstagramLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { filterAllProjects } from "@/utils/dbActions";
@@ -13,7 +12,6 @@ import { useEffect, useRef, useState } from "react";
 gsap.registerPlugin(ScrollTrigger);
 import { ContactDataType, navlinks } from "@/types";
 import { resolveStartAProjectLink } from "@/lib/contactData";
-import { FormattedText } from "@/components/custom/FormattedText";
 import HeroCta from "@/components/custom/HeroCta";
 import { scrollToTop, SITE_FOOTER_ID } from "@/lib/scrollToTop";
 import { cn } from "@/lib/utils";
@@ -23,10 +21,27 @@ const columnLabelClass =
 const columnLinkClass =
   "text-sm text-zinc-100 transition-colors hover:text-zinc-300";
 
+function FacebookIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden>
+      <path d="M22 12a10 10 0 1 0-11.6 9.9v-7h-2.3V12h2.3V9.8c0-2.3 1.4-3.6 3.5-3.6 1 0 2 .2 2 .2v2.2h-1.1c-1.1 0-1.5.7-1.5 1.4V12h2.6l-.4 2.9h-2.2v7A10 10 0 0 0 22 12Z" />
+    </svg>
+  );
+}
+
+function YouTubeIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden>
+      <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.7 15.5V8.5L15.8 12l-6.1 3.5Z" />
+    </svg>
+  );
+}
+
 function isNavLinkActive(href: string, pathname: string) {
   const linkPath = new URL(href, "https://trikala.local").pathname;
   if (linkPath === pathname) return true;
-  if (linkPath === "/projects" && pathname.startsWith("/projects")) return true;
+  // Project detail pages share the listing route; city pages are separate pages.
+  if (linkPath === "/projects" && pathname.startsWith("/projects/")) return true;
   return false;
 }
 
@@ -128,6 +143,7 @@ function FooterColumn({
 
 const LEGAL_PATHS = new Set(["/privacyPolicy", "/termAndCondition"]);
 const PROJECT_DETAIL_PATH = /^\/projects\/[^/]+$/;
+const LOCATION_PATH = /^\/locations(\/.*)?$/;
 
 export default function Footer({
   data,
@@ -136,7 +152,10 @@ export default function Footer({
 }) {
   const pathname = usePathname();
   const isHome = pathname === "/";
-  const useOverlap = !LEGAL_PATHS.has(pathname) && !PROJECT_DETAIL_PATH.test(pathname);
+  const useOverlap =
+    !LEGAL_PATHS.has(pathname) &&
+    !PROJECT_DETAIL_PATH.test(pathname) &&
+    !LOCATION_PATH.test(pathname);
   const scrollContainer = useScrollContainer();
   const [contactData, setContactData] = useState<ContactDataType[]>([]);
 
@@ -182,10 +201,10 @@ export default function Footer({
   const startAProjectLink = resolveStartAProjectLink(data);
 
   const socialLinks = [
-    { label: "Instagram", href: instagramUrl, icon: ImInstagram },
-    { label: "Facebook", href: facebookUrl, icon: FaFacebookF },
-    { label: "YouTube", href: youtubeUrl, icon: FaYoutube },
-    { label: "X", href: twitterUrl, icon: FaTwitter },
+    { label: "Instagram", href: instagramUrl, icon: InstagramLogoIcon },
+    { label: "Facebook", href: facebookUrl, icon: FacebookIcon },
+    { label: "YouTube", href: youtubeUrl, icon: YouTubeIcon },
+    { label: "X", href: twitterUrl, icon: TwitterLogoIcon },
   ];
 
   return (
@@ -226,6 +245,7 @@ export default function Footer({
                     {link.name}
                   </FooterNavLink>
                 ))}
+                <FooterNavLink href="/locations">Locations</FooterNavLink>
               </FooterColumn>
             </nav>
 
@@ -255,9 +275,7 @@ export default function Footer({
                   <p className="mb-1 font-mono text-[10px] uppercase tracking-[0.1em] text-zinc-500">
                     Address
                   </p>
-                  <FormattedText className="text-zinc-100">
-                    {address}
-                  </FormattedText>
+                  <p className="whitespace-pre-line text-zinc-100">{address}</p>
                 </div>
               ) : null}
               {phone ? (
@@ -269,7 +287,7 @@ export default function Footer({
                     href={`tel:${phone.trim()}`}
                     className="text-zinc-100 transition-colors hover:text-zinc-300"
                   >
-                    <FormattedText as="span">{phone}</FormattedText>
+                    <span className="whitespace-pre-line">{phone}</span>
                   </Link>
                 </div>
               ) : null}
@@ -282,7 +300,7 @@ export default function Footer({
                     href={`mailto:${email.trim()}`}
                     className="text-zinc-100 transition-colors hover:text-zinc-300"
                   >
-                    <FormattedText as="span">{email}</FormattedText>
+                    <span className="whitespace-pre-line">{email}</span>
                   </Link>
                 </div>
               ) : null}

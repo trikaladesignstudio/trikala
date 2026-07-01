@@ -1,6 +1,7 @@
+import { getAllLocations } from "@/lib/locationPages";
+import { SITE_URL } from "@/lib/seo";
 import { getAllProjectsByPDF } from "@/utils/dbActions";
 import { MetadataRoute } from "next";
-import { SITE_URL } from "@/lib/seo";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const projects = await getAllProjectsByPDF();
@@ -25,6 +26,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.9,
     },
     {
+      url: `${SITE_URL}/locations`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
       url: `${SITE_URL}/privacyPolicy`,
       lastModified: new Date(),
       changeFrequency: "yearly",
@@ -45,5 +52,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
-  return [...staticPages, ...projectPages];
+  const locationPages: MetadataRoute.Sitemap = (await getAllLocations()).map(
+    (loc) => ({
+      url: `${SITE_URL}/locations/${loc.slug}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    }),
+  );
+
+  return [...staticPages, ...locationPages, ...projectPages];
 }

@@ -1,16 +1,17 @@
 "use client";
 
 import ClickSpark from "@/components/ui/ClickSpark";
+import { resetHeroIntroClock } from "@/lib/heroIntro";
 import { useReducedMotion } from "framer-motion";
-import { type ReactNode, useEffect, useState } from "react";
+import { type ReactNode, useEffect, useLayoutEffect, useState } from "react";
 
-export default function HomeClickSpark({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export default function HomeClientShell({ children }: { children: ReactNode }) {
   const prefersReducedMotion = useReducedMotion();
   const [mounted, setMounted] = useState(false);
+
+  useLayoutEffect(() => {
+    resetHeroIntroClock();
+  }, []);
 
   useEffect(() => {
     setMounted(true);

@@ -1,6 +1,5 @@
 "use client";
 
-import { FormattedText } from "@/components/custom/FormattedText";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -87,9 +86,9 @@ export default function AdminProjectCard({
           )}
         </div>
 
-        <FormattedText className="mt-1 line-clamp-2 text-sm text-admin-muted">
+        <p className="mt-1 line-clamp-2 whitespace-pre-line text-sm text-admin-muted">
           {project.description || "No description"}
-        </FormattedText>
+        </p>
 
         <p className="mt-2 font-geist-mono text-xs text-admin-muted">
           {showSection && project.section !== "none"

@@ -2,7 +2,6 @@ import { ourFileRouter } from "@/app/api/uploadthing/core";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import JsonLd from "@/components/seo/JsonLd";
 import {
   DEFAULT_DESCRIPTION,
   ORGANIZATION_JSON_LD,
@@ -18,7 +17,6 @@ import { extractRouterConfig } from "uploadthing/server";
 import "./globals.css";
 import BackToTopBtn from "@/components/BackToTop";
 import GoogleAnalytics from "@/components/seo/GoogleAnalytics";
-import ViewportHeightSync from "@/components/ViewportHeightSync";
 import MainScrollContainer from "@/components/MainScrollContainer";
 import PsudoScollBar from "@/components/PseudoScollBar";
 
@@ -105,7 +103,12 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <head>
-        <JsonLd data={[ORGANIZATION_JSON_LD, WEBSITE_JSON_LD]} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify([ORGANIZATION_JSON_LD, WEBSITE_JSON_LD]),
+          }}
+        />
         <link rel="preconnect" href="https://utfs.io" />
         <link rel="dns-prefetch" href="https://utfs.io" />
         <link
@@ -123,7 +126,6 @@ export default async function RootLayout({
         {/* <TwScreenInfo /> */}
         <NextTopLoader height={3} color="#1A1A1A" showSpinner={false} />
         <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
-        <ViewportHeightSync />
         <MainScrollContainer>
           <BackToTopBtn />
           <PsudoScollBar />

@@ -36,3 +36,4 @@ yarn-error.log*
 next-env.d.ts
 .env
 private_key.json
+src/generated/locations.json

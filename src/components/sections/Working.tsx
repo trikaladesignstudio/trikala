@@ -6,7 +6,6 @@ import { filterAllProjects } from "@/utils/dbActions";
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import Image from "next/image";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { FormattedText } from "@/components/custom/FormattedText";
 import Heading from "../custom/Heading";
 import Sections from "../custom/Section";
 
@@ -179,9 +178,9 @@ function Working({
                   transition={contentSpring}
                   className="overflow-hidden"
                 >
-                  <FormattedText className="text-sm text-justify leading-snug pt-2 text-zinc-100">
+                  <p className="whitespace-pre-line text-sm text-justify leading-snug pt-2 text-zinc-100">
                     {activeSlide.description}
-                  </FormattedText>
+                  </p>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -332,9 +331,9 @@ function Working({
                               transition={contentSpring}
                               className="overflow-hidden"
                             >
-                              <FormattedText className="text-sm text-justify leading-4 pt-1">
+                              <p className="whitespace-pre-line text-sm text-justify leading-4 pt-1">
                                 {slide.description}
-                              </FormattedText>
+                              </p>
                             </motion.div>
                           )}
                         </AnimatePresence>

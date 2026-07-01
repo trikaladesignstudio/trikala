@@ -229,7 +229,7 @@ export default function Masonry({
   }, [grid]);
 
   const getEntranceOffset = useCallback(
-    (item: GridItem) => {
+    () => {
       let direction = animateFrom;
 
       if (animateFrom === "random") {
@@ -272,7 +272,7 @@ export default function Masonry({
       el.style.height = `${item.h}px`;
 
       if (!hasAnimated.current) {
-        const offset = getEntranceOffset(item);
+        const offset = getEntranceOffset();
         gsap.fromTo(
           el,
           {

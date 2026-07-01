@@ -1,7 +1,7 @@
 "use client";
 
 import SheetStatePanel from "@/components/custom/admin/SheetStatePanel";
-import { locationType } from "@/types/actions";
+import { locationType } from "@/types";
 
 type SheetManagerProps = {
   states: locationType[];

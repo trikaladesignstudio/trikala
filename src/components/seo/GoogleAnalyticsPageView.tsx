@@ -1,8 +1,10 @@
 "use client";
 
-import { GA_MEASUREMENT_ID } from "@/lib/ga";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
+
+const GA_MEASUREMENT_ID =
+  process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? "G-3W6HG8151V";
 
 declare global {
   interface Window {

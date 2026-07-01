@@ -22,7 +22,7 @@ import {
   BuildingClassType,
   EstimaterDataType,
   locationType,
-} from "@/types/actions";
+} from "@/types";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";

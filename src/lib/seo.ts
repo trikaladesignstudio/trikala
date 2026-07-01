@@ -1,3 +1,4 @@
+import type { LocationPageData } from "@/lib/locationTypes";
 import type { Metadata } from "next";
 
 export const SITE_URL =
@@ -78,3 +79,18 @@ export const WEBSITE_JSON_LD = {
   name: SITE_NAME,
   url: SITE_URL,
 };
+
+export function buildLocationJsonLd(location: LocationPageData) {
+  const hasPricing = location.priceLow > 0 && location.priceHigh > 0;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "ArchitecturalService",
+    name: SITE_NAME,
+    url: `${SITE_URL}/locations/${location.slug}`,
+    areaServed: location.city,
+    ...(hasPricing && {
+      priceRange: `₹${location.priceLow}-₹${location.priceHigh} per sq ft`,
+    }),
+  };
+}

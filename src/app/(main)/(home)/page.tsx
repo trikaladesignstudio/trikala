@@ -1,13 +1,11 @@
-import LazyMount from "@/components/custom/LazyMount";
+import { Suspense } from "react";
+import HomeClientShell from "./_com/HomeClientShell";
 import { FeaturedSectionShell } from "@/components/sections/FeaturedSection";
 import { buildPageMetadata, SITE_NAME } from "@/lib/seo";
 import type { Metadata } from "next";
-import { Suspense } from "react";
 import FasterHome from "./_com/FastestHero";
 import FeaturedHome from "./_com/FeaturedHome";
 import FeaturedSectionFallback from "./_com/FeaturedSectionFallback";
-import HeroIntroClock from "./_com/HeroIntroClock";
-import HomeClickSpark from "./_com/HomeClickSpark";
 import HomeHeroFallback from "./_com/HomeHeroFallback";
 import OtherHomeConponent from "./_com/OtherHomeConponent";
 
@@ -22,8 +20,7 @@ export const metadata: Metadata = buildPageMetadata({
 
 export default function Home() {
   return (
-    <HomeClickSpark>
-      <HeroIntroClock />
+    <HomeClientShell>
       <Suspense fallback={<HomeHeroFallback />}>
         <FasterHome />
       </Suspense>
@@ -32,11 +29,9 @@ export default function Home() {
           <FeaturedHome />
         </Suspense>
       </FeaturedSectionShell>
-      <LazyMount waitForHeroIntro={false}>
-        <Suspense fallback={null}>
-          <OtherHomeConponent />
-        </Suspense>
-      </LazyMount>
-    </HomeClickSpark>
+      <Suspense fallback={null}>
+        <OtherHomeConponent />
+      </Suspense>
+    </HomeClientShell>
   );
 }

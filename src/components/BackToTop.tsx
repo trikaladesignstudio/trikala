@@ -2,7 +2,7 @@
 
 import { motion, useAnimation } from "framer-motion";
 import { useEffect, useState } from "react";
-import { BiSolidUpArrowAlt } from "react-icons/bi";
+import { ChevronUpIcon } from "@radix-ui/react-icons";
 import { MAIN_SCROLL_CONTAINER_ID, scrollToTop } from "@/lib/scrollToTop";
 
 function BackToTopBtn() {
@@ -45,7 +45,7 @@ function BackToTopBtn() {
       id="back-to-top"
       className="fixed bottom-4 right-6 z-50 cursor-pointer rounded-full border border-gray-700/70 bg-black p-2 text-lg font-bold text-white shadow-xl transition-all duration-300 ease-in-out hover:bg-white hover:text-black"
     >
-      <BiSolidUpArrowAlt size={30} />
+      <ChevronUpIcon width={30} height={30} />
     </motion.button>
   );
 }

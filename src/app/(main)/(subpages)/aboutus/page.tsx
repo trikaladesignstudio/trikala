@@ -1,4 +1,3 @@
-import JsonLd from "@/components/seo/JsonLd";
 import { buildPageMetadata, ORGANIZATION_JSON_LD } from "@/lib/seo";
 import { getAllProjectsGroupByType } from "@/utils/dbActions";
 import type { Metadata } from "next";
@@ -53,7 +52,10 @@ export default async function AboutUs() {
 
   return (
     <>
-      <JsonLd data={ORGANIZATION_JSON_LD} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(ORGANIZATION_JSON_LD) }}
+      />
       <AboutHero heroImage={heroImage} inlineImage={inlineImage} />
       <AboutApproach />
       <ThrivePrinciples />

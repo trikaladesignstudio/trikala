@@ -1,6 +1,4 @@
 "use cache";
-import { FormattedText } from "@/components/custom/FormattedText";
-import JsonLd from "@/components/seo/JsonLd";
 import ProjectViewClient from "@/components/custom/ProjectViewClient";
 import Section from "@/components/custom/Section";
 import { SITE_URL } from "@/lib/seo";
@@ -69,15 +67,18 @@ export default async function Page({
 
   return (
     <Section className="lg:px-0 px-0 lg:py-0 py-0 max-h-fit justify-start bg-[#f5f5f5] pb-16 lg:pb-24">
-      <JsonLd data={projectJsonLd} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(projectJsonLd) }}
+      />
       <article className="flex w-full flex-col">
         <header className="page-x flex shrink-0 flex-col gap-3 py-6 lg:py-8">
           <h1 className="text-4xl md:text-5xl lg:text-6xl tracking-tight font-silver text-left text-zinc-900">
             {projectData.title}
           </h1>
-          <FormattedText className="max-w-3xl text-base text-zinc-700 lg:text-lg">
+          <p className="max-w-3xl whitespace-pre-line text-base text-zinc-700 lg:text-lg">
             {projectData.description}
-          </FormattedText>
+          </p>
         </header>
 
         <ProjectViewClient projectData={projectData} />

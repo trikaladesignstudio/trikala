@@ -46,7 +46,7 @@ export function toAdminProject(
 }
 
 export function filterProjectsWithPdf(projects: AdminProject[]) {
-  return projects.filter((project) => project.pdf != null);
+  return projects.filter((project) => Boolean(project.pdf?.url));
 }
 
 export async function getAdminProjects(): Promise<AdminProject[]> {

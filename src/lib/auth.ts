@@ -1,9 +1,32 @@
 "use server";
+
+import { SignJWT, jwtVerify } from "jose";
 import { NextRequest, NextResponse } from "next/server";
-import { decrypt, encrypt } from "./jwtShit";
-import prisma from "./prisma";
 import { cookies } from "next/headers";
 import { expiresin1Day } from "@/utils/client_utils";
+import prisma from "./prisma";
+
+const secretKey = process.env.SECRET_KEY_JWT;
+const key = new TextEncoder().encode(secretKey);
+
+async function encrypt(payload: {
+  data: Record<string, unknown>;
+  expires: number;
+}) {
+  return await new SignJWT(payload.data)
+    .setProtectedHeader({ alg: "HS256" })
+    .setIssuedAt()
+    .setExpirationTime(payload.expires)
+    .sign(key);
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function decrypt(input: string): Promise<any> {
+  const { payload } = await jwtVerify(input, key, {
+    algorithms: ["HS256"],
+  });
+  return payload;
+}
 
 const expires1dayTime = () => {
   const now = new Date();

@@ -1,11 +1,26 @@
 "use server";
 
-import { EstimaterDataType, locationType } from "@/types/actions";
-import dataDoc from "./googleAuth";
-import { getBlockedSheetTabs, getGoogleSheetUrl } from "./googleSheetsConfig";
+import { GoogleAuth } from "google-auth-library";
+import { GoogleSpreadsheet } from "google-spreadsheet";
+import { EstimaterDataType, locationType } from "@/types";
+import {
+  getBlockedSheetTabs,
+  getGoogleServiceAccountCredentials,
+  getGoogleSheetId,
+  getGoogleSheetUrl,
+} from "./googleSheetsConfig";
+import { cityHeader, priceHeader } from "./sheetRowUtils";
 import { revalidatePath } from "next/cache";
+import { revalidateLocationPages } from "@/lib/revalidateSite";
 
 export { getGoogleSheetUrl };
+
+const serviceAccountAuth = new GoogleAuth({
+  credentials: getGoogleServiceAccountCredentials(),
+  scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+});
+
+const dataDoc = new GoogleSpreadsheet(getGoogleSheetId(), serviceAccountAuth);
 
 const regex = /\d+/g;
 
@@ -26,11 +41,11 @@ async function getSheetByIndex(state_id: number) {
 }
 
 function getCityHeader(sheet: Awaited<ReturnType<typeof getSheetByIndex>>) {
-  return sheet.headerValues[0] ?? "City";
+  return cityHeader(sheet.headerValues);
 }
 
 function getPriceHeader(sheet: Awaited<ReturnType<typeof getSheetByIndex>>) {
-  return sheet.headerValues[2] ?? sheet.headerValues[1] ?? "Interior";
+  return priceHeader(sheet.headerValues);
 }
 
 export async function getStates(): Promise<locationType[]> {
@@ -144,6 +159,7 @@ export async function addState(title: string) {
   });
 
   revalidatePath("/admin");
+  await revalidateLocationPages();
 }
 
 export async function addCityRow(
@@ -167,6 +183,7 @@ export async function addCityRow(
   });
 
   revalidatePath("/admin");
+  await revalidateLocationPages();
 }
 
 export async function updateCityRow(
@@ -196,6 +213,7 @@ export async function updateCityRow(
   await row.save();
 
   revalidatePath("/admin");
+  await revalidateLocationPages();
 }
 
 export async function deleteCityRow(state_id: number, row_index: number) {
@@ -208,6 +226,7 @@ export async function deleteCityRow(state_id: number, row_index: number) {
 
   await row.delete();
   revalidatePath("/admin");
+  await revalidateLocationPages();
 }
 
 export async function deleteState(state_id: number) {

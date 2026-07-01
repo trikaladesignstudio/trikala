@@ -1,5 +1,6 @@
 "use client";
 
+import { useDynamicViewportHeight } from "@/hooks/useDynamicViewportHeight";
 import {
   ScrollContainerContext,
   useScrollContainerState,
@@ -29,6 +30,7 @@ export default function MainScrollContainer({
   const scrollRef = useRef<HTMLElement>(null);
   const [snapEnabled, setSnapEnabled] = useState(false);
   const { scrollLocked, setScrollLocked } = useScrollContainerState();
+  useDynamicViewportHeight();
 
   useEffect(() => {
     if (typeof history !== "undefined") {

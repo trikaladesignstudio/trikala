@@ -9,12 +9,13 @@
   },
   "scripts": {
     "dev": "next dev --turbo",
-    "build": "npm run pgen && next build",
+    "build": "npm run pgen && npm run sync-locations && next build",
     "start": "next start",
     "lint": "next lint",
     "test": "vitest run",
     "test:watch": "vitest",
     "pgen": "prisma generate",
+    "sync-locations": "tsx --env-file=.env scripts/sync-locations.ts",
     "pstudio": "prisma studio",
     "pmig": "prisma migrate dev",
     "ppull": "prisma db pull",
@@ -46,13 +47,11 @@
     "google-spreadsheet": "^4.1.4",
     "gsap": "^3.15.0",
     "jose": "^5.9.6",
-    "lodash": "^4.17.21",
     "next": "14.2.13",
     "nextjs-toploader": "^3.7.15",
     "react": "^18",
     "react-dom": "^18",
     "react-hot-toast": "^2.4.1",
-    "react-icons": "^5.3.0",
     "recharts": "^2.15.0",
     "sharp": "^0.33.5",
     "tailwind-merge": "^2.5.2",
@@ -60,7 +59,6 @@
     "uploadthing": "^7.3.0"
   },
   "devDependencies": {
-    "@types/lodash": "^4.17.13",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -69,6 +67,7 @@
     "postcss": "^8",
     "prisma": "^6.1.0",
     "tailwindcss": "^3.4.1",
+    "tsx": "^4.22.4",
     "typescript": "^5",
     "vitest": "^3.2.6"
   }

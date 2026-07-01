@@ -86,9 +86,6 @@ export const REFERENCE_TIMELINE_DAYS =
     constructionPhases[constructionPhases.length - 1].start +
     constructionPhases[constructionPhases.length - 1].days;
 
-// Calculate total days and cost
-export const totalDays = constructionPhases.reduce((sum, phase) => sum + phase.days, 0);
-
 // Calculate percentages for pie chart
 export const pieChartData = constructionPhases.map(phase => ({
     category: phase.id.toString(),

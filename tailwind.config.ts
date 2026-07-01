@@ -41,6 +41,7 @@ const config: Config = withUt({
         "custom-db": "#170800",
         "custom-lb": "#774931",
         "custom-bg": "#DEDEDE",
+        "custom-canvas": "#F5F5F5",
         black: "#1A1A1A",
         border: "var(--border)",
         input: "var(--input)",
