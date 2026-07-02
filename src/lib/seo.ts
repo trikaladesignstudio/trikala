@@ -2,7 +2,7 @@ import type { LocationPageData } from "@/lib/locationTypes";
 import type { Metadata } from "next";
 
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://trikalarchitects.com";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.trikalarchitects.com";
 
 export const SITE_NAME = "Trikal Architects";
 

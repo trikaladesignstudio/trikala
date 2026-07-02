@@ -2,7 +2,11 @@
 const nextConfig = {
   experimental: {
     serverActions: {
-      allowedOrigins: ["localhost:3000", "trikalarchitects.com"],
+      allowedOrigins: [
+        "localhost:3000",
+        "trikalarchitects.com",
+        "www.trikalarchitects.com",
+      ],
     },
     turbo: {
       resolveAlias: {
@@ -45,6 +49,10 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "trikalarchitects.com",
+      },
+      {
+        protocol: "https",
+        hostname: "www.trikalarchitects.com",
       },
     ],
   },
